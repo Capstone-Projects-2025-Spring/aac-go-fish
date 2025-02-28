@@ -1,5 +1,4 @@
 import random
-from typing import Union
 
 from fastapi import FastAPI, WebSocket
 
@@ -11,7 +10,8 @@ lobbies = {}
 animals = ["Fish", "Turtle", "Shark"]
 
 
-def generate_unique_code():
+def generate_unique_code() -> str:
+    """Generates a unique game lobby code."""
     while True:
         code = "-".join(random.choices(animals, k=3))
         if code not in lobbies:
@@ -19,14 +19,16 @@ def generate_unique_code():
 
 
 @app.post("/create_lobby")
-def create_lobby():
+def create_lobby() -> dict:
+    """Creates a new lobby and returns its unique game lobby code."""
     code = generate_unique_code()
     lobbies[code] = {"players": []}
     return {"code": code}
 
 
 @app.get("/lobby/{code}")
-def get_lobby(code: str):
+def get_lobby(code: str) -> dict:
+    """Retrieves the lobby information by its unique game code."""
     lobby = lobbies.get(code)
     if lobby is None:
         return {"error": "Lobby not found"}
@@ -34,7 +36,8 @@ def get_lobby(code: str):
 
 
 @app.get("/testGameState/")
-async def test_game_state():
+async def test_game_state() -> Lobby:
+    """Simulates and returns a test game state."""
     # create lobby
     game = Lobby(id=0)
 
@@ -46,14 +49,6 @@ async def test_game_state():
     game.players[player2.id] = player2
     game.player_count += 1
 
-    # give each player 7 cards
-    for i in range(7):
-        for id in game.players:
-            random_card = random.choice(game.deck)
-            game.deck.remove(random_card)
-
-            game.players[id].cards.append(random_card)
-
     # start game
     game.started = True
     game.current_turn = player1.id
@@ -62,17 +57,14 @@ async def test_game_state():
 
 
 @app.get("/")
-async def read_root():
+async def read_root() -> dict:
+    """Returns a simple message at root."""
     return {"Hello": "World"}
 
 
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
-
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
+async def websocket_endpoint(websocket: WebSocket) -> None:
+    """Handles a WebSocket connection for receiving and responding to messages."""
     await websocket.accept()
 
     while True:
@@ -88,7 +80,8 @@ async def websocket_endpoint(websocket: WebSocket):
                     query = message.data
                     response = QueryResponse(type=MessageKind.query_response, count=2)
                     await websocket.send_text(
-                        f"[Server] Query received for player {query.target_player_id}, card {query.card}. Responding with count: {response.count} (placeholder)"
+                        f"[Server] Query received for player {query.target_player_id}, card {query.card}.\
+                            Responding with count: {response.count} (placeholder)"
                     )
 
                 case MessageKind.chat:

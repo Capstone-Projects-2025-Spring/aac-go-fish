@@ -1,7 +1,7 @@
-# disabled
 on:
     push:
-        branches: '' # < remove and add 'main' to re enable
+        branches:
+          - fake-branch
 
 jobs:
     contrib-readme-job:
