@@ -1,0 +1,49 @@
+---
+name: Lint & Test
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@38f3f104447c67c051c4a08e39b64a148898af3a  # v4.2.0
+        with:
+          version: "0.5.4"
+
+      - name: Install python
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b  # v5.3.0
+        with:
+          python-version-file: "pyproject.toml"
+
+      - name: Install project
+        run: uv sync --all-extras --dev
+
+      - name: Cache pre-commit hooks
+        uses: actions/cache@6849a6489940f00c2f30c0fb92c6274307ccb58a  # v4.1.2
+        env:
+          cache-name: cache-pre-commit
+        with:
+          # https://pre-commit.com/#managing-ci-caches
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Run pre-commit
+        run: uv run pre-commit run --all-files
+
+      - name: Run pytest
+        run: uv run pytest backend

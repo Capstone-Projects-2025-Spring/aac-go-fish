@@ -3,58 +3,100 @@ sidebar_position: 4
 ---
 
 # Features and Requirements
-## Functional Requirements
-- Users can connect with up to 3 other users to play Go Fish integrated with Augmentative and Alternative Communication (**AAC**) software.
-- Users can communicate in real-time via an integrated AAC menu or by performing in-game actions.
-    - Text-To-Speech (**TTS**) will say AAC messages out loud.
-- Users can use frequent game specific phrases included on AAC board for faster communications.
-    - Game actions will automatically use TTS without any extra AAC actions.
-    - Ability to quickly say common quick statements like yes/no/repeat.
-- The system will indicate to all players when a user is making an AAC message.
-- Users will each have their own screen with a synced game state.
-    - Cards held in hand will be hidden from other players.
-    - Users will see the actions other users take on their screen.
-- Users can create a game room or join others with a code (similar to Kahoot).
-    - Each user types their name which will be included on the AAC board.
-- The application will have clear instructions on game rules, for example with a breif tutorial before gameplay.
 
-## Non-Functional Requirements
-- Game menus should be simple and intuitive to maximize accesibility and minimize time taken per turn.
-    - The game should have clear audio and visual cues for game actions like asking for a card.
-- The Go Fish game should integrate seamlessly with AAC making it easy to switch between communication and the game.
-- Application should stay in line with standard accessibility guidelines.
-    - Especially those applied to AAC and accomodating those with disabilities.
-- This web application should be compatible with mobile devices such as tablets.
-- Connecting young users in a lobby should be simple enough to start games quickly.
-- The application should feature modifications to the base Go Fish game to be more interesting to children.
-    - Customizable card decks (for example, instead of card ranks there could be ranks of animals or foods).
+## Functional
 
-### *Go Fish Game Rules and Requirements*
-Go Fish is usually played with a single deck of 52 cards, although with virtual cards any number would be possible.
-- How to Win:
-    - Player collects 4-of-a-kind sets AKA *“books”*
-    - The first player to play two books wins
+### Lobby Lifecycle
+- The system must let users create a game room or join others with a code.
+- The system must allow up to 4 users to join a lobby.
+- The system must provide each player with an avatar that they will be referred to by.
 
-- Dealing cards:
-    - 2 players: `7 cards each`
-    - 3 players: `6 cards each`
-    - 4 players: `5 cards each`
+### AAC Communication
+- The system must provide a way for users to communicate using AAC.
+- The system must play AAC communication out loud through text-to-speech on the speaker’s device.
+- The system must show a speech bubble on other players' devices to indicate that someone else is communicating using AAC.
 
-- Gameplay loop:
-    - Each player takes turns clockwise
-    - *Assume “Player A” is the player whose turn it is, “Player B” is the player asked for a card*
-        - Player A asks a player of their choice if they have a card
-            - Player A must ask for a card already in their hand
-        - If Player B has the card
-            - Player B must give Player A all of the card requested
-            - Player A gets another turn
-        - If Player B does not have a card, they say "go fish!"
-            - Player A must draw one card from the go fish pile and their turn ends
-    - Turns continue until a player plays 2 books
+### Game Start
+- The system must include four roles in the game: one manager role and three cooking station roles.
+- The system must include the following cooking roles:
+  - Burger
+  - Sides
+  - Drinks
+- The system must support gameplay with 2 to 4 players.
+- The system must designate one of up to four roles for each player, with the manager role being mandatory.
+- The system must assign remaining players to one of the three cooking roles, scaled to the number of players:
+  - If there are 2 players, the cook must be assigned to making the burger.
+  - If there are 3 players, two cooks must be randomly assigned to making the burger and sides.
+  - If there are 4 players, the three cooks must be randomly assigned to all stations.
+- The system must allow players to start the game.
 
-- Extra Actions:
-    - If a player gets any book, they must play them face up on the table, AKA the *“pool”*
-    - If a player runs out of cards:
-        - Draw up to three cards from the go fish pile
-        - If there are no cards in the go fish pile, they cannot make any more moves
-            - End the game if only one player left who can make a move, last player standing would win
+### Manager Roles
+- The system must allow the manager to receive orders from NPC customers.
+- The system must allow the manager to communicate orders to employees using AAC.
+- The system must allow the manager to serve the customer once the order has been completed by the employees.
+
+### Employee Roles
+- The system must allow employees to communicate requests to repeat orders or update the manager on their status using AAC.
+- The system must allow employees to receive orders from the manager.
+- The system must allow employees to complete orders by processing ingredients, placing ingredients, and following the manager’s orders.
+
+### Game Progression
+- The system must put players through rounds presented as days.
+- The system must end each day when all customers have been served.
+- The system must include five days in each game session.
+- The system must increase the difficulty each day by adding more customer orders each day.
+
+### Scoring
+- The system must calculate money earned from an order based on the items completed and a tip based on how quickly the order is completed.
+
+### Game Rules
+
+- The game can be played with 2-4 players.  
+- Customers will approach the counter and order a combination of three menu items:  
+  - **Burger**
+  - **Side**
+  - **Drink**  
+
+#### Cooking Process  
+
+- **Burgers**  
+  - Assemble buns, lettuce, patty, cheese, tomatoes, and pickles in a specific order.  
+  - Cook the patty before assembling the burger.  
+
+- **Drinks**  
+  - Fill a cup with the correct drink from a set of machines.  
+  - Ensure the correct drink is selected and adjust for ice/no ice preference.  
+
+- **Sides**  
+  - Fries
+    - Chop potatoes and place them in a deep fryer.  
+    - Wait for the fries to cook before serving.  
+
+#### Gameplay Flow  
+
+- The manager will relay customer orders to the employees.  
+- Employees must prepare orders at their assigned stations.  
+- Once an order is complete, employees send it to the manager, who serves it to the customer.  
+- Customers will pay based on the accuracy and speed of order completion.  
+
+#### Scoring System  
+
+- **Order Pricing for Each Correct Item:**  
+  - Burger: **$5**  
+  - Side: **$2.50**  
+  - Drink: **$1**  
+- **Tip Bonus:**  
+  - 0% to 25% based on completion speed.  
+- **Customer Patience Indicator:**  
+  - Displays remaining patience to help gauge the tip amount.  
+  - Faster service results in higher tips.  
+
+## Non-Functional
+- The system must integrate AAC communication seamlessly and ensure it is easy to use.  
+- The system must support real-time communication with minimal latency.  
+- The system must provide an intuitive and accessible user interface.  
+- The system must ensure secure access to game lobbies and protect user data.  
+- The system must support many concurrent game lobbies without performance degradation.  
+- The system must maintain consistent performance and handle network disruptions gracefully.  
+- The system must be designed for easy updates and future feature expansions.  
+- The system must be compatible with mobile devices and modern web browsers.
