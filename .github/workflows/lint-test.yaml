@@ -54,7 +54,7 @@ jobs:
       - name: Export and push coverage report
         run: |
           uv run coverage html
-          rm documentation/static/htmlcov/.gitignore
+          rm -f documentation/static/htmlcov/.gitignore
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
