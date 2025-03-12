@@ -4,14 +4,15 @@
 
 .IngredientButtons {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     margin-top: 20px;
     gap: 10px;
 }
 
 .IngredientButtons button {
-    width: 120px;
-    height: 120px;
+    min-width: 120px;
+    min-height: 120px;
     margin: 10px;
     padding: 0;
     border: 1px solid #322e2e;
