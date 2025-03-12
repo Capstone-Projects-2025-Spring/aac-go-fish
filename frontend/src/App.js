@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AACBoard from "./components/AACBoard";
+import BurgerBuilder from "./components/BurgerBuilder";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
@@ -51,7 +52,7 @@ const App = () => {
         }
     };
 
-	const isWebSocketConnecting = ws && ws.readyState === WebSocket.CONNECTING;
+    const isWebSocketConnecting = ws && ws.readyState === WebSocket.CONNECTING;
 
     return (
         <div style={{ padding: "1rem" }}>
@@ -65,6 +66,7 @@ const App = () => {
                     <div key={idx}>{msg}</div>
                 ))}
             </div>
+            <BurgerBuilder />
         </div>
     );
 };
