@@ -56,7 +56,7 @@ const App = () => {
 
     return (
         <div style={{ padding: "1rem" }}>
-            <h1>Test CustomerOrder</h1>
+            <h1>Customer Order</h1>
             <CustomerOrder />
             <h1>AAC Board</h1>
             { }

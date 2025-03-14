@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './CustomerOrder.css';
 
 function CustomerOrder() {
-    const [] = useState([]);
+    const [order, setOrder] = useState([]);
 
     const foodItems = [
         { id: 1, name: 'Burger', image: '/images/burger.png', audio: '/audio/burger.mp3' },
@@ -29,16 +29,35 @@ function CustomerOrder() {
 
     const getOrder = () => {
         console.log('Button clicked!');
-      };
+
+        document.getElementById("getOrderButton").hidden = "True";
+        const randomIndex = getRandomOrder(0,2);
+        setOrder(mockOrders[randomIndex]);
+    };
 
     return (
         <div className = "CustomerOrder">
-            <button
-            onClick={getOrder}
-            class = "button" type="button">
-                Get Order
-            </button>
+            <div className = "orderButton">
+                <button
+                onClick={getOrder}
+                id = "getOrderButton" class = "button" type="button">
+                    Get Order
+                </button>
+            </div>
+            <div className = "orderDisplay">
+                {order.map((itemName,index) => {
+                    const item = foodItems.find(food => food.name === itemName);
+                    return item ? (
+                        <div key={index} className="foodItem">
+                            <img src={item.image} />
+                            <p>{item.name}</p>
+                        </div>
+                    ) : null;
+                })}
+            </div>
+
         </div>
+
     );
 };
 
