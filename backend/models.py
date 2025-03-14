@@ -1,11 +1,25 @@
+from __future__ import annotations
+
 from enum import StrEnum
 from typing import Annotated, Literal
 from uuid import uuid4
 
-from pydantic import BaseModel, Field, TypeAdapter
+from pydantic import BaseModel, Field
+
+from .channel import Channel
 
 
-class Lobby(BaseModel):
+class Role(Enum):
+    """Player roles enum."""
+
+    manager = auto()
+    burger = auto()
+    fry = auto()
+    drink = auto()
+
+
+@dataclass
+class Lobby:
     """
     A class representing a game state.
 
@@ -17,24 +31,35 @@ class Lobby(BaseModel):
     """
 
     id: int
+    players: dict[str, Player]
     code: str = "ABC"
-    players: dict = dict()
     started: bool = False
 
+    def broadcast(self, msg: Message) -> None:
+        """Send a message to all players."""
+        for player in self.players.values():
+            player.send(msg)
 
-class Player(BaseModel):
+
+@dataclass
+class Player:
     """
     A class representing a player's ingame data.
 
     Attributes:
         id (int): The player's internal ID
         code (str): The code used to join the game
-        socket (): TODO: A web socket object (this is probably its own class idk yet)
     """
 
-    id: str = Field(default_factory=lambda: uuid4().hex)
-    name: str = "Unnamed Player"
-    socket: None = None
+    channel: Channel
+
+    role: Role
+
+    id: str = dataclasses.field(default_factory=lambda: uuid4().hex)
+
+    def send(self, msg: Message) -> None:
+        """Send a message to this player."""
+        self.channel.put(msg)
 
 
 class MessageKind(StrEnum):
@@ -85,6 +110,9 @@ class GameStart(BaseModel):
     lifecycle_type: Literal[LobbyLifecycleEventKind.game_start]
 
 
+type LifecycleEvent = Annotated[PlayerJoin | PlayerLeave | GameStart, Field(discriminator="lifecycle_type")]
+
+
 class Chat(BaseModel):
     """Represents a chat message sent between players."""
 
@@ -94,4 +122,7 @@ class Chat(BaseModel):
     typing: bool
 
 
-Message = TypeAdapter(Annotated[PlayerJoin, Field(discriminator="type")])
+class Message(BaseModel):
+    """Wrapper for message models."""
+
+    data: LifecycleEvent | Chat | GameState = Field(discriminator="type")
