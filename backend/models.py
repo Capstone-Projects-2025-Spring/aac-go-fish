@@ -1,5 +1,6 @@
 from enum import StrEnum
 from typing import Annotated, Literal
+from uuid import uuid4
 
 from pydantic import BaseModel, Field, TypeAdapter
 
@@ -31,7 +32,7 @@ class Player(BaseModel):
         socket (): TODO: A web socket object (this is probably its own class idk yet)
     """
 
-    id: int
+    id: str = Field(default_factory=lambda: uuid4().hex)
     name: str = "Unnamed Player"
     socket: None = None
 
