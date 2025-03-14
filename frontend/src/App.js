@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AACBoard from "./components/AACBoard";
+import CustomerOrder from "./components/CustomerOrder";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
@@ -55,6 +56,8 @@ const App = () => {
 
     return (
         <div style={{ padding: "1rem" }}>
+            <h1>Test CustomerOrder</h1>
+            <CustomerOrder />
             <h1>AAC Board</h1>
             { }
             <AACBoard />

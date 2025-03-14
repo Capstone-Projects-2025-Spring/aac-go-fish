@@ -1,3 +1,5 @@
+import './CustomerOrder.css';
+
 function CustomerOrder() {
     function getRandomOrder(min,max){
         return Math.floor(Math.random() * (max + 1 - min) + min);
@@ -25,12 +27,19 @@ function CustomerOrder() {
     //console.log(mockOrders)
     //const randomNumber = Math.random() * 10;
 
-    let orderCount = [0,0,0];
+    /*let orderCount = [0,0,0];
     for (let i = 0; i < 100; i++){
         order = getRandomOrder(0,2)
         orderCount[order]++;
     }
     console.log(orderCount);
-}
+    */
 
-CustomerOrder();
+    return (
+        <div className = "CustomerOrder">
+            <button class = "button" type="button">Get Order</button>
+        </div>
+    );
+};
+
+export default CustomerOrder;
