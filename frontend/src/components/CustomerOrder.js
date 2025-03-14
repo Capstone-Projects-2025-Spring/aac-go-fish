@@ -1,9 +1,8 @@
+import React, { useState } from 'react';
 import './CustomerOrder.css';
 
 function CustomerOrder() {
-    function getRandomOrder(min,max){
-        return Math.floor(Math.random() * (max + 1 - min) + min);
-    };
+    const [] = useState([]);
 
     const foodItems = [
         { id: 1, name: 'Burger', image: '/images/burger.png', audio: '/audio/burger.mp3' },
@@ -24,20 +23,21 @@ function CustomerOrder() {
         ['Bottom Bun', 'Tomato', 'Patty','Onion', 'Mustard', 'Ketchup', 'Top Bun'],
     ];
 
-    //console.log(mockOrders)
-    //const randomNumber = Math.random() * 10;
+    function getRandomOrder(min,max){
+        return Math.floor(Math.random() * (max + 1 - min) + min);
+    };
 
-    /*let orderCount = [0,0,0];
-    for (let i = 0; i < 100; i++){
-        order = getRandomOrder(0,2)
-        orderCount[order]++;
-    }
-    console.log(orderCount);
-    */
+    const getOrder = () => {
+        console.log('Button clicked!');
+      };
 
     return (
         <div className = "CustomerOrder">
-            <button class = "button" type="button">Get Order</button>
+            <button
+            onClick={getOrder}
+            class = "button" type="button">
+                Get Order
+            </button>
         </div>
     );
 };
