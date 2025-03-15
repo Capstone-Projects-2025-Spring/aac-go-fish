@@ -1,6 +1,6 @@
 from backend.channel import channel
-from backend.models import Role
 from backend.game_state import Lobby, Player
+from backend.models import Role
 
 
 def test_put_left_get_right() -> None:
