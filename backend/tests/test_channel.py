@@ -1,5 +1,6 @@
 from backend.channel import channel
-from backend.models import Lobby, Player, Role
+from backend.models import Role
+from backend.game_state import Lobby, Player
 
 
 def test_put_left_get_right() -> None:
@@ -29,7 +30,7 @@ def test_lobby_broadcast() -> None:
     left_a, right_a = channel()
     left_b, right_b = channel()
 
-    lobby = Lobby(0, {"A": Player(left_a, Role.manager), "B": Player(left_b, Role.burger)})
+    lobby = Lobby({"A": Player(left_a, Role.manager), "B": Player(left_b, Role.burger)})
 
     msg = 5
     lobby.broadcast(msg)  # pyright: ignore[reportArgumentType]
