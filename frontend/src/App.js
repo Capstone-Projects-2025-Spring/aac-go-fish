@@ -67,13 +67,32 @@ const App = () => {
     const clearAllSelected = () => {
         setSelectedItems([]);
     };
-    const handleSendItems = () => {
+    const handleSendItems = async () => {
         if (selectedItems.length === 0) {
             setActionLog((prev) => [...prev, "Manager: No items to send!"]);
-        } else {
-            const names = selectedItems.map((item) => item.name).join(", ");
-            setActionLog((prev) => [...prev, `Manager: Sending items: ${names}`]);
+            return;
         }
+
+        const names = selectedItems.map((item) => item.name).join(", ");
+        setActionLog((prev) => [...prev, `Manager: Sending items: ${names}`]);
+
+        for (const item of selectedItems) {
+            if (item.audio) {
+                const audio = new Audio(item.audio);
+                await new Promise((resolve) => {
+                    audio.onended = resolve;
+                    audio.onerror = resolve;
+                    audio.play().catch((err) => {
+                        console.error('Audio playback failed:', err);
+                        resolve();
+                    });
+                });
+            }
+        }
+
+        // 3) Clear items
+        setSelectedItems([]);
+        setActionLog((prev) => [...prev, "Manager: Order sent and cleared!"]);
     };
     const handleReceiveOrder = () => {
         setActionLog((prev) => [...prev, "Manager: Receiving the order..."]);
