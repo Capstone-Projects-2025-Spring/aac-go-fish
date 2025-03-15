@@ -1,9 +1,14 @@
 from __future__ import annotations
+
 import dataclasses
+import itertools
+from collections.abc import Iterable
 from dataclasses import dataclass
-from .channel import Channel
 from uuid import uuid4
+
+from .channel import Channel
 from .models import Message, Role
+
 
 @dataclass
 class Lobby:
@@ -26,6 +31,14 @@ class Lobby:
         """Send a message to all players."""
         for player in self.players.values():
             player.send(msg)
+
+    def messages(self) -> Iterable[Message]:
+        """Consume messages from all players."""
+        for player in itertools.cycle(self.players.values()):
+            m = player.channel.get(block=False)
+            if m:
+                yield m
+
 
 @dataclass
 class Player:

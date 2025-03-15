@@ -25,6 +25,14 @@ class Channel[T]:
         """Send a message."""
         self.send.put(msg)
 
-    def get(self) -> T:
-        """Receive a message. Blocks if necessary until an item is available."""
-        return self.recv.get()
+    def get(self, block: bool = True) -> T | None:
+        """
+        Receive a message.
+
+        Args:
+            block: If True, block until there is a message available. Otherwise, return None if empty.
+        """
+        try:
+            return self.recv.get(block)
+        except queue.Empty:
+            return None
