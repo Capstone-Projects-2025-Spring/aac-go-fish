@@ -6,8 +6,7 @@ const App = () => {
     const [messages, setMessages] = useState([]);
     const [ws, setWs] = useState(null);
     const [message, setMessage] = useState("");
-    const [playerId, setPlayerId] = useState(1);
-    const [card, setCard] = useState(1);
+
 
     const [selectedItems, setSelectedItems] = useState([]);
     const [actionLog, setActionLog] = useState([]);
@@ -36,24 +35,6 @@ const App = () => {
         );
         setMessage("");
         addMessage(`[Client] Chat sent: "${message}"`);
-    };
-
-    const sendQuery = () => {
-        ws.send(
-            JSON.stringify({
-                data: { type: "query", target_player_id: playerId, card: card },
-                source_player_id: 0,
-            })
-        );
-        addMessage(
-            `[Client] Game action sent: "Player ${playerId}, got any ${card}s?"`
-        );
-    };
-
-    const handleKeyDown = (e) => {
-        if (e.key === "Enter") {
-            sendMessage();
-        }
     };
 
     const isWebSocketConnecting = ws && ws.readyState === WebSocket.CONNECTING;
@@ -90,7 +71,6 @@ const App = () => {
             }
         }
 
-        // 3) Clear items
         setSelectedItems([]);
         setActionLog((prev) => [...prev, "Manager: Order sent and cleared!"]);
     };
