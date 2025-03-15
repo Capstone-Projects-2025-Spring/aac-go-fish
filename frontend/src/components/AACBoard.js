@@ -57,10 +57,27 @@ function AACBoard({ onItemClick }) {
     }
 
     return (
-        <div style={{ padding: '1rem' }}>
-            <div style={{ marginBottom: '1rem', fontWeight: 'bold', minHeight: '100px' }}>
+        <div
+            style={{
+                padding: '1rem',
+                maxWidth: '1200px',
+                margin: '0 auto',
+            }}
+        >
+            <div
+                style={{
+                    marginBottom: '1rem',
+                    fontWeight: 'bold',
+                    minHeight: '140px',
+                    border: '2px solid #ddd',
+                    borderRadius: '6px',
+                    padding: '1rem',
+                }}
+            >
                 {selectedItems.length === 0 ? (
-                    <p>Click an item to add it here!</p>
+                    <p style={{ margin: 0 }}>
+                        Click an item to add it here!
+                    </p>
                 ) : (
                     <div>
                         {selectedItems.map((item, index) => (
@@ -68,12 +85,13 @@ function AACBoard({ onItemClick }) {
                                 key={index}
                                 style={{
                                     marginRight: '0.75rem',
+                                    marginBottom: '0.75rem',
                                     padding: '0.5rem 0.75rem',
                                     border: '2px solid #ccc',
                                     borderRadius: '6px',
                                     display: 'inline-flex',
                                     alignItems: 'center',
-                                    fontSize: '1.1rem',
+                                    fontSize: '1.3rem',
                                 }}
                             >
                                 {item.image && (
@@ -81,8 +99,8 @@ function AACBoard({ onItemClick }) {
                                         src={item.image}
                                         alt={item.name}
                                         style={{
-                                            width: '30px',
-                                            height: '30px',
+                                            width: '40px',
+                                            height: '40px',
                                             marginRight: '0.5rem',
                                             objectFit: 'contain',
                                         }}
@@ -97,14 +115,14 @@ function AACBoard({ onItemClick }) {
                                         border: 'none',
                                         background: 'transparent',
                                         fontWeight: 'bold',
-                                        fontSize: '1.1rem',
+                                        fontSize: '1.2rem',
                                     }}
                                 >
                                     ×
                                 </button>
                             </span>
                         ))}
-                        <div style={{ marginTop: '0.75rem' }}>
+                        <div style={{ marginTop: '1rem' }}>
                             <button
                                 onClick={handlePlayAll}
                                 style={{
@@ -127,7 +145,6 @@ function AACBoard({ onItemClick }) {
                                 Clear All
                             </button>
                         </div>
-
                     </div>
                 )}
             </div>
@@ -135,7 +152,8 @@ function AACBoard({ onItemClick }) {
             <div
                 style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+                    gridTemplateColumns: 'repeat(4, 1fr)',
+                    gridAutoRows: '140px',
                     gap: '1rem',
                 }}
             >
@@ -144,14 +162,15 @@ function AACBoard({ onItemClick }) {
                         key={item.id}
                         onClick={() => handleClick(item)}
                         style={{
-                            padding: '0.5rem',
-                            fontSize: '1rem',
-                            cursor: 'pointer',
-                            minHeight: '120px',
+                            backgroundColor: '#fff',
+                            border: '2px solid #ccc',
+                            borderRadius: '8px',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
                             justifyContent: 'center',
+                            fontSize: '1.2rem',
+                            cursor: 'pointer',
                         }}
                     >
                         {item.image && (
@@ -159,14 +178,14 @@ function AACBoard({ onItemClick }) {
                                 src={item.image}
                                 alt={item.name}
                                 style={{
-                                    width: '50px',
-                                    height: '50px',
+                                    width: '70px',
+                                    height: '70px',
                                     marginBottom: '0.5rem',
                                     objectFit: 'contain',
                                 }}
                             />
                         )}
-                        <span>{item.name}</span>
+                        <span style={{ textAlign: 'center' }}>{item.name}</span>
                     </button>
                 ))}
             </div>
