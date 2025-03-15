@@ -1,19 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function ManagerActions() {
-    const [actionLog, setActionLog] = useState([]);
-
-    const handleSendItems = () => {
-        setActionLog((prev) => [...prev, 'Manager: Sending items...']);
-    };
-
-    const handleReceiveOrder = () => {
-        setActionLog((prev) => [...prev, 'Manager: Receiving the order...']);
-    };
-
-    const handleGiveToCustomer = () => {
-        setActionLog((prev) => [...prev, 'Manager: Giving items to the customer...']);
-    };
+function ManagerActions({
+    actionLog,
+    onSendItems,
+    onReceiveOrder,
+    onGiveToCustomer
+}) {
 
     return (
         <div style={{ border: '1px solid #ccc', padding: '1rem', maxWidth: '500px' }}>
@@ -21,13 +13,13 @@ function ManagerActions() {
             <p>Select an action (test)</p>
 
             <div style={{ marginBottom: '1rem' }}>
-                <button onClick={handleSendItems} style={{ marginRight: '0.5rem' }}>
+                <button onClick={onSendItems} style={{ marginRight: '0.5rem' }}>
                     Send Items
                 </button>
-                <button onClick={handleReceiveOrder} style={{ marginRight: '0.5rem' }}>
+                <button onClick={onReceiveOrder} style={{ marginRight: '0.5rem' }}>
                     Receive Order
                 </button>
-                <button onClick={handleGiveToCustomer}>
+                <button onClick={onGiveToCustomer}>
                     Give to Customer
                 </button>
             </div>

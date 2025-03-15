@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-function AACBoard({ onItemClick }) {
+function AACBoard({
+    onItemClick,
+    selectedItems,
+    onSelectItem,
+    onDeleteItem,
+    onClearAll
+}) {
     //hard coding here for now, should be in its own file later
     //images from https://www.opensymbols.org/
     const foodItems = [
@@ -16,7 +22,6 @@ function AACBoard({ onItemClick }) {
         { id: 11, name: 'Cheese', image: '/images/cheese.png', audio: '/audio/cheese.mp3' },
     ];
 
-    const [selectedItems, setSelectedItems] = useState([]);
     const handleClick = (item) => {
         if (item.audio) {
             const audio = new Audio(item.audio);
@@ -24,21 +29,11 @@ function AACBoard({ onItemClick }) {
                 console.error('Audio playback failed:', err);
             });
         }
+        onSelectItem(item);
 
-        setSelectedItems((prev) => [...prev, item]);
         if (onItemClick) {
             onItemClick(item.name);
         }
-    };
-
-    const handleDelete = (indexToDelete) => {
-        setSelectedItems((prev) =>
-            prev.filter((_, index) => index !== indexToDelete)
-        );
-    };
-
-    const handleClear = () => {
-        setSelectedItems([]);
     };
     const handlePlayAll = async () => {
         for (const item of selectedItems) {
@@ -108,7 +103,7 @@ function AACBoard({ onItemClick }) {
                                 )}
                                 {item.name}
                                 <button
-                                    onClick={() => handleDelete(index)}
+                                    onClick={() => onClearAll(index)}
                                     style={{
                                         marginLeft: '0.5rem',
                                         cursor: 'pointer',
@@ -135,7 +130,7 @@ function AACBoard({ onItemClick }) {
                                 Play All
                             </button>
                             <button
-                                onClick={handleClear}
+                                onClick={onClearAll}
                                 style={{
                                     padding: '0.5rem 1rem',
                                     fontSize: '1rem',
