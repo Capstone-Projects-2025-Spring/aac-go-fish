@@ -10,7 +10,7 @@ const App = () => {
 
     const [selectedItems, setSelectedItems] = useState([]);
     const [actionLog, setActionLog] = useState([]);
-
+    const isManager = true;
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -90,16 +90,17 @@ const App = () => {
                 onDeleteItem={removeSelectedItem}
                 onClearAll={clearAllSelected}
             />
-
-            <div style={{ marginTop: "2rem" }}>
-                <h2>Manager Text-Based UI</h2>
-                <ManagerActions
-                    actionLog={actionLog}
-                    onSendItems={handleSendItems}
-                    onReceiveOrder={handleReceiveOrder}
-                    onGiveToCustomer={handleGiveToCustomer}
-                />
-            </div>
+            {isManager && (
+                <div style={{ marginTop: "2rem" }}>
+                    <h2>Manager Text-Based UI</h2>
+                    <ManagerActions
+                        actionLog={actionLog}
+                        onSendItems={handleSendItems}
+                        onReceiveOrder={handleReceiveOrder}
+                        onGiveToCustomer={handleGiveToCustomer}
+                    />
+                </div>
+            )}
 
             <h3>Event Log</h3>
             <div>
