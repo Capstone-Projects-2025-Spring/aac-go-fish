@@ -95,3 +95,9 @@ class Chat(BaseModel):
 
 
 Message = TypeAdapter(Annotated[PlayerJoin, Field(discriminator="type")])
+
+if __name__ == "__main__":
+    import json
+
+    message_schema = Message.json_schema()
+    print(json.dumps(message_schema, indent=2))  # noqa: T201
