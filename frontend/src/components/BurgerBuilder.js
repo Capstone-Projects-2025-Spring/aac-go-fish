@@ -18,6 +18,10 @@ const BurgerBuilder = () => {
     const addIngredient = (ingredient) =>{
         setIngredients([...ingredients,ingredient.sideImage]);
     };
+    const clearPlate = () =>{
+        setIngredients([]);
+    };
+
     return(
         <div className="BurgerBuilder">
             <h1>Burger Station</h1>
@@ -43,6 +47,9 @@ const BurgerBuilder = () => {
             <div className="Plate">
             </div>
             <h2>Your Plate</h2>
+            <button className="ClearPlateButton" onClick={clearPlate}>
+                Clear Plate
+            </button>
         </div>
     );
 };
