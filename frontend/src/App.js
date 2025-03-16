@@ -53,26 +53,10 @@ const App = () => {
         }
 
     return (
-        <div className="app-container">
+        <div style={{ padding: "1rem" }}>
             <h1>AAC Board</h1>
             { }
-            <AACBoard
-                selectedItems={selectedItems}
-                onSelectItem={addSelectedItem}
-                onDeleteItem={removeSelectedItem}
-                onClearAll={clearAllSelected}
-            />
-            {isManager && (
-                <div className="manager-section">
-                    <h2>Manager Text-Based UI</h2>
-                    <ManagerActions
-                        actionLog={actionLog}
-                        onSendItems={handleSendItems}
-                        onReceiveOrder={handleReceiveOrder}
-                        onGiveToCustomer={handleGiveToCustomer}
-                    />
-                </div>
-            )}
+            <AACBoard />
 
             <h3>Event Log</h3>
             <div>
@@ -81,6 +65,7 @@ const App = () => {
                 ))}
             </div>
             <BurgerBuilder />
+            <DrinkBuilder />
         </div>
     );
 };
