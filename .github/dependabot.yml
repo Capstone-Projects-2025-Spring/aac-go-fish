@@ -10,7 +10,7 @@ updates:
         patterns:
           - "*"
 
-  - package-ecosystem: "yarn"
+  - package-ecosystem: "npm"
     directory: "/documentation"
     schedule:
       interval: "daily"
