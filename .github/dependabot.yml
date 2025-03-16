@@ -1,7 +1,9 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "/frontend"
+    directories:
+      - "/documentation"
+      - "/frontend"
     schedule:
       interval: "daily"
     open-pull-requests-limit: 1
@@ -9,17 +11,7 @@ updates:
       frontend-dependencies:
         patterns:
           - "*"
-
-  - package-ecosystem: "yarn"
-    directory: "/documentation"
-    schedule:
-      interval: "daily"
-    open-pull-requests-limit: 1
-    groups:
-      docs-dependencies:
-        patterns:
-          - "*"
-
+          
   - package-ecosystem: "uv"
     directory: "/"
     schedule:
