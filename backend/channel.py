@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-import queue
+import asyncio
 
 
 def channel() -> tuple[Channel, Channel]:
     """Create a pair of channels."""
-    lq = queue.Queue()
-    rq = queue.Queue()
+    lq = asyncio.Queue()
+    rq = asyncio.Queue()
 
     lc = Channel(lq, rq)
     rc = Channel(rq, lq)
@@ -17,22 +17,17 @@ def channel() -> tuple[Channel, Channel]:
 class Channel[T]:
     """In-memory two-way channel."""
 
-    def __init__(self, send: queue.Queue, recv: queue.Queue) -> None:
+    def __init__(self, send: asyncio.Queue, recv: asyncio.Queue) -> None:
         self.send = send
         self.recv = recv
 
-    def put(self, msg: T) -> None:
+    async def put(self, msg: T) -> None:
         """Send a message."""
-        self.send.put(msg)
+        await self.send.put(msg)
 
-    def get(self, block: bool = True) -> T | None:
+    async def get(self) -> T:
         """
         Receive a message.
-
-        Args:
-            block: If True, block until there is a message available. Otherwise, return None if empty.
         """
-        try:
-            return self.recv.get(block)
-        except queue.Empty:
-            return None
+
+        return await self.recv.get()

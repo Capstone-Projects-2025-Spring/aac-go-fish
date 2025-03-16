@@ -27,17 +27,15 @@ class Lobby:
     code: str = "ABC"
     started: bool = False
 
-    def broadcast(self, msg: Message) -> None:
+    async def broadcast(self, msg: Message) -> None:
         """Send a message to all players."""
         for player in self.players.values():
-            player.send(msg)
+            await player.send(msg)
 
-    def messages(self) -> Iterable[Message]:
+    async def messages(self) -> Iterable[Message]:
         """Consume messages from all players."""
-        for player in itertools.cycle(self.players.values()):
-            m = player.channel.get(block=False)
-            if m:
-                yield m
+
+        return []
 
 
 @dataclass
@@ -55,6 +53,6 @@ class Player:
     role: Role
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
 
-    def send(self, msg: Message) -> None:
+    async def send(self, msg: Message) -> None:
         """Send a message to this player."""
-        self.channel.put(msg)
+        await self.channel.put(msg)
