@@ -48,7 +48,7 @@ function CustomerOrder() {
                 {[...order].map((itemName,index) => {
                     const item = foodItems.find(food => food.name === itemName);
                     return item ? (
-                        <div key={index} className="foodItem" style={{ zIndex: order.length - index }}>
+                        <div key={index} className="foodItem">
                             <img src={item.image} />
                         </div>
                     ) : null;
