@@ -45,12 +45,11 @@ function CustomerOrder() {
                 </button>
             </div>
             <div className = "orderDisplay">
-                {order.map((itemName,index) => {
+                {[...order].map((itemName,index) => {
                     const item = foodItems.find(food => food.name === itemName);
                     return item ? (
-                        <div key={index} className="foodItem">
+                        <div key={index} className="foodItem" style={{ zIndex: order.length - index }}>
                             <img src={item.image} />
-                            <p>{item.name}</p>
                         </div>
                     ) : null;
                 })}
