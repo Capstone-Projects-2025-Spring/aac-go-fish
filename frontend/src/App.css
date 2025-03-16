@@ -32,7 +32,16 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.app-container {
+  padding: 1rem;
+}
+
+.manager-section {
+  margin-top: 2rem;
 }
