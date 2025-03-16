@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
 import AACBoard from "./components/AACBoard";
-import ManagerActions from './components/ManagerActions';
-import "./App.css";
+import BurgerBuilder from "./components/BurgerBuilder";
+import DrinkBuilder from "./components/DrinkBuilder";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
     const [ws, setWs] = useState(null);
     const [message, setMessage] = useState("");
-
-
-    const [selectedItems, setSelectedItems] = useState([]);
-    const [actionLog, setActionLog] = useState([]);
-    const isManager = true;
+    const [playerId, setPlayerId] = useState(1);
+    const [card, setCard] = useState(1);
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -55,32 +52,6 @@ const App = () => {
             return;
         }
 
-        const names = selectedItems.map((item) => item.name).join(", ");
-        setActionLog((prev) => [...prev, `Manager: Sending items: ${names}`]);
-
-        for (const item of selectedItems) {
-            if (item.audio) {
-                const audio = new Audio(item.audio);
-                await new Promise((resolve) => {
-                    audio.onended = resolve;
-                    audio.onerror = resolve;
-                    audio.play().catch((err) => {
-                        console.error('Audio playback failed:', err);
-                        resolve();
-                    });
-                });
-            }
-        }
-
-        setSelectedItems([]);
-        setActionLog((prev) => [...prev, "Manager: Order sent and cleared!"]);
-    };
-    const handleReceiveOrder = () => {
-        setActionLog((prev) => [...prev, "Manager: Receiving the order..."]);
-    };
-    const handleGiveToCustomer = () => {
-        setActionLog((prev) => [...prev, "Manager: Giving items to the customer..."]);
-    };
     return (
         <div className="app-container">
             <h1>AAC Board</h1>
@@ -109,6 +80,7 @@ const App = () => {
                     <div key={idx}>{msg}</div>
                 ))}
             </div>
+            <BurgerBuilder />
         </div>
     );
 };

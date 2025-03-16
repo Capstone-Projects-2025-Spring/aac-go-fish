@@ -1,0 +1,77 @@
+.DrinkBuilder{
+    text-align: center;
+}
+
+.DrinkButtons{
+    display:flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.DrinkButtons button{
+    min-width: 120px;
+    min-height: 120px;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.AddIceButton {
+    min-width: 120px;
+    min-height: 120px;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.ClearCupButton {
+    min-width: 120px;
+    min-height: 120px;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.Cup{
+    margin: 20px auto;
+    min-width: 150px;
+    max-width: 150px;
+    min-height: 300px;
+    border: 2px solid #000000;
+    border-radius: 15px;
+    background-color: #ffffff;
+    display:flex;
+    flex-direction: column-reverse;
+    overflow:hidden;
+    position:relative;
+}
+
+.DrinkLayer{
+    width: 100%;
+    min-height: 60px;
+    text-align: center;
+    line-height: 20px;
+    color:#ffffff;
+}
+
+.Ice{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:auto;
+    z-index:10;
+}
