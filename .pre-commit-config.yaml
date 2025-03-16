@@ -3,7 +3,11 @@ default_language_version:
   python: python3
   node: system
 
-exclude: 'documentation/static/htmlcov/.*'
+exclude: |
+  (?x)(
+    documentation/static/htmlcov/.*|
+    ^\.github/dependabot\.yml
+  )
 
 repos:
   - repo: meta

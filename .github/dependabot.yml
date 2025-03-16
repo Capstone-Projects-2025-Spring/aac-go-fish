@@ -1,0 +1,41 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/frontend"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 1
+    groups:
+      frontend-dependencies:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "yarn"
+    directory: "/documentation"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 1
+    groups:
+      docs-dependencies:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 1
+    groups:
+      python-dependencies:
+        patterns:
+          - "*"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 1
+    groups:
+      actions-dependencies:
+        patterns:
+          - "*"
