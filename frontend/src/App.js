@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AACBoard from "./components/AACBoard";
 import ManagerActions from './components/ManagerActions';
+import "./App.css";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
@@ -81,7 +82,7 @@ const App = () => {
         setActionLog((prev) => [...prev, "Manager: Giving items to the customer..."]);
     };
     return (
-        <div style={{ padding: "1rem" }}>
+        <div className="app-container">
             <h1>AAC Board</h1>
             { }
             <AACBoard
@@ -91,7 +92,7 @@ const App = () => {
                 onClearAll={clearAllSelected}
             />
             {isManager && (
-                <div style={{ marginTop: "2rem" }}>
+                <div className="manager-section">
                     <h2>Manager Text-Based UI</h2>
                     <ManagerActions
                         actionLog={actionLog}

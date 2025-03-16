@@ -1,4 +1,5 @@
 import React from 'react';
+import "./AACBoard.css";
 
 function AACBoard({
     onItemClick,
@@ -52,134 +53,44 @@ function AACBoard({
     }
 
     return (
-        <div
-            style={{
-                padding: '1rem',
-                margin: '0 auto',
-            }}
-        >
-            <div
-                style={{
-                    marginBottom: '1rem',
-                    fontWeight: 'bold',
-                    minHeight: '140px',
-                    border: '2px solid #ddd',
-                    borderRadius: '6px',
-                    padding: '1rem',
-                }}
-            >
-                {selectedItems.length === 0 ? (
-                    <p style={{ margin: 0 }}>
-                        Click an item to add it here!
-                    </p>
-                ) : (
-                    <div>
-                        {selectedItems.map((item, index) => (
-                            <span
-                                key={index}
-                                style={{
-                                    marginRight: '0.75rem',
-                                    marginBottom: '0.75rem',
-                                    padding: '0.5rem 0.75rem',
-                                    border: '2px solid #ccc',
-                                    borderRadius: '6px',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    fontSize: '1.3rem',
-                                }}
-                            >
-                                {item.image && (
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        style={{
-                                            width: '40px',
-                                            height: '40px',
-                                            marginRight: '0.5rem',
-                                            objectFit: 'contain',
-                                        }}
-                                    />
-                                )}
-                                {item.name}
-                                <button
-                                    onClick={() => onClearAll(index)}
-                                    style={{
-                                        marginLeft: '0.5rem',
-                                        cursor: 'pointer',
-                                        border: 'none',
-                                        background: 'transparent',
-                                        fontWeight: 'bold',
-                                        fontSize: '1.2rem',
-                                    }}
-                                >
-                                    ×
-                                </button>
-                            </span>
-                        ))}
-                        <div style={{ marginTop: '1rem' }}>
+        <div className="aacboard-wrapper">
+            {selectedItems.length === 0 ? (
+                <p>Click an item to add it here!</p>
+            ) : (
+                <div className="aacboard-selected-items">
+                    {selectedItems.map((item, index) => (
+                        <span key={index} className="aacboard-selected-item">
+                            {item.image && (
+                                <img src={item.image} alt={item.name} />
+                            )}
+                            {item.name}
                             <button
-                                onClick={handlePlayAll}
-                                style={{
-                                    marginRight: '0.5rem',
-                                    padding: '0.5rem 1rem',
-                                    fontSize: '1rem',
-                                    cursor: 'pointer',
-                                }}
+                                className="selected-item-delete"
+                                onClick={() => onDeleteItem(index)}
                             >
-                                Play All
+                                ×
                             </button>
-                            <button
-                                onClick={onClearAll}
-                                style={{
-                                    padding: '0.5rem 1rem',
-                                    fontSize: '1rem',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                Clear All
-                            </button>
-                        </div>
+                        </span>
+                    ))}
+                    <div className="selected-items-actions">
+                        <button onClick={onClearAll}>Clear All</button>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
-            <div
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(4, 1fr)',
-                    gridAutoRows: '140px',
-                    gap: '1rem',
-                }}
-            >
+            <div className="aacboard-grid">
                 {foodItems.map((item) => (
+
                     <button
                         key={item.id}
+                        className="aacboard-item-btn"
                         onClick={() => handleClick(item)}
-                        style={{
-                            backgroundColor: '#fff',
-                            border: '2px solid #ccc',
-                            borderRadius: '8px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '1.2rem',
-                            cursor: 'pointer',
-                        }}
                     >
                         {item.image && (
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                style={{
-                                    width: '70px',
-                                    height: '70px',
-                                    marginBottom: '0.5rem',
-                                    objectFit: 'contain',
-                                }}
-                            />
+
+                            <img src={item.image} alt={item.name} />
                         )}
-                        <span style={{ textAlign: 'center' }}>{item.name}</span>
+                        <span>{item.name}</span>
                     </button>
                 ))}
             </div>

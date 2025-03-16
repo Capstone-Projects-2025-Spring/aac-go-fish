@@ -1,4 +1,5 @@
 import React from 'react';
+import "./ManagerActions.css";
 
 function ManagerActions({
     actionLog,
@@ -8,11 +9,11 @@ function ManagerActions({
 }) {
 
     return (
-        <div style={{ border: '1px solid #ccc', padding: '1rem', maxWidth: '500px' }}>
+        <div className="manager-actions-container">
             <h3>Text Based Manager Actions</h3>
             <p>Select an action (test)</p>
 
-            <div style={{ marginBottom: '1rem' }}>
+            <div className="manager-actions-buttons">
                 <button onClick={onSendItems} style={{ marginRight: '0.5rem' }}>
                     Send Items
                 </button>
@@ -24,7 +25,7 @@ function ManagerActions({
                 </button>
             </div>
 
-            <div style={{ background: '#f9f9f9', minHeight: '80px', padding: '0.5rem' }}>
+            <div className="manager-action-log">
                 <h4>Action Log</h4>
                 {actionLog.length === 0 ? (
                     <p>No actions yet...</p>
