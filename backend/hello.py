@@ -60,7 +60,7 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
         data = await websocket.receive_text()
 
         try:
-            message = Message.validate_json(data)
+            message = Message.model_validate(data)
         except Exception as e:
             await websocket.send_text(f"[Server] Error: {e!s}")
         else:
