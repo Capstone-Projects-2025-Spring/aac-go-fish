@@ -7,19 +7,19 @@
 }
 
 .orderDisplay {
+    margin-top: -50px;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
 }
 
 .foodItem {
-    height: 100px;
-    width: 100px;
-    margin: -35px;
+    margin: -60px;
     z-index: 1;
 }
 
 .foodItem img{
-    height: 100px;
-    width: 100px;
+    width: 200px;
+    margin-top: 100px;
+
 }
