@@ -27,6 +27,13 @@ jobs:
       - name: Install
         run: cd documentation && yarn install
 
+      - name: Download coverage report
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806  # v4.1.9
+        with:
+          name: coverage
+          github-token: ${{ secrets.TOKEN }}
+          path: documentation/static/htmlcov
+
       - name: Deploy
         run: |
           export ORG_NAME=$(echo ${GITHUB_REPOSITORY%/*})
