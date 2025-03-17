@@ -1,40 +1,18 @@
-from enum import StrEnum
+from __future__ import annotations
+
+from enum import Enum, StrEnum, auto
 from typing import Annotated, Literal
-from uuid import uuid4
 
-from pydantic import BaseModel, Field, TypeAdapter
-
-
-class Lobby(BaseModel):
-    """
-    A class representing a game state.
-
-    Attributes:
-        id (int): The lobby's internal ID
-        code (str): The code used to join the lobby
-        players (dict): A list of player objects participating in the game
-        started (bool): Whether the game has started
-    """
-
-    id: int
-    code: str = "ABC"
-    players: dict = dict()
-    started: bool = False
+from pydantic import BaseModel, Field
 
 
-class Player(BaseModel):
-    """
-    A class representing a player's ingame data.
+class Role(Enum):
+    """Player roles enum."""
 
-    Attributes:
-        id (int): The player's internal ID
-        code (str): The code used to join the game
-        socket (): TODO: A web socket object (this is probably its own class idk yet)
-    """
-
-    id: str = Field(default_factory=lambda: uuid4().hex)
-    name: str = "Unnamed Player"
-    socket: None = None
+    manager = auto()
+    burger = auto()
+    fry = auto()
+    drink = auto()
 
 
 class MessageKind(StrEnum):
@@ -85,6 +63,9 @@ class GameStart(BaseModel):
     lifecycle_type: Literal[LobbyLifecycleEventKind.game_start]
 
 
+type LifecycleEvent = Annotated[PlayerJoin | PlayerLeave | GameStart, Field(discriminator="lifecycle_type")]
+
+
 class Chat(BaseModel):
     """Represents a chat message sent between players."""
 
@@ -94,4 +75,14 @@ class Chat(BaseModel):
     typing: bool
 
 
-Message = TypeAdapter(Annotated[PlayerJoin, Field(discriminator="type")])
+class Message(BaseModel):
+    """Wrapper for message models."""
+
+    data: LifecycleEvent | Chat | GameState = Field(discriminator="type")
+
+
+if __name__ == "__main__":
+    import json
+
+    message_schema = Message.model_json_schema()
+    print(json.dumps(message_schema, indent=2))  # noqa: T201

@@ -49,6 +49,7 @@
 **Starts from:**
 * [Use Case 5](#use-case-5---manager-receives-customer-order).
 
+1. The user presses buttons on the AAC board that open word categories for different stations (burger, sides, drink)
 2. The user (manager role) selects phrases or words from the AAC menu to communicate the order details.
 3. The user's AAC communication plays aloud on their device for all employees to hear.
 4. The user and the other players see speech bubbles appear on the other players' screens showing the communication in progress.
