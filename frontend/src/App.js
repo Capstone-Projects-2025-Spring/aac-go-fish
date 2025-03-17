@@ -85,25 +85,41 @@ const App = () => {
     };
     return (
         <div className="app-container">
-            <h1>AAC Board</h1>
-            { }
-            <AACBoard
-                selectedItems={selectedItems}
-                onSelectItem={addSelectedItem}
-                onDeleteItem={removeSelectedItem}
-                onClearAll={clearAllSelected}
-            />
-            {isManager && (
-                <div className="manager-section">
-                    <h2>Manager Text-Based UI</h2>
-                    <ManagerActions
-                        actionLog={actionLog}
-                        onSendItems={handleSendItems}
-                        onReceiveOrder={handleReceiveOrder}
-                        onGiveToCustomer={handleGiveToCustomer}
-                    />
-                </div>
-            )}
+            <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
+            {(() => {
+                switch (selectedRole) {
+                    case "manager":
+                        return (
+                            <>
+                                <h1>AAC Board</h1>
+                                <AACBoard
+                                    selectedItems={selectedItems}
+                                    onSelectItem={addSelectedItem}
+                                    onDeleteItem={removeSelectedItem}
+                                    onClearAll={clearAllSelected}
+                                />
+                                <div className="manager-section">
+                                    <h2>Manager Text-Based UI</h2>
+                                    <ManagerActions
+                                        actionLog={actionLog}
+                                        onSendItems={handleSendItems}
+                                        onReceiveOrder={handleReceiveOrder}
+                                        onGiveToCustomer={handleGiveToCustomer}
+                                    />
+                                </div>
+                            </>
+                        );
+
+                    case "burger":
+                        return <BurgerBuilder onSend={(items) => handleBuilderSend("burger", items)}/>;
+
+                    case "side":
+                        return <SideBuilder/>;
+
+                    case "drink":
+                        return <DrinkBuilder/>;
+                }
+            })()}
 
             <h3>Event Log</h3>
             <div>
