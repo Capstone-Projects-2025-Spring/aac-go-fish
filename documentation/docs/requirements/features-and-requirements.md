@@ -69,8 +69,7 @@ sidebar_position: 4
 #### Cooking Process  
 
 - **Burgers**  
-  - Assemble buns, lettuce, patty, cheese, tomatoes, and pickles in a specific order.  
-  - Cook the patty before assembling the burger.  
+  - Assemble burger by placing ingredients (buns, lettuce, patty, cheese, etc.) in a specific order.  
 
 - **Drinks**  
   - Fill a cup with the correct drink from a set of machines.  

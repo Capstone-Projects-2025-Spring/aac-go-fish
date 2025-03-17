@@ -4,7 +4,9 @@ import CustomerOrder from "./components/CustomerOrder";
 import ManagerActions from './components/ManagerActions';
 import mockOrders from "./MockOrders"
 import "./App.css";
-
+import BurgerBuilder from "./components/BurgerBuilder";
+import DrinkBuilder from "./components/DrinkBuilder";
+import SideBuilder from "./components/SideBuilder";
 const App = () => {
     const [messages, setMessages] = useState([]);
     const [ws, setWs] = useState(null);
@@ -132,6 +134,9 @@ const App = () => {
                     <div key={idx}>{msg}</div>
                 ))}
             </div>
+            <BurgerBuilder />
+            <SideBuilder />
+            <DrinkBuilder />
         </div>
     );
 };
