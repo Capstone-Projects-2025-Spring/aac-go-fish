@@ -1,48 +1,27 @@
-import random
-
-from fastapi import FastAPI, HTTPException, WebSocket
-from models import Message
+from dependencies import LobbyManager, lobby_manager
+from fastapi import Depends, FastAPI, HTTPException, WebSocket
+from models import Annotated, Message
 
 app = FastAPI()
 
-lobbies = {}
-animals = ["Fish", "Turtle", "Shark"]
 
+@app.post("/lobby")
+def create_lobby(lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, str]:
+    """Creates a new lobby."""
+    code, id = lm.register_lobby()
 
-def generate_unique_code() -> str:
-    """Generates a unique game lobby code."""
-    while True:
-        code = "-".join(random.choices(animals, k=3))
-        if code not in lobbies:
-            return code
-
-
-@app.post("/create_lobby")
-def create_lobby() -> dict:
-    """Creates a new lobby and returns its unique game lobby code."""
-    code = generate_unique_code()
-    lobbies[code] = {"players": []}
-    return {"code": code}
-
-
-@app.get("/lobby/{code}")
-def get_lobby(code: str) -> dict:
-    """Retrieves the lobby information by its unique game code."""
-    lobby = lobbies.get(code)
-    if lobby is None:
-        return {"error": "Lobby not found"}
-    return {"code": code, "players": lobby["players"]}
+    return {"code": code, "id": id}
 
 
 @app.post("/lobby/{code}/join")
-def join_lobby(code: str, player: str) -> dict:
+def join_lobby(code: str, lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, str]:
     """Joins a player to a lobby by its unique game code."""
     try:
-        lobby = lobbies[code]
-    except KeyError:
+        id = lm.register_player(code)
+    except ValueError:
         raise HTTPException(status_code=404, detail="Lobby not found")
-    lobby["players"].append(player)
-    return {"code": code, "players": lobby["players"]}
+
+    return {"id": id}
 
 
 @app.get("/")

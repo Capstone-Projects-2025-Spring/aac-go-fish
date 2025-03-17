@@ -1,12 +1,12 @@
 import pytest
 
-from backend.dependencies import _LobbyManager
+from backend.dependencies import LobbyManager
 from backend.models import Role
 
 
 def test_register_lobby() -> None:
     """Test a lobby is created correctly."""
-    lm = _LobbyManager(lambda: "code")
+    lm = LobbyManager(lambda: "code")
 
     code, _ = lm.register_lobby()
 
@@ -16,7 +16,7 @@ def test_register_lobby() -> None:
 
 def test_register_lobby_registers_a_player() -> None:
     """Test that a player is automatically registered when a lobby is registered."""
-    lm = _LobbyManager(lambda: "code")
+    lm = LobbyManager(lambda: "code")
 
     code, _ = lm.register_lobby()
 
@@ -29,7 +29,7 @@ def test_register_lobby_registers_a_player() -> None:
 
 def test_register_player_invalid_code() -> None:
     """Test ValueError is thrown on invalid codes."""
-    lm = _LobbyManager(lambda: "code")
+    lm = LobbyManager(lambda: "code")
 
     with pytest.raises(ValueError) as exc_info:
         lm.register_player("code")
@@ -39,7 +39,7 @@ def test_register_player_invalid_code() -> None:
 
 def test_register_player() -> None:
     """Test a player can be added correctly."""
-    lm = _LobbyManager(lambda: "code")
+    lm = LobbyManager(lambda: "code")
 
     code, _ = lm.register_lobby()
 

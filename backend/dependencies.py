@@ -5,7 +5,7 @@ from backend.game_state import Lobby, Player
 from backend.models import Role
 
 
-class _LobbyManager:
+class LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
 
     def __init__(self, code_generator: Callable[[], str]) -> None:
@@ -59,4 +59,9 @@ class _LobbyManager:
         return code, id
 
 
-LobbyManager = _LobbyManager(lambda: "code")
+_LobbyManager = LobbyManager(lambda: "code")
+
+
+def lobby_manager() -> LobbyManager:
+    """Return the lobby manager dependency."""
+    return _LobbyManager
