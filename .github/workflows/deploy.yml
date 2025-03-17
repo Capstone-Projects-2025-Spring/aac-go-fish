@@ -16,8 +16,23 @@ jobs:
       GIT_PASS: ${{secrets.TOKEN}}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - name: Download wss schema
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806  # v4.1.9
+        with:
+          name: wss-schema
+          github-token: ${{ secrets.TOKEN }}
+          path: documentation/static/schemas/wss_schema.json
+
       - name: Install
         run: cd documentation && yarn install
+
+      - name: Download coverage report
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806  # v4.1.9
+        with:
+          name: coverage
+          github-token: ${{ secrets.TOKEN }}
+          path: documentation/static/htmlcov
 
       - name: Deploy
         run: |

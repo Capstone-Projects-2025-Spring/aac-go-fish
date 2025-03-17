@@ -1,0 +1,63 @@
+.aacboard-wrapper {
+    padding: 1rem;
+    margin: 0 auto;
+}
+
+.aacboard-selected-items {
+    margin-bottom: 1rem;
+    font-weight: bold;
+    min-height: 140px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.aacboard-selected-item {
+    margin-right: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.3rem;
+}
+
+.selected-item-delete {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.selected-items-actions {
+    margin-top: 1rem;
+}
+
+.aacboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 140px;
+    gap: 1rem;
+}
+
+.aacboard-item-btn {
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.aacboard-item-btn img, .aacboard-selected-item img {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 0.5rem;
+    object-fit: contain;
+}

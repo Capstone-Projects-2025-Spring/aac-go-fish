@@ -109,8 +109,5 @@ include = ["src/**/*.py"]
 venvPath = "."
 venv = ".venv"
 
-[tool.coverage.html]
-directory = "documentation/static/htmlcov"
-
 [tool.pytest.ini_options]
 asyncio_default_fixture_loop_scope = "function"
