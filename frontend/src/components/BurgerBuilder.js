@@ -18,6 +18,7 @@ const BurgerBuilder = ({ onSend }) => {
 
     const handleSend = () => {
         onSend(ingredients);
+        clearPlate();
     };
 
     const maxSize = 9;
@@ -37,7 +38,6 @@ const BurgerBuilder = ({ onSend }) => {
 
     return(
         <div className="BurgerBuilder">
-            <h1>Burger Station</h1>
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "./DrinkBuilder.css"
+import DrinkDisplay from "./DrinkDisplay";
 const DrinkBuilder = ({ onSend }) =>{
     const [layers, setLayers] = useState([]);
     const [hasIce, setHasIce] = useState(false);
@@ -14,9 +15,10 @@ const DrinkBuilder = ({ onSend }) =>{
 
     const handleSend = () => {
         onSend({
-            layers: layers,
-            hasIce: hasIce,
+            layers,
+            hasIce,
         });
+        clearCup();
     };
 
     const maxSize = 9;
@@ -42,7 +44,6 @@ const DrinkBuilder = ({ onSend }) =>{
 
     return (
         <div className = "DrinkBuilder">
-            <h1>Drink Station</h1>
             <div className="DrinkButtons">
                 {drinkLayers.map((choice, index) => (
                     <button
@@ -61,24 +62,7 @@ const DrinkBuilder = ({ onSend }) =>{
             <button className="ClearCupButton" onClick = {clearCup}>
                 Clear Cup
             </button>
-
-            <div className="Cup">
-                {layers.map((layer,index) =>(
-                    <div
-                        key = {index}
-                        className="DrinkLayer"
-                        style={{backgroundColor:layer.color}}
-                    >
-                    </div>
-                ))}
-                {hasIce && (
-                    <img
-                        src="/images/ice.png"
-                        alt="Ice"
-                        className="Ice"
-                    />
-                )}
-            </div>
+            <DrinkDisplay layers={layers} hasIce={hasIce}/>
             <button onClick={handleSend}>Send</button>
         </div>
     );
