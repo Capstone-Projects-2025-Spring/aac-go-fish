@@ -47,13 +47,12 @@ const BurgerBuilder = () => {
                     <img
                         key={index}
                         src={image}
-                        alt={'Ingredient ${index}'}
+                        alt={`Ingredient ${index}`}
                         className="BurgerIngredient"
                     />
                 ))}
             </div>
-            <div className="Plate">
-            </div>
+            <div className="Plate"/>
             <h2>Your Plate</h2>
             <button className="ClearPlateButton" onClick={clearPlate}>
                 Clear Plate
