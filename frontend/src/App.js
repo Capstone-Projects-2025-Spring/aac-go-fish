@@ -46,7 +46,7 @@ const App = () => {
         }
 
         const names = selectedItems.map((item) => item.name).join(", ");
-        setActionLog((prev) => [...prev, `Manager: Sending items: ${names}`]);
+        addMessage(`Manager: Sending items: ${names}`);
 
         for (const item of selectedItems) {
             if (item.audio) {
@@ -58,18 +58,19 @@ const App = () => {
                         console.error('Audio playback failed:', err);
                         resolve();
                     });
+                    addMessage(`Manager: Playing ${item.audio}`)
                 });
             }
         }
 
         setSelectedItems([]);
-        setActionLog((prev) => [...prev, "Manager: Order sent and cleared!"]);
+        addMessage("Manager: Order sent and cleared!");
     };
     const handleReceiveOrder = () => {
-        setActionLog((prev) => [...prev, "Manager: Receiving the order..."]);
+        addMessage("Manager: Receiving the order...");
     };
     const handleGiveToCustomer = () => {
-        setActionLog((prev) => [...prev, "Manager: Giving items to the customer..."]);
+        addMessage("Manager: Giving items to the customer...");
     };
     return (
         <div className="app-container">
@@ -79,22 +80,17 @@ const App = () => {
                     case "manager":
                         return (
                             <>
-                                <h1>AAC Board</h1>
                                 <AACBoard
                                     selectedItems={selectedItems}
                                     onSelectItem={addSelectedItem}
                                     onDeleteItem={removeSelectedItem}
                                     onClearAll={clearAllSelected}
                                 />
-                                <div className="manager-section">
-                                    <h2>Manager Text-Based UI</h2>
-                                    <ManagerActions
-                                        actionLog={actionLog}
-                                        onSendItems={handleSendItems}
-                                        onReceiveOrder={handleReceiveOrder}
-                                        onGiveToCustomer={handleGiveToCustomer}
-                                    />
-                                </div>
+                                <ManagerActions
+                                    onSendItems={handleSendItems}
+                                    onReceiveOrder={handleReceiveOrder}
+                                    onGiveToCustomer={handleGiveToCustomer}
+                                />
                             </>
                         );
 
