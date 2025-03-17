@@ -6,6 +6,10 @@ import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
 import RoleSelector from "./components/RoleSelector";
+import BurgerDisplay from "./components/BurgerDisplay";
+import SideDisplay from "./components/SideDisplay";
+import DrinkDisplay from "./components/DrinkDisplay";
+import MiniOrderDisplay from "./components/MiniOrderDisplay";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
@@ -71,46 +75,62 @@ const App = () => {
         addMessage("Manager: Receiving the order...");
     };
     const handleGiveToCustomer = () => {
-        addMessage("Manager: Giving items to the customer...");
+        addMessage("Manager: Sending order to the customer");
+        if (burger) {
+            addMessage(`Sending burger (${JSON.stringify(burger.map((ingredient) => ingredient.name))})`)
+        }
+        if (side) {
+            addMessage(`Sending side (${side.tableState})`)
+        }
+        if (drink) {
+            addMessage(`Sending drink (${JSON.stringify(drink)})`)
+        }
+        setBurger(null);
+        setSide(null);
+        setDrink(null);
     };
     return (
         <div className="app-container">
-            <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
-            {(() => {
-                switch (selectedRole) {
-                    case "manager":
-                        return (
-                            <>
-                                <AACBoard
-                                    selectedItems={selectedItems}
-                                    onSelectItem={addSelectedItem}
-                                    onDeleteItem={removeSelectedItem}
-                                    onClearAll={clearAllSelected}
-                                />
-                                <ManagerActions
-                                    onSendItems={handleSendItems}
-                                    onReceiveOrder={handleReceiveOrder}
-                                    onGiveToCustomer={handleGiveToCustomer}
-                                />
-                            </>
-                        );
+            <div className="main-layout">
+                <div className="sidebar">
+                    <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
+                    <h3>Event Log</h3>
+                    <div className="event-log">
+                        {messages.map((msg, idx) => (
+                            <div key={idx}>{msg}</div>
+                        ))}
+                    </div>
+                </div>
 
-                    case "burger":
-                        return <BurgerBuilder onSend={setBurger}/>;
-
-                    case "side":
-                        return <SideBuilder onSend={setSide}/>;
-
-                    case "drink":
-                        return <DrinkBuilder onSend={setDrink}/>;
-                }
-            })()}
-
-            <h3>Event Log</h3>
-            <div>
-                {messages.map((msg, idx) => (
-                    <div key={idx}>{msg}</div>
-                ))}
+                <div className="stations">
+                    {(() => {
+                        switch (selectedRole) {
+                            case "manager":
+                                return (
+                                    <>
+                                        <AACBoard
+                                            selectedItems={selectedItems}
+                                            onSelectItem={addSelectedItem}
+                                            onDeleteItem={removeSelectedItem}
+                                            onClearAll={clearAllSelected}
+                                        />
+                                        <ManagerActions
+                                            onSendItems={handleSendItems}
+                                            onReceiveOrder={handleReceiveOrder}
+                                            onGiveToCustomer={handleGiveToCustomer}
+                                        />
+                                        <MiniOrderDisplay burger={burger} side={side} drink={drink}/>
+                                    </>
+                                );
+                            case "burger":
+                                return <BurgerBuilder onSend={setBurger}/>;
+                            case "side":
+                                return <SideBuilder onSend={setSide}/>;
+                            case "drink":
+                                return <DrinkBuilder onSend={setDrink}/>;
+                        }
+                    })()}
+                </div>
             </div>
         </div>
     );
