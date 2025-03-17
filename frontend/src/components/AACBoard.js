@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import "./AACBoard.css";
 
-function AACBoard({ onItemClick }) {
+function AACBoard({
+    onItemClick,
+    selectedItems,
+    onSelectItem,
+    onDeleteItem,
+    onClearAll
+}) {
     //hard coding here for now, should be in its own file later
     //images from https://www.opensymbols.org/
     const foodItems = [
@@ -16,7 +23,6 @@ function AACBoard({ onItemClick }) {
         { id: 11, name: 'Cheese', image: '/images/cheese.png', audio: '/audio/cheese.mp3' },
     ];
 
-    const [selectedItems, setSelectedItems] = useState([]);
     const handleClick = (item) => {
         if (item.audio) {
             const audio = new Audio(item.audio);
@@ -24,21 +30,11 @@ function AACBoard({ onItemClick }) {
                 console.error('Audio playback failed:', err);
             });
         }
+        onSelectItem(item);
 
-        setSelectedItems((prev) => [...prev, item]);
         if (onItemClick) {
             onItemClick(item.name);
         }
-    };
-
-    const handleDelete = (indexToDelete) => {
-        setSelectedItems((prev) =>
-            prev.filter((_, index) => index !== indexToDelete)
-        );
-    };
-
-    const handleClear = () => {
-        setSelectedItems([]);
     };
     const handlePlayAll = async () => {
         for (const item of selectedItems) {
@@ -57,114 +53,42 @@ function AACBoard({ onItemClick }) {
     }
 
     return (
-        <div style={{ padding: '1rem' }}>
-            <div style={{ marginBottom: '1rem', fontWeight: 'bold', minHeight: '100px' }}>
-                {selectedItems.length === 0 ? (
-                    <p>Click an item to add it here!</p>
-                ) : (
-                    <div>
-                        {selectedItems.map((item, index) => (
-                            <span
-                                key={index}
-                                style={{
-                                    marginRight: '0.75rem',
-                                    padding: '0.5rem 0.75rem',
-                                    border: '2px solid #ccc',
-                                    borderRadius: '6px',
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    fontSize: '1.1rem',
-                                }}
-                            >
-                                {item.image && (
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
-                                        style={{
-                                            width: '30px',
-                                            height: '30px',
-                                            marginRight: '0.5rem',
-                                            objectFit: 'contain',
-                                        }}
-                                    />
-                                )}
-                                {item.name}
-                                <button
-                                    onClick={() => handleDelete(index)}
-                                    style={{
-                                        marginLeft: '0.5rem',
-                                        cursor: 'pointer',
-                                        border: 'none',
-                                        background: 'transparent',
-                                        fontWeight: 'bold',
-                                        fontSize: '1.1rem',
-                                    }}
-                                >
-                                    ×
-                                </button>
-                            </span>
-                        ))}
-                        <div style={{ marginTop: '0.75rem' }}>
+        <div className="aacboard-wrapper">
+            {selectedItems.length === 0 ? (
+                <p>Click an item to add it here!</p>
+            ) : (
+                <div className="aacboard-selected-items">
+                    {selectedItems.map((item, index) => (
+                        <span key={index} className="aacboard-selected-item">
+                            {item.image && (
+                                <img src={item.image} alt={item.name} />
+                            )}
+                            {item.name}
                             <button
-                                onClick={handlePlayAll}
-                                style={{
-                                    marginRight: '0.5rem',
-                                    padding: '0.5rem 1rem',
-                                    fontSize: '1rem',
-                                    cursor: 'pointer',
-                                }}
+                                className="selected-item-delete"
+                                onClick={() => onDeleteItem(index)}
                             >
-                                Play All
+                                ×
                             </button>
-                            <button
-                                onClick={handleClear}
-                                style={{
-                                    padding: '0.5rem 1rem',
-                                    fontSize: '1rem',
-                                    cursor: 'pointer',
-                                }}
-                            >
-                                Clear All
-                            </button>
-                        </div>
-
+                        </span>
+                    ))}
+                    <div className="selected-items-actions">
+                        <button onClick={onClearAll}>Clear All</button>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
-            <div
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
-                    gap: '1rem',
-                }}
-            >
+            <div className="aacboard-grid">
                 {foodItems.map((item) => (
+
                     <button
                         key={item.id}
+                        className="aacboard-item-btn"
                         onClick={() => handleClick(item)}
-                        style={{
-                            padding: '0.5rem',
-                            fontSize: '1rem',
-                            cursor: 'pointer',
-                            minHeight: '120px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
                     >
                         {item.image && (
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                style={{
-                                    width: '50px',
-                                    height: '50px',
-                                    marginBottom: '0.5rem',
-                                    objectFit: 'contain',
-                                }}
-                            />
+
+                            <img src={item.image} alt={item.name} />
                         )}
                         <span>{item.name}</span>
                     </button>
