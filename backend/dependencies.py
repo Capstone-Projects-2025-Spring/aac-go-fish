@@ -1,6 +1,7 @@
 import asyncio
 from typing import Callable
-from backend.game_state import Lobby
+from backend.game_state import Lobby, Player
+from backend.models import Role
 
 class _LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
@@ -27,19 +28,32 @@ class _LobbyManager:
             The id of the newly created player.
         """
 
-        return ""
+        try:
+            lobby = self.lobbies[code]
+        except KeyError:
+            raise ValueError(f"Code {code} is not associated with any existing lobbies!")
+
+        channel = asyncio.Queue()
+        role = list(Role)[len(lobby.players)]
+        player = Player(channel, role)
+
+        lobby.players[player.id] = player
+
+        return player.id
 
     def register_lobby(self) -> str:
         """
         Create a new lobby.
 
+        Automatically registers this user as a player in the lobby.
+
         Returns:
             The lobby's join code.
         """
         code = self.code_generator()
-        l = Lobby({}, asyncio.Queue(), code)
+        lobby = Lobby({}, asyncio.Queue(), code)
 
-        self.lobbies[code] = l
+        self.lobbies[code] = lobby
         return code
 
 
