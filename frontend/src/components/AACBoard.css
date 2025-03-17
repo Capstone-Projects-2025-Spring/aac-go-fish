@@ -55,7 +55,7 @@
     cursor: pointer;
 }
 
-.aacboard-item-btn img {
+.aacboard-item-btn img, .aacboard-selected-item img {
     width: 70px;
     height: 70px;
     margin-bottom: 0.5rem;
