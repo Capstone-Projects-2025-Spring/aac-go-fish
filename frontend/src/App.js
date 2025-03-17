@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from "react";
 import AACBoard from "./components/AACBoard";
+import ManagerActions from './components/ManagerActions';
+import "./App.css";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
     const [ws, setWs] = useState(null);
     const [message, setMessage] = useState("");
-    const [playerId, setPlayerId] = useState(1);
-    const [card, setCard] = useState(1);
+
+
+    const [selectedItems, setSelectedItems] = useState([]);
+    const [actionLog, setActionLog] = useState([]);
+    const isManager = true;
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -33,31 +38,70 @@ const App = () => {
         addMessage(`[Client] Chat sent: "${message}"`);
     };
 
-    const sendQuery = () => {
-        ws.send(
-            JSON.stringify({
-                data: { type: "query", target_player_id: playerId, card: card },
-                source_player_id: 0,
-            })
-        );
-        addMessage(
-            `[Client] Game action sent: "Player ${playerId}, got any ${card}s?"`
-        );
+    const isWebSocketConnecting = ws && ws.readyState === WebSocket.CONNECTING;
+    const addSelectedItem = (item) => {
+        setSelectedItems((prev) => [...prev, item]);
+    };
+    const removeSelectedItem = (indexToDelete) => {
+        setSelectedItems((prev) => prev.filter((_, idx) => idx !== indexToDelete));
     };
 
-    const handleKeyDown = (e) => {
-        if (e.key === "Enter") {
-            sendMessage();
+    const clearAllSelected = () => {
+        setSelectedItems([]);
+    };
+    const handleSendItems = async () => {
+        if (selectedItems.length === 0) {
+            setActionLog((prev) => [...prev, "Manager: No items to send!"]);
+            return;
         }
+
+        const names = selectedItems.map((item) => item.name).join(", ");
+        setActionLog((prev) => [...prev, `Manager: Sending items: ${names}`]);
+
+        for (const item of selectedItems) {
+            if (item.audio) {
+                const audio = new Audio(item.audio);
+                await new Promise((resolve) => {
+                    audio.onended = resolve;
+                    audio.onerror = resolve;
+                    audio.play().catch((err) => {
+                        console.error('Audio playback failed:', err);
+                        resolve();
+                    });
+                });
+            }
+        }
+
+        setSelectedItems([]);
+        setActionLog((prev) => [...prev, "Manager: Order sent and cleared!"]);
     };
-
-	const isWebSocketConnecting = ws && ws.readyState === WebSocket.CONNECTING;
-
+    const handleReceiveOrder = () => {
+        setActionLog((prev) => [...prev, "Manager: Receiving the order..."]);
+    };
+    const handleGiveToCustomer = () => {
+        setActionLog((prev) => [...prev, "Manager: Giving items to the customer..."]);
+    };
     return (
-        <div style={{ padding: "1rem" }}>
+        <div className="app-container">
             <h1>AAC Board</h1>
             { }
-            <AACBoard />
+            <AACBoard
+                selectedItems={selectedItems}
+                onSelectItem={addSelectedItem}
+                onDeleteItem={removeSelectedItem}
+                onClearAll={clearAllSelected}
+            />
+            {isManager && (
+                <div className="manager-section">
+                    <h2>Manager Text-Based UI</h2>
+                    <ManagerActions
+                        actionLog={actionLog}
+                        onSendItems={handleSendItems}
+                        onReceiveOrder={handleReceiveOrder}
+                        onGiveToCustomer={handleGiveToCustomer}
+                    />
+                </div>
+            )}
 
             <h3>Event Log</h3>
             <div>
