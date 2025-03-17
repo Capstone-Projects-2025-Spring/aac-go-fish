@@ -1,7 +1,9 @@
 import asyncio
-from typing import Callable
+from collections.abc import Callable
+
 from backend.game_state import Lobby, Player
 from backend.models import Role
+
 
 class _LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
@@ -27,7 +29,6 @@ class _LobbyManager:
         Returns:
             The id of the newly created player.
         """
-
         try:
             lobby = self.lobbies[code]
         except KeyError:
@@ -41,20 +42,21 @@ class _LobbyManager:
 
         return player.id
 
-    def register_lobby(self) -> str:
+    def register_lobby(self) -> tuple[str, str]:
         """
         Create a new lobby.
 
-        Automatically registers this user as a player in the lobby.
+        Automatically registers the creator as a player in the lobby.
 
         Returns:
-            The lobby's join code.
+            A tuple of the lobby's join code and the first player's id.
         """
         code = self.code_generator()
         lobby = Lobby({}, asyncio.Queue(), code)
 
         self.lobbies[code] = lobby
-        return code
+        id = self.register_player(code)
+        return code, id
 
 
 LobbyManager = _LobbyManager(lambda: "code")
