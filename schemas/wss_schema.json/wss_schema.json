@@ -1,0 +1,173 @@
+{
+  "$defs": {
+    "Chat": {
+      "description": "Represents a chat message sent between players.",
+      "properties": {
+        "type": {
+          "const": "chat",
+          "title": "Type",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "typing": {
+          "title": "Typing",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "typing"
+      ],
+      "title": "Chat",
+      "type": "object"
+    },
+    "GameStart": {
+      "description": "Event for the host starting the game.",
+      "properties": {
+        "type": {
+          "const": "lobby_lifecycle",
+          "title": "Type",
+          "type": "string"
+        },
+        "lifecycle_type": {
+          "const": "game_start",
+          "title": "Lifecycle Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "lifecycle_type"
+      ],
+      "title": "GameStart",
+      "type": "object"
+    },
+    "GameState": {
+      "description": "Message to update frontend game state.",
+      "properties": {
+        "type": {
+          "const": "game_state",
+          "title": "Type",
+          "type": "string"
+        },
+        "state": {
+          "title": "State",
+          "type": "object"
+        }
+      },
+      "required": [
+        "type",
+        "state"
+      ],
+      "title": "GameState",
+      "type": "object"
+    },
+    "LifecycleEvent": {
+      "discriminator": {
+        "mapping": {
+          "game_start": "#/$defs/GameStart",
+          "player_join": "#/$defs/PlayerJoin",
+          "player_leave": "#/$defs/PlayerLeave"
+        },
+        "propertyName": "lifecycle_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PlayerJoin"
+        },
+        {
+          "$ref": "#/$defs/PlayerLeave"
+        },
+        {
+          "$ref": "#/$defs/GameStart"
+        }
+      ]
+    },
+    "PlayerJoin": {
+      "description": "Event for a player joining a lobby.",
+      "properties": {
+        "type": {
+          "const": "lobby_lifecycle",
+          "title": "Type",
+          "type": "string"
+        },
+        "lifecycle_type": {
+          "const": "player_join",
+          "title": "Lifecycle Type",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "lifecycle_type",
+        "id"
+      ],
+      "title": "PlayerJoin",
+      "type": "object"
+    },
+    "PlayerLeave": {
+      "description": "Event for a player leaving a lobby.",
+      "properties": {
+        "type": {
+          "const": "lobby_lifecycle",
+          "title": "Type",
+          "type": "string"
+        },
+        "lifecycle_type": {
+          "const": "player_leave",
+          "title": "Lifecycle Type",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "lifecycle_type",
+        "id"
+      ],
+      "title": "PlayerLeave",
+      "type": "object"
+    }
+  },
+  "description": "Wrapper for message models.",
+  "properties": {
+    "data": {
+      "discriminator": {
+        "mapping": {
+          "chat": "#/$defs/Chat",
+          "game_state": "#/$defs/GameState",
+          "lobby_lifecycle": "#/$defs/LifecycleEvent"
+        },
+        "propertyName": "type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/LifecycleEvent"
+        },
+        {
+          "$ref": "#/$defs/Chat"
+        },
+        {
+          "$ref": "#/$defs/GameState"
+        }
+      ],
+      "title": "Data"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "title": "Message",
+  "type": "object"
+}
