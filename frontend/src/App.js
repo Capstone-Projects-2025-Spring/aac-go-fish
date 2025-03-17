@@ -6,9 +6,6 @@ import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
 import RoleSelector from "./components/RoleSelector";
-import BurgerDisplay from "./components/BurgerDisplay";
-import SideDisplay from "./components/SideDisplay";
-import DrinkDisplay from "./components/DrinkDisplay";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
 
 const App = () => {
