@@ -15,8 +15,16 @@ const BurgerBuilder = () => {
         { id: 11, name: 'Cheese', image: '/images/cheese.png', audio: '/audio/cheese.mp3', sideImage: '/images/CheeseSide.png' },
     ];
 
+    const maxSize = 9;
+
     const addIngredient = (ingredient) =>{
-        setIngredients([...ingredients,ingredient.sideImage]);
+        if (ingredients.length <= maxSize){
+            setIngredients([...ingredients,ingredient.sideImage]);
+        }
+        else{
+            alert("Plate is full!");
+        }
+
     };
     const clearPlate = () =>{
         setIngredients([]);

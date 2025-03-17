@@ -12,8 +12,16 @@ const DrinkBuilder = () =>{
         {name: "Purple", color: "#660099"},
     ];
 
+    const maxSize = 9;
+
     const addLayer = (layer) =>{
-        setLayers([...layers, layer]);
+        if (layers.length <= maxSize){
+            setLayers([...layers, layer]);
+        }
+        else{
+            alert("Cup is full!");
+        }
+
     };
 
     const changeIce = () =>{

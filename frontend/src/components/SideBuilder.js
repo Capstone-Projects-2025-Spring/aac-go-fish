@@ -34,9 +34,9 @@ const SideBuilder = () =>{
         }
     };
 
-    const reset = () => {
+    const reset = (fryingInterval) => {
+        clearInterval(fryingInterval)
         setTableState("empty");
-        setFryTimeLeft(0);
     }
 
     return (
