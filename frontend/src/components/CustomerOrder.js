@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './CustomerOrder.css';
 
-function CustomerOrder() {
-    const [order, setOrder] = useState([]);
+function CustomerOrder({
+    order,
+    getOrder,
+}) {
+
 
     const foodItems = [
         { id: 1, name: 'Burger', image: '/images/burger.png', audio: '/audio/burger.mp3' },
@@ -17,23 +20,6 @@ function CustomerOrder() {
         { id: 11, name: 'Cheese', image: '/images/cheese.png', audio: '/audio/cheese.mp3' },
     ];
 
-    const mockOrders = [
-        ['Bottom Bun', 'Mustard', 'Lettuce', 'Tomato', 'Patty', 'Cheese', 'Ketchup', 'Top Bun'],
-        ['Bottom Bun', 'Ketchup', 'Lettuce', 'Onion', 'Patty', 'Cheese', 'Onion', 'Ketchup','Top Bun'],
-        ['Bottom Bun', 'Tomato', 'Patty','Onion', 'Mustard', 'Ketchup', 'Top Bun'],
-    ];
-
-    function getRandomOrder(min,max){
-        return Math.floor(Math.random() * (max + 1 - min) + min);
-    };
-
-    const getOrder = () => {
-        console.log('Button clicked!');
-
-        document.getElementById("getOrderButton").hidden = "True";
-        const randomIndex = getRandomOrder(0,2);
-        setOrder(mockOrders[randomIndex]);
-    };
 
     return (
         <div className = "CustomerOrder">
@@ -49,7 +35,7 @@ function CustomerOrder() {
                     const item = foodItems.find(food => food.name === itemName);
                     return item ? (
                         <div key={index} className="foodItem">
-                            <img src={item.image} />
+                            <img src={item.image} alt={item.image}/>
                         </div>
                     ) : null;
                 })}

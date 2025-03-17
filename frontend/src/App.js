@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AACBoard from "./components/AACBoard";
 import CustomerOrder from "./components/CustomerOrder";
 import ManagerActions from './components/ManagerActions';
+import mockOrders from "./MockOrders"
 import "./App.css";
 
 const App = () => {
@@ -13,6 +14,8 @@ const App = () => {
     const [selectedItems, setSelectedItems] = useState([]);
     const [actionLog, setActionLog] = useState([]);
     const isManager = true;
+
+    const [order, setOrder] = useState([]);
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -82,11 +85,26 @@ const App = () => {
     const handleGiveToCustomer = () => {
         setActionLog((prev) => [...prev, "Manager: Giving items to the customer..."]);
     };
+
+    const getRandomOrder = (min,max) => {
+        return Math.floor(Math.random() * (max + 1 - min) + min);
+    };
+
+    const getOrder = () => {
+        console.log('Button clicked!');
+
+        document.getElementById("getOrderButton").hidden = "True";
+        const randomIndex = getRandomOrder(0,2);
+        setOrder(mockOrders[randomIndex]);
+    };
     return (
         <div className="app-container">
             <div style={{ padding: "1rem" }}>
                 <h1>Customer Order</h1>
-                <CustomerOrder />
+                <CustomerOrder
+                    order = {order}
+                    getOrder = {getOrder}
+                />
             </div>
             <h1>AAC Board</h1>
             { }
