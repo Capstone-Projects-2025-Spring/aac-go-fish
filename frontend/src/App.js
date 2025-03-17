@@ -83,10 +83,11 @@ const App = () => {
         setActionLog((prev) => [...prev, "Manager: Giving items to the customer..."]);
     };
     return (
-        <div style={{ padding: "1rem" }}>
-            <h1>Customer Order</h1>
-            <CustomerOrder />
         <div className="app-container">
+            <div style={{ padding: "1rem" }}>
+                <h1>Customer Order</h1>
+                <CustomerOrder />
+            </div>
             <h1>AAC Board</h1>
             { }
             <AACBoard
