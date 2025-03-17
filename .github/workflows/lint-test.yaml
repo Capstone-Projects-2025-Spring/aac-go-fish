@@ -42,15 +42,5 @@ jobs:
 
       - name: Run pre-commit
         run: uv run pre-commit run --all-files
-
       - name: Run pytest with coverage.py
-        run: uv run coverage run -m pytest
-
-      - name: Create coverage report
-        run: uv run coverage html
-
-      - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1  # v4.6.1
-        with:
-          name: coverage
-          path: htmlcov
-          overwrite: true
+        run: uv run pytest
