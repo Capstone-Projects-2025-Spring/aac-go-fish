@@ -22,8 +22,6 @@ const App = () => {
         socket.onmessage = (event) => addMessage(event.data);
         socket.onclose = () => addMessage("WebSocket closed");
 
-        setWs(socket);
-
         return () => socket.close();
     }, []);
 
@@ -31,15 +29,6 @@ const App = () => {
         setMessages((prev) => [...prev, msg]);
     };
 
-    const sendMessage = () => {
-        ws.send(
-            JSON.stringify({ data: { type: "chat", message }, source_player_id: 0 })
-        );
-        setMessage("");
-        addMessage(`[Client] Chat sent: "${message}"`);
-    };
-
-    const isWebSocketConnecting = ws && ws.readyState === WebSocket.CONNECTING;
     const addSelectedItem = (item) => {
         setSelectedItems((prev) => [...prev, item]);
     };
