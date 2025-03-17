@@ -5,6 +5,26 @@ from backend.game_state import Lobby, Player
 from backend.models import Role
 
 
+class Channel[T]:
+    """Wrapper class around two queues for two-way communication."""
+
+    def __init__(self, send: asyncio.Queue[T], recv: asyncio.Queue[T]) -> None:
+        self._send = send
+        self._recv = recv
+
+    def send(self, msg: T) -> None:
+        """Send a message."""
+        # Can't raise asyncio.QueueFull because we don't set a max size.
+        self._send.put_nowait(msg)
+
+    def recv(self) -> T | None:
+        """Receive a message or None if empty."""
+        try:
+            return self._recv.get_nowait()
+        except asyncio.QueueEmpty:
+            return None
+
+
 class LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
 
@@ -57,6 +77,18 @@ class LobbyManager:
         self.lobbies[code] = lobby
         id = self.register_player(code)
         return code, id
+
+    def channel(self, code: str, id: str) -> Channel:
+        """
+        Create a channel for sending and receiving messages to and from the lobby.
+
+        Args:
+            code: Lobby join code.
+            id: Player id.
+        """
+        lobby = self.lobbies[code]
+        channel = Channel(lobby.channel, lobby.players[id].channel)
+        return channel
 
 
 _LobbyManager = LobbyManager(lambda: "code")

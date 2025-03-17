@@ -1,6 +1,6 @@
 from dependencies import LobbyManager, lobby_manager
 from fastapi import Depends, FastAPI, HTTPException, WebSocket
-from models import Annotated, Message
+from models import Annotated, Initializer, Message
 
 app = FastAPI()
 
@@ -31,18 +31,21 @@ async def read_root() -> dict:
 
 
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket) -> None:
+async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> None:
     """Handles a WebSocket connection for receiving and responding to messages."""
     await websocket.accept()
+
+    init = Initializer.model_validate(await websocket.receive_text())
+    channel = lm.channel(init.code, init.id)
 
     while True:
         data = await websocket.receive_text()
 
         try:
-            message = Message.model_validate(data)
+            incoming_message = Message.model_validate(data)
         except Exception as e:
             await websocket.send_text(f"[Server] Error: {e!s}")
         else:
-            match message.data.type:
-                case _:
-                    await websocket.send_text("[Server] Unknown message type received.")
+            channel.send(incoming_message)
+
+        # outgoing_message = channel.recv()
