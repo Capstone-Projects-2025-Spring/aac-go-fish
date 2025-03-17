@@ -63,7 +63,7 @@ const config = {
   markdown: {
     mermaid: true,
   },
-  themes: ['@docusaurus/theme-live-codeblock','@docusaurus/theme-mermaid'],
+  themes: ['@docusaurus/theme-live-codeblock','@docusaurus/theme-mermaid', "docusaurus-json-schema-plugin"],
   presets: [
     [
       'classic',
