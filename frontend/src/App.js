@@ -5,12 +5,11 @@ import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
+import RoleSelector from "./components/RoleSelector";
+
 const App = () => {
     const [messages, setMessages] = useState([]);
-    const [ws, setWs] = useState(null);
-    const [message, setMessage] = useState("");
-
-
+    const [selectedRole, setSelectedRole] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
     const [actionLog, setActionLog] = useState([]);
     const isManager = true;
