@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import "./DrinkBuilder.css"
-const DrinkBuilder = () =>{
+const DrinkBuilder = ({ onSend }) =>{
     const [layers, setLayers] = useState([]);
     const [hasIce, setHasIce] = useState(false);
     const drinkLayers = [
@@ -11,6 +11,13 @@ const DrinkBuilder = () =>{
         {name: "Orange", color: "#FF9900"},
         {name: "Purple", color: "#660099"},
     ];
+
+    const handleSend = () => {
+        onSend({
+            layers: layers,
+            hasIce: hasIce,
+        });
+    };
 
     const maxSize = 9;
 
@@ -39,9 +46,9 @@ const DrinkBuilder = () =>{
             <div className="DrinkButtons">
                 {drinkLayers.map((choice, index) => (
                     <button
-                    key = {index}
-                    onClick={() => addLayer(choice)}
-                    style={{backgroundColor: choice.color, color: "#FFFFFF"}}
+                        key = {index}
+                        onClick={() => addLayer(choice)}
+                        style={{backgroundColor: choice.color, color: "#FFFFFF"}}
                     >
                         {choice.name}
                     </button>
@@ -72,6 +79,7 @@ const DrinkBuilder = () =>{
                     />
                 )}
             </div>
+            <button onClick={handleSend}>Send</button>
         </div>
     );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './BurgerBuilder.css';
-const BurgerBuilder = () => {
+import BurgerDisplay from "./BurgerDisplay";
+const BurgerBuilder = ({ onSend }) => {
     const [ingredients, setIngredients] = useState([]);
 
     const foodItems = [
@@ -15,11 +16,15 @@ const BurgerBuilder = () => {
         { id: 11, name: 'Cheese', image: '/images/cheese.png', audio: '/audio/cheese.mp3', sideImage: '/images/CheeseSide.png' },
     ];
 
+    const handleSend = () => {
+        onSend(ingredients);
+    };
+
     const maxSize = 9;
 
     const addIngredient = (ingredient) =>{
         if (ingredients.length <= maxSize){
-            setIngredients([...ingredients,ingredient.sideImage]);
+            setIngredients([...ingredients, ingredient]);
         }
         else{
             alert("Plate is full!");
@@ -36,27 +41,16 @@ const BurgerBuilder = () => {
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>
-                        <img src={ingredient.image} alt ={ingredient.name} className= "IngredientImage" />
+                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage"/>
                         <p>{ingredient.name}</p>
                     </button>
                 ))}
             </div>
-
-            <div className = "Burger">
-                {ingredients.map((image,index) => (
-                    <img
-                        key={index}
-                        src={image}
-                        alt={`Ingredient ${index}`}
-                        className="BurgerIngredient"
-                    />
-                ))}
-            </div>
-            <div className="Plate"/>
-            <h2>Your Plate</h2>
+            <BurgerDisplay imagePaths={ingredients.map((ingredient) => ingredient.sideImage)}/>
             <button className="ClearPlateButton" onClick={clearPlate}>
                 Clear Plate
             </button>
+            <button onClick={handleSend}>Send</button>
         </div>
     );
 };

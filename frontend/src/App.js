@@ -11,8 +11,9 @@ const App = () => {
     const [messages, setMessages] = useState([]);
     const [selectedRole, setSelectedRole] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
-    const [actionLog, setActionLog] = useState([]);
-    const isManager = true;
+    const [burger, setBurger] = useState(null);
+    const [side, setSide] = useState(null);
+    const [drink, setDrink] = useState(null);
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -41,7 +42,7 @@ const App = () => {
     };
     const handleSendItems = async () => {
         if (selectedItems.length === 0) {
-            setActionLog((prev) => [...prev, "Manager: No items to send!"]);
+            addMessage("Manager: No items to send!")
             return;
         }
 
@@ -95,13 +96,13 @@ const App = () => {
                         );
 
                     case "burger":
-                        return <BurgerBuilder onSend={(items) => handleBuilderSend("burger", items)}/>;
+                        return <BurgerBuilder onSend={setBurger}/>;
 
                     case "side":
-                        return <SideBuilder/>;
+                        return <SideBuilder onSend={setSide}/>;
 
                     case "drink":
-                        return <DrinkBuilder/>;
+                        return <DrinkBuilder onSend={setDrink}/>;
                 }
             })()}
 
@@ -111,11 +112,9 @@ const App = () => {
                     <div key={idx}>{msg}</div>
                 ))}
             </div>
-            <BurgerBuilder />
-            <SideBuilder />
-            <DrinkBuilder />
         </div>
     );
-};
+}
+
 
 export default App;
