@@ -1,0 +1,343 @@
+{
+  "$defs": {
+    "Chat": {
+      "description": "The manager is typing.",
+      "properties": {
+        "type": {
+          "const": "chat",
+          "title": "Type",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "typing": {
+          "title": "Typing",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "id",
+        "typing"
+      ],
+      "title": "Chat",
+      "type": "object"
+    },
+    "DayEnd": {
+      "description": "No more orders for this day.",
+      "properties": {
+        "type": {
+          "const": "game_state",
+          "title": "Type",
+          "type": "string"
+        },
+        "game_state_update_type": {
+          "const": "day_end",
+          "title": "Game State Update Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "game_state_update_type"
+      ],
+      "title": "DayEnd",
+      "type": "object"
+    },
+    "GameEnd": {
+      "description": "All days are completed.",
+      "properties": {
+        "type": {
+          "const": "lobby_lifecycle",
+          "title": "Type",
+          "type": "string"
+        },
+        "lifecycle_type": {
+          "const": "game_end",
+          "title": "Lifecycle Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "lifecycle_type"
+      ],
+      "title": "GameEnd",
+      "type": "object"
+    },
+    "GameStart": {
+      "description": "The host starts the game.",
+      "properties": {
+        "type": {
+          "const": "lobby_lifecycle",
+          "title": "Type",
+          "type": "string"
+        },
+        "lifecycle_type": {
+          "const": "game_start",
+          "title": "Lifecycle Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "lifecycle_type"
+      ],
+      "title": "GameStart",
+      "type": "object"
+    },
+    "GameStateUpdate": {
+      "discriminator": {
+        "mapping": {
+          "day_end": "#/$defs/DayEnd",
+          "new_order": "#/$defs/NewOrder",
+          "order_score": "#/$defs/OrderScore",
+          "order_submission": "#/$defs/OrderSubmission",
+          "role_assignment": "#/$defs/RoleAssignment"
+        },
+        "propertyName": "game_state_update_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/NewOrder"
+        },
+        {
+          "$ref": "#/$defs/RoleAssignment"
+        },
+        {
+          "$ref": "#/$defs/OrderScore"
+        },
+        {
+          "$ref": "#/$defs/OrderSubmission"
+        },
+        {
+          "$ref": "#/$defs/DayEnd"
+        }
+      ]
+    },
+    "LifecycleEvent": {
+      "discriminator": {
+        "mapping": {
+          "game_end": "#/$defs/GameEnd",
+          "game_start": "#/$defs/GameStart",
+          "player_join": "#/$defs/PlayerJoin",
+          "player_leave": "#/$defs/PlayerLeave"
+        },
+        "propertyName": "lifecycle_type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/PlayerJoin"
+        },
+        {
+          "$ref": "#/$defs/PlayerLeave"
+        },
+        {
+          "$ref": "#/$defs/GameStart"
+        },
+        {
+          "$ref": "#/$defs/GameEnd"
+        }
+      ]
+    },
+    "NewOrder": {
+      "description": "A new order for the manager.",
+      "properties": {
+        "type": {
+          "const": "game_state",
+          "title": "Type",
+          "type": "string"
+        },
+        "game_state_update_type": {
+          "const": "new_order",
+          "title": "Game State Update Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "game_state_update_type"
+      ],
+      "title": "NewOrder",
+      "type": "object"
+    },
+    "OrderScore": {
+      "description": "A score for the order.",
+      "properties": {
+        "type": {
+          "const": "game_state",
+          "title": "Type",
+          "type": "string"
+        },
+        "game_state_update_type": {
+          "const": "order_score",
+          "title": "Game State Update Type",
+          "type": "string"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "type",
+        "game_state_update_type",
+        "score"
+      ],
+      "title": "OrderScore",
+      "type": "object"
+    },
+    "OrderSubmission": {
+      "description": "An order is submitted for review.",
+      "properties": {
+        "type": {
+          "const": "game_state",
+          "title": "Type",
+          "type": "string"
+        },
+        "game_state_update_type": {
+          "const": "order_submission",
+          "title": "Game State Update Type",
+          "type": "string"
+        },
+        "order": {
+          "items": {},
+          "title": "Order",
+          "type": "array"
+        }
+      },
+      "required": [
+        "type",
+        "game_state_update_type",
+        "order"
+      ],
+      "title": "OrderSubmission",
+      "type": "object"
+    },
+    "PlayerJoin": {
+      "description": "A player joining a lobby.",
+      "properties": {
+        "type": {
+          "const": "lobby_lifecycle",
+          "title": "Type",
+          "type": "string"
+        },
+        "lifecycle_type": {
+          "const": "player_join",
+          "title": "Lifecycle Type",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "lifecycle_type",
+        "id"
+      ],
+      "title": "PlayerJoin",
+      "type": "object"
+    },
+    "PlayerLeave": {
+      "description": "A player leaving a lobby.",
+      "properties": {
+        "type": {
+          "const": "lobby_lifecycle",
+          "title": "Type",
+          "type": "string"
+        },
+        "lifecycle_type": {
+          "const": "player_leave",
+          "title": "Lifecycle Type",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "lifecycle_type",
+        "id"
+      ],
+      "title": "PlayerLeave",
+      "type": "object"
+    },
+    "Role": {
+      "description": "Player roles.",
+      "enum": [
+        "manager",
+        "burger",
+        "fry",
+        "drink"
+      ],
+      "title": "Role",
+      "type": "string"
+    },
+    "RoleAssignment": {
+      "description": "Assign a role to the player.",
+      "properties": {
+        "type": {
+          "const": "game_state",
+          "title": "Type",
+          "type": "string"
+        },
+        "game_state_update_type": {
+          "const": "role_assignment",
+          "title": "Game State Update Type",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/Role"
+        }
+      },
+      "required": [
+        "type",
+        "game_state_update_type",
+        "id",
+        "role"
+      ],
+      "title": "RoleAssignment",
+      "type": "object"
+    }
+  },
+  "description": "Wrapper for message models.",
+  "properties": {
+    "data": {
+      "discriminator": {
+        "mapping": {
+          "chat": "#/$defs/Chat",
+          "game_state": "#/$defs/GameStateUpdate",
+          "lobby_lifecycle": "#/$defs/LifecycleEvent"
+        },
+        "propertyName": "type"
+      },
+      "oneOf": [
+        {
+          "$ref": "#/$defs/GameStateUpdate"
+        },
+        {
+          "$ref": "#/$defs/LifecycleEvent"
+        },
+        {
+          "$ref": "#/$defs/Chat"
+        }
+      ],
+      "title": "Data"
+    }
+  },
+  "required": [
+    "data"
+  ],
+  "title": "Message",
+  "type": "object"
+}
