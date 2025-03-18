@@ -5,6 +5,8 @@ import ManagerActions from './components/ManagerActions';
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
+import CustomerOrder from "./components/CustomerOrder";
+import mockOrders from "./MockOrders"
 import RoleSelector from "./components/RoleSelector";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
 
@@ -15,6 +17,8 @@ const App = () => {
     const [burger, setBurger] = useState(null);
     const [side, setSide] = useState(null);
     const [drink, setDrink] = useState(null);
+
+    const [order, setOrder] = useState([]);
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -86,6 +90,18 @@ const App = () => {
         setSide(null);
         setDrink(null);
     };
+
+    const getRandomOrder = (min,max) => {
+        return Math.floor(Math.random() * (max + 1 - min) + min);
+    };
+
+    const getOrder = () => {
+        console.log('Button clicked!');
+
+        document.getElementById("getOrderButton").hidden = "True";
+        const randomIndex = getRandomOrder(0,2);
+        setOrder(mockOrders[randomIndex]);
+    };
     return (
         <div className="app-container">
             <div className="main-layout">
@@ -105,6 +121,13 @@ const App = () => {
                             case "manager":
                                 return (
                                     <>
+                                        <div style={{ padding: "1rem" }}>
+                                            <h1>Customer Order</h1>
+                                            <CustomerOrder
+                                                order = {order}
+                                                getOrder = {getOrder}
+                                            />
+                                        </div>
                                         <AACBoard
                                             selectedItems={selectedItems}
                                             onSelectItem={addSelectedItem}
