@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import asyncio
 import dataclasses
-from collections.abc import AsyncIterable
+import queue
+from collections.abc import Iterable
 from dataclasses import dataclass
 from uuid import uuid4
 
@@ -22,21 +22,21 @@ class Lobby:
         started: Whether the game has started
     """
 
-    players: dict[str, Player]
-    channel: asyncio.Queue
-    id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
     code: str = "ABC"
+    players: dict[str, Player] = dataclasses.field(default_factory=dict)
+    channel: queue.Queue = dataclasses.field(default_factory=queue.Queue)
+    id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
     started: bool = False
 
-    async def broadcast(self, msg: Message) -> None:
+    def broadcast(self, msg: Message) -> None:
         """Send a message to all players."""
         for player in self.players.values():
-            await player.send(msg)
+            player.send(msg)
 
-    async def messages(self) -> AsyncIterable[Message]:
+    def messages(self) -> Iterable[Message]:
         """Consume messages from all players."""
         while True:
-            yield await self.channel.get()
+            yield self.channel.get()
 
 
 @dataclass
@@ -50,10 +50,10 @@ class Player:
         channel: Message queue for outgoing messages.
     """
 
-    channel: asyncio.Queue
+    channel: queue.Queue
     role: Role
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
 
-    async def send(self, msg: Message) -> None:
+    def send(self, msg: Message) -> None:
         """Send a message to this player."""
-        await self.channel.put(msg)
+        self.channel.put(msg)
