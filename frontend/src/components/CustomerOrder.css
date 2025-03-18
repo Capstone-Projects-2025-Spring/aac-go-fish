@@ -7,6 +7,11 @@
 }
 
 .orderDisplay {
+    display: flex;
+    flex-direction: row;
+}
+
+.burgerOrderDisplay {
     margin-top: -50px;
     display: flex;
     flex-direction: column-reverse;
@@ -22,4 +27,12 @@
     width: 200px;
     margin-top: 100px;
 
+}
+
+.drinkLayer {
+    width: 100%;
+    min-height: 30px;
+    text-align: center;
+    line-height: 20px;
+    color:#ffffff;
 }

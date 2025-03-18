@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import AACBoard from "./components/AACBoard";
 import CustomerOrder from "./components/CustomerOrder";
 import ManagerActions from './components/ManagerActions';
-import mockOrders from "./MockOrders"
+import {mockBurgerOrders, mockDrinkOrders} from "./MockOrders"
 import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
@@ -17,7 +17,12 @@ const App = () => {
     const [actionLog, setActionLog] = useState([]);
     const isManager = true;
 
-    const [order, setOrder] = useState([]);
+    const [burgerOrder, setBurgerOrder] = useState([]);
+    const [drinkOrder, setDrinkOrder] = useState([]);
+
+    const [layers, setLayers] = useState([]);
+    const [hasIce, setHasIce] = useState(false);
+    const maxSize = 9;
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -92,20 +97,51 @@ const App = () => {
         return Math.floor(Math.random() * (max + 1 - min) + min);
     };
 
-    const getOrder = () => {
+    const getBurgerOrder = () => {
         console.log('Button clicked!');
 
         document.getElementById("getOrderButton").hidden = "True";
         const randomIndex = getRandomOrder(0,2);
-        setOrder(mockOrders[randomIndex]);
+        setBurgerOrder(mockBurgerOrders[randomIndex]);
     };
+    const getDrinkOrder = () => {
+        console.log('Button clicked!');
+
+        document.getElementById("getOrderButton").hidden = "True";
+        const randomIndex = getRandomOrder(0,2);
+        setDrinkOrder(mockDrinkOrders[randomIndex]);
+    };
+
+    const addLayer = (layer) =>{
+        if (layers.length <= maxSize){
+            setLayers([...layers, layer]);
+        }
+        else{
+            alert("Cup is full!");
+        }
+
+    };
+
+    const changeIce = () =>{
+        setHasIce(!hasIce);
+    };
+
+    const clearCup = () =>{
+        setLayers([]);
+        setHasIce(false);
+    };
+
     return (
         <div className="app-container">
             <div style={{ padding: "1rem" }}>
                 <h1>Customer Order</h1>
                 <CustomerOrder
-                    order = {order}
-                    getOrder = {getOrder}
+                    burgerOrder = {burgerOrder}
+                    drinkOrder={drinkOrder}
+                    layers = {layers}
+                    hasIce = {hasIce}
+                    getBurgerOrder = {() => getBurgerOrder(mockBurgerOrders)}
+                    getDrinkOrder = {() => getDrinkOrder(mockDrinkOrders)}
                 />
             </div>
             <h1>AAC Board</h1>
@@ -136,7 +172,13 @@ const App = () => {
             </div>
             <BurgerBuilder />
             <SideBuilder />
-            <DrinkBuilder />
+            <DrinkBuilder
+                hasIce={hasIce}
+                layers={layers}
+                addLayer={addLayer}
+                changeIce={changeIce}
+                clearCup={clearCup}
+            />
         </div>
     );
 };
