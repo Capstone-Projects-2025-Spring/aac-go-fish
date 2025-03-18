@@ -100,7 +100,7 @@ jobs:
         uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806  # v4.1.9
         with:
           name: wss-schema
-          path: documentation/static/schemas/wss_schema.json
+          path: documentation/static/schemas
 
       - name: Download coverage report
         uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806  # v4.1.9
