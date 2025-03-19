@@ -124,10 +124,6 @@ const App = () => {
         if (layers.length <= maxSize){
             setLayers([...layers, layer]);
         }
-        else{
-            alert("Cup is full!");
-        }
-
     };
 
     const changeIce = () =>{

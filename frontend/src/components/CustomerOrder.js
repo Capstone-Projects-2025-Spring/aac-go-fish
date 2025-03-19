@@ -41,7 +41,7 @@ function CustomerOrder({
                     getBurgerOrder();
                     getDrinkOrder();
                 }}
-                id = "getOrderButton" class = "button" type="button">
+                id = "getOrderButton" type="button">
                     Get Order
                 </button>
                 ) : null
