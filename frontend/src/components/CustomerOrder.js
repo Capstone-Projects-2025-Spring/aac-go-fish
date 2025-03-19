@@ -7,7 +7,8 @@ function CustomerOrder({
     layers,
     hasIce,
     getBurgerOrder,
-    getDrinkOrder
+    getDrinkOrder,
+    orderButtonVisible
 }) {
 
     const foodItems = [
@@ -35,7 +36,7 @@ function CustomerOrder({
     return (
         <div className = "CustomerOrder">
             <div className = "orderButton">
-                <button
+                {orderButtonVisible ? (<button
                 onClick={() => {
                     getBurgerOrder();
                     getDrinkOrder();
@@ -43,6 +44,8 @@ function CustomerOrder({
                 id = "getOrderButton" class = "button" type="button">
                     Get Order
                 </button>
+                ) : null
+            }
             </div>
             <div className = "orderDisplay">
                 <div className = "burgerOrderDisplay">

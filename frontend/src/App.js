@@ -17,6 +17,8 @@ const App = () => {
     const [actionLog, setActionLog] = useState([]);
     const isManager = true;
 
+    const [orderButtonVisible, setOrderButtonVisibility] = useState(true)
+
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [drinkOrder, setDrinkOrder] = useState([]);
     const [orderHasIce, setOrderHasIce] = useState(false);
@@ -101,19 +103,18 @@ const App = () => {
     const getBurgerOrder = () => {
         console.log('Button clicked!');
 
-        document.getElementById("getOrderButton").hidden = "True";
+        setOrderButtonVisibility(!orderButtonVisible);
         const randomIndex = getRandomOrder(0,2);
         setBurgerOrder(mockBurgerOrders[randomIndex]);
     };
     const getDrinkOrder = () => {
         console.log('Button clicked!');
 
-        document.getElementById("getOrderButton").hidden = "True";
+        setOrderButtonVisibility(!orderButtonVisible);
         const randomIndex = getRandomOrder(0,2);
         setDrinkOrder(mockDrinkOrders[randomIndex]);
 
         const randomIce = getRandomOrder(0,1);
-        console.log(randomIce);
         if (randomIce) {
             setOrderHasIce(!orderHasIce);
         }
@@ -149,6 +150,7 @@ const App = () => {
                     hasIce = {orderHasIce}
                     getBurgerOrder = {() => getBurgerOrder(mockBurgerOrders)}
                     getDrinkOrder = {() => getDrinkOrder(mockDrinkOrders)}
+                    orderButtonVisible = {orderButtonVisible}
                 />
             </div>
             <h1>AAC Board</h1>
