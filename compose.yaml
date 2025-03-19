@@ -6,7 +6,8 @@ services:
       dockerfile: Dockerfile
       additional_contexts:
         metadata: .
-
+    ports:
+      - "8000:8000"
   frontend:
     build:
       context: ./frontend

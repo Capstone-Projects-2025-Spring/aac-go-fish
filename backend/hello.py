@@ -1,7 +1,8 @@
 import random
 
 from fastapi import FastAPI, HTTPException, WebSocket
-from models import Message
+
+from .models import Message
 
 app = FastAPI()
 
