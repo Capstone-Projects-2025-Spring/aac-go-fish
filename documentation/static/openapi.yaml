@@ -48,6 +48,10 @@ paths:
                     $ref: '#/components/schemas/Lobby2'
         '404':
           description: Lobby Not Found
+  /ws/:
+    get:
+      summary: Websocket Connection
+      description: Handles a WebSocket connection for receiving and responding to messages.
 components:
   schemas:
     Lobby1:
