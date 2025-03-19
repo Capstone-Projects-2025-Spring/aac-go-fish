@@ -7,7 +7,7 @@ paths:
     post:
       summary: Create Lobby
       description: Creates a new lobby and player, returning lobby information and new player information.
-      operationId: create_lobby_create_lobby_post
+      operationId: lobby_post
       responses:
         '200':
           description: Successful Response
@@ -25,7 +25,7 @@ paths:
     post:
       summary: Join Lobby
       description: Joins a player to a lobby by its unique game code, returning lobby information and new player information.
-      operationId: join_lobby_lobby__code__post
+      operationId: lobby_code_post
       parameters:
       - name: code
         in: path
@@ -46,30 +46,6 @@ paths:
                     $ref: '#/components/schemas/User2'
                   lobby:
                     $ref: '#/components/schemas/Lobby2'
-        '404':
-          description: Lobby Not Found
-    get:
-      summary: Get Lobby
-      description: Retrieves the lobby information by its unique game code.
-      operationId: get_lobby_lobby__code__get
-      parameters:
-      - name: code
-        in: path
-        required: true
-        schema:
-          type: string
-          title: Code
-          description: Lobby Code
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  lobby:
-                    $ref: '#/components/schemas/Lobby3'
         '404':
           description: Lobby Not Found
 components:
@@ -95,18 +71,6 @@ components:
           items:
             - $ref: '#/components/schemas/User1'
             - $ref: '#/components/schemas/User2'
-    Lobby3:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Fish-Turtle-Shark
-        players:
-          type: array
-          items:
-            - $ref: '#/components/schemas/User1'
-            - $ref: '#/components/schemas/User2'
-            - $ref: '#/components/schemas/User3'
     User1:
       type: object
       properties:
@@ -125,12 +89,3 @@ components:
         uuid:
           type: string
           example: c2002008-c0b2-4753-8ee5-14effb2f5fa7
-    User3:
-      type: object
-      properties:
-        avatar:
-          type: string
-          example: Turtle
-        uuid:
-          type: string
-          example: 1e17da3a-97f0-49be-a739-62c22d9e0576
