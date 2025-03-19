@@ -22,7 +22,7 @@
 }
 
 .foodItem {
-    width: 1000px;
+    width: 800px;
     margin: -57px;
     z-index: 1;
 }
@@ -52,4 +52,11 @@
     text-align: center;
     line-height: 20px;
     color:#ffffff;
+}
+
+.ice{
+    position:absolute;
+    height: auto;
+    width: 100%;
+    object-fit: contain;
 }

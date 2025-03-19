@@ -19,6 +19,7 @@ const App = () => {
 
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [drinkOrder, setDrinkOrder] = useState([]);
+    const [orderHasIce, setOrderHasIce] = useState(false);
 
     const [layers, setLayers] = useState([]);
     const [hasIce, setHasIce] = useState(false);
@@ -110,6 +111,12 @@ const App = () => {
         document.getElementById("getOrderButton").hidden = "True";
         const randomIndex = getRandomOrder(0,2);
         setDrinkOrder(mockDrinkOrders[randomIndex]);
+
+        const randomIce = getRandomOrder(0,1);
+        console.log(randomIce);
+        if (randomIce) {
+            setOrderHasIce(!orderHasIce);
+        }
     };
 
     const addLayer = (layer) =>{
@@ -139,7 +146,7 @@ const App = () => {
                     burgerOrder = {burgerOrder}
                     drinkOrder={drinkOrder}
                     layers = {layers}
-                    hasIce = {hasIce}
+                    hasIce = {orderHasIce}
                     getBurgerOrder = {() => getBurgerOrder(mockBurgerOrders)}
                     getDrinkOrder = {() => getDrinkOrder(mockDrinkOrders)}
                 />
