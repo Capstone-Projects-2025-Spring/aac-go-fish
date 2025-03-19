@@ -117,6 +117,31 @@
         }
       ]
     },
+    "Initializer": {
+      "description": "Initializes player state.\n\nLinks the websocket connection to a specific player and lobby.\n\nAttributes:\n    code: Lobby join code.\n    id: Player id.",
+      "properties": {
+        "type": {
+          "const": "initializer",
+          "title": "Type",
+          "type": "string"
+        },
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "code",
+        "id"
+      ],
+      "title": "Initializer",
+      "type": "object"
+    },
     "LifecycleEvent": {
       "discriminator": {
         "mapping": {
@@ -317,11 +342,15 @@
         "mapping": {
           "chat": "#/$defs/Chat",
           "game_state": "#/$defs/GameStateUpdate",
+          "initializer": "#/$defs/Initializer",
           "lobby_lifecycle": "#/$defs/LifecycleEvent"
         },
         "propertyName": "type"
       },
       "oneOf": [
+        {
+          "$ref": "#/$defs/Initializer"
+        },
         {
           "$ref": "#/$defs/GameStateUpdate"
         },
