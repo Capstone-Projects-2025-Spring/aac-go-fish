@@ -2,8 +2,13 @@ import React from 'react';
 import './CustomerOrder.css';
 
 function CustomerOrder({
-    order,
-    getOrder,
+    burgerOrder,
+    drinkOrder,
+    layers,
+    hasIce,
+    getBurgerOrder,
+    getDrinkOrder,
+    orderButtonVisible
 }) {
 
     const foodItems = [
@@ -18,25 +23,58 @@ function CustomerOrder({
         { id: 11, name: 'Cheese', image: '/images/cheese.png', audio: '/audio/cheese.mp3', sideImage: '/images/CheeseSide.png' },
     ];
 
+    const drinkLayers = [
+        {name: "Blue", color: "#0033CC"},
+        {name: "Green", color: "#00CC00"},
+        {name: "Yellow", color: "#FFFF00"},
+        {name: "Red", color: "#FF0000"},
+        {name: "Orange", color: "#FF9900"},
+        {name: "Purple", color: "#660099"},
+    ];
+
 
     return (
         <div className = "CustomerOrder">
             <div className = "orderButton">
-                <button
-                onClick={getOrder}
-                id = "getOrderButton" class = "button" type="button">
+                {orderButtonVisible ? (<button
+                onClick={() => {
+                    getBurgerOrder();
+                    getDrinkOrder();
+                }}
+                id = "getOrderButton" type="button">
                     Get Order
                 </button>
+                ) : null
+            }
             </div>
             <div className = "orderDisplay">
-                {[...order].map((itemName,index) => {
-                    const item = foodItems.find(food => food.name === itemName);
-                    return item ? (
-                        <div key={index} className="foodItem">
-                            <img src={item.sideImage} alt={item.sideImage}/>
-                        </div>
-                    ) : null;
-                })}
+                <div className = "burgerOrderDisplay">
+                    {[...burgerOrder].map((itemName,index) => {
+                        const item = foodItems.find(food => food.name === itemName);
+                        return item ? (
+                            <div key={index} className="foodItem">
+                                <img src={item.sideImage} alt={item.sideImage}/>
+                            </div>
+                        ) : null;
+                    })}
+                </div>
+                <div className="mockDisplayCup">
+                    {drinkOrder.map((layerName,index) => {
+                    const layer = drinkLayers.find(drink => drink.name === layerName);
+                        return layer && hasIce ? (
+                            <div key = {index} className="mockDrinkLayer" style={{backgroundColor:layer.color}}>
+                            </div>
+                        ) :
+                        layer ? (
+                            <div key = {index} className="mockDrinkLayer" style={{backgroundColor:layer.color}}>
+                            </div>
+                        ) :
+                        null;
+                    })}
+                </div>
+                <div>
+
+                </div>
             </div>
 
         </div>
