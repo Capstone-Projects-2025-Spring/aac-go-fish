@@ -5,7 +5,7 @@ import "./MiniOrderDisplay.css"
 import React from "react";
 
 export default function MiniOrderDisplay({ burger, side, drink }) {
-    return (<>
+    return ((burger || side || drink) && <>
         <h2>Order (from employees)</h2>
         <div style={{
             display: "flex",
