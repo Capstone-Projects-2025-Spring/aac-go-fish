@@ -18,9 +18,27 @@ class Role(StrEnum):
 class MessageKind(StrEnum):
     """Message kinds."""
 
+    initializer = "initializer"
     game_state = "game_state"
     lobby_lifecycle = "lobby_lifecycle"
     chat = "chat"
+
+
+class Initializer(BaseModel):
+    """
+    Initializes player state.
+
+    Links the websocket connection to a specific player and lobby.
+
+    Attributes:
+        code: Lobby join code.
+        id: Player id.
+    """
+
+    type: Literal[MessageKind.initializer]
+
+    code: str
+    id: str
 
 
 class GameStateUpdateKind(StrEnum):
@@ -136,7 +154,7 @@ class Chat(BaseModel):
 class Message(BaseModel):
     """Wrapper for message models."""
 
-    data: GameStateUpdate | LifecycleEvent | Chat = Field(discriminator="type")
+    data: Initializer | GameStateUpdate | LifecycleEvent | Chat = Field(discriminator="type")
 
 
 if __name__ == "__main__":

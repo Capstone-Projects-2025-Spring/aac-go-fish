@@ -2,6 +2,10 @@ import CodeBlock from '@theme/CodeBlock';
 import Schema from "@site/static/schemas/wss_schema.json";
 import JSONSchemaViewer from "@theme/JSONSchemaViewer";
 
+# Important
+On connecting via the websocket endpoint, the first message MUST be the
+initializer!
+
 # Websocket JSON Schema
 
 <JSONSchemaViewer schema={ Schema } />
