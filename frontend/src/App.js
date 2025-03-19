@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import AACBoard from "./components/AACBoard";
-import ManagerActions from './components/ManagerActions';
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
-import CustomerOrder from "./components/CustomerOrder";
 import mockOrders from "./MockOrders"
 import RoleSelector from "./components/RoleSelector";
-import MiniOrderDisplay from "./components/MiniOrderDisplay";
+import ManagerViewGroup from "./components/ManagerViewGroup";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
@@ -121,25 +118,21 @@ const App = () => {
                             case "manager":
                                 return (
                                     <>
-                                        <div style={{ padding: "1rem" }}>
-                                            <h1>Customer Order</h1>
-                                            <CustomerOrder
-                                                order = {order}
-                                                getOrder = {getOrder}
-                                            />
-                                        </div>
-                                        <AACBoard
+                                        <ManagerViewGroup
                                             selectedItems={selectedItems}
                                             onSelectItem={addSelectedItem}
                                             onDeleteItem={removeSelectedItem}
                                             onClearAll={clearAllSelected}
-                                        />
-                                        <ManagerActions
+                                            order={order}
+                                            getOrder={getOrder}
                                             onSendItems={handleSendItems}
                                             onReceiveOrder={handleReceiveOrder}
                                             onGiveToCustomer={handleGiveToCustomer}
+                                            burger={burger}
+                                            side={side}
+                                            drink={drink}
                                         />
-                                        <MiniOrderDisplay burger={burger} side={side} drink={drink}/>
+
                                     </>
                                 );
                             case "burger":
