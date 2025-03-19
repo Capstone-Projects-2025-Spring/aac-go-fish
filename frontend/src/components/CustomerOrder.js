@@ -55,13 +55,13 @@ function CustomerOrder({
                         ) : null;
                     })}
                 </div>
-                <div className="Cup">
+                <div className="mockDisplayCup">
                     {drinkOrder.map((layerName,index) => {
                     const layer = drinkLayers.find(drink => drink.name === layerName);
                         return layer ? (
                             <div
                             key = {index}
-                            className="drinkLayer"
+                            className="mockDrinkLayer"
                             style={{backgroundColor:layer.color}}
                             >
                             </div>
