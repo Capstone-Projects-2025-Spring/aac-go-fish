@@ -12,9 +12,9 @@ export default function ManagerViewGroup({
                                              onClearAll,
                                              order,
                                              getOrder,
-                                             handleSendItems,
-                                             handleReceiveOrder,
-                                             handleGiveToCustomer,
+                                             onSendItems,
+                                             onReceiveOrder,
+                                             onGiveToCustomer,
                                              burger,
                                              side,
                                              drink
@@ -39,9 +39,9 @@ export default function ManagerViewGroup({
         <div className="columns">
             <div className="column">
                 <ManagerActions
-                    onSendItems={handleSendItems}
-                    onReceiveOrder={handleReceiveOrder}
-                    onGiveToCustomer={handleGiveToCustomer}
+                    onSendItems={onSendItems}
+                    onReceiveOrder={onReceiveOrder}
+                    onGiveToCustomer={onGiveToCustomer}
                 />
             </div>
             <div className="column">
