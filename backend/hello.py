@@ -1,6 +1,6 @@
-from dependencies import LobbyManager, lobby_manager
 from fastapi import Depends, FastAPI, HTTPException, WebSocket
 
+from .dependencies import LobbyManager, lobby_manager
 from .models import Annotated, Initializer, Message
 
 app = FastAPI()
