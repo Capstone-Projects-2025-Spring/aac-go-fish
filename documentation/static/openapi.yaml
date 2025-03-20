@@ -9,7 +9,7 @@ paths:
       description: Creates a new lobby, returning lobby code.
       operationId: lobby_post
       responses:
-        '200':
+        '201':
           description: Successful Response
           content:
             application/json:
