@@ -101,7 +101,7 @@ const config = {
         specs: [
           {
             id: 'using-single-yaml',
-            spec: 'static/openapi.yml.yaml',
+            spec: 'static/openapi.yaml',
             route: '/api/',
           },
         ],
