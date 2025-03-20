@@ -1,6 +1,6 @@
 .columns {
     display: flex;
-    padding: 2.0rem;
+    padding: 1.0rem;
     .column {
         flex: 1
     }
