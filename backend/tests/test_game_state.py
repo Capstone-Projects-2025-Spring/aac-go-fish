@@ -21,13 +21,28 @@ def lobby() -> LobbyFixture:
 
 
 def test_lobby_broadcast(lobby: LobbyFixture) -> None:
-    """Broadcasted messages are received from multiple players."""
+    """Broadcasted messages are received by multiple players."""
     lobb, _, a_q, b_q = lobby
 
     lobb.broadcast(3)  # pyright: ignore[reportArgumentType]
 
     assert a_q.get() == 3
     assert b_q.get() == 3
+
+
+def test_lobby_broadcast_exclude(lobby: LobbyFixture) -> None:
+    """Broadcasted messages are received by players that are not excluded."""
+    lobb, _, a_q, b_q = lobby
+
+    # pick player A to exclude :(
+    exclude = lobb.players["A"].id
+    lobb.broadcast(3, exclude=[exclude])  # pyright: ignore[reportArgumentType]
+
+    assert b_q.get() == 3
+
+    with pytest.raises(queue.Empty):
+        # should be empty
+        a_q.get(block=False)
 
 
 def test_messages_receives_msg(lobby: LobbyFixture) -> None:

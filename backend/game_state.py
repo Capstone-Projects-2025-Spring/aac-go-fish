@@ -28,10 +28,12 @@ class Lobby:
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
     started: bool = False
 
-    def broadcast(self, msg: Message) -> None:
-        """Send a message to all players."""
+    def broadcast(self, msg: Message, *, exclude: Iterable[str] = ()) -> None:
+        """Send a message to all players except those in exclude."""
+        exclude = set(exclude)
         for player in self.players.values():
-            player.send(msg)
+            if player.id not in exclude:
+                player.send(msg)
 
     def messages(self) -> Iterable[Message]:
         """Iterate over messages that are currently available."""
