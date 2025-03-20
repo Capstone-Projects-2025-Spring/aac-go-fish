@@ -6,7 +6,7 @@ paths:
   /lobby:
     post:
       summary: Create Lobby
-      description: Creates a new lobby and player, returning lobby information and new player information.
+      description: Creates a new lobby, returning lobby code.
       operationId: lobby_post
       responses:
         '200':
@@ -16,15 +16,13 @@ paths:
               schema:
                 type: object
                 properties:
-                  self:
-                    $ref: '#/components/schemas/User1'
-                  lobby:
-                    $ref: '#/components/schemas/Lobby1'
-
+                  code:
+                    type: string
+                    example: Fish-Turtle-Shark
   /lobby/{code}:
     post:
       summary: Join Lobby
-      description: Joins a player to a lobby by its unique game code, returning lobby information and new player information.
+      description: Joins a player to a lobby by its unique game code, returning new player information and player avatars.
       operationId: lobby_code_post
       parameters:
       - name: code
@@ -43,53 +41,23 @@ paths:
                 type: object
                 properties:
                   self:
-                    $ref: '#/components/schemas/User2'
-                  lobby:
-                    $ref: '#/components/schemas/Lobby2'
+                    type: object
+                    properties:
+                      avatar:
+                        type: string
+                        example: Fish
+                      uuid:
+                        type: string
+                        example: 3e6b52bf-23ae-4f50-ba84-ad35ed1df31b
+                  players:
+                    type: array
+                    example:
+                      - Shark
+                      - Turtle
+                      - Fish
         '404':
           description: Lobby Not Found
   /ws/:
     get:
       summary: Websocket Connection
       description: Handles a WebSocket connection for receiving and responding to messages.
-components:
-  schemas:
-    Lobby1:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Fish-Turtle-Shark
-        players:
-          type: array
-          items:
-            $ref: '#/components/schemas/User1'
-    Lobby2:
-      type: object
-      properties:
-        code:
-          type: string
-          example: Fish-Turtle-Shark
-        players:
-          type: array
-          items:
-            - $ref: '#/components/schemas/User1'
-            - $ref: '#/components/schemas/User2'
-    User1:
-      type: object
-      properties:
-        avatar:
-          type: string
-          example: Fish
-        uuid:
-          type: string
-          example: 3e6b52bf-23ae-4f50-ba84-ad35ed1df31b
-    User2:
-      type: object
-      properties:
-        avatar:
-          type: string
-          example: Shark
-        uuid:
-          type: string
-          example: c2002008-c0b2-4753-8ee5-14effb2f5fa7
