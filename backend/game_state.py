@@ -34,9 +34,12 @@ class Lobby:
             player.send(msg)
 
     def messages(self) -> Iterable[Message]:
-        """Consume messages from all players."""
+        """Iterate over messages that are currently available."""
         while True:
-            yield self.channel.get()
+            try:
+                yield self.channel.get_nowait()
+            except queue.Empty:
+                return
 
 
 @dataclass
