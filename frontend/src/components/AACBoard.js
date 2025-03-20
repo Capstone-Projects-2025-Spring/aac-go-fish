@@ -53,7 +53,7 @@ function AACBoard({
     }
 
     return (
-        <div className="aacboard-wrapper">
+        <div>
             {selectedItems.length === 0 ? (
                 <p>Click an item to add it here!</p>
             ) : (

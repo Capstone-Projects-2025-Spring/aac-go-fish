@@ -53,12 +53,17 @@
     border-radius: 5px;
     z-index: 1;
 }
+.BurgerContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .Plate {
     width: 240px;
     height: 30px;
     border-radius: 50%;
     background-color: #ffffff;
-    margin: 0 auto;
+    margin: -2.5em auto 1.5em;
     position: relative;
     top: 0;
     box-shadow: 0 8px 15px #000000;
