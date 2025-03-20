@@ -12,10 +12,10 @@ function ManagerActions({
             <p>Select an action (test)</p>
 
             <div className="manager-actions-buttons">
-                <button onClick={onSendItems} style={{ marginRight: '0.5rem' }}>
+                <button onClick={onSendItems} >
                     Send Items
                 </button>
-                <button onClick={onReceiveOrder} style={{ marginRight: '0.5rem' }}>
+                <button onClick={onReceiveOrder}>
                     Receive Order
                 </button>
                 <button onClick={onGiveToCustomer}>
