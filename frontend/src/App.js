@@ -5,7 +5,10 @@ import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
 import mockOrders from "./MockOrders"
 import RoleSelector from "./components/RoleSelector";
-import ManagerViewGroup from "./components/ManagerViewGroup";
+import AACBoard from "./components/AACBoard";
+import CustomerOrder from "./components/CustomerOrder";
+import ManagerActions from "./components/ManagerActions";
+import MiniOrderDisplay from "./components/MiniOrderDisplay";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
@@ -118,20 +121,34 @@ const App = () => {
                             case "manager":
                                 return (
                                     <>
-                                        <ManagerViewGroup
-                                            selectedItems={selectedItems}
-                                            onSelectItem={addSelectedItem}
-                                            onDeleteItem={removeSelectedItem}
-                                            onClearAll={clearAllSelected}
-                                            order={order}
-                                            getOrder={getOrder}
-                                            onSendItems={handleSendItems}
-                                            onReceiveOrder={handleReceiveOrder}
-                                            onGiveToCustomer={handleGiveToCustomer}
-                                            burger={burger}
-                                            side={side}
-                                            drink={drink}
-                                        />
+                                        <div className="columns">
+                                            <div className="column">
+                                                <AACBoard
+                                                    selectedItems={selectedItems}
+                                                    onSelectItem={onSelectItem}
+                                                    onDeleteItem={onDeleteItem}
+                                                    onClearAll={onClearAll}
+                                                />
+                                            </div>
+                                            <div className="column">
+                                                <CustomerOrder
+                                                    order={order}
+                                                    getOrder={getOrder}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="columns">
+                                            <div className="column">
+                                                <ManagerActions
+                                                    onSendItems={onSendItems}
+                                                    onReceiveOrder={onReceiveOrder}
+                                                    onGiveToCustomer={onGiveToCustomer}
+                                                />
+                                            </div>
+                                            <div className="column">
+                                                <MiniOrderDisplay burger={burger} side={side} drink={drink}/>
+                                            </div>
+                                        </div>
 
                                     </>
                                 );
