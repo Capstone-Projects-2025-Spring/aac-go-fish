@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import asyncio
 import dataclasses
-from collections.abc import AsyncIterable
+import queue
+from collections.abc import Iterable
 from dataclasses import dataclass
 from uuid import uuid4
 
@@ -22,21 +22,26 @@ class Lobby:
         started: Whether the game has started
     """
 
-    players: dict[str, Player]
-    channel: asyncio.Queue
-    id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
     code: str = "ABC"
+    players: dict[str, Player] = dataclasses.field(default_factory=dict)
+    channel: queue.Queue = dataclasses.field(default_factory=queue.Queue)
+    id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
     started: bool = False
 
-    async def broadcast(self, msg: Message) -> None:
-        """Send a message to all players."""
+    def broadcast(self, msg: Message, *, exclude: Iterable[str] = ()) -> None:
+        """Send a message to all players except those in exclude."""
+        exclude = set(exclude)
         for player in self.players.values():
-            await player.send(msg)
+            if player.id not in exclude:
+                player.send(msg)
 
-    async def messages(self) -> AsyncIterable[Message]:
-        """Consume messages from all players."""
+    def messages(self) -> Iterable[Message]:
+        """Iterate over messages that are currently available."""
         while True:
-            yield await self.channel.get()
+            try:
+                yield self.channel.get_nowait()
+            except queue.Empty:
+                return
 
 
 @dataclass
@@ -50,10 +55,10 @@ class Player:
         channel: Message queue for outgoing messages.
     """
 
-    channel: asyncio.Queue
+    channel: queue.Queue
     role: Role
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
 
-    async def send(self, msg: Message) -> None:
+    def send(self, msg: Message) -> None:
         """Send a message to this player."""
-        await self.channel.put(msg)
+        self.channel.put(msg)

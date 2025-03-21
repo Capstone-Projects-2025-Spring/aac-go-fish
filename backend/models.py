@@ -35,7 +35,7 @@ class Initializer(BaseModel):
         id: Player id.
     """
 
-    type: Literal[MessageKind.initializer]
+    type: Literal[MessageKind.initializer] = MessageKind.initializer
 
     code: str
     id: str
@@ -54,15 +54,15 @@ class GameStateUpdateKind(StrEnum):
 class NewOrder(BaseModel):
     """A new order for the manager."""
 
-    type: Literal[MessageKind.game_state]
-    game_state_update_type: Literal[GameStateUpdateKind.new_order]
+    type: Literal[MessageKind.game_state] = MessageKind.game_state
+    game_state_update_type: Literal[GameStateUpdateKind.new_order] = GameStateUpdateKind.new_order
 
 
 class RoleAssignment(BaseModel):
     """Assign a role to the player."""
 
-    type: Literal[MessageKind.game_state]
-    game_state_update_type: Literal[GameStateUpdateKind.role_assignment]
+    type: Literal[MessageKind.game_state] = MessageKind.game_state
+    game_state_update_type: Literal[GameStateUpdateKind.role_assignment] = GameStateUpdateKind.role_assignment
 
     id: str
     role: Role
@@ -71,8 +71,8 @@ class RoleAssignment(BaseModel):
 class OrderScore(BaseModel):
     """A score for the order."""
 
-    type: Literal[MessageKind.game_state]
-    game_state_update_type: Literal[GameStateUpdateKind.order_score]
+    type: Literal[MessageKind.game_state] = MessageKind.game_state
+    game_state_update_type: Literal[GameStateUpdateKind.order_score] = GameStateUpdateKind.order_score
 
     score: float
 
@@ -80,8 +80,8 @@ class OrderScore(BaseModel):
 class OrderSubmission(BaseModel):
     """An order is submitted for review."""
 
-    type: Literal[MessageKind.game_state]
-    game_state_update_type: Literal[GameStateUpdateKind.order_submission]
+    type: Literal[MessageKind.game_state] = MessageKind.game_state
+    game_state_update_type: Literal[GameStateUpdateKind.order_submission] = GameStateUpdateKind.order_submission
 
     order: list
 
@@ -89,8 +89,8 @@ class OrderSubmission(BaseModel):
 class DayEnd(BaseModel):
     """No more orders for this day."""
 
-    type: Literal[MessageKind.game_state]
-    game_state_update_type: Literal[GameStateUpdateKind.day_end]
+    type: Literal[MessageKind.game_state] = MessageKind.game_state
+    game_state_update_type: Literal[GameStateUpdateKind.day_end] = GameStateUpdateKind.day_end
 
 
 type GameStateUpdate = Annotated[
@@ -110,8 +110,8 @@ class LobbyLifecycleEventKind(StrEnum):
 class PlayerJoin(BaseModel):
     """A player joining a lobby."""
 
-    type: Literal[MessageKind.lobby_lifecycle]
-    lifecycle_type: Literal[LobbyLifecycleEventKind.player_join]
+    type: Literal[MessageKind.lobby_lifecycle] = MessageKind.lobby_lifecycle
+    lifecycle_type: Literal[LobbyLifecycleEventKind.player_join] = LobbyLifecycleEventKind.player_join
 
     id: str
 
@@ -119,8 +119,8 @@ class PlayerJoin(BaseModel):
 class PlayerLeave(BaseModel):
     """A player leaving a lobby."""
 
-    type: Literal[MessageKind.lobby_lifecycle]
-    lifecycle_type: Literal[LobbyLifecycleEventKind.player_leave]
+    type: Literal[MessageKind.lobby_lifecycle] = MessageKind.lobby_lifecycle
+    lifecycle_type: Literal[LobbyLifecycleEventKind.player_leave] = LobbyLifecycleEventKind.player_leave
 
     id: str
 
@@ -128,15 +128,15 @@ class PlayerLeave(BaseModel):
 class GameStart(BaseModel):
     """The host starts the game."""
 
-    type: Literal[MessageKind.lobby_lifecycle]
-    lifecycle_type: Literal[LobbyLifecycleEventKind.game_start]
+    type: Literal[MessageKind.lobby_lifecycle] = MessageKind.lobby_lifecycle
+    lifecycle_type: Literal[LobbyLifecycleEventKind.game_start] = LobbyLifecycleEventKind.game_start
 
 
 class GameEnd(BaseModel):
     """All days are completed."""
 
-    type: Literal[MessageKind.lobby_lifecycle]
-    lifecycle_type: Literal[LobbyLifecycleEventKind.game_end]
+    type: Literal[MessageKind.lobby_lifecycle] = MessageKind.lobby_lifecycle
+    lifecycle_type: Literal[LobbyLifecycleEventKind.game_end] = LobbyLifecycleEventKind.game_end
 
 
 type LifecycleEvent = Annotated[PlayerJoin | PlayerLeave | GameStart | GameEnd, Field(discriminator="lifecycle_type")]
@@ -145,7 +145,7 @@ type LifecycleEvent = Annotated[PlayerJoin | PlayerLeave | GameStart | GameEnd, 
 class Chat(BaseModel):
     """The manager is typing."""
 
-    type: Literal[MessageKind.chat]
+    type: Literal[MessageKind.chat] = MessageKind.chat
 
     id: str
     typing: bool

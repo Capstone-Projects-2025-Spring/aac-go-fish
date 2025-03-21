@@ -1,27 +1,27 @@
-import asyncio
+import queue
 from collections.abc import Callable
 
-from backend.game_state import Lobby, Player
-from backend.models import Role
+from .game_state import Lobby, Player
+from .models import Role
 
 
 class Channel[T]:
     """Wrapper class around two queues for two-way communication."""
 
-    def __init__(self, send: asyncio.Queue[T], recv: asyncio.Queue[T]) -> None:
+    def __init__(self, send: queue.Queue[T], recv: queue.Queue[T]) -> None:
         self._send = send
         self._recv = recv
 
     def send(self, msg: T) -> None:
         """Send a message."""
-        # Can't raise asyncio.QueueFull because we don't set a max size.
+        # Can't raise queue.Full because we don't set a max size.
         self._send.put_nowait(msg)
 
     def recv(self) -> T | None:
         """Receive a message or None if empty."""
         try:
             return self._recv.get_nowait()
-        except asyncio.QueueEmpty:
+        except queue.Empty:
             return None
 
 
@@ -54,7 +54,7 @@ class LobbyManager:
         except KeyError:
             raise ValueError(f"Code {code} is not associated with any existing lobbies!")
 
-        channel = asyncio.Queue()
+        channel = queue.Queue()
         role = list(Role)[len(lobby.players)]
         player = Player(channel, role)
 
@@ -64,7 +64,7 @@ class LobbyManager:
 
     def register_lobby(self) -> tuple[str, str]:
         """
-        Create a new lobby.
+        Create a new lobby in its own thread.
 
         Automatically registers the creator as a player in the lobby.
 
@@ -72,10 +72,11 @@ class LobbyManager:
             A tuple of the lobby's join code and the first player's id.
         """
         code = self.code_generator()
-        lobby = Lobby({}, asyncio.Queue(), code)
+        lobby = Lobby(code)
 
         self.lobbies[code] = lobby
         id = self.register_player(code)
+
         return code, id
 
     def channel(self, code: str, id: str) -> Channel:
