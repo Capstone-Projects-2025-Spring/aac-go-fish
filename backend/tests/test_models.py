@@ -1,13 +1,17 @@
 import pytest
 
 from backend.models import (
+    Burger,
     Chat,
     DayEnd,
+    Drink,
+    Fry,
     GameEnd,
     GameStart,
     Initializer,
     Message,
     NewOrder,
+    Order,
     OrderScore,
     OrderSubmission,
     PlayerJoin,
@@ -26,8 +30,27 @@ from backend.models import (
             id="Initializer",
         ),
         pytest.param(
-            '{"data": {"type": "game_state", "game_state_update_type": "new_order"}}',
-            Message(data=NewOrder()),
+            """\
+            {
+                "data": {
+                    "type": "game_state",
+                    "game_state_update_type": "new_order",
+                    "order": {
+                        "burger": {"ingredients": ["bread", "bread"]},
+                        "fry": {},
+                        "drink": {"color": "green", "fill": 0, "ice": true, "size": "S"}
+                    }
+                }
+            }""",
+            Message(
+                data=NewOrder(
+                    order=Order(
+                        burger=Burger(ingredients=["bread", "bread"]),
+                        fry=Fry(),
+                        drink=Drink(color="green", fill=0, ice=True, size="S"),
+                    )
+                )
+            ),
             id="NewOrder",
         ),
         pytest.param(
@@ -49,8 +72,27 @@ from backend.models import (
             id="OrderScore",
         ),
         pytest.param(
-            '{"data": {"type": "game_state", "game_state_update_type": "order_submission", "order": []}}',
-            Message(data=OrderSubmission(order=[])),
+            """\
+            {
+                "data": {
+                    "type": "game_state",
+                    "game_state_update_type": "order_submission",
+                    "order": {
+                        "burger": {"ingredients": ["bread", "bread"]},
+                        "fry": {},
+                        "drink": {"color": "green", "fill": 0, "ice": true, "size": "S"}
+                    }
+                }
+            }""",
+            Message(
+                data=OrderSubmission(
+                    order=Order(
+                        burger=Burger(ingredients=["bread", "bread"]),
+                        fry=Fry(),
+                        drink=Drink(color="green", fill=0, ice=True, size="S"),
+                    )
+                )
+            ),
             id="OrderSubmission",
         ),
         pytest.param(
