@@ -1,6 +1,8 @@
 import queue
 from collections.abc import Callable
 
+from backend.game import start_main_loop
+
 from .game_state import Lobby, Player
 from .models import Role
 
@@ -85,6 +87,11 @@ class LobbyManager:
             id: Player id.
         """
         lobby = self.lobbies[code]
+
+        if not lobby.started:
+            lobby.started = True
+            start_main_loop(lobby)
+
         channel = Channel(lobby.channel, lobby.players[id].channel)
         return channel
 
