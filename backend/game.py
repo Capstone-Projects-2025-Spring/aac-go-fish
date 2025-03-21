@@ -1,11 +1,16 @@
 import functools
 import logging
+import random
 import threading
 
 from .game_state import Lobby, Player
-from .models import Chat, GameStart, Message, NewOrder, Role
+from .models import Burger, Chat, Drink, Fry, GameStart, Message, NewOrder, Order, Role
 
 logger = logging.getLogger(__file__)
+
+BURGER_INGREDIENTS = ["patty", "lettuce", "onion", "tomato", "ketchup", "mustard", "cheese"]
+DRINK_COLORS = ["blue", "red", "yellow", "orange", "purple", "green"]
+DRINK_SIZES = ["S", "M", "L"]
 
 
 class GameLoop:
@@ -38,7 +43,25 @@ class GameLoop:
         logger.debug("Starting game.")
 
         self.day = 1
-        self.manager.send(Message(data=NewOrder()))
+        self.manager.send(Message(data=NewOrder(order=self.generate_order())))
+
+    def generate_order(self) -> Order:
+        """Generate an order based on the number of players."""
+        order = Order(
+            burger=Burger(
+                ingredients=["bottom bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["top bun"]
+            ),
+            drink=None,
+            fry=None,
+        )
+
+        if len(self.lobby.players) >= 3:
+            order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
+
+        if len(self.lobby.players) >= 4:
+            order.fry = Fry()
+
+        return order
 
     def typing_indicator(self, msg: Chat) -> None:
         """Send an indicator that the manager is typing."""
