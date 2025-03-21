@@ -5,6 +5,7 @@
       "properties": {
         "type": {
           "const": "chat",
+          "default": "chat",
           "title": "Type",
           "type": "string"
         },
@@ -18,7 +19,6 @@
         }
       },
       "required": [
-        "type",
         "id",
         "typing"
       ],
@@ -30,19 +30,17 @@
       "properties": {
         "type": {
           "const": "game_state",
+          "default": "game_state",
           "title": "Type",
           "type": "string"
         },
         "game_state_update_type": {
           "const": "day_end",
+          "default": "day_end",
           "title": "Game State Update Type",
           "type": "string"
         }
       },
-      "required": [
-        "type",
-        "game_state_update_type"
-      ],
       "title": "DayEnd",
       "type": "object"
     },
@@ -51,19 +49,17 @@
       "properties": {
         "type": {
           "const": "lobby_lifecycle",
+          "default": "lobby_lifecycle",
           "title": "Type",
           "type": "string"
         },
         "lifecycle_type": {
           "const": "game_end",
+          "default": "game_end",
           "title": "Lifecycle Type",
           "type": "string"
         }
       },
-      "required": [
-        "type",
-        "lifecycle_type"
-      ],
       "title": "GameEnd",
       "type": "object"
     },
@@ -72,19 +68,17 @@
       "properties": {
         "type": {
           "const": "lobby_lifecycle",
+          "default": "lobby_lifecycle",
           "title": "Type",
           "type": "string"
         },
         "lifecycle_type": {
           "const": "game_start",
+          "default": "game_start",
           "title": "Lifecycle Type",
           "type": "string"
         }
       },
-      "required": [
-        "type",
-        "lifecycle_type"
-      ],
       "title": "GameStart",
       "type": "object"
     },
@@ -122,6 +116,7 @@
       "properties": {
         "type": {
           "const": "initializer",
+          "default": "initializer",
           "title": "Type",
           "type": "string"
         },
@@ -135,7 +130,6 @@
         }
       },
       "required": [
-        "type",
         "code",
         "id"
       ],
@@ -172,19 +166,17 @@
       "properties": {
         "type": {
           "const": "game_state",
+          "default": "game_state",
           "title": "Type",
           "type": "string"
         },
         "game_state_update_type": {
           "const": "new_order",
+          "default": "new_order",
           "title": "Game State Update Type",
           "type": "string"
         }
       },
-      "required": [
-        "type",
-        "game_state_update_type"
-      ],
       "title": "NewOrder",
       "type": "object"
     },
@@ -193,11 +185,13 @@
       "properties": {
         "type": {
           "const": "game_state",
+          "default": "game_state",
           "title": "Type",
           "type": "string"
         },
         "game_state_update_type": {
           "const": "order_score",
+          "default": "order_score",
           "title": "Game State Update Type",
           "type": "string"
         },
@@ -207,8 +201,6 @@
         }
       },
       "required": [
-        "type",
-        "game_state_update_type",
         "score"
       ],
       "title": "OrderScore",
@@ -219,11 +211,13 @@
       "properties": {
         "type": {
           "const": "game_state",
+          "default": "game_state",
           "title": "Type",
           "type": "string"
         },
         "game_state_update_type": {
           "const": "order_submission",
+          "default": "order_submission",
           "title": "Game State Update Type",
           "type": "string"
         },
@@ -234,8 +228,6 @@
         }
       },
       "required": [
-        "type",
-        "game_state_update_type",
         "order"
       ],
       "title": "OrderSubmission",
@@ -246,11 +238,13 @@
       "properties": {
         "type": {
           "const": "lobby_lifecycle",
+          "default": "lobby_lifecycle",
           "title": "Type",
           "type": "string"
         },
         "lifecycle_type": {
           "const": "player_join",
+          "default": "player_join",
           "title": "Lifecycle Type",
           "type": "string"
         },
@@ -260,8 +254,6 @@
         }
       },
       "required": [
-        "type",
-        "lifecycle_type",
         "id"
       ],
       "title": "PlayerJoin",
@@ -272,11 +264,13 @@
       "properties": {
         "type": {
           "const": "lobby_lifecycle",
+          "default": "lobby_lifecycle",
           "title": "Type",
           "type": "string"
         },
         "lifecycle_type": {
           "const": "player_leave",
+          "default": "player_leave",
           "title": "Lifecycle Type",
           "type": "string"
         },
@@ -286,8 +280,6 @@
         }
       },
       "required": [
-        "type",
-        "lifecycle_type",
         "id"
       ],
       "title": "PlayerLeave",
@@ -309,11 +301,13 @@
       "properties": {
         "type": {
           "const": "game_state",
+          "default": "game_state",
           "title": "Type",
           "type": "string"
         },
         "game_state_update_type": {
           "const": "role_assignment",
+          "default": "role_assignment",
           "title": "Game State Update Type",
           "type": "string"
         },
@@ -326,8 +320,6 @@
         }
       },
       "required": [
-        "type",
-        "game_state_update_type",
         "id",
         "role"
       ],
