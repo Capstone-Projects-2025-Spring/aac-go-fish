@@ -57,6 +57,8 @@ class NewOrder(BaseModel):
     type: Literal[MessageKind.game_state] = MessageKind.game_state
     game_state_update_type: Literal[GameStateUpdateKind.new_order] = GameStateUpdateKind.new_order
 
+    order: Order
+
 
 class RoleAssignment(BaseModel):
     """Assign a role to the player."""
@@ -83,7 +85,34 @@ class OrderSubmission(BaseModel):
     type: Literal[MessageKind.game_state] = MessageKind.game_state
     game_state_update_type: Literal[GameStateUpdateKind.order_submission] = GameStateUpdateKind.order_submission
 
-    order: list
+    order: Order
+
+
+class Order(BaseModel):
+    """A complete order."""
+
+    burger: Burger | None
+    drink: Drink | None
+    fry: Fry | None
+
+
+class Burger(BaseModel):
+    """A burger."""
+
+    ingredients: list[str]
+
+
+class Drink(BaseModel):
+    """A drink."""
+
+    color: str
+    fill: float
+    ice: bool
+    size: str
+
+
+class Fry(BaseModel):
+    """A fries."""
 
 
 class DayEnd(BaseModel):

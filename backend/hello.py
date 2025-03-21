@@ -1,7 +1,13 @@
+import logging
+import typing
+
 from fastapi import Depends, FastAPI, HTTPException, WebSocket
+from pydantic import ValidationError
 
 from .dependencies import LobbyManager, lobby_manager
 from .models import Annotated, Initializer, Message
+
+logger = logging.getLogger(__file__)
 
 app = FastAPI()
 
@@ -44,9 +50,10 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
 
         try:
             incoming_message = Message.model_validate(data)
-        except Exception as e:
-            await websocket.send_text(f"[Server] Error: {e!s}")
+        except ValidationError:
+            logger.warning("Unrecognized message: %.", data)
         else:
             channel.send(incoming_message)
 
-        # outgoing_message = channel.recv()
+        if outgoing_message := typing.cast(Message, channel.recv()):
+            await websocket.send_text(outgoing_message.model_dump_json())
