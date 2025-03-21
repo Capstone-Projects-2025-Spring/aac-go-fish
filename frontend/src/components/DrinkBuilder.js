@@ -92,7 +92,6 @@ const DrinkBuilder = ({ onSend }) =>{
             </button>
             <DrinkDisplay color={color} fillPercentage={fillPercentage}/>
             <button onClick={handleSend}>Send</button>
-            {errorMessage && <p style={{color: "red"}}>{errorMessage}</p>}
         </div>
     );
 };

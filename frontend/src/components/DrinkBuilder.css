@@ -15,11 +15,13 @@
     min-height: 120px;
     margin: 10px;
     padding: 0;
-    border: 1px solid #322e2e;
+    border: 3px solid #322e2e;
     background: #ffffff;
     cursor: pointer;
     text-align: center;
     border-radius: 6px;
+    -webkit-text-stroke-width: 0.2px;
+    -webkit-text-stroke-color: black;
 }
 
 .AddIceButton {
@@ -82,4 +84,24 @@
     position:absolute;
     bottom: 0;
     transition: height 0.3s ease, background-color 0.3s ease;
+}
+
+.FillCupButton{
+    min-width: 120px;
+    min-height: 120px;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.FillCupButton:hover {
+    border: 3px solid #322e2e;
+}
+
+.ClearCupButton:hover {
+    border: 3px solid #322e2e;
 }
