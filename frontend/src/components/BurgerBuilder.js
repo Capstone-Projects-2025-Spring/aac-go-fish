@@ -23,34 +23,40 @@ const BurgerBuilder = ({ onSend }) => {
 
     const maxSize = 9;
 
-    const addIngredient = (ingredient) =>{
-        if (ingredients.length <= maxSize){
+    const addIngredient = (ingredient) => {
+        if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
         }
-        else{
+        else {
             alert("Plate is full!");
         }
 
     };
-    const clearPlate = () =>{
+    const clearPlate = () => {
         setIngredients([]);
     };
 
-    return(
+    const handleRequestRepeat = () => {
+        alert("Request Repeat clicked (temp).");
+    };
+
+
+    return (
         <div className="BurgerBuilder">
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>
-                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage"/>
+                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage" />
                         <p>{ingredient.name}</p>
                     </button>
                 ))}
             </div>
-            <BurgerDisplay imagePaths={ingredients.map((ingredient) => ingredient.sideImage)}/>
+            <BurgerDisplay imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
             <button className="ClearPlateButton" onClick={clearPlate}>
                 Clear Plate
             </button>
             <button onClick={handleSend}>Send</button>
+            <button onClick={handleRequestRepeat}>Request Repeat</button>
         </div>
     );
 };
