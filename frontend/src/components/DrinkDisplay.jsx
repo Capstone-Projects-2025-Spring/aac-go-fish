@@ -1,16 +1,15 @@
 import React from "react";
 
-export default function DrinkDisplay({ layers, hasIce }) {
+export default function DrinkDisplay({ color, fillPercentage, hasIce }) {
     return (
         <div className="Cup">
-            {layers.map((layer, index) => (
-                <div
-                    key={index}
-                    className="DrinkLayer"
-                    style={{backgroundColor: layer.color}}
-                >
-                </div>
-            ))}
+            <div className="Filling"
+                 style={{
+                     backgroundColor: color || "#FFFFFF",
+                     height: `${fillPercentage}%`,
+                 }}
+            ></div>
+
             {hasIce && (
                 <img
                     src="/images/ice.png"
@@ -19,5 +18,5 @@ export default function DrinkDisplay({ layers, hasIce }) {
                 />
             )}
         </div>
-    )
+    );
 }

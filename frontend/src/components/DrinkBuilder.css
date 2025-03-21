@@ -76,3 +76,10 @@
     height:auto;
     z-index:10;
 }
+
+.Filling{
+    width: 100%;
+    position:absolute;
+    bottom: 0;
+    transition: height 0.3s ease, background-color 0.3s ease;
+}
