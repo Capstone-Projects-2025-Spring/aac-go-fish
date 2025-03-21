@@ -125,9 +125,9 @@ const App = () => {
                                             <div className="column">
                                                 <AACBoard
                                                     selectedItems={selectedItems}
-                                                    onSelectItem={onSelectItem}
-                                                    onDeleteItem={onDeleteItem}
-                                                    onClearAll={onClearAll}
+                                                    onSelectItem={addSelectedItem}
+                                                    onDeleteItem={removeSelectedItem}
+                                                    onClearAll={clearAllSelected}
                                                 />
                                             </div>
                                             <div className="column">
@@ -140,16 +140,15 @@ const App = () => {
                                         <div className="columns">
                                             <div className="column">
                                                 <ManagerActions
-                                                    onSendItems={onSendItems}
-                                                    onReceiveOrder={onReceiveOrder}
-                                                    onGiveToCustomer={onGiveToCustomer}
+                                                    onSendItems={handleSendItems}
+                                                    onReceiveOrder={handleReceiveOrder}
+                                                    onGiveToCustomer={handleGiveToCustomer}
                                                 />
                                             </div>
                                             <div className="column">
                                                 <MiniOrderDisplay burger={burger} side={side} drink={drink}/>
                                             </div>
                                         </div>
-
                                     </>
                                 );
                             case "burger":
