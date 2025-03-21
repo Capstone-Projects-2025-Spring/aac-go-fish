@@ -1,7 +1,0 @@
-.columns {
-    display: flex;
-    padding: 2.0rem;
-    .column {
-        flex: 1
-    }
-}

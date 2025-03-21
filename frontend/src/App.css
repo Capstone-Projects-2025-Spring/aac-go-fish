@@ -33,3 +33,11 @@
     display: flex;
     flex-direction: column;
 }
+
+.columns {
+    display: flex;
+    padding: 1.0rem;
+    .column {
+        flex: 1
+    }
+}
