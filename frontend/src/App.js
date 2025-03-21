@@ -58,13 +58,14 @@ const App = () => {
             if (item.audio) {
                 const audio = new Audio(item.audio);
                 await new Promise((resolve) => {
-                    audio.onended = resolve;
-                    audio.onerror = resolve;
-                    audio.play().catch((err) => {
-                        console.error('Audio playback failed:', err);
-                        resolve();
-                    });
-                    addMessage(`Manager: Playing ${item.audio}`)
+                    audio.play()
+                        .then(() => {
+                            addMessage(`Manager: Playing ${item.audio}`);
+                            audio.onended = resolve;
+                        }, () => {
+                            addMessage(`Manager: Failed to play ${item.audio} (Does the file exist?)`);
+                            resolve();
+                        })
                 });
             }
         }
