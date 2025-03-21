@@ -21,13 +21,12 @@ const DrinkBuilder = ({
 
     return (
         <div className = "DrinkBuilder">
-            <h1>Drink Station</h1>
             <div className="DrinkButtons">
                 {drinkLayers.map((choice, index) => (
                     <button
-                    key = {index}
-                    onClick={() => addLayer(choice)}
-                    style={{backgroundColor: choice.color, color: "#FFFFFF"}}
+                        key = {index}
+                        onClick={() => addLayer(choice)}
+                        style={{backgroundColor: choice.color, color: "#FFFFFF"}}
                     >
                         {choice.name}
                     </button>
@@ -40,24 +39,8 @@ const DrinkBuilder = ({
             <button className="ClearCupButton" onClick = {clearCup}>
                 Clear Cup
             </button>
-
-            <div className="Cup">
-                {layers.map((layer,index) =>(
-                    <div
-                        key = {index}
-                        className="DrinkLayer"
-                        style={{backgroundColor:layer.color}}
-                    >
-                    </div>
-                ))}
-                {hasIce && (
-                    <img
-                        src="/images/ice.png"
-                        alt="Ice"
-                        className="Ice"
-                    />
-                )}
-            </div>
+            <DrinkDisplay layers={layers} hasIce={hasIce}/>
+            <button onClick={handleSend}>Send</button>
         </div>
     );
 };

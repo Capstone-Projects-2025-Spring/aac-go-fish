@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import AACBoard from "./components/AACBoard";
-import CustomerOrder from "./components/CustomerOrder";
-import ManagerActions from './components/ManagerActions';
-import {mockBurgerOrders, mockDrinkOrders} from "./MockOrders"
 import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
+import {mockBurgerOrders, mockDrinkOrders} from "./MockOrders"
+import RoleSelector from "./components/RoleSelector";
+import AACBoard from "./components/AACBoard";
+import CustomerOrder from "./components/CustomerOrder";
+import ManagerActions from "./components/ManagerActions";
+import MiniOrderDisplay from "./components/MiniOrderDisplay";
+
 const App = () => {
     const [messages, setMessages] = useState([]);
-    const [ws, setWs] = useState(null);
-    const [message, setMessage] = useState("");
-
-
+    const [selectedRole, setSelectedRole] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
-    const [actionLog, setActionLog] = useState([]);
-    const isManager = true;
+    const [burger, setBurger] = useState(null);
+    const [side, setSide] = useState(null);
+    const [drink, setDrink] = useState(null);
 
     const [orderButtonVisible, setOrderButtonVisibility] = useState(true)
 
@@ -35,8 +36,6 @@ const App = () => {
         socket.onmessage = (event) => addMessage(event.data);
         socket.onclose = () => addMessage("WebSocket closed");
 
-        setWs(socket);
-
         return () => socket.close();
     }, []);
 
@@ -44,15 +43,6 @@ const App = () => {
         setMessages((prev) => [...prev, msg]);
     };
 
-    const sendMessage = () => {
-        ws.send(
-            JSON.stringify({ data: { type: "chat", message }, source_player_id: 0 })
-        );
-        setMessage("");
-        addMessage(`[Client] Chat sent: "${message}"`);
-    };
-
-    const isWebSocketConnecting = ws && ws.readyState === WebSocket.CONNECTING;
     const addSelectedItem = (item) => {
         setSelectedItems((prev) => [...prev, item]);
     };
@@ -65,35 +55,49 @@ const App = () => {
     };
     const handleSendItems = async () => {
         if (selectedItems.length === 0) {
-            setActionLog((prev) => [...prev, "Manager: No items to send!"]);
+            addMessage("Manager: No items to send!")
             return;
         }
 
         const names = selectedItems.map((item) => item.name).join(", ");
-        setActionLog((prev) => [...prev, `Manager: Sending items: ${names}`]);
+        addMessage(`Manager: Sending items: ${names}`);
 
         for (const item of selectedItems) {
             if (item.audio) {
                 const audio = new Audio(item.audio);
                 await new Promise((resolve) => {
-                    audio.onended = resolve;
-                    audio.onerror = resolve;
-                    audio.play().catch((err) => {
-                        console.error('Audio playback failed:', err);
-                        resolve();
-                    });
+                    audio.play()
+                        .then(() => {
+                            addMessage(`Manager: Playing ${item.audio}`);
+                            audio.onended = resolve;
+                        }, () => {
+                            addMessage(`Manager: Failed to play ${item.audio} (Does the file exist?)`);
+                            resolve();
+                        })
                 });
             }
         }
 
         setSelectedItems([]);
-        setActionLog((prev) => [...prev, "Manager: Order sent and cleared!"]);
+        addMessage("Manager: Order sent and cleared!");
     };
     const handleReceiveOrder = () => {
-        setActionLog((prev) => [...prev, "Manager: Receiving the order..."]);
+        addMessage("Manager: Receiving the order...");
     };
     const handleGiveToCustomer = () => {
-        setActionLog((prev) => [...prev, "Manager: Giving items to the customer..."]);
+        addMessage("Manager: Sending order to the customer");
+        if (burger) {
+            addMessage(`Sending burger (${JSON.stringify(burger.map((ingredient) => ingredient.name))})`)
+        }
+        if (side) {
+            addMessage(`Sending side (${side.tableState})`)
+        }
+        if (drink) {
+            addMessage(`Sending drink (${JSON.stringify(drink)})`)
+        }
+        setBurger(null);
+        setSide(null);
+        setDrink(null);
     };
 
     const getRandomOrder = (min,max) => {
@@ -168,12 +172,62 @@ const App = () => {
                     />
                 </div>
             )}
+            <div className="main-layout">
+                <div className="sidebar">
+                    <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
+                    <h3>Event Log</h3>
+                    <div className="event-log">
+                        {messages.map((msg, idx) => (
+                            <div key={idx}>{msg}</div>
+                        ))}
+                    </div>
+                </div>
 
-            <h3>Event Log</h3>
-            <div>
-                {messages.map((msg, idx) => (
-                    <div key={idx}>{msg}</div>
-                ))}
+                <div className="stations">
+                    {(() => {
+                        switch (selectedRole) {
+                            case "manager":
+                                return (
+                                    <>
+                                        <div className="columns">
+                                            <div className="column">
+                                                <AACBoard
+                                                    selectedItems={selectedItems}
+                                                    onSelectItem={addSelectedItem}
+                                                    onDeleteItem={removeSelectedItem}
+                                                    onClearAll={clearAllSelected}
+                                                />
+                                            </div>
+                                            <div className="column">
+                                                <CustomerOrder
+                                                    order={order}
+                                                    getOrder={getOrder}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="columns">
+                                            <div className="column">
+                                                <ManagerActions
+                                                    onSendItems={handleSendItems}
+                                                    onReceiveOrder={handleReceiveOrder}
+                                                    onGiveToCustomer={handleGiveToCustomer}
+                                                />
+                                            </div>
+                                            <div className="column">
+                                                <MiniOrderDisplay burger={burger} side={side} drink={drink}/>
+                                            </div>
+                                        </div>
+                                    </>
+                                );
+                            case "burger":
+                                return <BurgerBuilder onSend={setBurger}/>;
+                            case "side":
+                                return <SideBuilder onSend={setSide}/>;
+                            case "drink":
+                                return <DrinkBuilder onSend={setDrink}/>;
+                        }
+                    })()}
+                </div>
             </div>
             <BurgerBuilder />
             <SideBuilder />
@@ -185,7 +239,8 @@ const App = () => {
                 clearCup={clearCup}
             />
         </div>
-    );
+    )
 };
+
 
 export default App;
