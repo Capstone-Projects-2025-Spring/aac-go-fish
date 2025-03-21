@@ -37,7 +37,11 @@ const BurgerBuilder = ({ onSend }) => {
     };
 
     const handleRequestRepeat = () => {
-        alert("Request Repeat clicked (temp).");
+        console.log("Employee requests manager to repeat order...");
+        const audio = new Audio("/audio/repeat_order.mp3");
+        audio.play().catch((err) => {
+            console.error("Audio playback failed:", err);
+        });
     };
 
 
