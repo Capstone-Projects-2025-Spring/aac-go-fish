@@ -1,15 +1,28 @@
 import logging
 import typing
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException, WebSocket
 from pydantic import ValidationError
 
-from .dependencies import LobbyManager, lobby_manager
+from .dependencies import LobbyManager, lobby_manager, settings
 from .models import Annotated, Initializer, Message
 
 logger = logging.getLogger(__file__)
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncGenerator:
+    """Setup demo if necessary."""
+    s = settings()
+    if s.env == "demo":
+        lobby = lobby_manager()
+        lobby.register_lobby()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/lobby")

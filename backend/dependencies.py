@@ -1,6 +1,8 @@
 import queue
 from collections.abc import Callable
+from functools import cache
 
+from .constants import Settings
 from .game_state import Lobby, Player
 from .models import Role
 
@@ -98,3 +100,9 @@ _LobbyManager = LobbyManager(lambda: "code")
 def lobby_manager() -> LobbyManager:
     """Return the lobby manager dependency."""
     return _LobbyManager
+
+
+@cache
+def settings() -> Settings:
+    """Return the app settings."""
+    return Settings()
