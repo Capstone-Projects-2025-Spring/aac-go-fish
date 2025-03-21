@@ -15,9 +15,9 @@ app = FastAPI()
 @app.post("/lobby")
 def create_lobby(lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, str]:
     """Creates a new lobby."""
-    code, id = lm.register_lobby()
+    code = lm.register_lobby()
 
-    return {"code": code, "id": id}
+    return {"code": code}
 
 
 @app.post("/lobby/{code}/join")

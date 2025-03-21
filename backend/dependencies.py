@@ -1,6 +1,8 @@
 import queue
 from collections.abc import Callable
 
+from backend.game import start_main_loop
+
 from .game_state import Lobby, Player
 from .models import Role
 
@@ -62,22 +64,19 @@ class LobbyManager:
 
         return player.id
 
-    def register_lobby(self) -> tuple[str, str]:
+    def register_lobby(self) -> str:
         """
         Create a new lobby in its own thread.
 
-        Automatically registers the creator as a player in the lobby.
-
         Returns:
-            A tuple of the lobby's join code and the first player's id.
+            The lobby's join code
         """
         code = self.code_generator()
         lobby = Lobby(code)
 
         self.lobbies[code] = lobby
-        id = self.register_player(code)
 
-        return code, id
+        return code
 
     def channel(self, code: str, id: str) -> Channel:
         """
@@ -88,6 +87,11 @@ class LobbyManager:
             id: Player id.
         """
         lobby = self.lobbies[code]
+
+        if not lobby.started:
+            lobby.started = True
+            start_main_loop(lobby)
+
         channel = Channel(lobby.channel, lobby.players[id].channel)
         return channel
 
