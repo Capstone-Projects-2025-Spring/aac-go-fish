@@ -62,22 +62,19 @@ class LobbyManager:
 
         return player.id
 
-    def register_lobby(self) -> tuple[str, str]:
+    def register_lobby(self) -> str:
         """
         Create a new lobby in its own thread.
 
-        Automatically registers the creator as a player in the lobby.
-
         Returns:
-            A tuple of the lobby's join code and the first player's id.
+            The lobby's join code
         """
         code = self.code_generator()
         lobby = Lobby(code)
 
         self.lobbies[code] = lobby
-        id = self.register_player(code)
 
-        return code, id
+        return code
 
     def channel(self, code: str, id: str) -> Channel:
         """
