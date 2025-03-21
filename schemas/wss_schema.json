@@ -1,5 +1,22 @@
 {
   "$defs": {
+    "Burger": {
+      "description": "A burger.",
+      "properties": {
+        "ingredients": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Ingredients",
+          "type": "array"
+        }
+      },
+      "required": [
+        "ingredients"
+      ],
+      "title": "Burger",
+      "type": "object"
+    },
     "Chat": {
       "description": "The manager is typing.",
       "properties": {
@@ -42,6 +59,41 @@
         }
       },
       "title": "DayEnd",
+      "type": "object"
+    },
+    "Drink": {
+      "description": "A drink.",
+      "properties": {
+        "color": {
+          "title": "Color",
+          "type": "string"
+        },
+        "fill": {
+          "title": "Fill",
+          "type": "number"
+        },
+        "ice": {
+          "title": "Ice",
+          "type": "boolean"
+        },
+        "size": {
+          "title": "Size",
+          "type": "string"
+        }
+      },
+      "required": [
+        "color",
+        "fill",
+        "ice",
+        "size"
+      ],
+      "title": "Drink",
+      "type": "object"
+    },
+    "Fry": {
+      "description": "A fries.",
+      "properties": {},
+      "title": "Fry",
       "type": "object"
     },
     "GameEnd": {
@@ -175,9 +227,57 @@
           "default": "new_order",
           "title": "Game State Update Type",
           "type": "string"
+        },
+        "order": {
+          "$ref": "#/$defs/Order"
         }
       },
+      "required": [
+        "order"
+      ],
       "title": "NewOrder",
+      "type": "object"
+    },
+    "Order": {
+      "description": "A complete order.",
+      "properties": {
+        "burger": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Burger"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "drink": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Drink"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fry": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Fry"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "burger",
+        "drink",
+        "fry"
+      ],
+      "title": "Order",
       "type": "object"
     },
     "OrderScore": {
@@ -222,9 +322,7 @@
           "type": "string"
         },
         "order": {
-          "items": {},
-          "title": "Order",
-          "type": "array"
+          "$ref": "#/$defs/Order"
         }
       },
       "required": [
