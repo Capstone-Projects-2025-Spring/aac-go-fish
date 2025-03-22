@@ -58,20 +58,25 @@ function CustomerOrder({
                         ) : null;
                     })}
                 </div>
-                <div className="mockDisplayCup">
-                    {drinkOrder.map((layerName,index) => {
-                    const layer = drinkLayers.find(drink => drink.name === layerName);
-                        return layer && hasIce ? (
-                            <div key = {index} className="mockDrinkLayer" style={{backgroundColor:layer.color}}>
-                            </div>
-                        ) :
-                        layer ? (
-                            <div key = {index} className="mockDrinkLayer" style={{backgroundColor:layer.color}}>
-                            </div>
-                        ) :
-                        null;
-                    })}
-                </div>
+                {!orderButtonVisible ? (
+                    <div className="mockDisplayCup">
+                        {drinkOrder.map((layerName,index) => {
+                        const layer = drinkLayers.find(drink => drink.name === layerName);
+                            return layer && hasIce ? (
+                                <div key = {index} className="mockDrinkLayer" style={{backgroundColor:layer.color}}>
+                                </div>
+                            ) :
+                            layer ? (
+                                <div key = {index} className="mockDrinkLayer" style={{backgroundColor:layer.color}}>
+                                </div>
+                            ) :
+                            null;
+                        })}
+                    </div>
+                    )
+                : null
+                }
+
                 <div>
 
                 </div>
