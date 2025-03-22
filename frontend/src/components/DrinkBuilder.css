@@ -20,8 +20,10 @@
     cursor: pointer;
     text-align: center;
     border-radius: 6px;
-    -webkit-text-stroke-width: 0.2px;
-    -webkit-text-stroke-color: black;
+    font-size: 32px;
+}
+.DrinkButtons button:active {
+    transform: scale(.95);
 }
 
 .AddIceButton {
@@ -34,6 +36,7 @@
     cursor: pointer;
     text-align: center;
     border-radius: 6px;
+    font-size: 32px;
 }
 
 .ClearCupButton {
@@ -46,6 +49,7 @@
     cursor: pointer;
     text-align: center;
     border-radius: 6px;
+    font-size: 24px;
 }
 
 .Cup{
@@ -92,10 +96,12 @@
     margin: 10px;
     padding: 0;
     border: 1px solid #322e2e;
-    background: #ffffff;
+    background: #000000;
     cursor: pointer;
     text-align: center;
     border-radius: 6px;
+    font-size: 24px;
+    color: #ffffff;
 }
 
 .FillCupButton:hover {
@@ -104,4 +110,12 @@
 
 .ClearCupButton:hover {
     border: 3px solid #322e2e;
+}
+
+.FillCupButton:active {
+    transform: scale(.95);
+}
+
+.ClearCupButton:active {
+    transform: scale(.95);
 }

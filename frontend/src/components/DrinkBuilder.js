@@ -8,12 +8,12 @@ const DrinkBuilder = ({ onSend }) =>{
     const [hasIce, setHasIce] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const drinkColors = [
-        {name: "Blue", color: "#0033CC"},
-        {name: "Green", color: "#00CC00"},
-        {name: "Yellow", color: "#FFFF00"},
+        {name: "Blue", color: "#34C6F4"},
+        {name: "Green", color: "#99CA3C"},
+        {name: "Yellow", color: "#F7EC13"},
         {name: "Red", color: "#FF0000"},
-        {name: "Orange", color: "#FF9900"},
-        {name: "Purple", color: "#660099"},
+        {name: "Orange", color: "#F5841F"},
+        {name: "Purple", color: "#7E69AF"},
     ];
     const maxFill = 100;
     const fillAmount = 5;
