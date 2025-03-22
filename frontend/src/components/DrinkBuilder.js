@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
 const DrinkBuilder = ({ onSend }) =>{
@@ -7,6 +7,7 @@ const DrinkBuilder = ({ onSend }) =>{
     const fillInterval = useRef(null);
     const [hasIce, setHasIce] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+    const [colorSelected, setColorSelected] = useState(false);
     const drinkColors = [
         {name: "Blue", color: "#34C6F4"},
         {name: "Green", color: "#99CA3C"},
@@ -18,6 +19,12 @@ const DrinkBuilder = ({ onSend }) =>{
     const maxFill = 100;
     const fillAmount = 5;
     const fillRate = 200;
+
+    useEffect(() => {
+        setColor(null);
+        setColorSelected(false);
+        setFillPercentage(0);
+    }, []);
 
     const startFilling = () => {
         if (!color) {
@@ -45,6 +52,7 @@ const DrinkBuilder = ({ onSend }) =>{
     const clearCup = () =>{
         setColor(null);
         setFillPercentage(0);
+        setColorSelected(false);
     };
 
     const handleSend = () => {
@@ -61,18 +69,27 @@ const DrinkBuilder = ({ onSend }) =>{
         clearCup();
     };
 
+    const selectColor = (selectedColor) => {
+        if (color != null){
+            return;
+        }
+        setColor(selectedColor);
+        setColorSelected(true);
+    };
+
     return (
         <div className = "DrinkBuilder">
             <div className="DrinkButtons">
                 {drinkColors.map((choice, index) => (
                     <button
                         key = {index}
-                        onClick={() => setColor(choice.color)}
+                        onClick={() => selectColor(choice.color)}
                         style={{
                             backgroundColor: choice.color,
                             color: "#FFFFFF",
                             border: color === choice.color ? "3px solid black" : "none",
                         }}
+                        disabled={colorSelected}
                     >
                         {choice.name}
                     </button>
