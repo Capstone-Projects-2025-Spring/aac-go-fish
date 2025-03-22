@@ -1,17 +1,25 @@
+.container {
+    width: 100%;
+}
+
 .CustomerOrder {
     text-align: center;
 }
 
 .CustomerOrder button {
     font-size: 32px;
+    margin-left: 200px;
+    overflow-x: hidden;
 }
 
 .orderDisplay {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-
+    flex-wrap: wrap;
+    margin-left: 100px;
+    justify-content: space-evenly;
 }
+
 
 .burgerOrderDisplay {
     margin-top: -50px;
@@ -19,24 +27,25 @@
     flex-direction: column-reverse;
     align-items: center;
     transform: translateY(-20%);
+    width: auto;
 }
 
 .foodItem {
-    width: 800px;
+    width: auto;
     margin: -57px;
     z-index: 1;
 }
 
 .foodItem img{
-    width: 200px;
+    width: 150px;
     margin-top: 100px;
 }
 
 .mockDisplayCup {
     margin: 20px auto;
-    min-width: 150px;
-    max-width: 150px;
-    min-height: 300px;
+    min-width: 100px;
+    max-width: 100px;
+    min-height: 200px;
     border: 2px solid #000000;
     border-radius: 15px;
     background-color: #ffffff;
@@ -47,15 +56,8 @@
 
 .mockDrinkLayer {
     width: 100%;
-    min-height: 30px;
+    min-height: 25px;
     text-align: center;
     line-height: 20px;
     color:#ffffff;
-}
-
-.ice{
-    position:absolute;
-    height: auto;
-    width: 100%;
-    object-fit: contain;
 }
