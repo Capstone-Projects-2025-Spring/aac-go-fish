@@ -27,8 +27,6 @@ const App = () => {
     const [drinkOrder, setDrinkOrder] = useState([]);
     const [orderHasIce, setOrderHasIce] = useState(false);
 
-    const DrinkBuilder = ({ onSend }) =>{
-    }
     const [layers, setLayers] = useState([]);
     const [hasIce, setHasIce] = useState(false);
     const maxSize = 9;

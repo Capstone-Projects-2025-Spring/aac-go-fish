@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
-const DrinkBuilder = ({
-    hasIce,
-    layers,
-    addLayer,
-    changeIce,
-    clearCup,
-    onSend
-}) =>{
-
+const DrinkBuilder = ({ onSend }) =>{
+    const [layers, setLayers] = useState([]);
+    const [hasIce, setHasIce] = useState(false);
     const drinkLayers = [
         {name: "Blue", color: "#0033CC"},
         {name: "Green", color: "#00CC00"},
@@ -29,6 +23,24 @@ const DrinkBuilder = ({
 
     const maxSize = 9;
 
+    const addLayer = (layer) =>{
+        if (layers.length <= maxSize){
+            setLayers([...layers, layer]);
+        }
+        else{
+            alert("Cup is full!");
+        }
+
+    };
+
+    const changeIce = () =>{
+        setHasIce(!hasIce);
+    };
+
+    const clearCup = () =>{
+        setLayers([]);
+        setHasIce(false);
+    };
 
     return (
         <div className = "DrinkBuilder">
