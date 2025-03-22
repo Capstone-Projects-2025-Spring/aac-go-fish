@@ -59,9 +59,7 @@
 
 .Cup{
     margin: 20px auto;
-    min-width: 150px;
-    max-width: 150px;
-    min-height: 300px;
+    width: 150px;
     border: 2px solid #000000;
     border-radius: 15px;
     background-color: #ffffff;
@@ -69,14 +67,6 @@
     flex-direction: column-reverse;
     overflow:hidden;
     position:relative;
-}
-
-.DrinkLayer{
-    width: 100%;
-    min-height: 30px;
-    text-align: center;
-    line-height: 20px;
-    color:#ffffff;
 }
 
 .Ice{
@@ -125,3 +115,23 @@
     transform: scale(.95);
 }
 
+.CupSizeButtons {
+    min-width: 120px;
+    min-height: 120px;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 24px;
+}
+
+.CupSizeButtons:hover{
+    border: 3px solid #322e2e;
+}
+
+.CupSizeButtons:active {
+    transform: scale(.95);
+}

@@ -1,8 +1,13 @@
 import React from "react";
 
-export default function DrinkDisplay({ color, fillPercentage, hasIce }) {
+export default function DrinkDisplay({ color, fillPercentage, hasIce, cupSize }) {
+    const cupHeight = {
+        small: "200px",
+        medium: "275px",
+        large: "350px",
+    };
     return (
-        <div className="Cup">
+        <div className="Cup" style={{height: cupHeight[cupSize]}}>
             <div className="Filling"
                  style={{
                      backgroundColor: color || "#FFFFFF",

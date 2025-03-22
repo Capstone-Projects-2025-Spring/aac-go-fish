@@ -8,6 +8,7 @@ const DrinkBuilder = ({ onSend }) =>{
     const [hasIce, setHasIce] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [colorSelected, setColorSelected] = useState(false);
+    const [cupSize, setCupSize] = useState("medium");
     const drinkColors = [
         {name: "Blue", color: "#34C6F4"},
         {name: "Green", color: "#99CA3C"},
@@ -65,6 +66,7 @@ const DrinkBuilder = ({ onSend }) =>{
             color,
             fillPercentage,
             hasIce,
+            cupSize,
         });
         clearCup();
     };
@@ -78,11 +80,11 @@ const DrinkBuilder = ({ onSend }) =>{
     };
 
     return (
-        <div className = "DrinkBuilder">
+        <div className="DrinkBuilder">
             <div className="DrinkButtons">
                 {drinkColors.map((choice, index) => (
                     <button
-                        key = {index}
+                        key={index}
                         onClick={() => selectColor(choice.color)}
                         style={{
                             backgroundColor: choice.color,
@@ -93,7 +95,7 @@ const DrinkBuilder = ({ onSend }) =>{
                     >
                         {choice.name}
                     </button>
-                    ))}
+                ))}
             </div>
 
             <button className="FillCupButton"
@@ -104,10 +106,28 @@ const DrinkBuilder = ({ onSend }) =>{
                 Fill Cup
             </button>
 
-            <button className="ClearCupButton" onClick = {clearCup}>
+            <button className="ClearCupButton" onClick={clearCup}>
                 Clear Cup
             </button>
-            <DrinkDisplay color={color} fillPercentage={fillPercentage}/>
+            <button
+                className="CupSizeButtons"
+                onClick={() => setCupSize("small")}
+            >
+                Small
+            </button>
+            <button
+                className="CupSizeButtons"
+                onClick={() => setCupSize("medium")}
+            >
+                Medium
+            </button>
+            <button
+                className="CupSizeButtons"
+                onClick={() => setCupSize("large")}
+            >
+                Large
+            </button>
+            <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize ={cupSize}/>
             <button onClick={handleSend}>Send</button>
         </div>
     );
