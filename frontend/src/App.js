@@ -146,58 +146,18 @@ const App = () => {
 
     return (
         <div className="app-container">
-            <div style={{ padding: "1rem" }}>
-                <h1>Customer Order</h1>
-                <CustomerOrder
-                    burgerOrder = {burgerOrder}
-                    drinkOrder={drinkOrder}
-                    layers = {layers}
-                    hasIce = {orderHasIce}
-                    getBurgerOrder = {() => getBurgerOrder(mockBurgerOrders)}
-                    getDrinkOrder = {() => getDrinkOrder(mockDrinkOrders)}
-                    orderButtonVisible = {orderButtonVisible}
-                />
-            </div>
-            <h1>AAC Board</h1>
-            { }
-            <AACBoard
-                selectedItems={selectedItems}
-                onSelectItem={addSelectedItem}
-                onDeleteItem={removeSelectedItem}
-                onClearAll={clearAllSelected}
-            />
-            {isManager && (
-                <div className="manager-section">
-                    <h2>Manager Text-Based UI</h2>
-                    <ManagerActions
-                        actionLog={actionLog}
-                        onSendItems={handleSendItems}
-                        onReceiveOrder={handleReceiveOrder}
-                        onGiveToCustomer={handleGiveToCustomer}
-                    />
-                </div>
-            )}
-            <div className="main-layout">
-                <div className="sidebar">
-                    <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
-                    <h3>Event Log</h3>
-                    <div className="event-log">
-                        {messages.map((msg, idx) => (
-                            <div key={idx}>{msg}</div>
-                        ))}
-                    </div>
-                </div>
-            <div className="main-layout">
-                <div className="sidebar">
-                    <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
-                    <h3>Event Log</h3>
-                    <div className="event-log">
-                        {messages.map((msg, idx) => (
-                            <div key={idx}>{msg}</div>
-                        ))}
-                    </div>
-                </div>
 
+            <div className="main-layout">
+                <div className="sidebar">
+                    <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
+                    <h3>Event Log</h3>
+                    <div className="event-log">
+                        {messages.map((msg, idx) => (
+                            <div key={idx}>{msg}</div>
+                        ))}
+                    </div>
+                </div>
+            <div className="main-layout">
                 <div className="stations">
                     {(() => {
                         switch (selectedRole) {
@@ -215,8 +175,10 @@ const App = () => {
                                             </div>
                                             <div className="column">
                                                 <CustomerOrder
-                                                    order={burger}
-                                                    getOrder={getBurgerOrder}
+                                                    burgerOrder={burgerOrder}
+                                                    getBurgerOrder={getBurgerOrder}
+                                                    drinkOrder={drinkOrder}
+                                                    getDrinkOrder={getDrinkOrder}
                                                 />
                                             </div>
                                         </div>
@@ -244,16 +206,7 @@ const App = () => {
                     })()}
                 </div>
             </div>
-            <BurgerBuilder />
-            <SideBuilder />
-            <DrinkBuilder
-                hasIce={hasIce}
-                layers={layers}
-                addLayer={addLayer}
-                changeIce={changeIce}
-                clearCup={clearCup}
-                onSend={setDrink}
-            />
+
         </div>
         </div>
     );

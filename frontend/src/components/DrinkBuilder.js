@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "./DrinkBuilder.css"
+import DrinkDisplay from "./DrinkDisplay";
 const DrinkBuilder = ({
     hasIce,
     layers,
