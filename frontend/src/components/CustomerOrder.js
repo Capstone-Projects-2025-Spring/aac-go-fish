@@ -78,7 +78,6 @@ function CustomerOrder({
             </div>
 
         </div>
-
     );
 };
 

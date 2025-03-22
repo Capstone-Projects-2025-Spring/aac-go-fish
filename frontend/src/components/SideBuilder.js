@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
 import "./SideBuilder.css"
+import SideDisplay from "./SideDisplay";
 
-const SideBuilder = () =>{
+const SideBuilder = ({ onSend }) =>{
     const [tableState, setTableState] = useState("empty");
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
+
+    const handleSend = () => {
+        onSend({
+            tableState,
+            fryTimeLeft,
+        });
+        reset();
+    };
 
     const placePotatoes = () =>{
         if (tableState === "empty") {
@@ -41,22 +50,10 @@ const SideBuilder = () =>{
 
     return (
         <div className="SideBuilder">
-            <h1>Side Station</h1>
-            <div className = "Table">
-                {tableState === "empty" && <p>Table is empty</p>}
-                {tableState === "potatoes" && (<img src="/images/potato.png" alt="Potato" className="TableImages" />)}
-                {tableState === "chopped" && (<img src="/images/choppedPotatoes.png" alt="ChoppedPotatoes" className="TableImages" />)}
-                {tableState === "frying" && (
-                    <>
-                        <img src="/images/fryer.png" alt = "Frying" className="TableImages" />
-                        <p>Time left: {fryTimeLeft} seconds</p>
-                    </>
-                )}
-                {tableState === "fries" && (<img src="/images/fries.png" alt="Fries" className="TableImages" />)}
-            </div>
+            <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft}/>
             <div className="SideButtons">
                 <button onClick={placePotatoes} disabled={tableState !== "empty"}>
-                    <img src="/images/potatoButton.png" alt="Place Potatoes" className = "ButtonImages" />
+                    <img src="/images/potatoButton.png" alt="Place Potatoes" className="ButtonImages"/>
                     Place Potatoes
                 </button>
                 <button onClick={chopPotatoes} disabled={tableState !== "potatoes"}>
@@ -71,6 +68,7 @@ const SideBuilder = () =>{
                     Reset
                 </button>
             </div>
+            <button onClick={handleSend}>Send</button>
         </div>
     );
 };

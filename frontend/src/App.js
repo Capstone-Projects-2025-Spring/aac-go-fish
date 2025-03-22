@@ -18,12 +18,17 @@ const App = () => {
     const [side, setSide] = useState(null);
     const [drink, setDrink] = useState(null);
 
+    const [actionLog, setActionLog] = useState([]);
+    const isManager = true;
+
     const [orderButtonVisible, setOrderButtonVisibility] = useState(true)
 
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [drinkOrder, setDrinkOrder] = useState([]);
     const [orderHasIce, setOrderHasIce] = useState(false);
 
+    const DrinkBuilder = ({ onSend }) =>{
+    }
     const [layers, setLayers] = useState([]);
     const [hasIce, setHasIce] = useState(false);
     const maxSize = 9;
@@ -182,6 +187,16 @@ const App = () => {
                         ))}
                     </div>
                 </div>
+            <div className="main-layout">
+                <div className="sidebar">
+                    <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
+                    <h3>Event Log</h3>
+                    <div className="event-log">
+                        {messages.map((msg, idx) => (
+                            <div key={idx}>{msg}</div>
+                        ))}
+                    </div>
+                </div>
 
                 <div className="stations">
                     {(() => {
@@ -200,8 +215,8 @@ const App = () => {
                                             </div>
                                             <div className="column">
                                                 <CustomerOrder
-                                                    order={order}
-                                                    getOrder={getOrder}
+                                                    order={burger}
+                                                    getOrder={getBurgerOrder}
                                                 />
                                             </div>
                                         </div>
@@ -237,10 +252,13 @@ const App = () => {
                 addLayer={addLayer}
                 changeIce={changeIce}
                 clearCup={clearCup}
+                onSend={setDrink}
             />
         </div>
-    )
-};
+        </div>
+    );
+}
+
 
 
 export default App;

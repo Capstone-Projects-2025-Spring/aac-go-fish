@@ -5,7 +5,8 @@ const DrinkBuilder = ({
     layers,
     addLayer,
     changeIce,
-    clearCup
+    clearCup,
+    onSend
 }) =>{
 
     const drinkLayers = [
@@ -17,6 +18,15 @@ const DrinkBuilder = ({
         {name: "Purple", color: "#660099"},
     ];
 
+    const handleSend = () => {
+        onSend({
+            layers,
+            hasIce,
+        });
+        clearCup();
+    };
+
+    const maxSize = 9;
 
 
     return (

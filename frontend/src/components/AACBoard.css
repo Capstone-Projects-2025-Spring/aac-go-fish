@@ -1,8 +1,3 @@
-.aacboard-wrapper {
-    padding: 1rem;
-    margin: 0 auto;
-}
-
 .aacboard-selected-items {
     margin-bottom: 1rem;
     font-weight: bold;
@@ -21,6 +16,11 @@
     display: inline-flex;
     align-items: center;
     font-size: 1.3rem;
+    img {
+        width: 2.5rem;
+        height: 2.5rem;
+        object-fit: contain;
+    }
 }
 
 .selected-item-delete {
@@ -32,18 +32,16 @@
     font-size: 1.2rem;
 }
 
-.selected-items-actions {
-    margin-top: 1rem;
-}
-
 .aacboard-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 140px;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+    max-width: 100%;
+    margin-bottom: 2.5rem;
 }
 
 .aacboard-item-btn {
+    aspect-ratio: 1 / 1;
     background-color: #fff;
     border: 2px solid #ccc;
     border-radius: 8px;
@@ -53,11 +51,9 @@
     justify-content: center;
     font-size: 1.2rem;
     cursor: pointer;
-}
-
-.aacboard-item-btn img, .aacboard-selected-item img {
-    width: 70px;
-    height: 70px;
-    margin-bottom: 0.5rem;
-    object-fit: contain;
+    img {
+        width: 60%;
+        height: auto;
+        object-fit: contain;
+    }
 }
