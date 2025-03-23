@@ -47,7 +47,7 @@
 .mockDisplayCup {
     margin: 20px auto;
     margin-left: 50px;
-    min-width: 100px;
+    min-width: 125px;
     max-width: 100px;
     max-height: 250px;
     border: 2px solid #000000;
