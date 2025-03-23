@@ -25,7 +25,16 @@ export const menu = [
     {
         name: "Drinks",
         children: [
-            "Soda"
+            "Soda",
+            "Blue",
+            "Green",
+            "Yellow",
+            "Red",
+            "Orange",
+            "Purple",
+            "Small",
+            "Medium",
+            "Large"
         ],
     }
 ].map(
