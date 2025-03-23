@@ -62,24 +62,25 @@ function CustomerOrder({
                     <div className="mockDisplayCup">
                         {drinkOrder.map((layerName,index) => {
                         const layer = drinkLayers.find(drink => drink.name === layerName);
-                            return layer && hasIce ? (
+                            return layer ? (
                                 <div key = {index} className="mockDrinkLayer" style={{backgroundColor:layer.color}}>
-                                </div>
-                            ) :
-                            layer ? (
-                                <div key = {index} className="mockDrinkLayer" style={{backgroundColor:layer.color}}>
+
                                 </div>
                             ) :
                             null;
+
                         })}
+                        {hasIce && (
+                            <img
+                                src="/images/ice.png"
+                                alt="Ice"
+                                className="Ice"
+                            />
+                        )}
                     </div>
                     )
                 : null
                 }
-
-                <div>
-
-                </div>
             </div>
 
         </div>

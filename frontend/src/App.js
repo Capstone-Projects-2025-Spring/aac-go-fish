@@ -178,6 +178,7 @@ const App = () => {
                                                     drinkOrder={drinkOrder}
                                                     getDrinkOrder={getDrinkOrder}
                                                     orderButtonVisible={orderButtonVisible}
+                                                    hasIce={orderHasIce}
                                                 />
                                             </div>
                                         </div>
