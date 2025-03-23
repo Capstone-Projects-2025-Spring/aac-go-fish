@@ -3,7 +3,7 @@ import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
-import mockOrders from "./MockOrders"
+import {mockBurgerOrders, mockDrinkOrders} from "./MockOrders"
 import RoleSelector from "./components/RoleSelector";
 import AACBoard from "./components/AACBoard";
 import CustomerOrder from "./components/CustomerOrder";
@@ -18,7 +18,22 @@ const App = () => {
     const [side, setSide] = useState(null);
     const [drink, setDrink] = useState(null);
 
-    const [order, setOrder] = useState([]);
+    const [actionLog, setActionLog] = useState([]);
+    const isManager = true;
+
+    const [orderButtonVisible, setOrderButtonVisibility] = useState(true)
+
+    const [burgerOrder, setBurgerOrder] = useState([]);
+    const [drinkOrder, setDrinkOrder] = useState([]);
+
+    //// Temporarily not used until ice is fully implemented in the drink station
+    const [orderHasIce, setOrderHasIce] = useState(false);
+    const [drinkSize, setDrinkSize] = useState(0);
+
+    const [layers, setLayers] = useState([]);
+    const maxSize = 9;
+
+    const [hasSide, setHasSide] = useState(false);
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -92,19 +107,50 @@ const App = () => {
         setDrink(null);
     };
 
-    const getRandomOrder = (min,max) => {
+    const getRandomNumber = (min,max) => {
         return Math.floor(Math.random() * (max + 1 - min) + min);
     };
 
-    const getOrder = () => {
+    const getBurgerOrder = () => {
         console.log('Button clicked!');
 
-        document.getElementById("getOrderButton").hidden = "True";
-        const randomIndex = getRandomOrder(0,2);
-        setOrder(mockOrders[randomIndex]);
+        setOrderButtonVisibility(!orderButtonVisible);
+        const randomIndex = getRandomNumber(0,2);
+        setBurgerOrder(mockBurgerOrders[randomIndex]);
     };
+    const getDrinkOrder = () => {
+        console.log('Button clicked!');
+
+        const randomIndex = getRandomNumber(0,5);
+        setDrinkOrder(mockDrinkOrders[randomIndex]);
+
+        const randomSize = getRandomNumber(0,2);
+        setDrinkSize(randomSize);
+        console.log(drinkSize);
+
+        // Temporarily not used until ice is fully implemented in the drink station
+        const randomIce = getRandomNumber(0,2);
+        if (randomIce) {
+            setOrderHasIce(!orderHasIce);
+        }
+    };
+    const getSideOrder = () => {
+        const randomSide = getRandomNumber(0,1);
+
+        if (randomSide) {
+            setHasSide(!hasSide);
+        }
+    };
+
+    const addLayer = (layer) =>{
+        if (layers.length <= maxSize){
+            setLayers([...layers, layer]);
+        }
+    };
+
     return (
         <div className="app-container">
+
             <div className="main-layout">
                 <div className="sidebar">
                     <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole}/>
@@ -115,7 +161,7 @@ const App = () => {
                         ))}
                     </div>
                 </div>
-
+            <div className="main-layout">
                 <div className="stations">
                     {(() => {
                         switch (selectedRole) {
@@ -133,8 +179,15 @@ const App = () => {
                                             </div>
                                             <div className="column">
                                                 <CustomerOrder
-                                                    order={order}
-                                                    getOrder={getOrder}
+                                                    burgerOrder={burgerOrder}
+                                                    getBurgerOrder={getBurgerOrder}
+                                                    drinkOrder={drinkOrder}
+                                                    getDrinkOrder={getDrinkOrder}
+                                                    orderButtonVisible={orderButtonVisible}
+                                                    hasIce={orderHasIce}
+                                                    getSideOrder={getSideOrder}
+                                                    hasSide={hasSide}
+                                                    drinkSize={drinkSize}
                                                 />
                                             </div>
                                         </div>
@@ -162,9 +215,12 @@ const App = () => {
                     })()}
                 </div>
             </div>
+
+        </div>
         </div>
     );
 }
+
 
 
 export default App;

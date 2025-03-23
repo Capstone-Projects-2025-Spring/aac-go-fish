@@ -2,8 +2,16 @@ import React from 'react';
 import './CustomerOrder.css';
 
 function CustomerOrder({
-    order,
-    getOrder,
+    burgerOrder,
+    drinkOrder,
+    layers,
+    drinkSize,
+    hasIce,
+    hasSide,
+    getBurgerOrder,
+    getDrinkOrder,
+    getSideOrder,
+    orderButtonVisible
 }) {
 
     const foodItems = [
@@ -18,25 +26,92 @@ function CustomerOrder({
         { id: 11, name: 'Cheese', image: '/images/cheese.png', audio: '/audio/cheese.mp3', sideImage: '/images/CheeseSide.png' },
     ];
 
+    const drinkLayers = [
+        {name: "Blue", color: "#0033CC"},
+        {name: "Green", color: "#00CC00"},
+        {name: "Yellow", color: "#FFFF00"},
+        {name: "Red", color: "#FF0000"},
+        {name: "Orange", color: "#FF9900"},
+        {name: "Purple", color: "#660099"},
+    ];
 
+    // Temporarily set hasIce to false until ice is fully implemented in the drink station
+    hasIce = false;
+    console.log(drinkSize);
     return (
         <div className = "CustomerOrder">
             <div className = "orderButton">
-                <button
-                onClick={getOrder}
-                id = "getOrderButton" class = "button" type="button">
+                {orderButtonVisible ? (<button
+                onClick={() => {
+                    getBurgerOrder();
+                    getDrinkOrder();
+                    getSideOrder();
+                }}
+                id = "getOrderButton" type="button">
                     Get Order
                 </button>
+                ) : null
+            }
             </div>
             <div className = "orderDisplay">
-                {[...order].map((itemName,index) => {
-                    const item = foodItems.find(food => food.name === itemName);
-                    return item ? (
-                        <div key={index} className="foodItem">
-                            <img src={item.sideImage} alt={item.sideImage}/>
-                        </div>
-                    ) : null;
-                })}
+                <div className = "burgerOrderDisplay">
+                    {[...burgerOrder].map((itemName,index) => {
+                        const item = foodItems.find(food => food.name === itemName);
+                        return item ? (
+                            <div key={index} className="foodItem">
+                                <img src={item.sideImage} alt={item.sideImage}/>
+                            </div>
+                        ) : null;
+                    })}
+                </div>
+                {!orderButtonVisible && hasSide ? (
+                    <div className='sideDisplay'>
+                        {
+                        <img
+                            src="/images/fries.png"
+                            alt="Fries"
+                            className="Fries"
+                        />
+                        }
+                    </div>
+                ): !orderButtonVisible ? (
+                    <div className='sideDisplay'>
+                        {
+                        <img
+                            src="/images/noFries.png"
+                            alt="NoFries"
+                            className="NoFries"
+                        />
+                        }
+                    </div>
+                )
+                : null
+                }
+                {!orderButtonVisible ? (
+                    <div className="mockDisplayCup" style = {{ backgroundColor: drinkOrder[1], color: "#FFFFFF" }}>
+
+                        <p className='drinkSizeText'>
+                        {drinkSize === 2 ?
+                            "L"
+                        : drinkSize === 1 ?
+                            "M"
+                        : drinkSize === 0 ?
+                            "S"
+                         : null
+                        }
+                        </p>
+
+                        {hasIce && (
+                            <img
+                                src="/images/ice.png"
+                                alt="Ice"
+                                className="Ice"
+                            />
+                        )}
+                    </div>
+                    )
+                : null
+                }
             </div>
 
         </div>
