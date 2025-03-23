@@ -5,6 +5,7 @@ function CustomerOrder({
     burgerOrder,
     drinkOrder,
     layers,
+    drinkSize,
     hasIce,
     hasSide,
     getBurgerOrder,
@@ -34,7 +35,9 @@ function CustomerOrder({
         {name: "Purple", color: "#660099"},
     ];
 
-
+    // Temporarily set hasIce to false until ice is fully implemented in the drink station
+    hasIce = false;
+    console.log(drinkSize);
     return (
         <div className = "CustomerOrder">
             <div className = "orderButton">
@@ -96,6 +99,18 @@ function CustomerOrder({
                             null;
 
                         })}
+                        <p className='drinkSizeText'>
+                        {drinkSize === 2 ?
+                            "L"
+                        : drinkSize === 1 ?
+                            "M"
+                        : drinkSize === 0 ?
+                            "S"
+                         : null
+                        }
+
+                        </p>
+
                         {hasIce && (
                             <img
                                 src="/images/ice.png"

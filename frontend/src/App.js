@@ -25,7 +25,10 @@ const App = () => {
 
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [drinkOrder, setDrinkOrder] = useState([]);
+
+    //// Temporarily not used until ice is fully implemented in the drink station
     const [orderHasIce, setOrderHasIce] = useState(false);
+    const [drinkSize, setDrinkSize] = useState(0);
 
     const [layers, setLayers] = useState([]);
     const maxSize = 9;
@@ -104,7 +107,7 @@ const App = () => {
         setDrink(null);
     };
 
-    const getRandomOrder = (min,max) => {
+    const getRandomNumber = (min,max) => {
         return Math.floor(Math.random() * (max + 1 - min) + min);
     };
 
@@ -112,23 +115,28 @@ const App = () => {
         console.log('Button clicked!');
 
         setOrderButtonVisibility(!orderButtonVisible);
-        const randomIndex = getRandomOrder(0,2);
+        const randomIndex = getRandomNumber(0,2);
         setBurgerOrder(mockBurgerOrders[randomIndex]);
     };
     const getDrinkOrder = () => {
         console.log('Button clicked!');
 
         setOrderButtonVisibility(!orderButtonVisible);
-        const randomIndex = getRandomOrder(0,2);
+        const randomIndex = getRandomNumber(0,2);
         setDrinkOrder(mockDrinkOrders[randomIndex]);
 
-        const randomIce = getRandomOrder(0,1);
+        const randomSize = getRandomNumber(0,2);
+        setDrinkSize(randomSize);
+        console.log(drinkSize);
+
+        // Temporarily not used until ice is fully implemented in the drink station
+        const randomIce = getRandomNumber(0,2);
         if (randomIce) {
             setOrderHasIce(!orderHasIce);
         }
     };
     const getSideOrder = () => {
-        const randomSide = getRandomOrder(0,1);
+        const randomSide = getRandomNumber(0,1);
 
         if (randomSide) {
             setHasSide(!hasSide);
@@ -180,6 +188,7 @@ const App = () => {
                                                     hasIce={orderHasIce}
                                                     getSideOrder={getSideOrder}
                                                     hasSide={hasSide}
+                                                    drinkSize={drinkSize}
                                                 />
                                             </div>
                                         </div>

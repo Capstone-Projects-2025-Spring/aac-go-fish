@@ -59,6 +59,16 @@
     position: relative;
 }
 
+.drinkSizeText{
+    font-size: large;
+    font-family: verdana, sans-serif;
+    font-weight: bold;
+    position: absolute;
+    top: 33%;
+    left: 45%;
+
+}
+
 .mockDrinkLayer {
     width: 100%;
     min-height: 25px;
