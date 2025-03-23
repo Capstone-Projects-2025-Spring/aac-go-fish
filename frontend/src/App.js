@@ -28,8 +28,9 @@ const App = () => {
     const [orderHasIce, setOrderHasIce] = useState(false);
 
     const [layers, setLayers] = useState([]);
-    const [hasIce, setHasIce] = useState(false);
     const maxSize = 9;
+
+    const [hasSide, setHasSide] = useState(false);
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -126,20 +127,18 @@ const App = () => {
             setOrderHasIce(!orderHasIce);
         }
     };
+    const getSideOrder = () => {
+        const randomSide = getRandomOrder(0,1);
+
+        if (randomSide) {
+            setHasSide(!hasSide);
+        }
+    };
 
     const addLayer = (layer) =>{
         if (layers.length <= maxSize){
             setLayers([...layers, layer]);
         }
-    };
-
-    const changeIce = () =>{
-        setHasIce(!hasIce);
-    };
-
-    const clearCup = () =>{
-        setLayers([]);
-        setHasIce(false);
     };
 
     return (
@@ -179,6 +178,8 @@ const App = () => {
                                                     getDrinkOrder={getDrinkOrder}
                                                     orderButtonVisible={orderButtonVisible}
                                                     hasIce={orderHasIce}
+                                                    getSideOrder={getSideOrder}
+                                                    hasSide={hasSide}
                                                 />
                                             </div>
                                         </div>

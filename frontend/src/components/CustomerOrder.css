@@ -1,5 +1,5 @@
-.container {
-    width: 100%;
+.main-layout {
+    width: 200%;
 }
 
 .CustomerOrder {
@@ -17,7 +17,10 @@
     flex-direction: row;
     flex-wrap: wrap;
     margin-left: 100px;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    width: 1500%;
+    max-width: 500px;
+    gap: 50px;
 }
 
 
@@ -43,6 +46,7 @@
 
 .mockDisplayCup {
     margin: 20px auto;
+    margin-left: 50px;
     min-width: 100px;
     max-width: 100px;
     min-height: 200px;
@@ -68,7 +72,18 @@
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100%; /* Adjust to fit the cup */
+    width: 100%;
     height: auto;
-    pointer-events: none; /* So it doesn’t interfere with interactions */
+    pointer-events: none;
+}
+
+.sideDisplay {
+    width: 150px;
+}
+
+.sideDisplay img{
+    width: 150px;
+    position: relative;
+    margin-top: 105px;
+    margin-left: 50px;
 }

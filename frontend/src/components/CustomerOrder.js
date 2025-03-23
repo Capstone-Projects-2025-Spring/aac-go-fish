@@ -6,8 +6,10 @@ function CustomerOrder({
     drinkOrder,
     layers,
     hasIce,
+    hasSide,
     getBurgerOrder,
     getDrinkOrder,
+    getSideOrder,
     orderButtonVisible
 }) {
 
@@ -40,6 +42,7 @@ function CustomerOrder({
                 onClick={() => {
                     getBurgerOrder();
                     getDrinkOrder();
+                    getSideOrder();
                 }}
                 id = "getOrderButton" type="button">
                     Get Order
@@ -58,6 +61,29 @@ function CustomerOrder({
                         ) : null;
                     })}
                 </div>
+                {!orderButtonVisible && hasSide ? (
+                    <div className='sideDisplay'>
+                        {
+                        <img
+                            src="/images/fries.png"
+                            alt="Fries"
+                            className="Fries"
+                        />
+                        }
+                    </div>
+                ): !orderButtonVisible ? (
+                    <div className='sideDisplay'>
+                        {
+                        <img
+                            src="/images/noFries.png"
+                            alt="NoFries"
+                            className="NoFries"
+                        />
+                        }
+                    </div>
+                )
+                : null
+                }
                 {!orderButtonVisible ? (
                     <div className="mockDisplayCup">
                         {drinkOrder.map((layerName,index) => {
