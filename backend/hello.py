@@ -1,16 +1,36 @@
-from dependencies import LobbyManager, lobby_manager
-from fastapi import Depends, FastAPI, HTTPException, WebSocket
-from models import Annotated, Initializer, Message
+import logging
+import typing
+from collections.abc import AsyncGenerator
+from contextlib import asynccontextmanager
 
-app = FastAPI()
+from fastapi import Depends, FastAPI, HTTPException, WebSocket
+from pydantic import ValidationError
+
+from .dependencies import LobbyManager, lobby_manager, settings
+from .models import Annotated, Initializer, Message
+
+logger = logging.getLogger(__file__)
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncGenerator:
+    """Setup demo if necessary."""
+    s = settings()
+    if s.env == "demo":
+        lobby = lobby_manager()
+        lobby.register_lobby()
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 @app.post("/lobby")
 def create_lobby(lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, str]:
     """Creates a new lobby."""
-    code, id = lm.register_lobby()
+    code = lm.register_lobby()
 
-    return {"code": code, "id": id}
+    return {"code": code}
 
 
 @app.post("/lobby/{code}/join")
@@ -43,9 +63,10 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
 
         try:
             incoming_message = Message.model_validate(data)
-        except Exception as e:
-            await websocket.send_text(f"[Server] Error: {e!s}")
+        except ValidationError:
+            logger.warning("Unrecognized message: %.", data)
         else:
             channel.send(incoming_message)
 
-        # outgoing_message = channel.recv()
+        if outgoing_message := typing.cast(Message, channel.recv()):
+            await websocket.send_text(outgoing_message.model_dump_json())

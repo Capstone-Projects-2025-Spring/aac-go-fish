@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import "./SideBuilder.css"
 import SideDisplay from "./SideDisplay";
 
 const SideBuilder = ({ onSend }) =>{
     const [tableState, setTableState] = useState("empty");
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
+    const fryingIntervalRef = useRef(null);
 
     const handleSend = () => {
         onSend({
@@ -32,21 +33,32 @@ const SideBuilder = ({ onSend }) =>{
             let timeLeft = 5;
             setFryTimeLeft(timeLeft)
 
-            const fryingInterval = setInterval(() =>{
-                timeLeft -= 1;
-                setFryTimeLeft(timeLeft);
-                if (timeLeft === 0){
-                    clearInterval(fryingInterval);
-                    setTableState("fries");
-                }
+            if (fryingIntervalRef.current){
+                clearInterval(fryingIntervalRef.current);
+            }
+
+            fryingIntervalRef.current = setInterval(() => {
+                setFryTimeLeft((prevTime) => {
+                    if (prevTime <= 1) {
+                        clearInterval(fryingIntervalRef.current);
+                        fryingIntervalRef.current = null;
+                        setTableState("fries");
+                        return 0;
+                    }
+                    return prevTime - 1;
+                });
             }, 1000);
         }
     };
 
-    const reset = (fryingInterval) => {
-        clearInterval(fryingInterval)
+    const reset = () => {
         setTableState("empty");
-    }
+        setFryTimeLeft(0);
+        if (fryingIntervalRef.current){
+            clearInterval(fryingIntervalRef.current);
+            fryingIntervalRef.current = null;
+        }
+    };
 
     return (
         <div className="SideBuilder">

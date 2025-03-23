@@ -1,68 +1,133 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
 const DrinkBuilder = ({ onSend }) =>{
-    const [layers, setLayers] = useState([]);
+    const [color, setColor] = useState([]);
+    const [fillPercentage, setFillPercentage] = useState(0);
+    const fillInterval = useRef(null);
     const [hasIce, setHasIce] = useState(false);
-    const drinkLayers = [
-        {name: "Blue", color: "#0033CC"},
-        {name: "Green", color: "#00CC00"},
-        {name: "Yellow", color: "#FFFF00"},
+    const [errorMessage, setErrorMessage] = useState("");
+    const [colorSelected, setColorSelected] = useState(false);
+    const [cupSize, setCupSize] = useState("medium");
+    const drinkColors = [
+        {name: "Blue", color: "#34C6F4"},
+        {name: "Green", color: "#99CA3C"},
+        {name: "Yellow", color: "#F7EC13"},
         {name: "Red", color: "#FF0000"},
-        {name: "Orange", color: "#FF9900"},
-        {name: "Purple", color: "#660099"},
+        {name: "Orange", color: "#F5841F"},
+        {name: "Purple", color: "#7E69AF"},
     ];
+    const maxFill = 100;
+    const fillAmount = 5;
+    const fillRate = 200;
+
+    useEffect(() => {
+        setColor(null);
+        setColorSelected(false);
+        setFillPercentage(0);
+    }, []);
+
+    const startFilling = () => {
+        if (!color) {
+            setErrorMessage("Select a color!");
+            return;
+        }
+
+        fillInterval.current = setInterval(() => {
+            setFillPercentage((prev) => {
+                if (prev >= maxFill){
+                    clearInterval(fillInterval.current);
+                    return maxFill;
+                }
+                return prev + fillAmount;
+            });
+        }, fillRate);
+    };
+
+    const stopFilling = () => {
+        if (fillInterval.current) {
+            clearInterval(fillInterval.current);
+        }
+    };
+
+    const clearCup = () =>{
+        setColor(null);
+        setFillPercentage(0);
+        setColorSelected(false);
+    };
 
     const handleSend = () => {
+        if (!color || fillPercentage === 0){
+            setErrorMessage("Cup is empty!");
+            return;
+        }
+
         onSend({
-            layers,
+            color,
+            fillPercentage,
             hasIce,
+            cupSize,
         });
         clearCup();
     };
 
-    const maxSize = 9;
-
-    const addLayer = (layer) =>{
-        if (layers.length <= maxSize){
-            setLayers([...layers, layer]);
+    const selectColor = (selectedColor) => {
+        if (color != null){
+            return;
         }
-        else{
-            alert("Cup is full!");
-        }
-
-    };
-
-    const changeIce = () =>{
-        setHasIce(!hasIce);
-    };
-
-    const clearCup = () =>{
-        setLayers([]);
-        setHasIce(false);
+        setColor(selectedColor);
+        setColorSelected(true);
     };
 
     return (
-        <div className = "DrinkBuilder">
+        <div className="DrinkBuilder">
             <div className="DrinkButtons">
-                {drinkLayers.map((choice, index) => (
+                {drinkColors.map((choice, index) => (
                     <button
-                        key = {index}
-                        onClick={() => addLayer(choice)}
-                        style={{backgroundColor: choice.color, color: "#FFFFFF"}}
+                        key={index}
+                        onClick={() => selectColor(choice.color)}
+                        style={{
+                            backgroundColor: choice.color,
+                            color: "#FFFFFF",
+                            border: color === choice.color ? "3px solid black" : "none",
+                        }}
+                        disabled={colorSelected}
                     >
                         {choice.name}
                     </button>
-                    ))}
+                ))}
             </div>
-            <button className="AddIceButton" onClick = {changeIce}>
-                {hasIce ? "Remove Ice" : "Add Ice"}
+
+            <button className="FillCupButton"
+                    onMouseDown={startFilling}
+                    onMouseUp={stopFilling}
+                    onMouseLeave={stopFilling}
+            >
+                Fill Cup
             </button>
 
-            <button className="ClearCupButton" onClick = {clearCup}>
+            <button className="ClearCupButton" onClick={clearCup}>
                 Clear Cup
             </button>
-            <DrinkDisplay layers={layers} hasIce={hasIce}/>
+            <button
+                className="CupSizeButtons"
+                onClick={() => setCupSize("small")}
+            >
+                Small
+            </button>
+            <button
+                className="CupSizeButtons"
+                onClick={() => setCupSize("medium")}
+            >
+                Medium
+            </button>
+            <button
+                className="CupSizeButtons"
+                onClick={() => setCupSize("large")}
+            >
+                Large
+            </button>
+            <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize ={cupSize}/>
             <button onClick={handleSend}>Send</button>
         </div>
     );
