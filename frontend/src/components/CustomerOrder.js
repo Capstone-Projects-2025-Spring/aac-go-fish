@@ -88,17 +88,8 @@ function CustomerOrder({
                 : null
                 }
                 {!orderButtonVisible ? (
-                    <div className="mockDisplayCup">
-                        {drinkOrder.map((layerName,index) => {
-                        const layer = drinkLayers.find(drink => drink.name === layerName);
-                            return layer ? (
-                                <div key = {index} className="mockDrinkLayer" style={{backgroundColor:layer.color}}>
+                    <div className="mockDisplayCup" style = {{ backgroundColor: drinkOrder[1], color: "#FFFFFF" }}>
 
-                                </div>
-                            ) :
-                            null;
-
-                        })}
                         <p className='drinkSizeText'>
                         {drinkSize === 2 ?
                             "L"
@@ -108,7 +99,6 @@ function CustomerOrder({
                             "S"
                          : null
                         }
-
                         </p>
 
                         {hasIce && (

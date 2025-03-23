@@ -121,8 +121,7 @@ const App = () => {
     const getDrinkOrder = () => {
         console.log('Button clicked!');
 
-        setOrderButtonVisibility(!orderButtonVisible);
-        const randomIndex = getRandomNumber(0,2);
+        const randomIndex = getRandomNumber(0,5);
         setDrinkOrder(mockDrinkOrders[randomIndex]);
 
         const randomSize = getRandomNumber(0,2);

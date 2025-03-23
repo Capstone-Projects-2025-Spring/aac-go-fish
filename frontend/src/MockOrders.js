@@ -5,7 +5,10 @@ export const mockBurgerOrders = [
 ];
 
 export const mockDrinkOrders = [
-    ['Yellow', 'Red', 'Green', 'Blue', 'Orange', 'Red', 'Green', 'Yellow', 'Orange', 'Green'],
-    ['Blue', 'Red', 'Blue', 'Green', 'Orange', 'Purple', 'Red', 'Green','Purple', 'Orange'],
-    ['Purple', 'Red', 'Blue','Purple', 'Green', 'Yellow', 'Orange', 'Red', 'Orange', 'Purple'],
+    ["Blue", "#34C6F4"],
+    ["Green", "#99CA3C"],
+    ["Yellow", "#F7EC13"],
+    ["Red", "#FF0000"],
+    ["Orange", "#F5841F"],
+    ["Purple", "#7E69AF"],
 ];
