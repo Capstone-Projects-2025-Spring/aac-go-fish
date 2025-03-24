@@ -37,7 +37,6 @@ function CustomerOrder({
 
     // Temporarily set hasIce to false until ice is fully implemented in the drink station
     hasIce = false;
-    console.log(drinkSize);
     return (
         <div className = "CustomerOrder">
             <div className = "orderButton">
@@ -91,11 +90,11 @@ function CustomerOrder({
                     <div className="mockDisplayCup" style = {{ backgroundColor: drinkOrder[1], color: "#FFFFFF" }}>
 
                         <p className='drinkSizeText'>
-                        {drinkSize === 2 ?
+                        {drinkSize === 'large' ?
                             "L"
-                        : drinkSize === 1 ?
+                        : drinkSize === 'medium' ?
                             "M"
-                        : drinkSize === 0 ?
+                        : drinkSize === 'small' ?
                             "S"
                          : null
                         }

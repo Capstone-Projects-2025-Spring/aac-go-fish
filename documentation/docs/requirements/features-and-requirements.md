@@ -83,10 +83,12 @@ sidebar_position: 4
 
 #### Scoring System  
 
-- **Order Pricing for Each Correct Item:**  
-  - Burger: **$5**  
-  - Side: **$3**  
-  - Drink: **$1**  
+- **Base Pricing for Each Item:**  
+  - Burger: **$3**  
+  - Drink: **$2**  
+  - Side: **$1**  
+- **Bonus Score for Correctness**
+  - Additional **$2** per correct item
 - **Tip Bonus:**  
   - 0% to 25% based on completion speed.  
 - **Customer Patience Indicator:**  
