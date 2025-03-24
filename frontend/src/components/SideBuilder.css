@@ -7,8 +7,19 @@
     padding: 20px;
     max-width: 500px;
     min-height: 200px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.TableBorder{
     border: 2px solid #000000;
     border-radius: 10px;
+    margin:20px auto;
+    padding: 20px;
+    max-width: 500px;
+    min-height: 200px;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -48,4 +59,16 @@
 .TableImages{
     max-width: 150px;
     max-height: 150px;
+}
+
+.SendButton {
+    min-width: 120px;
+    min-height: 40px;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
 }

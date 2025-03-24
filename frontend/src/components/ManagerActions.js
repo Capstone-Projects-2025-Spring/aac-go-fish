@@ -12,13 +12,13 @@ function ManagerActions({
             <p>Select an action (test)</p>
 
             <div className="manager-actions-buttons">
-                <button onClick={onSendItems} >
+                <button className="MenuButtons" onClick={onSendItems} >
                     Send Items
                 </button>
-                <button onClick={onReceiveOrder}>
+                <button className="MenuButtons" onClick={onReceiveOrder}>
                     Receive Order
                 </button>
-                <button onClick={onGiveToCustomer}>
+                <button className="MenuButtons" onClick={onGiveToCustomer}>
                     Give to Customer
                 </button>
             </div>
