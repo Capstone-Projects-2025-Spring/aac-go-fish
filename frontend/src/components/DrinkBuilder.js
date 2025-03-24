@@ -128,7 +128,7 @@ const DrinkBuilder = ({ onSend }) =>{
                 Large
             </button>
             <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize ={cupSize}/>
-            <button onClick={handleSend}>Send</button>
+            <button className ="SendButton" onClick={handleSend}>Send</button>
         </div>
     );
 };

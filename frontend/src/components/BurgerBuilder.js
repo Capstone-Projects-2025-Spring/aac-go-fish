@@ -59,8 +59,8 @@ const BurgerBuilder = ({ onSend }) => {
             <button className="ClearPlateButton" onClick={clearPlate}>
                 Clear Plate
             </button>
-            <button onClick={handleSend}>Send</button>
-            <button onClick={handleRequestRepeat}>Request Repeat</button>
+            <button className="BottomButtons" onClick={handleSend}>Send</button>
+            <button className="BottomButtons" onClick={handleRequestRepeat}>Request Repeat</button>
         </div>
     );
 };

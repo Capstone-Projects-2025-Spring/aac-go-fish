@@ -80,7 +80,7 @@ const SideBuilder = ({ onSend }) =>{
                     Reset
                 </button>
             </div>
-            <button onClick={handleSend}>Send</button>
+            <button className="SendButton" onClick={handleSend}>Send</button>
         </div>
     );
 };
