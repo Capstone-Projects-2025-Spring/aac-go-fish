@@ -62,14 +62,14 @@ const App = () => {
     const clearAllSelected = () => {
         setSelectedItems([]);
     };
-    const handleSendItems = async () => {
+    const onPlayAll = async () => {
         if (selectedItems.length === 0) {
-            addMessage("Manager: No items to send!")
+            addMessage("Manager: No phrase to play!")
             return;
         }
 
         const names = selectedItems.map((item) => item.name).join(", ");
-        addMessage(`Manager: Sending items: ${names}`);
+        addMessage(`Manager: Playing phrase: ${names}`);
 
         for (const item of selectedItems) {
             if (item.audio) {
@@ -87,8 +87,7 @@ const App = () => {
             }
         }
 
-        setSelectedItems([]);
-        addMessage("Manager: Order sent and cleared!");
+        addMessage("Manager: Played phrase!");
     };
     const handleReceiveOrder = () => {
         // Temportarily clear order and bring back 'Get Order' button
@@ -233,6 +232,7 @@ const App = () => {
                                                     onSelectItem={addSelectedItem}
                                                     onDeleteItem={removeSelectedItem}
                                                     onClearAll={clearAllSelected}
+                                                    onPlayAll={onPlayAll}
                                                 />
                                             </div>
                                             <div className="column">
@@ -252,7 +252,6 @@ const App = () => {
                                         <div className="columns">
                                             <div className="column">
                                                 <ManagerActions
-                                                    onSendItems={handleSendItems}
                                                     onReceiveOrder={handleReceiveOrder}
                                                     onGiveToCustomer={handleGiveToCustomer}
                                                 />

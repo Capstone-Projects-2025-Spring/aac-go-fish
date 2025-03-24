@@ -1,0 +1,12 @@
+.selected-items-actions{
+    min-width: 120px;
+    min-height: 40px;
+    max-width: 40px;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
+}

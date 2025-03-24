@@ -1,10 +1,13 @@
-export default function SelectedItemsDisplay({ selectedItems, onDelete, onClear }) {
+import "./SelectedItemsDisplay.css";
+
+export default function SelectedItemsDisplay({ selectedItems, onDelete, onClear, onPlayAll }) {
     return (
         <div>
             {selectedItems.length === 0 ? (
                 <p>Click an item to add it here!</p>
             ) : (
                 <div className="aacboard-selected-items">
+                    <div>
                     {selectedItems.map((item, index) => (
                         <span key={index} className="aacboard-selected-item">
                             {item.image && (
@@ -19,9 +22,10 @@ export default function SelectedItemsDisplay({ selectedItems, onDelete, onClear 
                             </button>
                         </span>
                     ))}
-                    <div className="selected-items-actions">
-                        <button onClick={onClear}>Clear All</button>
                     </div>
+
+                <button className="selected-items-actions" onClick={onClear}>Clear All</button>
+                <button className="selected-items-actions" onClick={onPlayAll}>Play All</button>
                 </div>
             )}
         </div>

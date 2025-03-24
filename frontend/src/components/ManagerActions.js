@@ -2,7 +2,6 @@ import React from 'react';
 import "./ManagerActions.css";
 
 function ManagerActions({
-    onSendItems,
     onReceiveOrder,
     onGiveToCustomer
 }) {
@@ -10,11 +9,7 @@ function ManagerActions({
     return (
         <div className="manager-actions-container">
             <p>Select an action (test)</p>
-
             <div className="manager-actions-buttons">
-                <button className="MenuButtons" onClick={onSendItems} >
-                    Send Items
-                </button>
                 <button className="MenuButtons" onClick={onReceiveOrder}>
                     Receive Order
                 </button>
