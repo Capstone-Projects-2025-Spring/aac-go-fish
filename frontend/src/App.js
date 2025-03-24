@@ -21,7 +21,7 @@ const App = () => {
     const [actionLog, setActionLog] = useState([]);
     const isManager = true;
 
-    const [orderButtonVisible, setOrderButtonVisibility] = useState(true)
+    const [orderVisible, setOrderVisible] = useState(false)
 
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [drinkOrder, setDrinkOrder] = useState([]);
@@ -90,10 +90,10 @@ const App = () => {
         addMessage("Manager: Played phrase!");
     };
     const handleReceiveOrder = () => {
-        // Temportarily clear order and bring back 'Get Order' button
-        setOrderButtonVisibility(true)
-        setBurgerOrder([])
-        setDrinkOrder([])
+        setOrderVisible(true);
+        getBurgerOrder();
+        getDrinkOrder();
+        getSideOrder();
 
         addMessage("Manager: Receiving the order...");
     };
@@ -169,7 +169,7 @@ const App = () => {
     const getBurgerOrder = () => {
         console.log('Button clicked!');
 
-        setOrderButtonVisibility(!orderButtonVisible);
+
         const randomIndex = getRandomNumber(0,2);
         setBurgerOrder(mockBurgerOrders[randomIndex]);
     };
@@ -238,14 +238,11 @@ const App = () => {
                                             <div className="column">
                                                 <CustomerOrder
                                                     burgerOrder={burgerOrder}
-                                                    getBurgerOrder={getBurgerOrder}
                                                     drinkOrder={drinkOrder}
-                                                    getDrinkOrder={getDrinkOrder}
-                                                    orderButtonVisible={orderButtonVisible}
                                                     hasIce={orderHasIce}
-                                                    getSideOrder={getSideOrder}
                                                     hasSide={hasSide}
                                                     drinkSize={drinkSize}
+                                                    orderVisible={orderVisible}
                                                 />
                                             </div>
                                         </div>

@@ -4,14 +4,10 @@ import './CustomerOrder.css';
 function CustomerOrder({
     burgerOrder,
     drinkOrder,
-    layers,
     drinkSize,
     hasIce,
     hasSide,
-    getBurgerOrder,
-    getDrinkOrder,
-    getSideOrder,
-    orderButtonVisible
+    orderVisible
 }) {
 
     const foodItems = [
@@ -39,19 +35,6 @@ function CustomerOrder({
     hasIce = false;
     return (
         <div className = "CustomerOrder">
-            <div className = "orderButton">
-                {orderButtonVisible ? (<button
-                onClick={() => {
-                    getBurgerOrder();
-                    getDrinkOrder();
-                    getSideOrder();
-                }}
-                id = "getOrderButton" type="button">
-                    Get Order
-                </button>
-                ) : null
-            }
-            </div>
             <div className = "orderDisplay">
                 <div className = "burgerOrderDisplay">
                     {[...burgerOrder].map((itemName,index) => {
@@ -63,7 +46,7 @@ function CustomerOrder({
                         ) : null;
                     })}
                 </div>
-                {!orderButtonVisible && hasSide ? (
+                {orderVisible && hasSide ? (
                     <div className='sideDisplay'>
                         {
                         <img
@@ -73,7 +56,7 @@ function CustomerOrder({
                         />
                         }
                     </div>
-                ): !orderButtonVisible ? (
+                ): orderVisible ? (
                     <div className='sideDisplay'>
                         {
                         <img
@@ -86,7 +69,7 @@ function CustomerOrder({
                 )
                 : null
                 }
-                {!orderButtonVisible ? (
+                {orderVisible ? (
                     <div className="mockDisplayCup" style = {{ backgroundColor: drinkOrder[1], color: "#FFFFFF" }}>
 
                         <p className='drinkSizeText'>
