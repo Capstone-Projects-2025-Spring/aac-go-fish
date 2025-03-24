@@ -28,7 +28,9 @@ const App = () => {
 
     //// Temporarily not used until ice is fully implemented in the drink station
     const [orderHasIce, setOrderHasIce] = useState(false);
-    const [drinkSize, setDrinkSize] = useState(0);
+    const [drinkSize, setDrinkSize] = useState('medium');
+
+    const [score, setScore] = useState(0)
 
     const [layers, setLayers] = useState([]);
     const maxSize = 9;
@@ -113,27 +115,23 @@ const App = () => {
                 addMessage(`Manager: Side order is correct`)
             } else {
                 addMessage(`Manager: Side order is incorrect`)
-                console.log(side)
             }
         }
         if (drink) {
             // 2 points for submitting any drink, +2 points if correct
             tempScore += 2
 
-            // test object
-            const drinkObj = {color: drinkOrder[1], fillPercentage: 100, hasIce: orderHasIce, cupSize: 'medium'}
+            // Test object, fill and ice are hardcoded for now
+            const drinkObj = {color: drinkOrder[1], fillPercentage: 100, hasIce: false, cupSize: drinkSize}
             if(JSON.stringify(drink) === JSON.stringify(drinkObj)){
                 tempScore += 2
                 addMessage(`Manager: Drink order is correct`)
             } else {
                 addMessage(`Manager: Drink order is incorrect`)
-                console.log("drink on next line")
-                console.log(drink)
-                console.log("drinkOrder on next line")
-                console.log(drinkObj)
             }
         }
         addMessage(`Score is ${tempScore}`)
+        setScore(score + tempScore)
     }
     const handleGiveToCustomer = () => {
         addMessage("Manager: Sending order to the customer");
@@ -177,8 +175,9 @@ const App = () => {
         const randomIndex = getRandomNumber(0,5);
         setDrinkOrder(mockDrinkOrders[randomIndex]);
 
+        const sizes = ['small','medium','large']
         const randomSize = getRandomNumber(0,2);
-        setDrinkSize(randomSize);
+        setDrinkSize(sizes[randomSize]);
         console.log(drinkSize);
 
         // Temporarily not used until ice is fully implemented in the drink station
@@ -223,6 +222,7 @@ const App = () => {
                                     <>
                                         <div className="columns">
                                             <div className="column">
+                                                Your score is ${score}
                                                 <AACBoard
                                                     selectedItems={selectedItems}
                                                     onSelectItem={addSelectedItem}
