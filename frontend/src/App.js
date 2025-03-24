@@ -9,6 +9,7 @@ import AACBoard from "./components/AACBoard";
 import CustomerOrder from "./components/CustomerOrder";
 import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
+import WebSocketComponent from "./components/WebSocketComponent";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
@@ -17,19 +18,8 @@ const App = () => {
     const [burger, setBurger] = useState(null);
     const [side, setSide] = useState(null);
     const [drink, setDrink] = useState(null);
-
     const [order, setOrder] = useState([]);
-
-    useEffect(() => {
-        const socket = new WebSocket("ws://localhost:8000/ws");
-        addMessage("Attempting to connect to WebSocket...");
-
-        socket.onopen = () => addMessage("Connected to WebSocket");
-        socket.onmessage = (event) => addMessage(event.data);
-        socket.onclose = () => addMessage("WebSocket closed");
-
-        return () => socket.close();
-    }, []);
+    const [playerId, setPlayerId] = useState(null);
 
     const addMessage = (msg) => {
         setMessages((prev) => [...prev, msg]);
@@ -103,6 +93,16 @@ const App = () => {
         const randomIndex = getRandomOrder(0,2);
         setOrder(mockOrders[randomIndex]);
     };
+
+    const joinLobby = () =>
+        fetch("http://127.0.0.1:8000/lobby/code/join", {
+            method: "POST",
+        }).then(async response => {
+            const data = await response.json();
+            console.log(data);
+            setPlayerId(data.id)
+        });
+
     return (
         <div className="app-container">
             <div className="main-layout">
@@ -114,6 +114,11 @@ const App = () => {
                             <div key={idx}>{msg}</div>
                         ))}
                     </div>
+                    <button onClick={joinLobby} disabled={playerId !== null}>Join</button>
+                    <WebSocketComponent
+                        addMessage={addMessage}
+                        playerId={playerId}
+                    />
                 </div>
 
                 <div className="stations">
@@ -158,6 +163,8 @@ const App = () => {
                                 return <SideBuilder onSend={setSide}/>;
                             case "drink":
                                 return <DrinkBuilder onSend={setDrink}/>;
+                            default:
+                                return <div />
                         }
                     })()}
                 </div>

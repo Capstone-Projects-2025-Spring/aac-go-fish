@@ -4,6 +4,7 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException, WebSocket
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import ValidationError
 
 from .dependencies import LobbyManager, lobby_manager, settings
@@ -24,6 +25,11 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
 
 app = FastAPI(lifespan=lifespan)
 
+origins = ["http://localhost:3000"]
+
+app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["*"],
+                   allow_headers=["*"])
+
 
 @app.post("/lobby")
 def create_lobby(lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, str]:
@@ -36,6 +42,8 @@ def create_lobby(lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[st
 @app.post("/lobby/{code}/join")
 def join_lobby(code: str, lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, str]:
     """Joins a player to a lobby by its unique game code."""
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
     try:
         id = lm.register_player(code)
     except ValueError:
@@ -53,16 +61,17 @@ async def read_root() -> dict:
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> None:
     """Handles a WebSocket connection for receiving and responding to messages."""
+    print("r")
     await websocket.accept()
 
-    init = Initializer.model_validate(await websocket.receive_text())
+    init = Initializer.model_validate(await websocket.receive_json())
     channel = lm.channel(init.code, init.id)
 
     while True:
         data = await websocket.receive_text()
 
         try:
-            incoming_message = Message.model_validate(data)
+            incoming_message = Message.validate_json(data)
         except ValidationError:
             logger.warning("Unrecognized message: %.", data)
         else:
