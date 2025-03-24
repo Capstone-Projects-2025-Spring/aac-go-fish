@@ -91,17 +91,70 @@ const App = () => {
     const handleReceiveOrder = () => {
         addMessage("Manager: Receiving the order...");
     };
+    const getScoring = ({burger, side, drink}) => {
+        // Temporarily scoring function while no scoring in backend
+        var tempScore = 0
+
+        if (burger) {
+            // 3 points for submitting any burger, +2 points if correct
+            tempScore += 3
+            if(JSON.stringify(burger) === JSON.stringify(burgerOrder)){
+                tempScore += 2
+                addMessage(`Manager: Burger order is correct`)
+            } else {
+                addMessage(`Manager: Burger order is incorrect`)
+            }
+        } 
+        if (side) {
+            // 1 point for submitting any side, +2 points if correct
+            tempScore += 1
+            if(hasSide && side === 'fries'){
+                tempScore += 2
+                addMessage(`Manager: Side order is correct`)
+            } else {
+                addMessage(`Manager: Side order is incorrect`)
+                console.log(side)
+            }
+        }
+        if (drink) {
+            // 2 points for submitting any drink, +2 points if correct
+            tempScore += 2
+
+            // test object
+            const drinkObj = {color: drinkOrder[1], fillPercentage: 100, hasIce: orderHasIce, cupSize: 'medium'}
+            if(JSON.stringify(drink) === JSON.stringify(drinkObj)){
+                tempScore += 2
+                addMessage(`Manager: Drink order is correct`)
+            } else {
+                addMessage(`Manager: Drink order is incorrect`)
+                console.log("drink on next line")
+                console.log(drink)
+                console.log("drinkOrder on next line")
+                console.log(drinkObj)
+            }
+        }
+        addMessage(`Score is ${tempScore}`)
+    }
     const handleGiveToCustomer = () => {
         addMessage("Manager: Sending order to the customer");
+
+        var tempBurger = null
+        var tempSide = null
         if (burger) {
-            addMessage(`Sending burger (${JSON.stringify(burger.map((ingredient) => ingredient.name))})`)
+            tempBurger = burger.map((ingredient) => ingredient.name)
+            addMessage(`Sending burger (${JSON.stringify(tempBurger)})`)
         }
         if (side) {
+            tempSide = side.tableState
             addMessage(`Sending side (${side.tableState})`)
         }
         if (drink) {
             addMessage(`Sending drink (${JSON.stringify(drink)})`)
         }
+
+        // Temporarily score function while no scoring in backend
+        getScoring({burger: tempBurger, side: tempSide, drink: drink})
+
         setBurger(null);
         setSide(null);
         setDrink(null);
