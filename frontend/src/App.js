@@ -95,7 +95,7 @@ const App = () => {
         setOrderButtonVisibility(true)
         setBurgerOrder([])
         setDrinkOrder([])
-        
+
         addMessage("Manager: Receiving the order...");
     };
     const getScoring = ({burger, side, drink}) => {
@@ -111,7 +111,7 @@ const App = () => {
             } else {
                 addMessage(`Manager: Burger order is incorrect`)
             }
-        } 
+        }
         if (side) {
             // 1 point for submitting any side, +2 points if correct
             tempScore += 1
