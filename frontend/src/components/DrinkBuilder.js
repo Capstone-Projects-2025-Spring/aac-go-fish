@@ -90,6 +90,7 @@ const DrinkBuilder = ({ onSend }) =>{
                             backgroundColor: choice.color,
                             color: "#FFFFFF",
                             border: color === choice.color ? "3px solid black" : "none",
+                            WebkitTextStroke: "1px black",
                         }}
                         disabled={colorSelected}
                     >
