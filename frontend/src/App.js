@@ -91,6 +91,11 @@ const App = () => {
         addMessage("Manager: Order sent and cleared!");
     };
     const handleReceiveOrder = () => {
+        // Temportarily clear order and bring back 'Get Order' button
+        setOrderButtonVisibility(true)
+        setBurgerOrder([])
+        setDrinkOrder([])
+        
         addMessage("Manager: Receiving the order...");
     };
     const getScoring = ({burger, side, drink}) => {
