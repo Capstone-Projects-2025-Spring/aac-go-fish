@@ -92,11 +92,6 @@ const App = () => {
         addMessage("Manager: Played phrase!");
     };
     const handleReceiveOrder = () => {
-        // Temportarily clear order and bring back 'Get Order' button
-        //setOrderButtonVisibility(true)
-        //setBurgerOrder([])
-        //setDrinkOrder([])
-
         setOrderVisible(true);
         getBurgerOrder();
         getDrinkOrder();
@@ -245,12 +240,9 @@ const App = () => {
                                             <div className="column">
                                                 <CustomerOrder
                                                     burgerOrder={burgerOrder}
-                                                    getBurgerOrder={getBurgerOrder}
                                                     drinkOrder={drinkOrder}
-                                                    getDrinkOrder={getDrinkOrder}
                                                     orderButtonVisible={orderButtonVisible}
                                                     hasIce={orderHasIce}
-                                                    getSideOrder={getSideOrder}
                                                     hasSide={hasSide}
                                                     drinkSize={drinkSize}
                                                     orderVisible={orderVisible}

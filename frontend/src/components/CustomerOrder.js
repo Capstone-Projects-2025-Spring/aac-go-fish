@@ -4,14 +4,9 @@ import './CustomerOrder.css';
 function CustomerOrder({
     burgerOrder,
     drinkOrder,
-    layers,
     drinkSize,
     hasIce,
     hasSide,
-    getBurgerOrder,
-    getDrinkOrder,
-    getSideOrder,
-    orderButtonVisible,
     orderVisible
 }) {
 
