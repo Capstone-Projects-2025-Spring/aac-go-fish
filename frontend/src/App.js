@@ -23,6 +23,8 @@ const App = () => {
 
     const [orderButtonVisible, setOrderButtonVisibility] = useState(true)
 
+    const [orderVisible, setOrderVisible] = useState(false)
+
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [drinkOrder, setDrinkOrder] = useState([]);
 
@@ -91,9 +93,14 @@ const App = () => {
     };
     const handleReceiveOrder = () => {
         // Temportarily clear order and bring back 'Get Order' button
-        setOrderButtonVisibility(true)
-        setBurgerOrder([])
-        setDrinkOrder([])
+        //setOrderButtonVisibility(true)
+        //setBurgerOrder([])
+        //setDrinkOrder([])
+
+        setOrderVisible(true);
+        getBurgerOrder();
+        getDrinkOrder();
+        getSideOrder();
 
         addMessage("Manager: Receiving the order...");
     };
@@ -246,6 +253,7 @@ const App = () => {
                                                     getSideOrder={getSideOrder}
                                                     hasSide={hasSide}
                                                     drinkSize={drinkSize}
+                                                    orderVisible={orderVisible}
                                                 />
                                             </div>
                                         </div>
