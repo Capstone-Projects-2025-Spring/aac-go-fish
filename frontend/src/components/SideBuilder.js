@@ -62,7 +62,9 @@ const SideBuilder = ({ onSend }) =>{
 
     return (
         <div className="SideBuilder">
-            <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft}/>
+            <div className="TableBorder">
+                <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft}/>
+            </div>
             <div className="SideButtons">
                 <button onClick={placePotatoes} disabled={tableState !== "empty"}>
                     <img src="/images/potatoButton.png" alt="Place Potatoes" className="ButtonImages"/>
