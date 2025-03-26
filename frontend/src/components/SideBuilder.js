@@ -6,6 +6,7 @@ const SideBuilder = ({ onSend }) =>{
     const [tableState, setTableState] = useState("empty");
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
     const fryingIntervalRef = useRef(null);
+    const [sideType, setSideType] = useState("");
 
     const handleSend = () => {
         onSend({
@@ -15,20 +16,24 @@ const SideBuilder = ({ onSend }) =>{
         reset();
     };
 
-    const placePotatoes = () =>{
-        if (tableState === "empty") {
-            setTableState("potatoes");
+    const placeSide = (type) => {
+        if (tableState === "empty"){
+            setTableState(type === "potatoes" ? "potatoes" : "onions");
+            setSideType(type === "potatoes" ? "fries" : "onionRings")
         }
     };
 
-    const chopPotatoes = () =>{
-        if (tableState === "potatoes"){
-            setTableState("chopped");
+    const chopSide = () =>{
+        if (tableState === "potatoes") {
+            setTableState("choppedPotatoes");
+        }
+        if (tableState === "onions") {
+            setTableState("choppedOnions");
         }
     };
 
-    const fryPotatoes = () => {
-        if (tableState === "chopped") {
+    const frySide = () => {
+        if (tableState === "choppedPotatoes") {
             setTableState("frying");
             let timeLeft = 5;
             setFryTimeLeft(timeLeft)
@@ -43,6 +48,27 @@ const SideBuilder = ({ onSend }) =>{
                         clearInterval(fryingIntervalRef.current);
                         fryingIntervalRef.current = null;
                         setTableState("fries");
+                        return 0;
+                    }
+                    return prevTime - 1;
+                });
+            }, 1000);
+        }
+        else if (tableState === "choppedOnions") {
+            setTableState("frying");
+            let timeLeft = 5;
+            setFryTimeLeft(timeLeft)
+
+            if (fryingIntervalRef.current){
+                clearInterval(fryingIntervalRef.current);
+            }
+
+            fryingIntervalRef.current = setInterval(() => {
+                setFryTimeLeft((prevTime) => {
+                    if (prevTime <= 1) {
+                        clearInterval(fryingIntervalRef.current);
+                        fryingIntervalRef.current = null;
+                        setTableState("onionRings");
                         return 0;
                     }
                     return prevTime - 1;
@@ -66,17 +92,21 @@ const SideBuilder = ({ onSend }) =>{
                 <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft}/>
             </div>
             <div className="SideButtons">
-                <button onClick={placePotatoes} disabled={tableState !== "empty"}>
+                <button onClick={() => placeSide("potatoes")} disabled={tableState !== "empty"}>
                     <img src="/images/potatoButton.png" alt="Place Potatoes" className="ButtonImages"/>
                     Place Potatoes
                 </button>
-                <button onClick={chopPotatoes} disabled={tableState !== "potatoes"}>
-                    <img src="/images/knife.png" alt="Chop Potatoes" className="ButtonImages"/>
-                    Chop Potatoes
+                <button onClick={() => placeSide("onions")} disabled={tableState !== "empty"}>
+                    <img src="/images/onion.png" alt="Place Onions" className="ButtonImages"/>
+                    Place Onions
                 </button>
-                <button onClick={fryPotatoes} disabled={tableState !== "chopped"}>
+                <button onClick={chopSide} disabled={tableState !== "potatoes" && tableState !== "onions"}>
+                    <img src="/images/knife.png" alt="Chop Potatoes" className="ButtonImages"/>
+                    Chop
+                </button>
+                <button onClick={frySide} disabled={tableState !== "choppedPotatoes" && tableState !== "choppedOnions"}>
                     <img src="/images/fryer.png" alt="Fry Potatoes" className="ButtonImages"/>
-                    Fry Potatoes
+                    Fry
                 </button>
                 <button onClick={reset}>
                     Reset
