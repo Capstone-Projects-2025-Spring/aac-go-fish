@@ -1,4 +1,4 @@
-.BurgerBuilder{
+.BurgerBuilder {
     text-align: center;
 }
 
@@ -30,12 +30,13 @@
     margin: 0 auto;
 }
 
-.IngredientsButtons button p{
+.IngredientsButtons button p {
     margin-top: 5px;
     font-size: 14px;
     font-weight: bold;
 }
-.Burger{
+
+.Burger {
     margin: 20px auto;
     width: 200px;
     display: flex;
@@ -47,17 +48,20 @@
     position: relative;
     z-index: 1;
 }
-.BurgerIngredient{
+
+.BurgerIngredient {
     width: 180px;
     margin: -5px 0;
     border-radius: 5px;
     z-index: 1;
 }
+
 .BurgerContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .Plate {
     width: 240px;
     height: 30px;
@@ -69,7 +73,7 @@
     box-shadow: 0 8px 15px #000000;
 }
 
-.ClearPlateButton{
+.ClearPlateButton {
     min-width: 120px;
     min-height: 40px;
     margin: 10px;
@@ -81,7 +85,7 @@
     border-radius: 6px;
 }
 
-.BottomButtons{
+.BottomButtons {
     min-width: 120px;
     min-height: 40px;
     margin: 10px;
