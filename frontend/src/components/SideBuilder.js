@@ -94,11 +94,11 @@ const SideBuilder = ({ onSend }) =>{
             <div className="SideButtons">
                 <button onClick={() => placeSide("potatoes")} disabled={tableState !== "empty"}>
                     <img src="/images/potatoButton.png" alt="Place Potatoes" className="ButtonImages"/>
-                    Place Potatoes
+                    Potato
                 </button>
                 <button onClick={() => placeSide("onions")} disabled={tableState !== "empty"}>
                     <img src="/images/onion.png" alt="Place Onions" className="ButtonImages"/>
-                    Place Onions
+                    Onion
                 </button>
                 <button onClick={chopSide} disabled={tableState !== "potatoes" && tableState !== "onions"}>
                     <img src="/images/knife.png" alt="Chop Potatoes" className="ButtonImages"/>
