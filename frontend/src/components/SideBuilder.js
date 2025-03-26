@@ -82,7 +82,7 @@ const SideBuilder = ({ onSend }) =>{
                     Reset
                 </button>
             </div>
-            <button className="SendButton" onClick={handleSend}>Send</button>
+            <button className="SendButton" onClick={handleSend} disabled={tableState !== "fries"}>Send</button>
         </div>
     );
 };
