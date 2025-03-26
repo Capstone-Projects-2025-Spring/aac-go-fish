@@ -96,3 +96,23 @@
     text-align: center;
     border-radius: 6px;
 }
+
+.BurgerDisplay {
+    position: relative;
+    width: 700px;
+    margin: 0 auto;
+}
+
+.GrillImage {
+    width: 100%;
+    height: auto;
+    display: block;
+    z-index: 1;
+}
+
+.IngredientOnGrill {
+    position: absolute;
+    width: 80px;
+    height: auto;
+    z-index: 2;
+}

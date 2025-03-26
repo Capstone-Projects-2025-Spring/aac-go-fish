@@ -1,20 +1,25 @@
 import React from "react";
-import "./BurgerBuilder.css"
+import "./BurgerBuilder";
 
-export default function BurgerDisplay({ imagePaths }) {
+function BurgerDisplay({ imagePaths }) {
     return (
-        <div className="BurgerContainer">
-            <div className="Burger">
-                {imagePaths.map((imagePath, index) => (
-                    <img
-                        key={index}
-                        src={imagePath}
-                        alt={`Ingredient ${index}`}
-                        className="BurgerIngredient"
-                    />
-                ))}
-            </div>
-            <div className="Plate" />
+        <div className="BurgerDisplay">
+            <img
+                src="/images/kitchen.png"
+                alt="Grill Station"
+                className="GrillImage"
+            />
+
+            {imagePaths.map((path, idx) => (
+                <img
+                    key={idx}
+                    src={path}
+                    alt={`ingredient-${idx}`}
+                    className="IngredientOnGrill"
+                />
+            ))}
         </div>
     );
 }
+
+export default BurgerDisplay;
