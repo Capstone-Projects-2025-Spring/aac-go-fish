@@ -55,8 +55,16 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
     """Handles a WebSocket connection for receiving and responding to messages."""
     await websocket.accept()
 
-    init = Initializer.model_validate_json(await websocket.receive_text())
-    channel = lm.channel(init.code, init.id)
+    init = Message.model_validate_json(await websocket.receive_text())
+
+    match init:
+        case Message(data=Initializer(code=code, id=id)):
+            channel = lm.channel(code, id)
+            logger.info("WebSocket connection initialized for player %s.", id)
+        case _:
+            logger.info("WebSocket connection failed to initialize: message %", init)
+            await websocket.close()
+            return
 
     await asyncio.gather(_recv_handler(websocket, channel), _send_handler(websocket, channel))
 
