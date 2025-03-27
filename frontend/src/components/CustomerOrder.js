@@ -1,6 +1,5 @@
 import React from 'react';
 import './CustomerOrder.css';
-import {drinkColors} from "./DrinkBuilder";
 import {menu} from "../menuItems";
 
 function CustomerOrder({
