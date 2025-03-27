@@ -1,12 +1,12 @@
+import asyncio
 import logging
 import typing
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, HTTPException, WebSocket
-from pydantic import ValidationError
 
-from .dependencies import LobbyManager, lobby_manager, settings
+from .dependencies import Channel, LobbyManager, lobby_manager, settings
 from .models import Annotated, Initializer, Message
 
 logger = logging.getLogger(__file__)
@@ -55,18 +55,19 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
     """Handles a WebSocket connection for receiving and responding to messages."""
     await websocket.accept()
 
-    init = Initializer.model_validate(await websocket.receive_text())
+    init = Initializer.model_validate_json(await websocket.receive_text())
     channel = lm.channel(init.code, init.id)
 
+    await asyncio.gather(_recv_handler(websocket, channel), _send_handler(websocket, channel))
+
+
+async def _recv_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
     while True:
-        data = await websocket.receive_text()
+        data = Message.model_validate_json(await websocket.receive_text())
+        channel.send(data)
 
-        try:
-            incoming_message = Message.model_validate(data)
-        except ValidationError:
-            logger.warning("Unrecognized message: %.", data)
-        else:
-            channel.send(incoming_message)
 
-        if outgoing_message := typing.cast(Message, channel.recv()):
-            await websocket.send_text(outgoing_message.model_dump_json())
+async def _send_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
+    while True:
+        msg: Message = channel.recv()
+        await websocket.send_text(msg.model_dump_json())
