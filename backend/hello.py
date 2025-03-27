@@ -1,15 +1,40 @@
 import logging
+import tomllib
 import typing
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+from pathlib import Path
 
+from asgi_correlation_id import correlation_id
 from fastapi import Depends, FastAPI, HTTPException, WebSocket
 from pydantic import ValidationError
 
 from .dependencies import LobbyManager, lobby_manager, settings
+from .logging_config import configure_logger
 from .models import Annotated, Initializer, Message
 
 logger = logging.getLogger(__file__)
+
+
+def add_correlation(
+    logger: logging.Logger, method_name: str, event_dict: dict[str, typing.Any]
+) -> dict[str, typing.Any]:
+    """Add request id to log message."""
+    if request_id := correlation_id.get():
+        event_dict["request_id"] = request_id
+    return event_dict
+
+
+def _setup_logging() -> None:
+    config_dir = Path(__file__).parent / "logging"
+    if settings().env == "prod":
+        config = config_dir / "production.toml"
+    else:
+        config = config_dir / "development.toml"
+
+    data = tomllib.loads(config.read_text())
+
+    configure_logger(data, [add_correlation])
 
 
 @asynccontextmanager
@@ -19,6 +44,9 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
     if s.env == "demo":
         lobby = lobby_manager()
         lobby.register_lobby()
+
+    _setup_logging()
+
     yield
 
 
