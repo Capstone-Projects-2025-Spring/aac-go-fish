@@ -3,7 +3,7 @@ from __future__ import annotations
 from enum import StrEnum, auto
 from typing import Annotated, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, TypeAdapter
 
 
 class Role(StrEnum):
@@ -179,12 +179,7 @@ class Chat(BaseModel):
     id: str
     typing: bool
 
-
-class Message(BaseModel):
-    """Wrapper for message models."""
-
-    data: Initializer | GameStateUpdate | LifecycleEvent | Chat = Field(discriminator="type")
-
+Message = TypeAdapter(Initializer | GameStateUpdate | LifecycleEvent | Chat)
 
 if __name__ == "__main__":
     import json
