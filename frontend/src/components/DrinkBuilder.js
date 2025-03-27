@@ -6,7 +6,6 @@ const DrinkBuilder = ({ onSend }) =>{
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
     const [hasIce, setHasIce] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
     const drinkColors = [
@@ -29,7 +28,6 @@ const DrinkBuilder = ({ onSend }) =>{
 
     const startFilling = () => {
         if (!color) {
-            setErrorMessage("Select a color!");
             return;
         }
 
@@ -58,7 +56,6 @@ const DrinkBuilder = ({ onSend }) =>{
 
     const handleSend = () => {
         if (!color || fillPercentage === 0){
-            setErrorMessage("Cup is empty!");
             return;
         }
 

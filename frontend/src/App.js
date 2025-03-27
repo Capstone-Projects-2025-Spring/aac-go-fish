@@ -18,9 +18,7 @@ const App = () => {
     const [burger, setBurger] = useState(null);
     const [side, setSide] = useState(null);
     const [drink, setDrink] = useState(null);
-    const {message, send} = useContext(WebSocketContext);
-    const [actionLog, setActionLog] = useState([]);
-    const isManager = true;
+    const { message } = useContext(WebSocketContext);
     const [orderVisible, setOrderVisible] = useState(false)
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [drinkOrder, setDrinkOrder] = useState([]);
@@ -28,6 +26,14 @@ const App = () => {
     useEffect(() => {
         if (!message) return;
         addMessage(JSON.stringify(message));
+        // parse into an order
+        switch (message.type) {
+            case "game_state":
+                switch (message.game_state_update_type) {
+                    case "new_order":
+                        //handle receiving order
+                }
+        }
     }, [message]);
 
     //// Temporarily not used until ice is fully implemented in the drink station
@@ -188,12 +194,6 @@ const App = () => {
 
         if (randomSide) {
             setHasSide(!hasSide);
-        }
-    };
-
-    const addLayer = (layer) =>{
-        if (layers.length <= maxSize){
-            setLayers([...layers, layer]);
         }
     };
 
