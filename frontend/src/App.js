@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
@@ -9,6 +9,7 @@ import AACBoard from "./components/AACBoard";
 import CustomerOrder from "./components/CustomerOrder";
 import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
+import { WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
@@ -17,14 +18,17 @@ const App = () => {
     const [burger, setBurger] = useState(null);
     const [side, setSide] = useState(null);
     const [drink, setDrink] = useState(null);
-
+    const {message, send} = useContext(WebSocketContext);
     const [actionLog, setActionLog] = useState([]);
     const isManager = true;
-
     const [orderVisible, setOrderVisible] = useState(false)
-
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [drinkOrder, setDrinkOrder] = useState([]);
+
+    useEffect(() => {
+        if (!message) return;
+        addMessage(JSON.stringify(message));
+    }, [message]);
 
     //// Temporarily not used until ice is fully implemented in the drink station
     const [orderHasIce, setOrderHasIce] = useState(false);
@@ -36,17 +40,6 @@ const App = () => {
     const maxSize = 9;
 
     const [hasSide, setHasSide] = useState(false);
-
-    useEffect(() => {
-        const socket = new WebSocket("ws://localhost:8000/ws");
-        addMessage("Attempting to connect to WebSocket...");
-
-        socket.onopen = () => addMessage("Connected to WebSocket");
-        socket.onmessage = (event) => addMessage(event.data);
-        socket.onclose = () => addMessage("WebSocket closed");
-
-        return () => socket.close();
-    }, []);
 
     const addMessage = (msg) => {
         setMessages((prev) => [...prev, msg]);
