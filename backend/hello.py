@@ -5,15 +5,16 @@ from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from asgi_correlation_id import correlation_id
+import structlog
+from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
 from fastapi import Depends, FastAPI, HTTPException, WebSocket
 from pydantic import ValidationError
 
 from .dependencies import LobbyManager, lobby_manager, settings
-from .logging_config import configure_logger
+from .logging_config import LoggingMiddleware, configure_logger
 from .models import Annotated, Initializer, Message
 
-logger = logging.getLogger(__file__)
+logger: structlog.stdlib.BoundLogger = structlog.get_logger()
 
 
 def add_correlation(
@@ -51,6 +52,9 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(CorrelationIdMiddleware)
+app.add_middleware(LoggingMiddleware)
 
 
 @app.post("/lobby")
