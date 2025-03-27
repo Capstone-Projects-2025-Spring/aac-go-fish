@@ -8,8 +8,8 @@ from .models import Burger, Chat, Drink, Fry, GameStart, Message, NewOrder, Orde
 
 logger = logging.getLogger(__file__)
 
-BURGER_INGREDIENTS = ["patty", "lettuce", "onion", "tomato", "ketchup", "mustard", "cheese"]
-DRINK_COLORS = ["blue", "red", "yellow", "orange", "purple", "green"]
+BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
+DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
 DRINK_SIZES = ["S", "M", "L"]
 
 
@@ -49,7 +49,7 @@ class GameLoop:
         """Generate an order based on the number of players."""
         order = Order(
             burger=Burger(
-                ingredients=["bottom bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["top bun"]
+                ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
             ),
             drink=None,
             fry=None,
