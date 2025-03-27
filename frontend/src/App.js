@@ -3,7 +3,6 @@ import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
-import {mockBurgerOrders, mockDrinkOrders} from "./MockOrders"
 import RoleSelector from "./components/RoleSelector";
 import AACBoard from "./components/AACBoard";
 import CustomerOrder from "./components/CustomerOrder";
@@ -25,13 +24,16 @@ const App = () => {
 
     useEffect(() => {
         if (!message) return;
-        addMessage(JSON.stringify(message));
+        addMessage("Order received from backend (Visible in manager view)");
         // parse into an order
-        switch (message.type) {
+        const content = message.content;
+        switch (content.type) {
             case "game_state":
-                switch (message.game_state_update_type) {
+                switch (content.game_state_update_type) {
                     case "new_order":
-                        //handle receiving order
+                        setOrderVisible(true);
+                        setBurgerOrder(content.order.burger.ingredients);
+                        // TODO: sides and drink (backend doesn't send them yet -- check generate_order() in game.py)
                 }
         }
     }, [message]);
@@ -88,14 +90,7 @@ const App = () => {
 
         addMessage("Manager: Played phrase!");
     };
-    const handleReceiveOrder = () => {
-        setOrderVisible(true);
-        getBurgerOrder();
-        getDrinkOrder();
-        getSideOrder();
 
-        addMessage("Manager: Receiving the order...");
-    };
     const getScoring = ({burger, side, drink}) => {
         // Temporarily scoring function while no scoring in backend
         var tempScore = 0
@@ -165,38 +160,6 @@ const App = () => {
         return Math.floor(Math.random() * (max + 1 - min) + min);
     };
 
-    const getBurgerOrder = () => {
-        console.log('Button clicked!');
-
-
-        const randomIndex = getRandomNumber(0,2);
-        setBurgerOrder(mockBurgerOrders[randomIndex]);
-    };
-    const getDrinkOrder = () => {
-        console.log('Button clicked!');
-
-        const randomIndex = getRandomNumber(0,5);
-        setDrinkOrder(mockDrinkOrders[randomIndex]);
-
-        const sizes = ['small','medium','large']
-        const randomSize = getRandomNumber(0,2);
-        setDrinkSize(sizes[randomSize]);
-        console.log(drinkSize);
-
-        // Temporarily not used until ice is fully implemented in the drink station
-        const randomIce = getRandomNumber(0,2);
-        if (randomIce) {
-            setOrderHasIce(!orderHasIce);
-        }
-    };
-    const getSideOrder = () => {
-        const randomSide = getRandomNumber(0,1);
-
-        if (randomSide) {
-            setHasSide(!hasSide);
-        }
-    };
-
     return (
         <div className="app-container">
 
@@ -242,7 +205,6 @@ const App = () => {
                                         <div className="columns">
                                             <div className="column">
                                                 <ManagerActions
-                                                    onReceiveOrder={handleReceiveOrder}
                                                     onGiveToCustomer={handleGiveToCustomer}
                                                 />
                                             </div>
