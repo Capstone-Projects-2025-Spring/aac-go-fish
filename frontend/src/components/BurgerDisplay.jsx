@@ -5,19 +5,21 @@ function BurgerDisplay({ imagePaths }) {
     return (
         <div className="BurgerDisplay">
             <img
-                src="/images/kitchen.png"
-                alt="Grill Station"
                 className="GrillImage"
+                src="/images/kitchen.png"
+                alt="grill station"
             />
 
-            {imagePaths.map((path, idx) => (
-                <img
-                    key={idx}
-                    src={path}
-                    alt={`ingredient-${idx}`}
-                    className="IngredientOnGrill"
-                />
-            ))}
+            <div className="BurgerStack">
+                {imagePaths.map((path, idx) => (
+                    <img
+                        key={idx}
+                        className="IngredientOnGrill"
+                        src={path}
+                        alt={`ingredient-${idx}`}
+                    />
+                ))}
+            </div>
         </div>
     );
 }
