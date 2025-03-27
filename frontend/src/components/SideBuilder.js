@@ -32,48 +32,34 @@ const SideBuilder = ({ onSend }) =>{
         }
     };
 
+    const startFrying = (finalState) => {
+        setTableState("frying");
+        let timeLeft = 5;
+        setFryTimeLeft(timeLeft)
+
+        if (fryingIntervalRef.current){
+            clearInterval(fryingIntervalRef.current);
+        }
+
+        fryingIntervalRef.current = setInterval(() => {
+            setFryTimeLeft((prevTime) => {
+                if (prevTime <= 1) {
+                    clearInterval(fryingIntervalRef.current);
+                    fryingIntervalRef.current = null;
+                    setTableState(finalState);
+                    return 0;
+                }
+                return prevTime - 1;
+            });
+        }, 1000);
+    }
+
     const frySide = () => {
         if (tableState === "choppedPotatoes") {
-            setTableState("frying");
-            let timeLeft = 5;
-            setFryTimeLeft(timeLeft)
-
-            if (fryingIntervalRef.current){
-                clearInterval(fryingIntervalRef.current);
-            }
-
-            fryingIntervalRef.current = setInterval(() => {
-                setFryTimeLeft((prevTime) => {
-                    if (prevTime <= 1) {
-                        clearInterval(fryingIntervalRef.current);
-                        fryingIntervalRef.current = null;
-                        setTableState("fries");
-                        return 0;
-                    }
-                    return prevTime - 1;
-                });
-            }, 1000);
+            startFrying("fries");
         }
         else if (tableState === "choppedOnions") {
-            setTableState("frying");
-            let timeLeft = 5;
-            setFryTimeLeft(timeLeft)
-
-            if (fryingIntervalRef.current){
-                clearInterval(fryingIntervalRef.current);
-            }
-
-            fryingIntervalRef.current = setInterval(() => {
-                setFryTimeLeft((prevTime) => {
-                    if (prevTime <= 1) {
-                        clearInterval(fryingIntervalRef.current);
-                        fryingIntervalRef.current = null;
-                        setTableState("onionRings");
-                        return 0;
-                    }
-                    return prevTime - 1;
-                });
-            }, 1000);
+            startFrying("onionRings");
         }
     };
 
