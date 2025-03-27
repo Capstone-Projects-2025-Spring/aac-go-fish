@@ -12,19 +12,13 @@ export function WebSocketProvider({ children }) {
 
     useEffect(() => {
         ws.current = new WebSocket("ws://localhost:8000/ws");
-        ws.current.onopen = () => {
-            joinLobby().catch(console.error);
-        };
+        ws.current.onopen = () => joinLobby().catch(console.error);
         ws.current.onmessage = (event) => setTimestampedMessage(JSON.parse(event.data));
 
-        return () => {
-            ws.current.close();
-        };
+        return () => ws.current.close();
     }, []);
 
-    const send = (object) => {
-        ws.current.send(JSON.stringify(object));
-    };
+    const send = (object) => ws.current.send(JSON.stringify(object));
 
     const joinLobby = async () => {
         const response = await fetch("http://127.0.0.1:8000/lobby/code/join", { method: "POST" });
