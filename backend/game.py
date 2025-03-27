@@ -1,4 +1,5 @@
 import functools
+import itertools
 import logging
 import random
 import threading
@@ -11,6 +12,8 @@ logger = logging.getLogger(__file__)
 BURGER_INGREDIENTS = ["patty", "lettuce", "onion", "tomato", "ketchup", "mustard", "cheese"]
 DRINK_COLORS = ["blue", "red", "yellow", "orange", "purple", "green"]
 DRINK_SIZES = ["S", "M", "L"]
+
+MESSAGES_PER_LOOP = 5
 
 
 class GameLoop:
@@ -27,9 +30,7 @@ class GameLoop:
         Processes messages in a loop.
         """
         while True:
-            # avoid an infinite loop if we process messages slower than they come in
-            messages = list(self.lobby.messages())
-            for message in messages:
+            for message in itertools.islice(self.lobby.messages(), MESSAGES_PER_LOOP):
                 match message.data:
                     case GameStart():
                         self.start_game()

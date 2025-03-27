@@ -21,12 +21,16 @@ class Channel[T]:
         # Can't raise queue.Full because we don't set a max size.
         self._send.put_nowait(msg)
 
-    def recv(self) -> T | None:
+    def recv_nowait(self) -> T | None:
         """Receive a message or None if empty."""
         try:
             return self._recv.get_nowait()
         except queue.Empty:
             return None
+
+    def recv(self) -> T:
+        """Receive a message. Blocks until a message is available."""
+        return self._recv.get()
 
 
 class LobbyManager:
