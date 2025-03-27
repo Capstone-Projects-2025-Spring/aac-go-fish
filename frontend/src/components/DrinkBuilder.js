@@ -1,14 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
-export const drinkColors = [
-    {name: "Blue", color: "#34C6F4"},
-    {name: "Green", color: "#99CA3C"},
-    {name: "Yellow", color: "#F7EC13"},
-    {name: "Red", color: "#FF0000"},
-    {name: "Orange", color: "#F5841F"},
-    {name: "Purple", color: "#7E69AF"},
-];
 const DrinkBuilder = ({ onSend }) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
@@ -17,7 +9,14 @@ const DrinkBuilder = ({ onSend }) =>{
     const [errorMessage, setErrorMessage] = useState("");
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
-
+    const drinkColors = [
+        {name: "Blue", color: "#34C6F4"},
+        {name: "Green", color: "#99CA3C"},
+        {name: "Yellow", color: "#F7EC13"},
+        {name: "Red", color: "#FF0000"},
+        {name: "Orange", color: "#F5841F"},
+        {name: "Purple", color: "#7E69AF"},
+    ];
     const maxFill = 100;
     const fillAmount = 5;
     const fillRate = 200;
