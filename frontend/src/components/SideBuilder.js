@@ -8,6 +8,11 @@ const SideBuilder = ({ onSend }) =>{
     const fryingIntervalRef = useRef(null);
     const [sideType, setSideType] = useState("");
 
+    const sideTypes = [
+        {type: "potatoes", initialState: "potatoes", choppedState: "choppedPotatoes", finalState: "fries"},
+        {type: "onions", initialState: "onions", choppedState: "choppedOnions", finalState: "onionRings"},
+    ];
+
     const handleSend = () => {
         onSend({
             tableState,
@@ -18,17 +23,18 @@ const SideBuilder = ({ onSend }) =>{
 
     const placeSide = (type) => {
         if (tableState === "empty"){
-            setTableState(type === "potatoes" ? "potatoes" : "onions");
-            setSideType(type === "potatoes" ? "fries" : "onionRings")
+            const side = sideTypes.find((side) => side.type === type);
+            if (side) {
+                setTableState(side.initialState);
+                setSideType(side.finalState);
+            }
         }
     };
 
     const chopSide = () =>{
-        if (tableState === "potatoes") {
-            setTableState("choppedPotatoes");
-        }
-        if (tableState === "onions") {
-            setTableState("choppedOnions");
+        const side = sideTypes.find((side) => side.initialState === tableState);
+        if (side) {
+            setTableState(side.choppedState);
         }
     };
 
@@ -55,11 +61,9 @@ const SideBuilder = ({ onSend }) =>{
     }
 
     const frySide = () => {
-        if (tableState === "choppedPotatoes") {
-            startFrying("fries");
-        }
-        else if (tableState === "choppedOnions") {
-            startFrying("onionRings");
+        const side = sideTypes.find((side) => side.choppedState === tableState);
+        if (side) {
+            startFrying(side.finalState);
         }
     };
 
