@@ -4,7 +4,8 @@ function nameToItem(name, index) {
         id: index,
         name,
         image: `/images/${key}.png`,
-        audio: `/audio/${key}.mp3`
+        audio: `/audio/${key}.mp3`,
+        sideImage: `images/${key}_side.png`
     };
 }
 
