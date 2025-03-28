@@ -6,7 +6,7 @@
     margin:20px auto;
     padding: 20px;
     max-width: 500px;
-    min-height: 200px;
+    min-height: 150px;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -19,7 +19,7 @@
     margin:20px auto;
     padding: 20px;
     max-width: 500px;
-    min-height: 200px;
+    min-height: 150px;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -76,4 +76,37 @@
 .SendButton:disabled {
     cursor: not-allowed;
     transform:none;
+}
+
+.Fryer {
+    width: 200px;
+    height: 200px;
+    border: 3px #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+    position: relative;
+}
+
+.Fryer:hover{
+    border-color: #ffa500
+}
+
+.FryerImage {
+    max-height: 100%;
+    max-width: 100%;
+    position: absolute;
+    z-index: 0;
+}
+
+.DraggableItem{
+    cursor: grab;
+    width: 100px;
+    height: auto;
+    margin: 10px;
+}
+
+.DraggableItem img{
+    width: 100%;
 }
