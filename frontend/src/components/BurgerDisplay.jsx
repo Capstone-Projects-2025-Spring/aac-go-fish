@@ -17,6 +17,7 @@ function BurgerDisplay({ imagePaths }) {
                         className="IngredientOnGrill"
                         src={path}
                         alt={`ingredient-${idx}`}
+                        style={{ zIndex: idx + 1 }}
                     />
                 ))}
             </div>
