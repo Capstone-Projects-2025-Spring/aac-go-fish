@@ -60,13 +60,6 @@ const SideBuilder = ({ onSend }) =>{
         }, 1000);
     }
 
-    const frySide = () => {
-        const side = sideTypes.find((side) => side.choppedState === tableState);
-        if (side) {
-            startFrying(side.finalState);
-        }
-    };
-
     const reset = () => {
         setTableState("empty");
         setFryTimeLeft(0);
@@ -76,11 +69,47 @@ const SideBuilder = ({ onSend }) =>{
         }
     };
 
+    const handleDragStart = (event, itemType) =>{
+        event.dataTransfer.setData("itemType",itemType);
+    }
+
+    const handleDrop = (event) => {
+        event.preventDefault();
+        const itemType = event.dataTransfer.getData("itemType");
+        const side = sideTypes.find((side) => side.choppedState === itemType);
+        if (side) {
+            playFryingSound();
+            startFrying(side.finalState);
+        }
+    };
+
+    const getOverlayImage = () => {
+        if (sideType === "fries"){
+            return <img src="/images/choppedPotatoes.png" alt="Chopped Potatoes" className="ChoppedOverlay" />;
+        }
+        if (sideType === "onionRings"){
+            return <img src="/images/OnionSide.png" alt="Chopped Onions" className="ChoppedOverlay" />;
+        }
+        return null;
+    }
+
+    const playFryingSound = () => {
+        const audio = new Audio("/audio/frying.mp3");
+        audio.play();
+    }
+
     return (
         <div className="SideBuilder">
-            <div className="TableBorder">
-                <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft}/>
-            </div>
+                <div className="TableBorder">
+                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart}/>
+                </div>
+                <div className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
+                     onDragOver={(event)=> event.preventDefault()}
+                     onDrop={handleDrop}
+                >
+                    <img src="/images/fryer.png" alt="Fryer" className="FryerImage" />
+                    {tableState === "frying" && getOverlayImage()}
+                </div>
             <div className="SideButtons">
                 <button onClick={() => placeSide("potatoes")} disabled={tableState !== "empty"}>
                     <img src="/images/potatoButton.png" alt="Place Potatoes" className="ButtonImages"/>
@@ -93,10 +122,6 @@ const SideBuilder = ({ onSend }) =>{
                 <button onClick={chopSide} disabled={tableState !== "potatoes" && tableState !== "onions"}>
                     <img src="/images/knife.png" alt="Chop Potatoes" className="ButtonImages"/>
                     Chop
-                </button>
-                <button onClick={frySide} disabled={tableState !== "choppedPotatoes" && tableState !== "choppedOnions"}>
-                    <img src="/images/fryer.png" alt="Fry Potatoes" className="ButtonImages"/>
-                    Fry
                 </button>
                 <button onClick={reset}>
                     Reset
