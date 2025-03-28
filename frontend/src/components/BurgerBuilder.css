@@ -131,3 +131,15 @@
     height: auto;
     margin: -3px 0;
 }
+
+.SendCustomerOrderImage{
+    height: 100px;
+}
+
+.RepeatOrderImage{
+    height: 100px;
+}
+
+.ClearPlateImage{
+    height: 100px;
+}

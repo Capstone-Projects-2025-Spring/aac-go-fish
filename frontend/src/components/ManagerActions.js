@@ -14,7 +14,7 @@ function ManagerActions({
                     Receive Order
                 </button>
                 <button className="MenuButtons" onClick={onGiveToCustomer}>
-                    Give to Customer
+                    <img className="SendCustomerOrder" src="images/send_order.png" alt="send customer order" />
                 </button>
             </div>
         </div>

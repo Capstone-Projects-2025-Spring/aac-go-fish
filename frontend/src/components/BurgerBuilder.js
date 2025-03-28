@@ -57,10 +57,14 @@ const BurgerBuilder = ({ onSend }) => {
             </div>
             <BurgerDisplay imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
             <button className="ClearPlateButton" onClick={clearPlate}>
-                Clear Plate
+                <img src="images/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
             </button>
-            <button className="BottomButtons" onClick={handleSend}>Send</button>
-            <button className="BottomButtons" onClick={handleRequestRepeat}>Request Repeat</button>
+            <button className="BottomButtons" onClick={handleSend}>
+                <img src="images/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
+            </button>
+            <button className="BottomButtons" onClick={handleRequestRepeat}>
+                <img src="images/repeat_order.png" alt="Request Repeat" className="RepeatOrderImage" />
+            </button>
         </div>
     );
 };

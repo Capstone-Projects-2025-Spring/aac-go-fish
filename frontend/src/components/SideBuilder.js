@@ -99,7 +99,7 @@ const SideBuilder = ({ onSend }) =>{
                     Fry
                 </button>
                 <button onClick={reset}>
-                    Reset
+                    <img src="/images/clear_plate.png" alt="Clear Plate" className="ClearPlateImage"/>
                 </button>
             </div>
             <button className="SendButton" onClick={handleSend} disabled={tableState === "empty" || tableState === "frying"}>Send</button>

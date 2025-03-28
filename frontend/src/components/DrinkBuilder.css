@@ -91,12 +91,11 @@
     margin: 10px;
     padding: 0;
     border: 1px solid #322e2e;
-    background: #000000;
+    background: #ffffff;
     cursor: pointer;
     text-align: center;
     border-radius: 6px;
     font-size: 24px;
-    color: #ffffff;
 }
 
 .FillCupButton:hover {
@@ -115,18 +114,6 @@
     transform: scale(.95);
 }
 
-.CupSizeButtons {
-    min-width: 120px;
-    min-height: 120px;
-    margin: 10px;
-    padding: 0;
-    border: 1px solid #322e2e;
-    background: #ffffff;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 6px;
-    font-size: 24px;
-}
 
 .CupSizeButtons:hover{
     border: 3px solid #322e2e;
@@ -146,4 +133,47 @@
     cursor: pointer;
     text-align: center;
     border-radius: 6px;
+}
+
+.CupSizeButtons {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px;
+    min-height: 120px;
+    margin: 10px;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.CupSizeImageSmall{
+    width: 85px;
+    height: 85px;
+    object-fit: contain;
+}
+.CupSizeImageMedium{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+.CupSizeImageLarge{
+    width: 115px;
+    height: 115px;
+    object-fit: contain;
+}
+
+.ButtonHolder{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.FillCupImage{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
 }
