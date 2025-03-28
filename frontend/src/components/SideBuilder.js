@@ -72,6 +72,7 @@ const SideBuilder = ({ onSend }) =>{
     const handleDragStart = (event, itemType) =>{
         event.dataTransfer.setData("itemType",itemType);
     }
+
     const handleDrop = (event) => {
         event.preventDefault();
         const itemType = event.dataTransfer.getData("itemType");
@@ -80,6 +81,16 @@ const SideBuilder = ({ onSend }) =>{
             startFrying(side.finalState);
         }
     };
+
+    const getOverlayImage = () => {
+        if (sideType === "fries"){
+            return <img src="/images/choppedPotatoes.png" alt="Chopped Potatoes" className="ChoppedOverlay" />;
+        }
+        if (sideType === "onionRings"){
+            return <img src="/images/OnionSide.png" alt="Chopped Onions" className="ChoppedOverlay" />;
+        }
+        return null;
+    }
 
     return (
         <div className="SideBuilder">
@@ -91,7 +102,7 @@ const SideBuilder = ({ onSend }) =>{
                      onDrop={handleDrop}
                 >
                     <img src="/images/fryer.png" alt="Fryer" className="FryerImage" />
-                    <p>Drag and drop chopped ingredients here</p>
+                    {tableState === "frying" && getOverlayImage()}
                 </div>
             <div className="SideButtons">
                 <button onClick={() => placeSide("potatoes")} disabled={tableState !== "empty"}>

@@ -128,3 +128,30 @@
         box-shadow: 0 0 10px 2px #ff8c00;
     }
 }
+
+.ChoppedOverlay {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.8);
+    width: 80px;
+    opacity: 0.9;
+    z-index: 10;
+    animation: fryingAnimation 2s infinite;
+}
+
+@keyframes fryingAnimation {
+    0%{
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.9;
+    }
+    50%{
+        transform: translate(-50%, -50%) scale(1.0);
+        opacity: 1.0;
+    }
+    100%{
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.9;
+    }
+
+}
