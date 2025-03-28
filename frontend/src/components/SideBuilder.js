@@ -78,6 +78,7 @@ const SideBuilder = ({ onSend }) =>{
         const itemType = event.dataTransfer.getData("itemType");
         const side = sideTypes.find((side) => side.choppedState === itemType);
         if (side) {
+            playFryingSound();
             startFrying(side.finalState);
         }
     };
@@ -90,6 +91,11 @@ const SideBuilder = ({ onSend }) =>{
             return <img src="/images/OnionSide.png" alt="Chopped Onions" className="ChoppedOverlay" />;
         }
         return null;
+    }
+
+    const playFryingSound = () => {
+        const audio = new Audio("/audio/frying.mp3");
+        audio.play();
     }
 
     return (
