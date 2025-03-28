@@ -24,7 +24,7 @@ const App = () => {
 
     useEffect(() => {
         if (!message) return;
-        addMessage("Order received from backend (Visible in manager view)");
+        console.log(message.content);
         // parse into an order
         const content = message.content;
         switch (content.type) {
