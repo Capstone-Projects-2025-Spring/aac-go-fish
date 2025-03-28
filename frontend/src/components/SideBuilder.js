@@ -86,7 +86,7 @@ const SideBuilder = ({ onSend }) =>{
                 <div className="TableBorder">
                     <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart}/>
                 </div>
-                <div className="Fryer"
+                <div className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
                      onDragOver={(event)=> event.preventDefault()}
                      onDrop={handleDrop}
                 >

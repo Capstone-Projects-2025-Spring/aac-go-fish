@@ -23,7 +23,6 @@ export default function SideDisplay({ tableState, fryTimeLeft, onDragStart }) {
         )}
         {tableState === "frying" && (
             <>
-                <img src="/images/fryer.png" alt="Frying" className="TableImages"/>
                 <p>Time left: {fryTimeLeft} seconds</p>
             </>
         )}
