@@ -6,9 +6,7 @@ export function WebSocketProvider({ children }) {
     const ws = useRef(null);
     const [message, setMessage] = useState(null);
 
-    const setTimestampedMessage = (content) => {
-        setMessage({content, timestamp: Date.now()});
-    };
+    const setTimestampedMessage = (content) => setMessage({content, timestamp: Date.now()});
 
     useEffect(() => {
         ws.current = new WebSocket("ws://localhost:8000/ws");
