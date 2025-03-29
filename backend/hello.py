@@ -55,7 +55,7 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
     """Handles a WebSocket connection for receiving and responding to messages."""
     await websocket.accept()
 
-    init = Message.model_validate_json(await websocket.receive_text())
+    init = Message.model_validate(await websocket.receive_json())
 
     match init:
         case Message(data=Initializer(code=code, id=id)):
@@ -72,10 +72,12 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
 async def _recv_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
     while True:
         data = Message.model_validate_json(await websocket.receive_text())
+        logger.debug("Sending WebSocket message: %.", data)
         channel.send(data)
 
 
 async def _send_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
     while True:
         msg: Message = channel.recv()
+        logger.debug("Received WebSocket message: %.", msg)
         await websocket.send_text(msg.model_dump_json())

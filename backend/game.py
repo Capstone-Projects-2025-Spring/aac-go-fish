@@ -5,7 +5,7 @@ import random
 import threading
 
 from .game_state import Lobby, Player
-from .models import Burger, Chat, Drink, Fry, GameStart, Message, NewOrder, Order, Role
+from .models import Burger, Chat, Drink, Fry, GameEnd, GameStart, Message, NewOrder, Order, Role
 
 logger = logging.getLogger(__file__)
 
@@ -34,6 +34,8 @@ class GameLoop:
                 match message.data:
                     case GameStart():
                         self.start_game()
+                    case GameEnd():
+                        return
                     case Chat() as c:
                         self.typing_indicator(c)
                     case _:
