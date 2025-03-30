@@ -44,7 +44,8 @@ const App = () => {
         "/images/customers/customer5.png",
 
     ];
-    const [customerImage, setCustomerImage] = useState(null);
+    const [customerImage, setCustomerImage] = useState("/images/customers/empty.png");
+
 
     useEffect(() => {
         const socket = new WebSocket("ws://localhost:8000/ws");
@@ -245,6 +246,7 @@ const App = () => {
                                                         onDeleteItem={removeSelectedItem}
                                                         onClearAll={clearAllSelected}
                                                         onPlayAll={onPlayAll}
+                                                        customerImage={customerImage}
                                                     />
                                                 </div>
                                                 <div className="column">
@@ -255,6 +257,7 @@ const App = () => {
                                                         hasSide={hasSide}
                                                         drinkSize={drinkSize}
                                                         orderVisible={orderVisible}
+
                                                     />
                                                 </div>
                                             </div>
