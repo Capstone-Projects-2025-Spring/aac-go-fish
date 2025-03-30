@@ -2,9 +2,8 @@ import queue
 from collections.abc import Callable
 from functools import cache
 
-from backend.game import start_main_loop
-
 from .constants import Settings
+from .game import start_main_loop
 from .game_state import Lobby, Player
 from .models import Role
 

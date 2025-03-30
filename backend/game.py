@@ -1,13 +1,14 @@
 import functools
 import itertools
-import logging
 import random
 import threading
+
+import structlog
 
 from .game_state import Lobby, Player
 from .models import Burger, Chat, Drink, Fry, GameEnd, GameStart, Message, NewOrder, Order, Role
 
-logger = logging.getLogger(__file__)
+logger = structlog.stdlib.get_logger(__file__)
 
 BURGER_INGREDIENTS = ["patty", "lettuce", "onion", "tomato", "ketchup", "mustard", "cheese"]
 DRINK_COLORS = ["blue", "red", "yellow", "orange", "purple", "green"]
@@ -39,7 +40,7 @@ class GameLoop:
                     case Chat() as c:
                         self.typing_indicator(c)
                     case _:
-                        logger.warning("Unrecognized message: %.", message.data)
+                        logger.warning("Unimplemented message.", message=message.data)
 
     def start_game(self) -> None:
         """Start game and generate the first order."""
