@@ -32,7 +32,7 @@ function AACBoard({
             <SelectedItemsDisplay selectedItems={selectedItems} onDelete={onDeleteItem} onClear={onClearAll} onPlayAll={onPlayAll} />
             <ItemGrid items={menu} onClick={handleClick} />
             <img
-                src="/images/managerBackground.png"
+                src="/images/customers/empty.png"
                 alt="Restaurant background"
                 className="manager-image" />
         </div>
