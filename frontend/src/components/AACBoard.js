@@ -11,6 +11,7 @@ function AACBoard({
     onDeleteItem,
     onClearAll,
     onPlayAll,
+    customerImage,
 }) {
 
     const handleClick = (item) => {
@@ -32,9 +33,10 @@ function AACBoard({
             <SelectedItemsDisplay selectedItems={selectedItems} onDelete={onDeleteItem} onClear={onClearAll} onPlayAll={onPlayAll} />
             <ItemGrid items={menu} onClick={handleClick} />
             <img
-                src="/images/managerBackground.png"
-                alt="Restaurant background"
-                className="manager-image" />
+                src={customerImage ?? "/images/customers/empty.png"}
+                alt="Customer"
+                className="manager-image"
+            />
         </div>
     );
 }

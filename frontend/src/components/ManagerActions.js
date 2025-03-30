@@ -8,7 +8,7 @@ function ManagerActions({
 
     return (
         <div className="manager-actions-container">
-            <p>Select an action (test)</p>
+            <p>Select an action</p>
             <div className="manager-actions-buttons">
                 <button className="MenuButtons" onClick={onReceiveOrder}>
                     Receive Order
