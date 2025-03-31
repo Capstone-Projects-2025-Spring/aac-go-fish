@@ -4,9 +4,9 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     """App settings."""
 
-    env: str = "prod"
+    env: str = "dev"
 
-    log_level: str = "INFO"
+    log_level: str = "DEBUG"
 
 
 settings = Settings()
