@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './BurgerBuilder.css';
-import BurgerDisplay from "./BurgerDisplay";
+import BurgerStation from "./BurgerStation";
 import {menu} from "../menuItems";
 const BurgerBuilder = ({ onSend }) => {
     const [ingredients, setIngredients] = useState([]);
@@ -46,15 +46,15 @@ const BurgerBuilder = ({ onSend }) => {
                     </button>
                 ))}
             </div>
-            <BurgerDisplay imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
+            <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
             <button className="ClearPlateButton" onClick={clearPlate}>
-                <img src="images/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
+                <img src="/images/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="images/repeat_order.png" alt="Request Repeat" className="RepeatOrderImage" />
+                <img src="/images/repeat_order.png" alt="Request Repeat" className="RepeatOrderImage" />
             </button>
             <button onClick={handleSend} className="SendOrderButton">
-                <img src="images/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
+                <img src="/images/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
         </div>
     );

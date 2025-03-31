@@ -1,4 +1,29 @@
 .mini-order-display {
     display: flex;
-    align-items: end;
+    align-items: center;
+    gap: 2.5rem;
+    > * {
+        all: unset;
+        width: 100px !important;
+        height: 200px !important;
+        display: flex;
+        align-items: end;
+        .TableImages {
+            all: unset;
+            height: 100px;
+        }
+        > * {
+            width: 100%
+        }
+    }
+    .BurgerDisplay {
+        flex-direction: column-reverse;
+    }
+    .Cup {
+        border: 2px solid #000000;
+        border-radius: 15px;
+        background-color: #ffffff;
+        overflow: hidden;
+        position: relative;
+    }
 }

@@ -69,6 +69,10 @@
     position:relative;
 }
 
+.Cup.small { height: 200px; }
+.Cup.medium { height: 275px; }
+.Cup.large { height: 350px; }
+
 .Ice{
     position:absolute;
     top:0;

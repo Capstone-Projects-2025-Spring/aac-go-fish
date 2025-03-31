@@ -97,7 +97,7 @@
     border-radius: 6px;
 }
 
-.BurgerDisplay {
+.BurgerStation {
     position: relative;
     width: 600px;
     margin: 0 auto;
@@ -125,6 +125,10 @@
     height: 90%;
 }
 
+.BurgerDisplay {
+    display: flex;
+    flex-direction: column-reverse;
+}
 
 .IngredientOnGrill {
     width: 80px;

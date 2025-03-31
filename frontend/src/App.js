@@ -9,6 +9,8 @@ import CustomerOrder from "./components/CustomerOrder";
 import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
 import { WebSocketContext } from "./WebSocketContext";
+import { useCustomerImages } from "./useCustomerImages";
+import Customer from "./components/Customer";
 
 const App = () => {
     const [messages, setMessages] = useState([]);
@@ -19,9 +21,9 @@ const App = () => {
     const [drink, setDrink] = useState(null);
     const { message } = useContext(WebSocketContext);
     const [orderVisible, setOrderVisible] = useState(false)
-
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [drinkOrder, setDrinkOrder] = useState([]);
+    const { customerImage, setRandomCustomerImage } = useCustomerImages();
 
     useEffect(() => {
         if (!message) return;
@@ -33,6 +35,7 @@ const App = () => {
                     case "new_order":
                         setOrderVisible(true);
                         setBurgerOrder(data.order.burger.ingredients);
+                        setRandomCustomerImage();
                         // TODO: sides and drink (backend doesn't send them yet -- check generate_order() in game.py)
                 }
         }
@@ -48,16 +51,6 @@ const App = () => {
     const maxSize = 9;
 
     const [hasSide, setHasSide] = useState(false);
-    const customerImages = [
-        "/images/customers/customer1.png",
-        "/images/customers/customer2.png",
-        "/images/customers/customer3.png",
-        "/images/customers/customer4.png",
-        "/images/customers/customer5.png",
-
-    ];
-    const [customerImage, setCustomerImage] = useState("/images/customers/empty.png");
-
 
     const addMessage = (msg) => {
         setMessages((prev) => [...prev, msg]);
@@ -100,13 +93,7 @@ const App = () => {
 
         addMessage("Manager: Played phrase!");
     };
-    const handleReceiveOrder = () => {
-        const randomIndex = Math.floor(Math.random() * customerImages.length);
-        const randomCustomer = customerImages[randomIndex];
-        setCustomerImage(randomCustomer);
-        console.log("Random customer selected:", randomCustomer);
-        addMessage("Manager: Receiving the order...");
-    };
+
     const getScoring = ({ burger, side, drink }) => {
         // Temporarily scoring function while no scoring in backend
         var tempScore = 0
@@ -178,7 +165,6 @@ const App = () => {
 
     return (
         <div className="app-container">
-
             <div className="main-layout">
                 <div className="sidebar">
                     <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
@@ -207,6 +193,8 @@ const App = () => {
                                                         onPlayAll={onPlayAll}
                                                         customerImage={customerImage}
                                                     />
+                                                    <MiniOrderDisplay burger={burger} side={side} drink={drink} />
+                                                    <ManagerActions onGiveToCustomer={handleGiveToCustomer}/>
                                                 </div>
                                                 <div className="column">
                                                     <CustomerOrder
@@ -217,17 +205,7 @@ const App = () => {
                                                         drinkSize={drinkSize}
                                                         orderVisible={orderVisible}
                                                     />
-                                                </div>
-                                            </div>
-                                            <div className="columns">
-                                                <div className="column">
-                                                    <ManagerActions
-                                                        onReceiveOrder={handleReceiveOrder}
-                                                        onGiveToCustomer={handleGiveToCustomer}
-                                                    />
-                                                </div>
-                                                <div className="column">
-                                                    <MiniOrderDisplay burger={burger} side={side} drink={drink} />
+                                                    <Customer customerImage={customerImage} />
                                                 </div>
                                             </div>
                                         </>
