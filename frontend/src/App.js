@@ -3,7 +3,6 @@ import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
-import { mockBurgerOrders, mockDrinkOrders } from "./MockOrders"
 import RoleSelector from "./components/RoleSelector";
 import AACBoard from "./components/AACBoard";
 import CustomerOrder from "./components/CustomerOrder";
@@ -26,15 +25,14 @@ const App = () => {
 
     useEffect(() => {
         if (!message) return;
-        console.log(message.content);
-        // parse into an order
-        const content = message.content;
-        switch (content.type) {
+        const data = message.content.data;
+        console.log(data);
+        switch (data.type) {
             case "game_state":
-                switch (content.game_state_update_type) {
+                switch (data.game_state_update_type) {
                     case "new_order":
                         setOrderVisible(true);
-                        setBurgerOrder(content.order.burger.ingredients);
+                        setBurgerOrder(data.order.burger.ingredients);
                         // TODO: sides and drink (backend doesn't send them yet -- check generate_order() in game.py)
                 }
         }
@@ -103,10 +101,6 @@ const App = () => {
         addMessage("Manager: Played phrase!");
     };
     const handleReceiveOrder = () => {
-        setOrderVisible(true);
-        getBurgerOrder();
-        getDrinkOrder();
-        getSideOrder();
         const randomIndex = Math.floor(Math.random() * customerImages.length);
         const randomCustomer = customerImages[randomIndex];
         setCustomerImage(randomCustomer);
@@ -182,44 +176,6 @@ const App = () => {
         return Math.floor(Math.random() * (max + 1 - min) + min);
     };
 
-    const getBurgerOrder = () => {
-        console.log('Button clicked!');
-
-
-        const randomIndex = getRandomNumber(0, 2);
-        setBurgerOrder(mockBurgerOrders[randomIndex]);
-    };
-    const getDrinkOrder = () => {
-        console.log('Button clicked!');
-
-        const randomIndex = getRandomNumber(0, 5);
-        setDrinkOrder(mockDrinkOrders[randomIndex]);
-
-        const sizes = ['small', 'medium', 'large']
-        const randomSize = getRandomNumber(0, 2);
-        setDrinkSize(sizes[randomSize]);
-        console.log(drinkSize);
-
-        // Temporarily not used until ice is fully implemented in the drink station
-        const randomIce = getRandomNumber(0, 2);
-        if (randomIce) {
-            setOrderHasIce(!orderHasIce);
-        }
-    };
-    const getSideOrder = () => {
-        const randomSide = getRandomNumber(0, 1);
-
-        if (randomSide) {
-            setHasSide(!hasSide);
-        }
-    };
-
-    const addLayer = (layer) => {
-        if (layers.length <= maxSize) {
-            setLayers([...layers, layer]);
-        }
-    };
-
     return (
         <div className="app-container">
 
@@ -260,7 +216,6 @@ const App = () => {
                                                         hasSide={hasSide}
                                                         drinkSize={drinkSize}
                                                         orderVisible={orderVisible}
-
                                                     />
                                                 </div>
                                             </div>
