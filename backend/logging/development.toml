@@ -1,9 +1,0 @@
-[handlers.default]
-level = "DEBUG"
-class = "logging.StreamHandler"
-formatter = "development"
-
-[loggers.""]
-handlers = ["default"]
-level = "DEBUG"
-propagate = true

@@ -6,5 +6,7 @@ class Settings(BaseSettings):
 
     env: str = "prod"
 
+    log_level: str = "INFO"
+
 
 settings = Settings()
