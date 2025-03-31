@@ -215,6 +215,7 @@ dev = [
     { name = "pre-commit" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
+    { name = "rich" },
 ]
 
 [package.metadata]
@@ -231,6 +232,7 @@ dev = [
     { name = "pre-commit", specifier = ">=4.1.0" },
     { name = "pytest", specifier = ">=8.3.4" },
     { name = "pytest-asyncio", specifier = ">=0.25.3" },
+    { name = "rich", specifier = ">=13.9.4" },
 ]
 
 [[package]]

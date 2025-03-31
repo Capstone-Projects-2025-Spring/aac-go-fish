@@ -1,41 +1,19 @@
-import logging
-import tomllib
+import asyncio
+import time
 import typing
-from collections.abc import AsyncGenerator
+from collections.abc import AsyncGenerator, Awaitable, Callable
 from contextlib import asynccontextmanager
-from pathlib import Path
 
 import structlog
 from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
-from fastapi import Depends, FastAPI, HTTPException, WebSocket
-from pydantic import ValidationError
+from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
+from uvicorn.protocols.utils import get_path_with_query_string
 
-from .dependencies import LobbyManager, lobby_manager, settings
-from .logging_config import LoggingMiddleware, configure_logger
+from .dependencies import Channel, LobbyManager, lobby_manager, settings
+from .logging_config import setup_logging
 from .models import Annotated, Initializer, Message
 
-logger: structlog.stdlib.BoundLogger = structlog.get_logger()
-
-
-def add_correlation(
-    logger: logging.Logger, method_name: str, event_dict: dict[str, typing.Any]
-) -> dict[str, typing.Any]:
-    """Add request id to log message."""
-    if request_id := correlation_id.get():
-        event_dict["request_id"] = request_id
-    return event_dict
-
-
-def _setup_logging() -> None:
-    config_dir = Path(__file__).parent / "logging"
-    if settings().env == "prod":
-        config = config_dir / "production.toml"
-    else:
-        config = config_dir / "development.toml"
-
-    data = tomllib.loads(config.read_text())
-
-    configure_logger(data, [add_correlation])
+access_logger = structlog.stdlib.get_logger("api.access")
 
 
 @asynccontextmanager
@@ -46,15 +24,66 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
         lobby = lobby_manager()
         lobby.register_lobby()
 
-    _setup_logging()
+    if s.env == "prod":
+        json_logs = True
+    else:
+        json_logs = False
+
+    setup_logging(json_logs=json_logs, log_level=s.log_level)
 
     yield
 
 
 app = FastAPI(lifespan=lifespan)
 
+
+@app.middleware("http")
+async def logging_middleware(request: Request, call_next: Callable[[Request], Awaitable[Response]]) -> Response:
+    """Add log info to all requests."""
+    structlog.contextvars.clear_contextvars()
+    # These context vars will be added to all log entries emitted during the request
+    request_id = correlation_id.get()
+    structlog.contextvars.bind_contextvars(request_id=request_id)
+
+    start_time = time.perf_counter_ns()
+    # If the call_next raises an error, we still want to return our own 500
+    # response, so we can add headers to it (process time, request ID...)
+    response = Response(status_code=500)
+    try:
+        response = await call_next(request)
+    except Exception:
+        structlog.stdlib.get_logger("api.error").exception("Uncaught exception")
+        raise
+    finally:
+        process_time = time.perf_counter_ns() - start_time
+
+        status_code = response.status_code
+        url = get_path_with_query_string(request.scope)  # pyright: ignore[reportArgumentType]
+        client_host = request.client.host if request.client else ""
+        client_port = request.client.port if request.client else ""
+        http_method = request.method
+        http_version = request.scope["http_version"]
+        # Recreate the Uvicorn access log format, but add all parameters as
+        # structured information
+        access_logger.info(
+            f"""{client_host}:{client_port} - "{http_method} {url} HTTP/{http_version}" {status_code}""",
+            http={
+                "url": str(request.url),
+                "status_code": status_code,
+                "method": http_method,
+                "request_id": request_id,
+                "version": http_version,
+            },
+            network={"client": {"ip": client_host, "port": client_port}},
+            duration=process_time,
+        )
+        response.headers["X-Process-Time"] = str(process_time / 10**9)
+        return response  # noqa: B012
+
+
 app.add_middleware(CorrelationIdMiddleware)
-app.add_middleware(LoggingMiddleware)
+
+logger = structlog.stdlib.get_logger()
 
 
 @app.post("/lobby")
@@ -87,18 +116,30 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
     """Handles a WebSocket connection for receiving and responding to messages."""
     await websocket.accept()
 
-    init = Initializer.model_validate(await websocket.receive_text())
-    channel = lm.channel(init.code, init.id)
+    init = Message.model_validate(await websocket.receive_json())
 
+    match init:
+        case Message(data=Initializer(code=code, id=id)):
+            channel = lm.channel(code, id)
+            logger.info("WebSocket connection initialized.", player=id)
+        case _:
+            logger.info("WebSocket connection failed to initialize.", message=init)
+            await websocket.close()
+            return
+
+    await asyncio.gather(_recv_handler(websocket, channel), _send_handler(websocket, channel))
+    await websocket.close()
+
+
+async def _recv_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
     while True:
-        data = await websocket.receive_text()
+        data = Message.model_validate_json(await websocket.receive_text())
+        logger.debug("Received WebSocket message.", message=data)
+        channel.send(data)
 
-        try:
-            incoming_message = Message.model_validate(data)
-        except ValidationError:
-            logger.warning("Unrecognized message: %.", data)
-        else:
-            channel.send(incoming_message)
 
-        if outgoing_message := typing.cast(Message, channel.recv()):
-            await websocket.send_text(outgoing_message.model_dump_json())
+async def _send_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
+    while True:
+        msg: Message = await channel.arecv()
+        logger.debug("Sending WebSocket message.", message=msg)
+        await websocket.send_text(msg.model_dump_json())

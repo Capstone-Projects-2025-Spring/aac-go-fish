@@ -148,3 +148,25 @@
     margin-top: 10px;
     padding: 10px;
 }
+
+.SendCustomerOrderImage{
+    height: 100px;
+}
+
+.RepeatOrderImage{
+    height: 100px;
+}
+
+.ClearPlateImage{
+    height: 100px;
+}
+
+.SendImage{
+    height: 100px;
+}
+
+.SendOrderButton{
+    background: white;
+    border: none;
+    cursor: pointer;
+}
