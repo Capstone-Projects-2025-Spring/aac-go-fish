@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useRef, useState } from "react";
 
 export const WebSocketContext = createContext(null);
-const BACKEND_URL = "ws://localhost:8000/ws"
+const BACKEND_DOMAIN = "localhost:8000"
 
 export function WebSocketProvider({ children }) {
     const ws = useRef(null);
@@ -10,7 +10,7 @@ export function WebSocketProvider({ children }) {
     const setTimestampedMessage = (content) => setMessage({content, timestamp: Date.now()});
 
     useEffect(() => {
-        ws.current = new WebSocket(BACKEND_URL);
+        ws.current = new WebSocket(`ws://${BACKEND_DOMAIN}/ws`);
         ws.current.onopen = () => joinLobby().catch(console.error);
         ws.current.onmessage = (event) => setTimestampedMessage(JSON.parse(event.data));
 
@@ -20,7 +20,7 @@ export function WebSocketProvider({ children }) {
     const send = (object) => ws.current.send(JSON.stringify(object));
 
     const joinLobby = async () => {
-        const response = await fetch("http://127.0.0.1:8000/lobby/code/join", { method: "POST" });
+        const response = await fetch(`http://${BACKEND_DOMAIN}/lobby/code/join`, { method: "POST" });
         const data = await response.json();
         send({data: { type: "initializer", code: "code", id: data.id }});
         send({data: { type: "lobby_lifecycle", lifecycle_type: "game_start" }});
