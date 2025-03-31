@@ -23,7 +23,7 @@ function AACBoard({
                 const thinkVersion = customerImage.replace(".png", "_think.png");
                 setCurrentCustomerImage(thinkVersion);
             }
-        }, 3000);
+        }, 2900);
 
         return () => clearTimeout(timer);
     }, [customerImage]);

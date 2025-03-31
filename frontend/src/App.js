@@ -100,13 +100,25 @@ const App = () => {
         "/images/customers/customer5.png"
     ];
     const handleReceiveOrder = () => {
-        setOrderVisible(true);
+        setOrderVisible(false);
+        setBurger(null);
+        setSide(null);
+        setDrink(null);
         getBurgerOrder();
         getDrinkOrder();
         getSideOrder();
+
         const randIndex = Math.floor(Math.random() * customerBaseImages.length);
         const randomCustomer = customerBaseImages[randIndex];
         setCustomerImage(randomCustomer);
+
+        console.log("Random customer selected:", randomCustomer);
+
+        setTimeout(() => {
+            setOrderVisible(true);
+            addMessage("Manager: Receiving the order...");
+        }, 3000);
+
 
         console.log("Random customer selected:", randomCustomer);
         addMessage("Manager: Receiving the order...");

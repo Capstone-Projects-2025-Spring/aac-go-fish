@@ -36,65 +36,37 @@ function CustomerOrder({
     return (
         <div className="CustomerOrder">
             <div className="orderDisplay">
-                <div className="burgerOrderDisplay">
-                    {[...burgerOrder].map((itemName, index) => {
-                        const item = foodItems.find(food => food.name === itemName);
-                        return item ? (
-                            <div key={index} className="foodItem">
-                                <img src={item.sideImage} alt={item.sideImage} />
-                            </div>
-                        ) : null;
-                    })}
-                </div>
+
+                {orderVisible && (
+                    <div className="burgerOrderDisplay">
+                        {[...burgerOrder].map((itemName, index) => {
+                            const item = foodItems.find(food => food.name === itemName);
+                            return item ? (
+                                <div key={index} className="foodItem">
+                                    <img src={item.sideImage} alt={item.sideImage} />
+                                </div>
+                            ) : null;
+                        })}
+                    </div>
+                )}
+
                 {orderVisible && hasSide ? (
-                    <div className='sideDisplay'>
-                        {
-                            <img
-                                src="/images/fries.png"
-                                alt="Fries"
-                                className="Fries"
-                            />
-                        }
+                    <div className="sideDisplay">
+                        <img src="/images/fries.png" alt="Fries" className="Fries" />
                     </div>
                 ) : orderVisible ? (
                     <div className='sideDisplay'>
-                        {
-                            <img
-                                src="/images/noFries.png"
-                                alt="NoFries"
-                                className="NoFries"
-                            />
-                        }
+                        <img src="/images/noFries.png" alt="NoFries" className="NoFries" />
                     </div>
-                )
-                    : null
-                }
+                ) : null}
+
                 {orderVisible ? (
                     <div className="mockDisplayCup" style={{ backgroundColor: drinkOrder[1], color: "#FFFFFF" }}>
-
-                        <p className='drinkSizeText'>
-                            {drinkSize === 'large' ?
-                                "L"
-                                : drinkSize === 'medium' ?
-                                    "M"
-                                    : drinkSize === 'small' ?
-                                        "S"
-                                        : null
-                            }
-                        </p>
-
-                        {hasIce && (
-                            <img
-                                src="/images/ice.png"
-                                alt="Ice"
-                                className="Ice"
-                            />
-                        )}
                     </div>
-                )
-                    : null
-                }
+                ) : null}
+
             </div>
+
 
         </div>
     );
