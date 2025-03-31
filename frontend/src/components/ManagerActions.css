@@ -27,6 +27,17 @@
     border-radius: 6px;
 }
 
+.SendOrder{
+    min-width: 120px;
+    min-height: 40px;
+    margin: 10px;
+    padding: 0;
+    border: None;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+}
+
 .SendCustomerOrder{
     height: 100px;
 }

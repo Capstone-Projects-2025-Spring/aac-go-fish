@@ -100,6 +100,9 @@ const DrinkBuilder = ({ onSend }) =>{
             </div>
 
             <div className='ButtonHolder'>
+            <button className="ClearCupButton" onClick={clearCup}>
+                <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
+            </button>
             <button className="FillCupButton"
                     onMouseDown={startFilling}
                     onMouseUp={stopFilling}
@@ -108,9 +111,6 @@ const DrinkBuilder = ({ onSend }) =>{
                 <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
             </button>
 
-            <button className="ClearCupButton" onClick={clearCup}>
-                Clear Cup
-            </button>
             <button
                 className="CupSizeButtons"
                 onClick={() => setCupSize("small")}

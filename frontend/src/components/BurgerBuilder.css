@@ -143,3 +143,13 @@
 .ClearPlateImage{
     height: 100px;
 }
+
+.SendImage{
+    height: 100px;
+}
+
+.SendOrderButton{
+    background: white;
+    border: none;
+    cursor: pointer;
+}

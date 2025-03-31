@@ -59,11 +59,11 @@ const BurgerBuilder = ({ onSend }) => {
             <button className="ClearPlateButton" onClick={clearPlate}>
                 <img src="images/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
             </button>
-            <button className="BottomButtons" onClick={handleSend}>
-                <img src="images/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
-            </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
                 <img src="images/repeat_order.png" alt="Request Repeat" className="RepeatOrderImage" />
+            </button>
+            <button onClick={handleSend} className="SendOrderButton">
+                <img src="images/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
         </div>
     );

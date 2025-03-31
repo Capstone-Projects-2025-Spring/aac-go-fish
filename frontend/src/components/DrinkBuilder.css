@@ -102,10 +102,6 @@
     border: 3px solid #322e2e;
 }
 
-.ClearCupButton:hover {
-    border: 3px solid #322e2e;
-}
-
 .FillCupButton:active {
     transform: scale(.95);
 }
@@ -176,4 +172,11 @@
     width: 100px;
     height: 100px;
     object-fit: contain;
+}
+
+.ClearCupButton{
+    border: none;
+}
+.ClearCupImage{
+    height: 120px;
 }

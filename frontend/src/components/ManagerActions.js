@@ -13,7 +13,7 @@ function ManagerActions({
                 <button className="MenuButtons" onClick={onReceiveOrder}>
                     Receive Order
                 </button>
-                <button className="MenuButtons" onClick={onGiveToCustomer}>
+                <button className="SendOrder" onClick={onGiveToCustomer}>
                     <img className="SendCustomerOrder" src="images/send_order.png" alt="send customer order" />
                 </button>
             </div>
