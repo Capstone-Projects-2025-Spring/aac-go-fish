@@ -22,13 +22,13 @@ const App = () => {
     const { message } = useContext(WebSocketContext);
     const [orderVisible, setOrderVisible] = useState(false)
     const [burgerOrder, setBurgerOrder] = useState([]);
-    const [drinkOrder, setDrinkOrder] = useState([]);
-    const { customerImage, setRandomCustomerImage } = useCustomerImages();
+    const { customerImage, setRandomCustomerImage } = useCustomerImages()
+    const [score, setScore] = useState(0)
 
     useEffect(() => {
         if (!message) return;
         const data = message.content.data;
-        console.log(data);
+        addMessage(JSON.stringify(data));
         switch (data.type) {
             case "game_state":
                 switch (data.game_state_update_type) {
@@ -41,16 +41,6 @@ const App = () => {
         }
     }, [message]);
 
-    //// Temporarily not used until ice is fully implemented in the drink station
-    const [orderHasIce, setOrderHasIce] = useState(false);
-    const [drinkSize, setDrinkSize] = useState('medium');
-
-    const [score, setScore] = useState(0)
-
-    const [layers, setLayers] = useState([]);
-    const maxSize = 9;
-
-    const [hasSide, setHasSide] = useState(false);
 
     const addMessage = (msg) => {
         setMessages((prev) => [...prev, msg]);
@@ -96,7 +86,7 @@ const App = () => {
 
     const getScoring = ({ burger, side, drink }) => {
         // Temporarily scoring function while no scoring in backend
-        var tempScore = 0
+        let tempScore = 0
 
         if (burger) {
             // 3 points for submitting any burger, +2 points if correct
@@ -111,7 +101,7 @@ const App = () => {
         if (side) {
             // 1 point for submitting any side, +2 points if correct
             tempScore += 1
-            if (hasSide && side === 'fries') {
+            if (side === 'fries') {
                 tempScore += 2
                 addMessage(`Manager: Side order is correct`)
             } else {
@@ -123,7 +113,7 @@ const App = () => {
             tempScore += 2
 
             // Test object, fill and ice are hardcoded for now
-            const drinkObj = { color: drinkOrder[1], fillPercentage: 100, hasIce: false, cupSize: drinkSize }
+            const drinkObj = { color: null, fillPercentage: 100, hasIce: false, cupSize: null }
             if (JSON.stringify(drink) === JSON.stringify(drinkObj)) {
                 tempScore += 2
                 addMessage(`Manager: Drink order is correct`)
@@ -137,8 +127,8 @@ const App = () => {
     const handleGiveToCustomer = () => {
         addMessage("Manager: Sending order to the customer");
 
-        var tempBurger = null
-        var tempSide = null
+        let tempBurger = null;
+        let tempSide = null;
         if (burger) {
             tempBurger = burger.map((ingredient) => ingredient.name)
             addMessage(`Sending burger (${JSON.stringify(tempBurger)})`)
@@ -157,10 +147,6 @@ const App = () => {
         setBurger(null);
         setSide(null);
         setDrink(null);
-    };
-
-    const getRandomNumber = (min, max) => {
-        return Math.floor(Math.random() * (max + 1 - min) + min);
     };
 
     return (
@@ -199,10 +185,10 @@ const App = () => {
                                                 <div className="column">
                                                     <CustomerOrder
                                                         burgerOrder={burgerOrder}
-                                                        drinkOrder={drinkOrder}
-                                                        hasIce={orderHasIce}
-                                                        hasSide={hasSide}
-                                                        drinkSize={drinkSize}
+                                                        drinkOrder={[]}
+                                                        hasIce={false}
+                                                        hasSide={false}
+                                                        drinkSize={null}
                                                         orderVisible={orderVisible}
                                                     />
                                                     <Customer customerImage={customerImage} />

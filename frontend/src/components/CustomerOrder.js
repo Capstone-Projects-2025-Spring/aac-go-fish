@@ -13,8 +13,6 @@ function CustomerOrder({
 
     const burgerIngredients = menu[0].children;
 
-    // Temporarily set hasIce to false until ice is fully implemented in the drink station
-    hasIce = false;
     return (
         <div className="CustomerOrder">
             <div className="orderDisplay">
