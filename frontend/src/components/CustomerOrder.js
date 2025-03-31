@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './CustomerOrder.css';
 
 function CustomerOrder({
@@ -7,7 +7,7 @@ function CustomerOrder({
     drinkSize,
     hasIce,
     hasSide,
-    orderVisible
+    orderVisible,
 }) {
 
     const foodItems = [
@@ -23,25 +23,25 @@ function CustomerOrder({
     ];
 
     const drinkLayers = [
-        {name: "Blue", color: "#0033CC"},
-        {name: "Green", color: "#00CC00"},
-        {name: "Yellow", color: "#FFFF00"},
-        {name: "Red", color: "#FF0000"},
-        {name: "Orange", color: "#FF9900"},
-        {name: "Purple", color: "#660099"},
+        { name: "Blue", color: "#0033CC" },
+        { name: "Green", color: "#00CC00" },
+        { name: "Yellow", color: "#FFFF00" },
+        { name: "Red", color: "#FF0000" },
+        { name: "Orange", color: "#FF9900" },
+        { name: "Purple", color: "#660099" },
     ];
 
     // Temporarily set hasIce to false until ice is fully implemented in the drink station
     hasIce = false;
     return (
-        <div className = "CustomerOrder">
-            <div className = "orderDisplay">
-                <div className = "burgerOrderDisplay">
-                    {[...burgerOrder].map((itemName,index) => {
+        <div className="CustomerOrder">
+            <div className="orderDisplay">
+                <div className="burgerOrderDisplay">
+                    {[...burgerOrder].map((itemName, index) => {
                         const item = foodItems.find(food => food.name === itemName);
                         return item ? (
                             <div key={index} className="foodItem">
-                                <img src={item.sideImage} alt={item.sideImage}/>
+                                <img src={item.sideImage} alt={item.sideImage} />
                             </div>
                         ) : null;
                     })}
@@ -49,38 +49,38 @@ function CustomerOrder({
                 {orderVisible && hasSide ? (
                     <div className='sideDisplay'>
                         {
-                        <img
-                            src="/images/fries.png"
-                            alt="Fries"
-                            className="Fries"
-                        />
+                            <img
+                                src="/images/fries.png"
+                                alt="Fries"
+                                className="Fries"
+                            />
                         }
                     </div>
-                ): orderVisible ? (
+                ) : orderVisible ? (
                     <div className='sideDisplay'>
                         {
-                        <img
-                            src="/images/noFries.png"
-                            alt="NoFries"
-                            className="NoFries"
-                        />
+                            <img
+                                src="/images/noFries.png"
+                                alt="NoFries"
+                                className="NoFries"
+                            />
                         }
                     </div>
                 )
-                : null
+                    : null
                 }
                 {orderVisible ? (
-                    <div className="mockDisplayCup" style = {{ backgroundColor: drinkOrder[1], color: "#FFFFFF" }}>
+                    <div className="mockDisplayCup" style={{ backgroundColor: drinkOrder[1], color: "#FFFFFF" }}>
 
                         <p className='drinkSizeText'>
-                        {drinkSize === 'large' ?
-                            "L"
-                        : drinkSize === 'medium' ?
-                            "M"
-                        : drinkSize === 'small' ?
-                            "S"
-                         : null
-                        }
+                            {drinkSize === 'large' ?
+                                "L"
+                                : drinkSize === 'medium' ?
+                                    "M"
+                                    : drinkSize === 'small' ?
+                                        "S"
+                                        : null
+                            }
                         </p>
 
                         {hasIce && (
@@ -91,8 +91,8 @@ function CustomerOrder({
                             />
                         )}
                     </div>
-                    )
-                : null
+                )
+                    : null
                 }
             </div>
 

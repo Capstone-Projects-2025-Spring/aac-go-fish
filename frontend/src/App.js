@@ -36,14 +36,6 @@ const App = () => {
     const maxSize = 9;
 
     const [hasSide, setHasSide] = useState(false);
-    const customerImages = [
-        "/images/customers/customer1.png",
-        "/images/customers/customer2.png",
-        "/images/customers/customer3.png",
-        "/images/customers/customer4.png",
-        "/images/customers/customer5.png",
-
-    ];
     const [customerImage, setCustomerImage] = useState("/images/customers/empty.png");
 
 
@@ -99,14 +91,23 @@ const App = () => {
 
         addMessage("Manager: Played phrase!");
     };
+
+    const customerBaseImages = [
+        "/images/customers/customer1.png",
+        "/images/customers/customer2.png",
+        "/images/customers/customer3.png",
+        "/images/customers/customer4.png",
+        "/images/customers/customer5.png"
+    ];
     const handleReceiveOrder = () => {
         setOrderVisible(true);
         getBurgerOrder();
         getDrinkOrder();
         getSideOrder();
-        const randomIndex = Math.floor(Math.random() * customerImages.length);
-        const randomCustomer = customerImages[randomIndex];
+        const randIndex = Math.floor(Math.random() * customerBaseImages.length);
+        const randomCustomer = customerBaseImages[randIndex];
         setCustomerImage(randomCustomer);
+
         console.log("Random customer selected:", randomCustomer);
         addMessage("Manager: Receiving the order...");
     };
@@ -257,6 +258,8 @@ const App = () => {
                                                         hasSide={hasSide}
                                                         drinkSize={drinkSize}
                                                         orderVisible={orderVisible}
+                                                        customerImage={customerImage}
+
 
                                                     />
                                                 </div>
