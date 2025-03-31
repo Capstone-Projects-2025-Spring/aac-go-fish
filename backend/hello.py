@@ -128,17 +128,18 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
             return
 
     await asyncio.gather(_recv_handler(websocket, channel), _send_handler(websocket, channel))
+    await websocket.close()
 
 
 async def _recv_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
     while True:
         data = Message.model_validate_json(await websocket.receive_text())
-        logger.debug("Sending WebSocket message.", message=data)
+        logger.debug("Received WebSocket message.", message=data)
         channel.send(data)
 
 
 async def _send_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
     while True:
         msg: Message = await channel.arecv()
-        logger.debug("Sending WebSocket message: %s.", msg)
+        logger.debug("Sending WebSocket message.", message=msg)
         await websocket.send_text(msg.model_dump_json())

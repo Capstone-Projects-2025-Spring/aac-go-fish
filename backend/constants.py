@@ -6,7 +6,7 @@ class Settings(BaseSettings):
 
     env: str = "dev"
 
-    log_level: str = "INFO"
+    log_level: str = "DEBUG"
 
 
 settings = Settings()
