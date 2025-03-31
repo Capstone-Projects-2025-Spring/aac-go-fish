@@ -5,7 +5,9 @@ FRONTEND_URL = "http://localhost:3000"
 class Settings(BaseSettings):
     """App settings."""
 
-    env: str = "prod"
+    env: str = "dev"
+
+    log_level: str = "DEBUG"
 
 
 settings = Settings()

@@ -1,16 +1,20 @@
 import functools
-import logging
+import itertools
 import random
 import threading
 
+import structlog
+
 from .game_state import Lobby, Player
-from .models import Burger, Chat, Drink, Fry, GameStart, Message, NewOrder, Order, Role
+from .models import Burger, Chat, Drink, Fry, GameEnd, GameStart, Message, NewOrder, Order, Role
 
-logger = logging.getLogger(__file__)
+logger = structlog.stdlib.get_logger(__file__)
 
-BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
-DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
+BURGER_INGREDIENTS = ["patty", "lettuce", "onion", "tomato", "ketchup", "mustard", "cheese"]
+DRINK_COLORS = ["blue", "red", "yellow", "orange", "purple", "green"]
 DRINK_SIZES = ["S", "M", "L"]
+
+MESSAGES_PER_LOOP = 5
 
 
 class GameLoop:
@@ -27,29 +31,29 @@ class GameLoop:
         Processes messages in a loop.
         """
         while True:
-            # avoid an infinite loop if we process messages slower than they come in
-            messages = list(self.lobby.messages())
-            for message in messages:
-                match message:
+            for message in itertools.islice(self.lobby.messages(), MESSAGES_PER_LOOP):
+                match message.data:
                     case GameStart():
                         self.start_game()
+                    case GameEnd():
+                        return
                     case Chat() as c:
                         self.typing_indicator(c)
                     case _:
-                        logger.warning("Unrecognized message: %.", message)
+                        logger.warning("Unimplemented message.", message=message.data)
 
     def start_game(self) -> None:
         """Start game and generate the first order."""
         logger.debug("Starting game.")
 
         self.day = 1
-        self.manager.send(NewOrder(order=self.generate_order()))
+        self.manager.send(Message(data=NewOrder(order=self.generate_order())))
 
     def generate_order(self) -> Order:
         """Generate an order based on the number of players."""
         order = Order(
             burger=Burger(
-                ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
+                ingredients=["bottom bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["top bun"]
             ),
             drink=None,
             fry=None,
@@ -65,7 +69,7 @@ class GameLoop:
 
     def typing_indicator(self, msg: Chat) -> None:
         """Send an indicator that the manager is typing."""
-        self.lobby.broadcast(msg, exclude=[msg.id])
+        self.lobby.broadcast(Message(data=msg), exclude=[msg.id])
 
     @functools.cached_property
     def manager(self) -> Player:

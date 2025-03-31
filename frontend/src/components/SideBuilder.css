@@ -72,3 +72,8 @@
     text-align: center;
     border-radius: 6px;
 }
+
+.SendButton:disabled {
+    cursor: not-allowed;
+    transform:none;
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import "./AACBoard.css";
 import ItemGrid from "./ItemGrid";
 import SelectedItemsDisplay from "./SelectedItemsDisplay";
-import {menu} from "../menuItems";
+import { menu } from "../menuItems";
 
 function AACBoard({
     onItemClick,
@@ -11,6 +11,7 @@ function AACBoard({
     onDeleteItem,
     onClearAll,
     onPlayAll,
+    customerImage,
 }) {
 
     const handleClick = (item) => {
@@ -29,8 +30,13 @@ function AACBoard({
 
     return (
         <div>
-            <SelectedItemsDisplay selectedItems={selectedItems} onDelete={onDeleteItem} onClear={onClearAll} onPlayAll={onPlayAll}/>
-            <ItemGrid items={menu} onClick={handleClick}/>
+            <SelectedItemsDisplay selectedItems={selectedItems} onDelete={onDeleteItem} onClear={onClearAll} onPlayAll={onPlayAll} />
+            <ItemGrid items={menu} onClick={handleClick} />
+            <img
+                src={customerImage ?? "/images/customers/empty.png"}
+                alt="Customer"
+                className="manager-image"
+            />
         </div>
     );
 }

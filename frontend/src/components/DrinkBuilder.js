@@ -96,35 +96,38 @@ const DrinkBuilder = ({ onSend }) =>{
                 ))}
             </div>
 
+            <div className='ButtonHolder'>
+            <button className="ClearCupButton" onClick={clearCup}>
+                <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
+            </button>
             <button className="FillCupButton"
                     onMouseDown={startFilling}
                     onMouseUp={stopFilling}
                     onMouseLeave={stopFilling}
             >
-                Fill Cup
+                <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
             </button>
 
-            <button className="ClearCupButton" onClick={clearCup}>
-                Clear Cup
-            </button>
             <button
                 className="CupSizeButtons"
                 onClick={() => setCupSize("small")}
             >
-                Small
+                <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
             </button>
             <button
                 className="CupSizeButtons"
                 onClick={() => setCupSize("medium")}
             >
-                Medium
+                <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
             </button>
             <button
                 className="CupSizeButtons"
                 onClick={() => setCupSize("large")}
             >
-                Large
+                <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
             </button>
+            </div>
+
             <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize ={cupSize}/>
             <button className ="SendButton" onClick={handleSend}>Send</button>
         </div>
