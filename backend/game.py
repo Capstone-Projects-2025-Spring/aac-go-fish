@@ -30,20 +30,20 @@ class GameLoop:
             # avoid an infinite loop if we process messages slower than they come in
             messages = list(self.lobby.messages())
             for message in messages:
-                match message.data:
+                match message:
                     case GameStart():
                         self.start_game()
                     case Chat() as c:
                         self.typing_indicator(c)
                     case _:
-                        logger.warning("Unrecognized message: %.", message.data)
+                        logger.warning("Unrecognized message: %.", message)
 
     def start_game(self) -> None:
         """Start game and generate the first order."""
         logger.debug("Starting game.")
 
         self.day = 1
-        self.manager.send(Message(data=NewOrder(order=self.generate_order())))
+        self.manager.send(NewOrder(order=self.generate_order()))
 
     def generate_order(self) -> Order:
         """Generate an order based on the number of players."""
@@ -65,7 +65,7 @@ class GameLoop:
 
     def typing_indicator(self, msg: Chat) -> None:
         """Send an indicator that the manager is typing."""
-        self.lobby.broadcast(Message(data=msg), exclude=[msg.id])
+        self.lobby.broadcast(msg, exclude=[msg.id])
 
     @functools.cached_property
     def manager(self) -> Player:
