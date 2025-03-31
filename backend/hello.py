@@ -4,7 +4,6 @@ import typing
 from collections.abc import AsyncGenerator, Awaitable, Callable
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI, HTTPException, WebSocket
 import structlog
 from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
@@ -140,6 +139,6 @@ async def _recv_handler(websocket: WebSocket, channel: Channel[Message]) -> typi
 
 async def _send_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
     while True:
-        msg: Message = channel.recv()
-        logger.debug("Received WebSocket message", message=msg)
+        msg: Message = await channel.arecv()
+        logger.debug("Sending WebSocket message: %s.", msg)
         await websocket.send_text(msg.model_dump_json())

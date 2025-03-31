@@ -1,3 +1,5 @@
+import asyncio
+import contextlib
 import queue
 from collections.abc import Callable
 from functools import cache
@@ -30,6 +32,14 @@ class Channel[T]:
     def recv(self) -> T:
         """Receive a message. Blocks until a message is available."""
         return self._recv.get()
+
+    async def arecv(self) -> T:
+        """Receive a message."""
+        while True:
+            with contextlib.suppress(queue.Empty):
+                return self._recv.get_nowait()
+
+            await asyncio.sleep(0.05)
 
 
 class LobbyManager:
