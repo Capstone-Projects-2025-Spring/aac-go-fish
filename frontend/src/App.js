@@ -260,11 +260,20 @@ const App = () => {
                                     </>
                                 );
                             case "burger":
-                                return <BurgerBuilder onSend={setBurger}/>;
+                                return <BurgerBuilder
+                                            onSend={setBurger}
+                                            score={score}
+                                        />;
                             case "side":
-                                return <SideBuilder onSend={setSide}/>;
+                                return <SideBuilder
+                                            onSend={setSide}
+                                            score={score}
+                                        />;
                             case "drink":
-                                return <DrinkBuilder onSend={setDrink}/>;
+                                return <DrinkBuilder
+                                            onSend={setDrink}
+                                            score={score}
+                                        />;
                         }
                     })()}
                 </div>
