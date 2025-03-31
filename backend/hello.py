@@ -4,18 +4,16 @@ import typing
 from collections.abc import AsyncGenerator, Awaitable, Callable
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI, HTTPException, WebSocket
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import ValidationError
 import structlog
 from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
+from fastapi.middleware.cors import CORSMiddleware
 from uvicorn.protocols.utils import get_path_with_query_string
 
+from .constants import FRONTEND_URL
 from .dependencies import Channel, LobbyManager, lobby_manager, settings
 from .logging_config import setup_logging
 from .models import Annotated, Initializer, Message
-from .constants import FRONTEND_URL
 
 access_logger = structlog.stdlib.get_logger("api.access")
 
@@ -47,6 +45,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.middleware("http")
 async def logging_middleware(request: Request, call_next: Callable[[Request], Awaitable[Response]]) -> Response:
