@@ -50,7 +50,7 @@ const BurgerBuilder = ({
 
     return (
         <div className="BurgerBuilder">
-            Your score is ${score}
+            <p className='ScoreText'>Your score is ${score}</p>
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>

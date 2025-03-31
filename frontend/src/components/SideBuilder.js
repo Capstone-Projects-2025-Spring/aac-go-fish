@@ -81,7 +81,7 @@ const SideBuilder = ({
 
     return (
         <div className="SideBuilder">
-            Your score is ${score}
+            <p className='ScoreText'>Your score is ${score}</p>
             <div className="TableBorder">
                 <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft}/>
             </div>

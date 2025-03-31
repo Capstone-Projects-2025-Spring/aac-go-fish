@@ -84,7 +84,7 @@ const DrinkBuilder = ({
 
     return (
         <div className="DrinkBuilder">
-            Your score is ${score}
+            <p className='ScoreText'>Your score is ${score}</p>
             <div className="DrinkButtons">
                 {drinkColors.map((choice, index) => (
                     <button
