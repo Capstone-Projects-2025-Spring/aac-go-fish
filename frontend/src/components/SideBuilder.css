@@ -111,6 +111,11 @@
     width: 100%;
 }
 
+.DraggableItem:hover{
+    transform: scale(1.1);
+    transition: 0.2s ease;
+}
+
 .Fryer.frying {
     border: 4px solid #ff8c00;
     box-shadow: 0 0 20px 5px #ff8c00;
