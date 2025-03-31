@@ -9,6 +9,7 @@ from pydantic import ValidationError
 
 from .dependencies import LobbyManager, lobby_manager, settings
 from .models import Annotated, Initializer, Message
+from .constants import FRONTEND_URL
 
 logger = logging.getLogger(__file__)
 
@@ -25,13 +26,9 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
 
 app = FastAPI(lifespan=lifespan)
 
-origins = [
-    "http://localhost:3000",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[FRONTEND_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

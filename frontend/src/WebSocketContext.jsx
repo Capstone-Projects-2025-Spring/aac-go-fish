@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useRef, useState } from "react";
 
 export const WebSocketContext = createContext(null);
+const BACKEND_URL = "ws://localhost:8000/ws"
 
 export function WebSocketProvider({ children }) {
     const ws = useRef(null);
@@ -9,7 +10,7 @@ export function WebSocketProvider({ children }) {
     const setTimestampedMessage = (content) => setMessage({content, timestamp: Date.now()});
 
     useEffect(() => {
-        ws.current = new WebSocket("ws://localhost:8000/ws");
+        ws.current = new WebSocket(BACKEND_URL);
         ws.current.onopen = () => joinLobby().catch(console.error);
         ws.current.onmessage = (event) => setTimestampedMessage(JSON.parse(event.data));
 
