@@ -11,7 +11,6 @@ function AACBoard({
     onDeleteItem,
     onClearAll,
     onPlayAll,
-    customerImage,
 }) {
 
     const handleClick = (item) => {
