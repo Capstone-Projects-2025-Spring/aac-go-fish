@@ -21,8 +21,8 @@ export function WebSocketProvider({ children }) {
     const joinLobby = async () => {
         const response = await fetch("http://127.0.0.1:8000/lobby/code/join", { method: "POST" });
         const data = await response.json();
-        send({ type: "initializer", code: "code", id: data.id });
-        send({ type: "lobby_lifecycle", lifecycle_type: "game_start" });
+        send({data: { type: "initializer", code: "code", id: data.id }});
+        send({data: { type: "lobby_lifecycle", lifecycle_type: "game_start" }});
     };
 
     return (

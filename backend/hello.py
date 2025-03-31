@@ -67,14 +67,14 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
     """Handles a WebSocket connection for receiving and responding to messages."""
     await websocket.accept()
 
-    init = Initializer.model_validate(await websocket.receive_text())
+    init = Message.model_validate_json(await websocket.receive_text()).data
     channel = lm.channel(init.code, init.id)
 
     while True:
         data = await websocket.receive_text()
 
         try:
-            incoming_message = Message.model_validate(data)
+            incoming_message = Message.model_validate_json(data)
         except ValidationError:
             logger.warning("Unrecognized message: %.", data)
         else:
