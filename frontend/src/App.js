@@ -19,7 +19,7 @@ const App = () => {
     const [employeeSide, setEmployeeSide] = useState(null);
     const [employeeDrink, setEmployeeDrink] = useState(null);
     const [burgerOrder, setBurgerOrder] = useState([]);
-    const [sideOrder, setSideOrder] = useState(false);
+    const [sideOrder, setSideOrder] = useState(null);
     const [drinkOrder, setDrinkOrder] = useState(null);
     const [score, setScore] = useState(0);
     const { customerImage, setRandomCustomerImage } = useCustomerImages();
