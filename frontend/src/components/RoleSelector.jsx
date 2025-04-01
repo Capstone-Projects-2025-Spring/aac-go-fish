@@ -1,6 +1,6 @@
 import "./RoleSelector.css"
 
-const Roles = {
+export const Roles = {
     MANAGER: "manager",
     BURGER: "burger",
     SIDE: "side",

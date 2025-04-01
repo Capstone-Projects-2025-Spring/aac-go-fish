@@ -4,7 +4,7 @@ import { menuMap } from "./menuItems"
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
-import RoleSelector from "./components/RoleSelector";
+import RoleSelector, {Roles} from "./components/RoleSelector";
 import AACBoard from "./components/AACBoard";
 import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
@@ -13,7 +13,7 @@ import { useCustomerImages } from "./useCustomerImages";
 import Customer from "./components/Customer";
 
 const App = () => {
-    const [selectedRole, setSelectedRole] = useState(null);
+    const [selectedRole, setSelectedRole] = useState(Roles.MANAGER);
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
@@ -35,7 +35,7 @@ const App = () => {
                     case "new_order":
                         const burger = data.order.burger?.ingredients ?? [];
                         const drink = data.order.drink ?? null;
-                        const side = data.order.fry !== {};
+                        const side = { tableState: "fries"}; // TODO: update when backend sends more sides
 
                         setBurgerOrder(burger.map(ingredient => menuMap["Burger"][ingredient]));
                         setDrinkOrder(drink);
