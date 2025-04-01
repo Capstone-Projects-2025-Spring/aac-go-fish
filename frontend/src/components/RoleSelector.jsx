@@ -7,7 +7,7 @@ const Roles = {
 
 export default function RoleSelector({ selectedRole, setSelectedRole }) {
     return (
-        <div>
+        <div style={{position:"absolute", bottom: "1rem", right: "1rem", zIndex: "999999", alignItems: "center"}}>
             <h2>Select a Role</h2>
             <div>
                 {Object.values(Roles).map((role) => (

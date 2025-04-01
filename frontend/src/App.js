@@ -145,59 +145,50 @@ const App = () => {
     };
 
     return (
-        <div className="app-container">
-            <div className="main-layout">
-                <div className="sidebar">
-                    <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
-                </div>
-                <div className="main-layout">
-                    <div className="stations">
-                        {(() => {
-                            switch (selectedRole) {
-                                case "manager":
-                                    return (
-                                        <>
-                                            <div className="columns">
-                                                <div className="column">
-                                                    Your score is ${score}
-                                                    <AACBoard
-                                                        selectedItems={selectedItems}
-                                                        onSelectItem={addSelectedItem}
-                                                        onDeleteItem={removeSelectedItem}
-                                                        onClearAll={clearAllSelected}
-                                                        onPlayAll={onPlayAll}
-                                                        customerImage={customerImage}
-                                                    />
-                                                    <MiniOrderDisplay burger={burger} side={side} drink={drink} />
-                                                    <ManagerActions onGiveToCustomer={handleGiveToCustomer}/>
-                                                </div>
-                                                <div className="column">
-                                                    <CustomerOrder
-                                                        burgerOrder={burgerOrder}
-                                                        drinkOrder={[]}
-                                                        hasIce={false}
-                                                        hasSide={false}
-                                                        drinkSize={null}
-                                                        orderVisible={orderVisible}
-                                                    />
-                                                    <Customer customerImage={customerImage} />
-                                                </div>
-                                            </div>
-                                        </>
-                                    );
-                                case "burger":
-                                    return <BurgerBuilder onSend={setBurger} />;
-                                case "side":
-                                    return <SideBuilder onSend={setSide} />;
-                                case "drink":
-                                    return <DrinkBuilder onSend={setDrink} />;
-                            }
-                        })()}
-                    </div>
-                </div>
-
+            <div className="app-container">
+                <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
+                {(() => {
+                    switch (selectedRole) {
+                        case "manager":
+                            return (
+                                <>
+                                    <div className="columns">
+                                        <div className="column">
+                                            <CustomerOrder
+                                                burgerOrder={burgerOrder}
+                                                drinkOrder={[]}
+                                                hasIce={false}
+                                                hasSide={false}
+                                                drinkSize={null}
+                                                orderVisible={orderVisible}
+                                            />
+                                            <Customer customerImage={customerImage} />
+                                        </div>
+                                        <div className="column">
+                                            Your score is ${score}
+                                            <AACBoard
+                                                selectedItems={selectedItems}
+                                                onSelectItem={addSelectedItem}
+                                                onDeleteItem={removeSelectedItem}
+                                                onClearAll={clearAllSelected}
+                                                onPlayAll={onPlayAll}
+                                                customerImage={customerImage}
+                                            />
+                                            <MiniOrderDisplay burger={burger} side={side} drink={drink} />
+                                            <ManagerActions onGiveToCustomer={handleGiveToCustomer}/>
+                                        </div>
+                                    </div>
+                                </>
+                            );
+                        case "burger":
+                            return <BurgerBuilder onSend={setBurger} />;
+                        case "side":
+                            return <SideBuilder onSend={setSide} />;
+                        case "drink":
+                            return <DrinkBuilder onSend={setDrink} />;
+                    }
+                })()}
             </div>
-        </div>
     );
 }
 
