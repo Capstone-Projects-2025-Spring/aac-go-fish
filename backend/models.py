@@ -48,6 +48,7 @@ class GameStateUpdateKind(StrEnum):
     role_assignment = "role_assignment"
     order_score = "order_score"
     order_submission = "order_submission"
+    order_component = "order_component"
     day_end = "day_end"
 
 
@@ -77,6 +78,15 @@ class OrderScore(BaseModel):
     game_state_update_type: Literal[GameStateUpdateKind.order_score] = GameStateUpdateKind.order_score
 
     score: float
+
+
+class OrderComponent(BaseModel):
+    """A finished component is submitted to the manager."""
+
+    type: Literal[MessageKind.game_state] = MessageKind.game_state
+    game_state_update_type: Literal[GameStateUpdateKind.order_component] = GameStateUpdateKind.order_component
+
+    component: Burger | Fry | Drink
 
 
 class OrderSubmission(BaseModel):
@@ -123,7 +133,8 @@ class DayEnd(BaseModel):
 
 
 type GameStateUpdate = Annotated[
-    NewOrder | RoleAssignment | OrderScore | OrderSubmission | DayEnd, Field(discriminator="game_state_update_type")
+    NewOrder | RoleAssignment | OrderScore | OrderSubmission | OrderComponent | DayEnd,
+    Field(discriminator="game_state_update_type"),
 ]
 
 
