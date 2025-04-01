@@ -13,7 +13,6 @@ import { useCustomerImages } from "./useCustomerImages";
 import Customer from "./components/Customer";
 
 const App = () => {
-    const [messages, setMessages] = useState([]);
     const [selectedRole, setSelectedRole] = useState(null);
     const [selectedItems, setSelectedItems] = useState([]);
     const [burger, setBurger] = useState(null);
@@ -28,7 +27,7 @@ const App = () => {
     useEffect(() => {
         if (!message) return;
         const data = message.content.data;
-        addMessage(JSON.stringify(data));
+        console.log(JSON.stringify(data));
         switch (data.type) {
             case "game_state":
                 switch (data.game_state_update_type) {
@@ -42,10 +41,6 @@ const App = () => {
     }, [message]);
 
 
-    const addMessage = (msg) => {
-        setMessages((prev) => [...prev, msg]);
-    };
-
     const addSelectedItem = (item) => {
         setSelectedItems((prev) => [...prev, item]);
     };
@@ -58,12 +53,12 @@ const App = () => {
     };
     const onPlayAll = async () => {
         if (selectedItems.length === 0) {
-            addMessage("Manager: No phrase to play!")
+            console.log("Manager: No phrase to play!")
             return;
         }
 
         const names = selectedItems.map((item) => item.name).join(", ");
-        addMessage(`Manager: Playing phrase: ${names}`);
+        console.log(`Manager: Playing phrase: ${names}`);
 
         for (const item of selectedItems) {
             if (item.audio) {
@@ -71,17 +66,17 @@ const App = () => {
                 await new Promise((resolve) => {
                     audio.play()
                         .then(() => {
-                            addMessage(`Manager: Playing ${item.audio}`);
+                            console.log(`Manager: Playing ${item.audio}`);
                             audio.onended = resolve;
                         }, () => {
-                            addMessage(`Manager: Failed to play ${item.audio} (Does the file exist?)`);
+                            console.log(`Manager: Failed to play ${item.audio} (Does the file exist?)`);
                             resolve();
                         })
                 });
             }
         }
 
-        addMessage("Manager: Played phrase!");
+        console.log("Manager: Played phrase!");
     };
 
     const getScoring = ({ burger, side, drink }) => {
@@ -93,9 +88,9 @@ const App = () => {
             tempScore += 3
             if (JSON.stringify(burger) === JSON.stringify(burgerOrder)) {
                 tempScore += 2
-                addMessage(`Manager: Burger order is correct`)
+                console.log(`Manager: Burger order is correct`)
             } else {
-                addMessage(`Manager: Burger order is incorrect`)
+                console.log(`Manager: Burger order is incorrect`)
             }
         }
         if (side) {
@@ -103,9 +98,9 @@ const App = () => {
             tempScore += 1
             if (side === 'fries') {
                 tempScore += 2
-                addMessage(`Manager: Side order is correct`)
+                console.log(`Manager: Side order is correct`)
             } else {
-                addMessage(`Manager: Side order is incorrect`)
+                console.log(`Manager: Side order is incorrect`)
             }
         }
         if (drink) {
@@ -116,29 +111,29 @@ const App = () => {
             const drinkObj = { color: null, fillPercentage: 100, hasIce: false, cupSize: null }
             if (JSON.stringify(drink) === JSON.stringify(drinkObj)) {
                 tempScore += 2
-                addMessage(`Manager: Drink order is correct`)
+                console.log(`Manager: Drink order is correct`)
             } else {
-                addMessage(`Manager: Drink order is incorrect`)
+                console.log(`Manager: Drink order is incorrect`)
             }
         }
-        addMessage(`Score is ${tempScore}`)
+        console.log(`Score is ${tempScore}`)
         setScore(score + tempScore)
     }
     const handleGiveToCustomer = () => {
-        addMessage("Manager: Sending order to the customer");
+        console.log("Manager: Sending order to the customer");
 
         let tempBurger = null;
         let tempSide = null;
         if (burger) {
             tempBurger = burger.map((ingredient) => ingredient.name)
-            addMessage(`Sending burger (${JSON.stringify(tempBurger)})`)
+            console.log(`Sending burger (${JSON.stringify(tempBurger)})`)
         }
         if (side) {
             tempSide = side.tableState
-            addMessage(`Sending side (${side.tableState})`)
+            console.log(`Sending side (${side.tableState})`)
         }
         if (drink) {
-            addMessage(`Sending drink (${JSON.stringify(drink)})`)
+            console.log(`Sending drink (${JSON.stringify(drink)})`)
         }
 
         // Temporarily score function while no scoring in backend
@@ -154,12 +149,6 @@ const App = () => {
             <div className="main-layout">
                 <div className="sidebar">
                     <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
-                    <h3>Event Log</h3>
-                    <div className="event-log">
-                        {messages.map((msg, idx) => (
-                            <div key={idx}>{msg}</div>
-                        ))}
-                    </div>
                 </div>
                 <div className="main-layout">
                     <div className="stations">
