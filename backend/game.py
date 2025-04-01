@@ -46,8 +46,17 @@ class GameLoop:
         """Start game and generate the first order."""
         logger.debug("Starting game.")
 
+        self.assign_roles()
         self.day = 1
         self.manager.send(Message(data=NewOrder(order=self.generate_order())))
+
+    def assign_roles(self) -> None:
+        """Assign roles to players."""
+        roles = list(Role)
+        random.shuffle(roles)
+
+        for player, role in zip(self.lobby.players.values(), roles, strict=False):
+            player.role = role
 
     def generate_order(self) -> Order:
         """Generate an order based on the number of players."""
