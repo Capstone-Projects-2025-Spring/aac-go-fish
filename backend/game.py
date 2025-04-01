@@ -118,8 +118,11 @@ class GameLoop:
         # Sides are graded based on completeness.
         # Up to 2 extra dollars + 1 base dollar
         side_score = 0
-        if self.order.fry == order.fry and self.order.fry is not None:
-            side_score += 3
+        if self.order.fry is not None:
+            side_score += 1
+
+            if self.order.fry == order.fry:
+                side_score += 2
 
         # Drink attributes are equally weighted, with the fill percentage being
         # graded on the squared error from the correct fill percentage.
@@ -127,11 +130,14 @@ class GameLoop:
         drink_score = 0
         if not (self.order.drink is None or order.drink is None):
             drink_score += 2
-            per_attribute = 1 / 3 * 2
-            if self.order.drink.color == order.drink.color:
-                drink_score += per_attribute
-            if self.order.drink.ice == order.drink.ice:
-                drink_score += per_attribute
+
+            per_attribute = 1 / 4 * 2
+            correct = (
+                (self.order.drink.size == order.drink.size)
+                + (self.order.drink.ice == order.drink.ice)
+                + (self.order.drink.color == order.drink.color)
+            )
+            drink_score += per_attribute * correct
 
             distance = abs(1 - order.drink.fill / 100)
             if distance == 0:
