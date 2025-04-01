@@ -260,21 +260,18 @@ const App = () => {
                                                         onClearAll={clearAllSelected}
                                                         onPlayAll={onPlayAll}
                                                         customerImage={customerImage}
-                                                    />
-                                                </div>
-                                                <div className="column">
-                                                    <CustomerOrder
+
                                                         burgerOrder={burgerOrder}
                                                         drinkOrder={drinkOrder}
-                                                        hasIce={orderHasIce}
                                                         hasSide={hasSide}
+                                                        hasIce={orderHasIce}
                                                         drinkSize={drinkSize}
                                                         orderVisible={orderVisible}
-                                                        customerImage={customerImage}
-
-
                                                     />
                                                 </div>
+
+
+
                                             </div>
                                             <div className="columns">
                                                 <div className="column">

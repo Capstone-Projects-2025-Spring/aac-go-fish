@@ -65,3 +65,18 @@
     width: 100%;
     display: block;
 }
+
+.AACBoardContainer {
+    position: relative;
+    width: 700px;
+    min-height: 500px;
+}
+
+
+.CustomerOrder {
+    position: absolute;
+    top: 120px;
+    left: 180px;
+    z-index: 10;
+    transform: scale(0.75);
+}

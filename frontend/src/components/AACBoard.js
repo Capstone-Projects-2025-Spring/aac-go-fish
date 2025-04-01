@@ -3,6 +3,8 @@ import "./AACBoard.css";
 import ItemGrid from "./ItemGrid";
 import SelectedItemsDisplay from "./SelectedItemsDisplay";
 import { menu } from "../menuItems";
+import CustomerOrder from "./CustomerOrder";
+
 
 function AACBoard({
     onItemClick,
@@ -12,6 +14,12 @@ function AACBoard({
     onClearAll,
     onPlayAll,
     customerImage,
+    burgerOrder,
+    drinkOrder,
+    hasSide,
+    hasIce,
+    drinkSize,
+    orderVisible,
 }) {
     const [currentCustomerImage, setCurrentCustomerImage] = useState(customerImage);
 
@@ -43,7 +51,7 @@ function AACBoard({
     };
 
     return (
-        <div>
+        <div className="AACBoardContainer">
             <SelectedItemsDisplay selectedItems={selectedItems} onDelete={onDeleteItem} onClear={onClearAll} onPlayAll={onPlayAll} />
             <ItemGrid items={menu} onClick={handleClick} />
             <img
@@ -51,8 +59,18 @@ function AACBoard({
                 alt="Customer"
                 className="manager-image"
             />
+
+            <CustomerOrder
+                burgerOrder={burgerOrder}
+                drinkOrder={drinkOrder}
+                hasSide={hasSide}
+                hasIce={hasIce}
+                drinkSize={drinkSize}
+                orderVisible={orderVisible}
+            />
         </div>
     );
 }
+
 
 export default AACBoard;
