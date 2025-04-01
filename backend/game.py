@@ -1,6 +1,7 @@
 import difflib
 import functools
 import itertools
+import math
 import random
 import threading
 
@@ -125,27 +126,22 @@ class GameLoop:
                 side_score += 2
 
         # Drink attributes are equally weighted, with the fill percentage being
-        # graded on the squared error from the correct fill percentage.
-        # up to 2 bonus dollars + 2 base dollars
+        # graded on the square root of the error from the correct fill
+        # percentage. up to 2 bonus dollars + 2 base dollars
         drink_score = 0
         if not (self.order.drink is None or order.drink is None):
             drink_score += 2
 
-            per_attribute = 1 / 4 * 2
+            score_per_attribute = 1 / 4 * 2
             correct = (
                 (self.order.drink.size == order.drink.size)
                 + (self.order.drink.ice == order.drink.ice)
                 + (self.order.drink.color == order.drink.color)
             )
-            drink_score += per_attribute * correct
+            drink_score += score_per_attribute * correct
+            drink_score += math.sqrt(1 - abs(1 - order.drink.fill / 100)) * score_per_attribute
 
-            distance = abs(1 - order.drink.fill / 100)
-            if distance == 0:
-                drink_score += per_attribute
-            else:
-                drink_score += per_attribute * distance ** (-2)
-
-        return burger_score + side_score + drink_score
+        return round(burger_score + side_score + drink_score, 2)
 
     def typing_indicator(self, msg: Chat) -> None:
         """Send an indicator that the manager is typing."""

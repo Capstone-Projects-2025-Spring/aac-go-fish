@@ -80,10 +80,10 @@ from backend.models import Burger, Drink, Fry, Order
 )
 def test_grade_order(correct_order: Order, inp_order: Order, exp: float) -> None:
     """Test grade order."""
-    l = GameLoop(lobby=Lobby())
-    l.order = correct_order
+    game_loop = GameLoop(lobby=Lobby())
+    game_loop.order = correct_order
 
-    out = l.grade_order(inp_order)
+    out = game_loop.grade_order(inp_order)
 
     assert exp == out
 
@@ -112,28 +112,40 @@ def test_grade_order(correct_order: Order, inp_order: Order, exp: float) -> None
     ],
 )
 @pytest.mark.parametrize(
-    ["inp_fill"],
+    "inp_fill",
     [
-        [100],
-        [75],
-        [80],
+        100,
+        75,
+        80,
     ],
 )
-def test_grade_order_drink(correct_color: str, inp_color: str, color_score: float, correct_size: str, inp_size: str, size_score: float, correct_ice: bool, inp_ice: bool, ice_score: float, inp_fill: float) -> None:
+def test_grade_order_drink(
+    correct_color: str,
+    inp_color: str,
+    color_score: float,
+    correct_size: str,
+    inp_size: str,
+    size_score: float,
+    correct_ice: bool,
+    inp_ice: bool,
+    ice_score: float,
+    inp_fill: float,
+) -> None:
     """Grade order test for drinks specifically to take advantage of parameter matrix."""
-    l = GameLoop(lobby=Lobby())
-    l.order = Order( burger=Burger(ingredients=["a", "b"]), fry=Fry(), drink=Drink(color=correct_color, size=correct_size, ice=correct_ice, fill=100),)
+    game_loop = GameLoop(lobby=Lobby())
+    game_loop.order = Order(
+        burger=Burger(ingredients=["a", "b"]),
+        fry=Fry(),
+        drink=Drink(color=correct_color, size=correct_size, ice=correct_ice, fill=100),
+    )
 
     inp_order = Order(
-            burger=Burger(ingredients=["a", "b"]),
-            fry=Fry(),
-            drink=Drink(color=inp_color, size=inp_size, ice=inp_ice, fill=inp_fill),
-        )
+        burger=Burger(ingredients=["a", "b"]),
+        fry=Fry(),
+        drink=Drink(color=inp_color, size=inp_size, ice=inp_ice, fill=inp_fill),
+    )
+    fill_mult = (1 - abs(1 - inp_fill / 100)) ** 0.5
 
-    out = l.grade_order(inp_order)
+    out = game_loop.grade_order(inp_order)
 
-    fill_mult = 1
-    if inp_fill != 100:
-        fill_mult = abs(1 - inp_fill / 100)**-2
-
-    assert color_score + size_score + ice_score + 0.5 * fill_mult == out
+    assert round(10 + color_score + size_score + ice_score + 0.5 * fill_mult, 2) == out
