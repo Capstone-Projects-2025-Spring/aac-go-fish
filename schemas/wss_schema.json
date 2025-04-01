@@ -139,6 +139,7 @@
         "mapping": {
           "day_end": "#/$defs/DayEnd",
           "new_order": "#/$defs/NewOrder",
+          "order_component": "#/$defs/OrderComponent",
           "order_score": "#/$defs/OrderScore",
           "order_submission": "#/$defs/OrderSubmission",
           "role_assignment": "#/$defs/RoleAssignment"
@@ -157,6 +158,9 @@
         },
         {
           "$ref": "#/$defs/OrderSubmission"
+        },
+        {
+          "$ref": "#/$defs/OrderComponent"
         },
         {
           "$ref": "#/$defs/DayEnd"
@@ -278,6 +282,42 @@
         "fry"
       ],
       "title": "Order",
+      "type": "object"
+    },
+    "OrderComponent": {
+      "description": "A finished component is submitted to the manager.",
+      "properties": {
+        "type": {
+          "const": "game_state",
+          "default": "game_state",
+          "title": "Type",
+          "type": "string"
+        },
+        "game_state_update_type": {
+          "const": "order_component",
+          "default": "order_component",
+          "title": "Game State Update Type",
+          "type": "string"
+        },
+        "component": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Burger"
+            },
+            {
+              "$ref": "#/$defs/Fry"
+            },
+            {
+              "$ref": "#/$defs/Drink"
+            }
+          ],
+          "title": "Component"
+        }
+      },
+      "required": [
+        "component"
+      ],
+      "title": "OrderComponent",
       "type": "object"
     },
     "OrderScore": {
