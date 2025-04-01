@@ -100,6 +100,12 @@
     z-index: 0;
 }
 
+.Fryer.drop-hover {
+    border: 4px dashed #ffa500;
+    background-color: #292929;
+    transition: all 0.3s ease-in-out;
+}
+
 .DraggableItem{
     cursor: grab;
     width: 100px;

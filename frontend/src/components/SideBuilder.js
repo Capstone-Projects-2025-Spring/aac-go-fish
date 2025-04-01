@@ -71,10 +71,21 @@ const SideBuilder = ({ onSend }) =>{
 
     const handleDragStart = (event, itemType) =>{
         event.dataTransfer.setData("itemType",itemType);
-    }
+    };
+
+    const handleDragOver = (event) => {
+        event.preventDefault();
+        event.currentTarget.classList.add("drop-hover");
+    };
+
+    const handleDragLeave = (event) => {
+        event.currentTarget.classList.remove("drop-hover");
+    };
 
     const handleDrop = (event) => {
         event.preventDefault();
+        event.currentTarget.classList.remove("drop-hover");
+
         const itemType = event.dataTransfer.getData("itemType");
         const side = sideTypes.find((side) => side.choppedState === itemType);
         if (side) {
@@ -104,8 +115,9 @@ const SideBuilder = ({ onSend }) =>{
                     <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart}/>
                 </div>
                 <div className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
-                     onDragOver={(event)=> event.preventDefault()}
+                     onDragOver={handleDragOver}
                      onDrop={handleDrop}
+                     onDragLeave={handleDragLeave}
                 >
                     <img src="/images/fryer.png" alt="Fryer" className="FryerImage" />
                     {tableState === "frying" && getOverlayImage()}
