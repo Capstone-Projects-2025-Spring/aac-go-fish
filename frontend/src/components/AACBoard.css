@@ -76,7 +76,17 @@
 .CustomerOrder {
     position: absolute;
     top: 120px;
-    left: 180px;
+    left: 1800px;
     z-index: 10;
     transform: scale(0.75);
+}
+
+.AACBoardContainer {
+    margin-top: 1rem;
+    position: relative;
+}
+
+.imageAndOrder {
+    display: inline-block;
+    position: relative;
 }

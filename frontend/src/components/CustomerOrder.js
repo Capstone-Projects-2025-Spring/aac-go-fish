@@ -8,6 +8,7 @@ function CustomerOrder({
     hasIce,
     hasSide,
     orderVisible,
+    shiftDown,
 }) {
 
     const foodItems = [
@@ -35,7 +36,7 @@ function CustomerOrder({
     hasIce = false;
     return (
         <div className="CustomerOrder">
-            <div className="orderDisplay">
+            <div className={`orderDisplay ${shiftDown ? "shiftDown" : ""}`}>
 
                 {orderVisible && (
                     <div className="burgerOrderDisplay">

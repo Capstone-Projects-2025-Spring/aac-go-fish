@@ -270,9 +270,8 @@ const App = () => {
                                                     />
                                                 </div>
 
-
-
                                             </div>
+
                                             <div className="columns">
                                                 <div className="column">
                                                     <ManagerActions
@@ -286,6 +285,7 @@ const App = () => {
                                             </div>
                                         </>
                                     );
+
                                 case "burger":
                                     return <BurgerBuilder onSend={setBurger} />;
                                 case "side":
