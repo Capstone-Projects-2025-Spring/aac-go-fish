@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import './BurgerBuilder.css';
 import BurgerDisplay from "./BurgerDisplay";
-const BurgerBuilder = ({ onSend }) => {
+const BurgerBuilder = ({
+    onSend,
+    score
+}) => {
     const [ingredients, setIngredients] = useState([]);
 
     const foodItems = [
@@ -47,6 +50,7 @@ const BurgerBuilder = ({ onSend }) => {
 
     return (
         <div className="BurgerBuilder">
+            <p className='ScoreText'>Your score is ${score}</p>
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>

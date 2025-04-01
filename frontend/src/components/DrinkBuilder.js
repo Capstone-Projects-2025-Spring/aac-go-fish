@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
-const DrinkBuilder = ({ onSend }) =>{
+const DrinkBuilder = ({
+    onSend,
+    score
+}) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
@@ -81,6 +84,7 @@ const DrinkBuilder = ({ onSend }) =>{
 
     return (
         <div className="DrinkBuilder">
+            <p className='ScoreText'>Your score is ${score}</p>
             <div className="DrinkButtons">
                 {drinkColors.map((choice, index) => (
                     <button
