@@ -38,6 +38,7 @@ const BurgerBuilder = ({ onSend }) => {
 
     return (
         <div className="BurgerBuilder">
+            <p className='ScoreText'>Your score is ${score}</p>
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>

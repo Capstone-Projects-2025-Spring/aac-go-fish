@@ -165,7 +165,7 @@ const App = () => {
                                             <Customer customerImage={customerImage} />
                                         </div>
                                         <div className="column">
-                                            Your score is ${score}
+                                            <p className='Score'>Your score is ${score}</p>
                                             <AACBoard
                                                 selectedItems={selectedItems}
                                                 onSelectItem={addSelectedItem}
@@ -181,11 +181,11 @@ const App = () => {
                                 </>
                             );
                         case "burger":
-                            return <BurgerBuilder onSend={setEmployeeBurger} />;
+                            return <BurgerBuilder onSend={setEmployeeBurger} score={score}/>;
                         case "side":
-                            return <SideBuilder onSend={setEmployeeSide} />;
+                            return <SideBuilder onSend={setEmployeeSide} score={score}/>;
                         case "drink":
-                            return <DrinkBuilder onSend={setEmployeeDrink} />;
+                            return <DrinkBuilder onSend={setEmployeeDrink} score={score}/>;
                     }
                 })()}
             </div>

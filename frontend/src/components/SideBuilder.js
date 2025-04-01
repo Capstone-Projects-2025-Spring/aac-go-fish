@@ -2,7 +2,10 @@ import React, { useState, useRef } from 'react';
 import "./SideBuilder.css"
 import SideDisplay from "./SideDisplay";
 
-const SideBuilder = ({ onSend }) =>{
+const SideBuilder = ({
+    onSend,
+    score
+ }) =>{
     const [tableState, setTableState] = useState("empty");
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
     const fryingIntervalRef = useRef(null);
@@ -78,6 +81,7 @@ const SideBuilder = ({ onSend }) =>{
 
     return (
         <div className="SideBuilder">
+            <p className='ScoreText'>Your score is ${score}</p>
             <div className="TableBorder">
                 <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft}/>
             </div>

@@ -12,6 +12,7 @@ from backend.models import (
     Message,
     NewOrder,
     Order,
+    OrderComponent,
     OrderScore,
     OrderSubmission,
     PlayerJoin,
@@ -70,6 +71,18 @@ from backend.models import (
             '{"data": {"type": "game_state", "game_state_update_type": "order_score", "score": 1}}',
             Message(data=OrderScore(score=1)),
             id="OrderScore",
+        ),
+        pytest.param(
+            """\
+            {
+                "data": {
+                    "type": "game_state",
+                    "game_state_update_type": "order_component",
+                    "component": {"ingredients": ["bread", "bread"]}
+                }
+            }""",
+            Message(data=OrderComponent(component=Burger(ingredients=["bread", "bread"]))),
+            id="OrderComponent",
         ),
         pytest.param(
             """\
