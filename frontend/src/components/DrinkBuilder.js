@@ -61,9 +61,9 @@ const DrinkBuilder = ({ onSend }) =>{
 
         onSend({
             color,
-            fillPercentage,
-            hasIce,
-            cupSize,
+            fill: fillPercentage,
+            ice: hasIce,
+            size: cupSize,
         });
         clearCup();
     };

@@ -1,6 +1,7 @@
 .mini-order-display {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 2.5rem;
     > * {
         all: unset;
