@@ -18,11 +18,13 @@ const App = () => {
     const [burger, setBurger] = useState(null);
     const [side, setSide] = useState(null);
     const [drink, setDrink] = useState(null);
-    const { message } = useContext(WebSocketContext);
-    const [orderVisible, setOrderVisible] = useState(false)
     const [burgerOrder, setBurgerOrder] = useState([]);
-    const { customerImage, setRandomCustomerImage } = useCustomerImages()
-    const [score, setScore] = useState(0)
+    const [sideOrder, setSideOrder] = useState(false);
+    const [drinkOrder, setDrinkOrder] = useState([]);
+    const [orderVisible, setOrderVisible] = useState(false);
+    const [score, setScore] = useState(0);
+    const { customerImage, setRandomCustomerImage } = useCustomerImages();
+    const { message } = useContext(WebSocketContext);
 
     useEffect(() => {
         if (!message) return;
@@ -32,11 +34,14 @@ const App = () => {
             case "game_state":
                 switch (data.game_state_update_type) {
                     case "new_order":
+                        setBurgerOrder(data.order.burger.ingredients ?? []);
+                        setDrinkOrder(data.order.drink ?? []);
+                        setSideOrder(data.order.fry ?? false);
                         setOrderVisible(true);
-                        setBurgerOrder(data.order.burger.ingredients);
                         setRandomCustomerImage();
-                        // TODO: sides and drink (backend doesn't send them yet -- check generate_order() in game.py)
+                        break;
                 }
+                break;
         }
     }, [message]);
 
@@ -156,9 +161,9 @@ const App = () => {
                                         <div className="column">
                                             <CustomerOrder
                                                 burgerOrder={burgerOrder}
-                                                drinkOrder={[]}
+                                                drinkOrder={drinkOrder}
+                                                hasSide={sideOrder}
                                                 hasIce={false}
-                                                hasSide={false}
                                                 drinkSize={null}
                                                 orderVisible={orderVisible}
                                             />
