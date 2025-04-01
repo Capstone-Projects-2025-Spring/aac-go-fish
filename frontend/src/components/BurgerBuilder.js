@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import {menu} from "../menuItems";
-const BurgerBuilder = ({ onSend }) => {
+const BurgerBuilder = ({ onSend, score }) => {
     const [ingredients, setIngredients] = useState([]);
 
     const foodItems = menu[0].children;
