@@ -7,7 +7,6 @@ from functools import cache
 from .constants import Settings
 from .game import start_main_loop
 from .game_state import Lobby, Player
-from .models import Role
 
 
 class Channel[T]:
@@ -72,8 +71,9 @@ class LobbyManager:
             raise ValueError(f"Code {code} is not associated with any existing lobbies!")
 
         channel = queue.Queue()
-        role = list(Role)[len(lobby.players)]
-        player = Player(channel, role)
+
+        # role assigned later when game starts
+        player = Player(channel=channel, role=None)
 
         lobby.players[player.id] = player
 
