@@ -6,7 +6,6 @@ import SideBuilder from "./components/SideBuilder";
 import { mockBurgerOrders, mockDrinkOrders } from "./MockOrders"
 import RoleSelector from "./components/RoleSelector";
 import AACBoard from "./components/AACBoard";
-import CustomerOrder from "./components/CustomerOrder";
 import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
 
@@ -36,7 +35,11 @@ const App = () => {
     const maxSize = 9;
 
     const [hasSide, setHasSide] = useState(false);
-    const [customerImage, setCustomerImage] = useState("/images/customers/empty.png");
+
+
+    const [baseCustomerImage, setBaseCustomerImage] = useState("/images/customers/empty.png");
+    const [currentCustomerImage, setCurrentCustomerImage] = useState("/images/customers/empty.png");
+
 
 
     useEffect(() => {
@@ -49,6 +52,15 @@ const App = () => {
 
         return () => socket.close();
     }, []);
+    useEffect(() => {
+        if (baseCustomerImage && !baseCustomerImage.includes("_think")) {
+            const timer = setTimeout(() => {
+                const thinkVersion = baseCustomerImage.replace(".png", "_think.png");
+                setCurrentCustomerImage(thinkVersion);
+            }, 2900);
+            return () => clearTimeout(timer);
+        }
+    }, [baseCustomerImage]);
 
     const addMessage = (msg) => {
         setMessages((prev) => [...prev, msg]);
@@ -110,7 +122,8 @@ const App = () => {
 
         const randIndex = Math.floor(Math.random() * customerBaseImages.length);
         const randomCustomer = customerBaseImages[randIndex];
-        setCustomerImage(randomCustomer);
+        setBaseCustomerImage(randomCustomer);
+        setCurrentCustomerImage(randomCustomer);
 
         console.log("Random customer selected:", randomCustomer);
 
@@ -259,8 +272,7 @@ const App = () => {
                                                         onDeleteItem={removeSelectedItem}
                                                         onClearAll={clearAllSelected}
                                                         onPlayAll={onPlayAll}
-                                                        customerImage={customerImage}
-
+                                                        customerImage={currentCustomerImage}
                                                         burgerOrder={burgerOrder}
                                                         drinkOrder={drinkOrder}
                                                         hasSide={hasSide}

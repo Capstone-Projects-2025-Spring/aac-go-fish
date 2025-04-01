@@ -20,20 +20,9 @@ function AACBoard({
     drinkSize,
     orderVisible,
 }) {
-    const [currentCustomerImage, setCurrentCustomerImage] = useState(customerImage);
 
     const [shiftDown, setShiftDown] = useState(false);
 
-    useEffect(() => {
-        setCurrentCustomerImage(customerImage);
-        const timer = setTimeout(() => {
-            if (customerImage) {
-                const thinkVersion = customerImage.replace(".png", "_think.png");
-                setCurrentCustomerImage(thinkVersion);
-            }
-        }, 2900);
-        return () => clearTimeout(timer);
-    }, [customerImage]);
 
     const handleClick = (item) => {
         if (item.name.toLowerCase() === "burger" || item.name.toLowerCase() === "drink") {
@@ -67,7 +56,7 @@ function AACBoard({
 
             <div className={`imageAndOrder ${shiftDown ? "shiftDown" : ""}`}>
                 <img
-                    src={currentCustomerImage ?? "/images/customers/empty.png"}
+                    src={customerImage ?? "/images/customers/empty.png"}
                     alt="Customer"
                     className="manager-image"
                 />
