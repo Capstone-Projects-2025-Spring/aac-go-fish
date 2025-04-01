@@ -3,37 +3,6 @@
     display: flex;
 }
 
-.main-layout {
-    display: flex;
-    flex: 1;
-}
-
-.sidebar {
-    width: 20%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: #f4f4f4;
-    padding: 0 10px;
-    border-radius: 10px;
-}
-
-.event-log {
-    overflow-y: auto;
-    padding: 5px;
-    background: white;
-    display: flex;
-    flex-direction: column;
-}
-
-
-.stations {
-    width: 100%;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
-
 .columns {
     display: flex;
     padding: 1.0rem;
@@ -41,3 +10,4 @@
         flex: 1
     }
 }
+
