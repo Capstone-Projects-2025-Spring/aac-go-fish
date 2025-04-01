@@ -10,7 +10,6 @@ from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocke
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn.protocols.utils import get_path_with_query_string
 
-from .constants import FRONTEND_URL
 from .dependencies import Channel, LobbyManager, lobby_manager, settings
 from .logging_config import setup_logging
 from .models import Annotated, Initializer, Message
@@ -40,7 +39,7 @@ app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL],
+    allow_origins=[settings().frontend_url],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
