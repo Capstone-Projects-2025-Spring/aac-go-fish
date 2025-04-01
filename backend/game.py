@@ -60,7 +60,8 @@ class GameLoop:
                         self.manager.send(Message(data=component))
                     case OrderSubmission(order=order):
                         logger.debug("Received order.", order=order)
-                        self.grade_order(order)
+                        score = self.grade_order(order)
+                        self.lobby.broadcast(Message(data=OrderScore(score=score)))
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
 
@@ -99,7 +100,7 @@ class GameLoop:
 
         return order
 
-    def grade_order(self, order: Order) -> None:
+    def grade_order(self, order: Order) -> float:
         """
         Grade order based on correctness.
 
@@ -117,14 +118,15 @@ class GameLoop:
         # Sides are graded based on completeness.
         # Up to 2 extra dollars + 1 base dollar
         side_score = 0
-        if self.order.fry == order.fry:
+        if self.order.fry == order.fry and self.order.fry is not None:
             side_score += 3
 
         # Drink attributes are equally weighted, with the fill percentage being
         # graded on the squared error from the correct fill percentage.
         # up to 2 bonus dollars + 2 base dollars
-        drink_score = 2
+        drink_score = 0
         if not (self.order.drink is None or order.drink is None):
+            drink_score += 2
             per_attribute = 1 / 3 * 2
             if self.order.drink.color == order.drink.color:
                 drink_score += per_attribute
@@ -137,9 +139,7 @@ class GameLoop:
             else:
                 drink_score += per_attribute * distance ** (-2)
 
-        score = OrderScore(score=burger_score + side_score + drink_score)
-
-        self.manager.send(Message(data=score))
+        return burger_score + side_score + drink_score
 
     def typing_indicator(self, msg: Chat) -> None:
         """Send an indicator that the manager is typing."""
