@@ -8,7 +8,7 @@ const BurgerBuilder = ({ onSend, score }) => {
     const foodItems = menu[0].children;
 
     const handleSend = () => {
-        onSend(ingredients);
+        onSend(ingredients.map(ingredient => ingredient.name));
         clearPlate();
     };
 

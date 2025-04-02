@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 import "./App.css";
-import { menuMap } from "./menuItems"
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
@@ -37,7 +36,7 @@ const App = () => {
                         const drink = data.order.drink ?? null;
                         const side = data.order.fry ? { tableState: "fries" } : null; // TODO: update when backend sends more sides
 
-                        setBurgerOrder(burger.map(ingredient => menuMap["Burger"][ingredient]));
+                        setBurgerOrder(burger);
                         setDrinkOrder(drink);
                         setSideOrder(side);
                         setRandomCustomerImage();
@@ -46,6 +45,8 @@ const App = () => {
                 break;
         }
     }, [message]);
+
+    useEffect(() => console.log(employeeBurger), [employeeBurger]);
 
 
     const addSelectedItem = (item) => {
@@ -93,6 +94,8 @@ const App = () => {
         if (burger) {
             // 3 points for submitting any burger, +2 points if correct
             tempScore += 3
+            console.log(employeeBurger);
+            console.log(burgerOrder);
             if (JSON.stringify(burger) === JSON.stringify(burgerOrder)) {
                 tempScore += 2
                 console.log(`Manager: Burger order is correct`)
@@ -132,7 +135,7 @@ const App = () => {
         let tempBurger = null;
         let tempSide = null;
         if (employeeBurger) {
-            tempBurger = employeeBurger.map((ingredient) => ingredient.name)
+            tempBurger = employeeBurger;
             console.log(`Sending burger (${tempBurger})`)
         }
         if (employeeSide) {
