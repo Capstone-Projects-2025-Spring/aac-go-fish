@@ -146,6 +146,7 @@
 .CupSizeButtons:disabled{
     cursor: not-allowed;
     transform: none;
+    border: 1px solid #322e2e;
 }
 
 .CupSizeImageSmall{
