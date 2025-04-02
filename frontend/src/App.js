@@ -35,7 +35,7 @@ const App = () => {
                     case "new_order":
                         const burger = data.order.burger?.ingredients ?? [];
                         const drink = data.order.drink ?? null;
-                        const side = { tableState: "fries"}; // TODO: update when backend sends more sides
+                        const side = data.order.fry ? { tableState: "fries" } : null; // TODO: update when backend sends more sides
 
                         setBurgerOrder(burger.map(ingredient => menuMap["Burger"][ingredient]));
                         setDrinkOrder(drink);
