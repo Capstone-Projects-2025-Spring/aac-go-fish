@@ -131,21 +131,21 @@ const DrinkBuilder = ({ onSend }) =>{
                     onClick={() => selectCupSize("small")}
                     disabled={fillPercentage > 0}
                 >
-                    <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
+                    <img src="/images/cup-small.png" alt="Small Cup" className="CupSizeImageSmall"/>
                 </button>
                 <button
                     className="CupSizeButtons"
                     onClick={() => selectCupSize("medium")}
                     disabled={fillPercentage > 0}
                 >
-                    <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
+                    <img src="/images/cup-medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
                 </button>
                 <button
                     className="CupSizeButtons"
                     onClick={() => selectCupSize("large")}
                     disabled={fillPercentage > 0}
                 >
-                    <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
+                    <img src="/images/cup-large.png" alt="Small Cup" className="CupSizeImageLarge"/>
                 </button>
             </div>
             {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}/>}

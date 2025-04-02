@@ -2,9 +2,9 @@ import React from "react";
 
 export default function DrinkDisplay({ color, fillPercentage, hasIce, cupSize }) {
     const cupImages = {
-        small: "/images/small.png",
-        medium: "/images/medium.png",
-        large: "/images/large.png",
+        small: "/images/cup-small.png",
+        medium: "/images/cup-medium.png",
+        large: "/images/cup-large.png",
     };
     return (
         <div className={`CupContainer ${cupSize}`}>
@@ -16,7 +16,7 @@ export default function DrinkDisplay({ color, fillPercentage, hasIce, cupSize })
                 }}
             ></div>
 
-            <img src={cupImages[cupSize]} alt="Cup" className="CupImages" />
+            <img src={`/images/cup-${cupSize}.png`} alt="Cup" className="CupImages" />
         </div>
     );
 }

@@ -180,11 +180,23 @@
     justify-content: center;
     position: relative;
     align-items: flex-end;
-    width: 400px;
-    height: 400px;
     margin: 0 auto;
 }
 
+.CupContainer.small{
+    width: 300px;
+    height: 300px;
+}
+
+.CupContainer.medium{
+    width: 350px;
+    height: 350px;
+}
+
+.CupContainer.large{
+    width: 400px;
+    height: 400px;
+}
 .CupImages {
     width: 100%;
     height: auto;
