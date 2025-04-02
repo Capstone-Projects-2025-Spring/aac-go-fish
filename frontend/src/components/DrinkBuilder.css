@@ -57,17 +57,6 @@
     font-size: 24px;
 }
 
-.Cup{
-    margin: 20px auto;
-    width: 150px;
-    border: 2px solid #000000;
-    border-radius: 15px;
-    background-color: #ffffff;
-    display:flex;
-    flex-direction: column-reverse;
-    overflow:hidden;
-    position:relative;
-}
 
 .Ice{
     position:absolute;
@@ -179,4 +168,36 @@
 }
 .ClearCupImage{
     height: 120px;
+}
+
+.CupContainer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    align-items: flex-end;
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+.CupImages {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.FillOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform:translateX(-50%);
+    width: 80%;
+    height: 0;
+    background-color: transparent;
+    transition: height 0.3s ease-in-out;
+    z-index: 5;
 }
