@@ -175,7 +175,7 @@ const App = () => {
                                                 customerImage={customerImage}
                                             />
                                             <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
-                                            <ManagerActions onGiveToCustomer={handleGiveToCustomer}/>
+                                            {(employeeBurger || employeeDrink || employeeSide) && (<ManagerActions onGiveToCustomer={handleGiveToCustomer}/>)}
                                         </div>
                                     </div>
                                 </>
