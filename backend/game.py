@@ -7,7 +7,7 @@ import threading
 
 import structlog
 
-from .game_state import Lobby, Player
+from .game_state import Lobby, Player, TaggedMessage
 from .models import (
     Burger,
     Chat,
@@ -21,9 +21,10 @@ from .models import (
     OrderComponent,
     OrderScore,
     OrderSubmission,
+    PlayerJoin,
+    PlayerLeave,
     Role,
 )
-from .game_state import Lobby, Player, TaggedMessage
 
 logger = structlog.stdlib.get_logger(__file__)
 
@@ -53,9 +54,15 @@ class GameLoop:
             for message in itertools.islice(self.lobby.messages(), MESSAGES_PER_LOOP):
                 match message.data:
                     case GameStart():
-                        self.start_game()
+                        self.start_game(message.id)
                     case GameEnd():
                         return
+                    case PlayerJoin():
+                        self.lobby.broadcast(Message(data=message.data), exclude=[message.id])
+                    case PlayerLeave(id=id):
+                        self.lobby.players.pop(id)
+
+                        self.lobby.broadcast(Message(data=message.data))
                     case Chat():
                         self.typing_indicator(message)
                     case OrderComponent() as component:
@@ -67,14 +74,21 @@ class GameLoop:
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
 
-    def start_game(self) -> None:
-        """Start game and generate the first order."""
+    def start_game(self, id: str) -> None:
+        """
+        Start game and generate the first order.
+
+        Args:
+            id: The id of the player that started the game.
+        """
         logger.debug("Starting game.")
 
         self.assign_roles()
         self.day = 1
         self.order = self.generate_order()
         self.manager.send(Message(data=NewOrder(order=self.order)))
+
+        self.lobby.broadcast(Message(data=GameStart()), exclude=[id])
 
     def assign_roles(self) -> None:
         """Assign roles to players."""
