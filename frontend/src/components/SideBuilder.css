@@ -166,3 +166,14 @@
     }
 
 }
+
+.ConfirmMessage{
+    text-align: center;
+    font-family: "Comic Sans MS";
+    font-size: 32px;
+    color: #84d838;
+    background-color: #ffffff;
+    border-radius: 5px;
+    opacity: 0.9;
+    transition: opacity 1s ease-in-out;
+}

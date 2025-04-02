@@ -7,6 +7,7 @@ const SideBuilder = ({ onSend }) =>{
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
     const fryingIntervalRef = useRef(null);
     const [sideType, setSideType] = useState("");
+    const [confirmMessage, setConfirmMessage] = useState("");
 
     const sideTypes = [
         {type: "potatoes", initialState: "potatoes", choppedState: "choppedPotatoes", finalState: "fries"},
@@ -19,6 +20,10 @@ const SideBuilder = ({ onSend }) =>{
             fryTimeLeft,
         });
         reset();
+        setConfirmMessage("Side sent to manager!");
+        setTimeout(() => {
+            setConfirmMessage("");
+        }, 3000);
     };
 
     const placeSide = (type) => {
@@ -138,6 +143,9 @@ const SideBuilder = ({ onSend }) =>{
                 <button onClick={reset}>
                     Reset
                 </button>
+            </div>
+            <div className="ConfirmMessage">
+                {confirmMessage && <p>{confirmMessage}</p>}
             </div>
             <button className="SendButton" onClick={handleSend} disabled={tableState === "empty" || tableState === "frying"}>Send</button>
         </div>
