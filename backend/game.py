@@ -2,6 +2,7 @@ import functools
 import itertools
 import random
 import threading
+from collections.abc import Iterable
 
 import structlog
 
@@ -17,12 +18,48 @@ DRINK_SIZES = ["S", "M", "L"]
 MESSAGES_PER_LOOP = 5
 
 
+class OrderGenerator:
+    """Handle generation of orders."""
+
+    def __init__(self, num_players: int = 0) -> None:
+        self.num_players = num_players
+        self.day = 0
+
+    def get_orders(self) -> Iterable[Order]:
+        """Return the orders for the next day"""
+        return []
+
+    def orders_on_day(self, day: int) -> int:
+        """Compute the number of orders on day day."""
+        return day * 2 + 1
+
+    def _generate_order(self) -> Order:
+        """Generate an order based on the number of players."""
+        order = Order(
+            burger=Burger(
+                ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
+            ),
+            drink=None,
+            fry=None,
+        )
+
+        if self.num_players >= 3:
+            order.fry = Fry()
+
+        if self.num_players >= 4:
+            order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
+
+        return order
+
+
 class GameLoop:
     """Implements game logic."""
 
     def __init__(self, lobby: Lobby) -> None:
         self.lobby = lobby
         self.day = 0
+
+        self.orders = OrderGenerator(num_players=4)
 
     def run(self) -> None:
         """
@@ -49,8 +86,7 @@ class GameLoop:
         logger.debug("Starting game.")
 
         self.assign_roles()
-        self.day = 1
-        self.manager.send(Message(data=NewOrder(order=self.generate_order())))
+        self.manager.send(Message(data=NewOrder(order=)))
 
     def assign_roles(self) -> None:
         """Assign roles to players."""
@@ -59,24 +95,6 @@ class GameLoop:
 
         for player, role in zip(self.lobby.players.values(), roles, strict=False):
             player.role = role
-
-    def generate_order(self) -> Order:
-        """Generate an order based on the number of players."""
-        order = Order(
-            burger=Burger(
-                ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
-            ),
-            drink=None,
-            fry=None,
-        )
-
-        if len(self.lobby.players) >= 3:
-            order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
-
-        if len(self.lobby.players) >= 4:
-            order.fry = Fry()
-
-        return order
 
     def typing_indicator(self, msg: Chat) -> None:
         """Send an indicator that the manager is typing."""
