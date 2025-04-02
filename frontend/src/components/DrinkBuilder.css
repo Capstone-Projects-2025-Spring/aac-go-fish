@@ -87,6 +87,11 @@
     font-size: 24px;
 }
 
+.FillCupButton:disabled{
+    cursor: not-allowed;
+    transform: none;
+}
+
 .FillCupButton:hover {
     border: 3px solid #322e2e;
 }

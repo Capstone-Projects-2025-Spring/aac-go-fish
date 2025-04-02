@@ -30,8 +30,7 @@ const DrinkBuilder = ({ onSend }) =>{
     }, []);
 
     const startFilling = () => {
-        if (!color) {
-            setErrorMessage("Select a color!");
+        if (!color || !cupPlaced) {
             return;
         }
 
@@ -122,6 +121,7 @@ const DrinkBuilder = ({ onSend }) =>{
                         onMouseDown={startFilling}
                         onMouseUp={stopFilling}
                         onMouseLeave={stopFilling}
+                        disabled={!cupPlaced || !colorSelected}
                 >
                     <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
                 </button>
