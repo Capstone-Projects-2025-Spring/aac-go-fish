@@ -23,6 +23,7 @@ from .models import (
     OrderSubmission,
     Role,
 )
+from .game_state import Lobby, Player, TaggedMessage
 
 logger = structlog.stdlib.get_logger(__file__)
 
@@ -55,8 +56,8 @@ class GameLoop:
                         self.start_game()
                     case GameEnd():
                         return
-                    case Chat() as c:
-                        self.typing_indicator(c)
+                    case Chat():
+                        self.typing_indicator(message)
                     case OrderComponent() as component:
                         self.manager.send(Message(data=component))
                     case OrderSubmission(order=order):
@@ -143,9 +144,9 @@ class GameLoop:
 
         return round(burger_score + side_score + drink_score, 2)
 
-    def typing_indicator(self, msg: Chat) -> None:
+    def typing_indicator(self, msg: TaggedMessage) -> None:
         """Send an indicator that the manager is typing."""
-        self.lobby.broadcast(Message(data=msg), exclude=[msg.id])
+        self.lobby.broadcast(Message(data=msg.data), exclude=[msg.id])
 
     @functools.cached_property
     def manager(self) -> Player:
