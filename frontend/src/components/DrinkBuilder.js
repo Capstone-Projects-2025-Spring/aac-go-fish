@@ -87,6 +87,9 @@ const DrinkBuilder = ({ onSend }) =>{
     };
 
     const selectCupSize = (size) => {
+        if (fillPercentage > 0){
+            return;
+        }
         setCupSize(size);
         setCupPlaced(true);
     };
@@ -126,18 +129,21 @@ const DrinkBuilder = ({ onSend }) =>{
                 <button
                     className="CupSizeButtons"
                     onClick={() => selectCupSize("small")}
+                    disabled={fillPercentage > 0}
                 >
                     <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
                 </button>
                 <button
                     className="CupSizeButtons"
                     onClick={() => selectCupSize("medium")}
+                    disabled={fillPercentage > 0}
                 >
                     <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
                 </button>
                 <button
                     className="CupSizeButtons"
                     onClick={() => selectCupSize("large")}
+                    disabled={fillPercentage > 0}
                 >
                     <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
                 </button>

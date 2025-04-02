@@ -134,6 +134,11 @@
     border-radius: 6px;
 }
 
+.CupSizeButtons:disabled{
+    cursor: not-allowed;
+    transform: none;
+}
+
 .CupSizeImageSmall{
     width: 85px;
     height: 85px;
