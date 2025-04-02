@@ -9,6 +9,7 @@ const DrinkBuilder = ({ onSend }) =>{
     const [errorMessage, setErrorMessage] = useState("");
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
+    const [confirmMessage, setConfirmMessage] = useState("");
     const drinkColors = [
         {name: "Blue", color: "#34C6F4"},
         {name: "Green", color: "#99CA3C"},
@@ -69,6 +70,10 @@ const DrinkBuilder = ({ onSend }) =>{
             cupSize,
         });
         clearCup();
+        setConfirmMessage("Drink sent to manager!");
+        setTimeout(() => {
+            setConfirmMessage("");
+        }, 3000);
     };
 
     const selectColor = (selectedColor) => {
@@ -100,39 +105,41 @@ const DrinkBuilder = ({ onSend }) =>{
             </div>
 
             <div className='ButtonHolder'>
-            <button className="ClearCupButton" onClick={clearCup}>
-                <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
-            </button>
-            <button className="FillCupButton"
-                    onMouseDown={startFilling}
-                    onMouseUp={stopFilling}
-                    onMouseLeave={stopFilling}
-            >
-                <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
-            </button>
+                <button className="ClearCupButton" onClick={clearCup}>
+                    <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
+                </button>
+                <button className="FillCupButton"
+                        onMouseDown={startFilling}
+                        onMouseUp={stopFilling}
+                        onMouseLeave={stopFilling}
+                >
+                    <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
+                </button>
 
-            <button
-                className="CupSizeButtons"
-                onClick={() => setCupSize("small")}
-            >
-                <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
-            </button>
-            <button
-                className="CupSizeButtons"
-                onClick={() => setCupSize("medium")}
-            >
-                <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
-            </button>
-            <button
-                className="CupSizeButtons"
-                onClick={() => setCupSize("large")}
-            >
-                <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
-            </button>
+                <button
+                    className="CupSizeButtons"
+                    onClick={() => setCupSize("small")}
+                >
+                    <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
+                </button>
+                <button
+                    className="CupSizeButtons"
+                    onClick={() => setCupSize("medium")}
+                >
+                    <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
+                </button>
+                <button
+                    className="CupSizeButtons"
+                    onClick={() => setCupSize("large")}
+                >
+                    <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
+                </button>
             </div>
-
-            <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize ={cupSize}/>
-            <button className ="SendButton" onClick={handleSend}>Send</button>
+            <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}/>
+            <div className="ConfirmMessage">
+                {confirmMessage && <p>{confirmMessage}</p>}
+            </div>
+            <button className="SendButton" onClick={handleSend}>Send</button>
         </div>
     );
 };
