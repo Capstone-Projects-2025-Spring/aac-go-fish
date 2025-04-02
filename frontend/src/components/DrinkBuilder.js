@@ -87,9 +87,6 @@ const DrinkBuilder = ({ onSend }) =>{
     };
 
     const selectCupSize = (size) => {
-        if (cupPlaced) {
-            return;
-        }
         setCupSize(size);
         setCupPlaced(true);
     };
@@ -129,21 +126,18 @@ const DrinkBuilder = ({ onSend }) =>{
                 <button
                     className="CupSizeButtons"
                     onClick={() => selectCupSize("small")}
-                    disabled={cupPlaced}
                 >
                     <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
                 </button>
                 <button
                     className="CupSizeButtons"
                     onClick={() => selectCupSize("medium")}
-                    disabled={cupPlaced}
                 >
                     <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
                 </button>
                 <button
                     className="CupSizeButtons"
                     onClick={() => selectCupSize("large")}
-                    disabled={cupPlaced}
                 >
                     <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
                 </button>
