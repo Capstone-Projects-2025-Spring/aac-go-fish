@@ -79,7 +79,7 @@ const DrinkBuilder = ({ onSend }) =>{
     };
 
     const selectColor = (selectedColor) => {
-        if (color != null){
+        if (fillPercentage > 0){
             return;
         }
         setColor(selectedColor);
@@ -107,7 +107,7 @@ const DrinkBuilder = ({ onSend }) =>{
                             border: color === choice.color ? "3px solid black" : "none",
                             WebkitTextStroke: "1px black",
                         }}
-                        disabled={colorSelected}
+                        disabled={fillPercentage > 0}
                     >
                         {choice.name}
                     </button>
