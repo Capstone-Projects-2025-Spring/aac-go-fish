@@ -122,6 +122,7 @@ const DrinkBuilder = ({ onSend }) =>{
                         onMouseUp={stopFilling}
                         onMouseLeave={stopFilling}
                         disabled={!cupPlaced || !colorSelected}
+                        title="Press and hold to fill"
                 >
                     <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
                 </button>
