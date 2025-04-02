@@ -1,5 +1,6 @@
 import React from 'react';
 import './CustomerOrder.css';
+import DrinkDisplay from "./DrinkDisplay";
 
 function CustomerOrder({
     burgerOrder,
@@ -70,27 +71,12 @@ function CustomerOrder({
                 : null
                 }
                 {orderVisible ? (
-                    <div className="mockDisplayCup" style = {{ backgroundColor: drinkOrder[1], color: "#FFFFFF" }}>
-
-                        <p className='drinkSizeText'>
-                        {drinkSize === 'large' ?
-                            "L"
-                        : drinkSize === 'medium' ?
-                            "M"
-                        : drinkSize === 'small' ?
-                            "S"
-                         : null
-                        }
-                        </p>
-
-                        {hasIce && (
-                            <img
-                                src="/images/ice.png"
-                                alt="Ice"
-                                className="Ice"
-                            />
-                        )}
-                    </div>
+                    <DrinkDisplay
+                        color={drinkOrder[1]}
+                        fillPercentage={100}
+                        cupSize={drinkSize}
+                        hasIce={hasIce}
+                        />
                     )
                 : null
                 }
