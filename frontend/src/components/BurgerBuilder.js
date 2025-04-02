@@ -1,26 +1,14 @@
 import React, { useState } from 'react';
 import './BurgerBuilder.css';
-import BurgerDisplay from "./BurgerDisplay";
-const BurgerBuilder = ({
-    onSend,
-    score
-}) => {
+import BurgerStation from "./BurgerStation";
+import {menu} from "../menuItems";
+const BurgerBuilder = ({ onSend, score }) => {
     const [ingredients, setIngredients] = useState([]);
 
-    const foodItems = [
-        { id: 2, name: 'Bottom Bun', image: '/images/bottom_bun.png', audio: '/audio/bottom_bun.mp3', sideImage: '/images/BottomBunSide.png' },
-        { id: 3, name: 'Top Bun', image: '/images/top_bun.png', audio: '/audio/top_bun.mp3', sideImage: '/images/TopBunSide.png' },
-        { id: 4, name: 'Patty', image: '/images/patty.png', audio: '/audio/patty.mp3', sideImage: '/images/PattySide.png' },
-        { id: 6, name: 'Lettuce', image: '/images/lettuce.png', audio: '/audio/lettuce.mp3', sideImage: '/images/LettuceSide.png' },
-        { id: 7, name: 'Onion', image: '/images/onion.png', audio: '/audio/onion.mp3', sideImage: '/images/OnionSide.png' },
-        { id: 8, name: 'Tomato', image: '/images/tomato.png', audio: '/audio/tomato.mp3', sideImage: '/images/TomatoSide.png' },
-        { id: 9, name: 'Ketchup', image: '/images/ketchup.png', audio: '/audio/ketchup.mp3', sideImage: '/images/KetchupSide.png' },
-        { id: 10, name: 'Mustard', image: '/images/mustard.png', audio: '/audio/mustard.mp3', sideImage: '/images/MustardSide.png' },
-        { id: 11, name: 'Cheese', image: '/images/cheese.png', audio: '/audio/cheese.mp3', sideImage: '/images/CheeseSide.png' },
-    ];
+    const foodItems = menu[0].children;
 
     const handleSend = () => {
-        onSend(ingredients);
+        onSend(ingredients.map(ingredient => ingredient.name));
         clearPlate();
     };
 
@@ -59,15 +47,15 @@ const BurgerBuilder = ({
                     </button>
                 ))}
             </div>
-            <BurgerDisplay imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
+            <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
             <button className="ClearPlateButton" onClick={clearPlate}>
-                <img src="images/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
+                <img src="/images/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="images/repeat_order.png" alt="Request Repeat" className="RepeatOrderImage" />
+                <img src="/images/repeat_order.png" alt="Request Repeat" className="RepeatOrderImage" />
             </button>
             <button onClick={handleSend} className="SendOrderButton">
-                <img src="images/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
+                <img src="/images/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
         </div>
     );

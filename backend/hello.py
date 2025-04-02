@@ -7,6 +7,7 @@ from contextlib import asynccontextmanager
 import structlog
 from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
+from fastapi.middleware.cors import CORSMiddleware
 from uvicorn.protocols.utils import get_path_with_query_string
 
 from .dependencies import Channel, LobbyManager, lobby_manager, settings
@@ -35,6 +36,14 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[settings().frontend_url],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.middleware("http")

@@ -43,8 +43,8 @@ def test_websocket(lobby_client: TestClient) -> None:
     # side.
     # technically speaking, we _could_ inject a random.Random for testing,
     # but that seems like too much effort for not much gain
-    assert burger["ingredients"][0] == "bottom bun"
-    assert burger["ingredients"][-1] == "top bun"
+    assert burger["ingredients"][0] == "Bottom Bun"
+    assert burger["ingredients"][-1] == "Top Bun"
 
     assert order["drink"] is None
     assert order["fry"] is None

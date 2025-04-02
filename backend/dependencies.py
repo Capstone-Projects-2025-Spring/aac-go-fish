@@ -23,10 +23,7 @@ class Channel[T]:
 
     def recv_nowait(self) -> T | None:
         """Receive a message or None if empty."""
-        try:
-            return self._recv.get_nowait()
-        except queue.Empty:
-            return None
+        return self._recv.get()
 
     def recv(self) -> T:
         """Receive a message. Blocks until a message is available."""

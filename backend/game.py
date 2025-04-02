@@ -10,8 +10,8 @@ from .models import Burger, Chat, Drink, Fry, GameEnd, GameStart, Message, NewOr
 
 logger = structlog.stdlib.get_logger(__file__)
 
-BURGER_INGREDIENTS = ["patty", "lettuce", "onion", "tomato", "ketchup", "mustard", "cheese"]
-DRINK_COLORS = ["blue", "red", "yellow", "orange", "purple", "green"]
+BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
+DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
 DRINK_SIZES = ["S", "M", "L"]
 
 MESSAGES_PER_LOOP = 5
@@ -54,7 +54,7 @@ class GameLoop:
 
     def assign_roles(self) -> None:
         """Assign roles to players."""
-        roles = list(Role)
+        roles = list(Role)[: len(self.lobby.players)]
         random.shuffle(roles)
 
         for player, role in zip(self.lobby.players.values(), roles, strict=False):
@@ -64,7 +64,7 @@ class GameLoop:
         """Generate an order based on the number of players."""
         order = Order(
             burger=Burger(
-                ingredients=["bottom bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["top bun"]
+                ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
             ),
             drink=None,
             fry=None,
