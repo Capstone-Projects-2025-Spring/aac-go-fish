@@ -4915,9 +4915,9 @@ dns-packet@^5.2.2:
     "@leichtgewicht/ip-codec" "^2.0.1"
 
 docusaurus-json-schema-plugin@^1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/docusaurus-json-schema-plugin/-/docusaurus-json-schema-plugin-1.13.0.tgz#daa33aa6267f4e5d8277a2bc1b0dae5dc3d1c168"
-  integrity sha512-lSufbtvYZVqzspW4Wn9LDKJGB+K2xWUo3Jq2R2RRYvfUNeCv73l25zPW+XRvUgI5xeWgTupnsUfiAwwxS/499Q==
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/docusaurus-json-schema-plugin/-/docusaurus-json-schema-plugin-1.14.0.tgz#56068280de5ace928a7704b65c48d99341185c04"
+  integrity sha512-TyXIVqAr+rKXhRQqq/IElUogl5ABSDV+PoiHcB6+Jroy2RMsimHkvz3OyfYpxTPDVGetSlX9TvuYJgLVBLIe/w==
   dependencies:
     "@stoplight/json-ref-resolver" "^3.1.5"
     monaco-editor "^0.52.2"
