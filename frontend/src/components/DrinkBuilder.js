@@ -10,6 +10,7 @@ const DrinkBuilder = ({ onSend }) =>{
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
     const [confirmMessage, setConfirmMessage] = useState("");
+    const [cupPlaced, setCupPlaced] = useState(false);
     const drinkColors = [
         {name: "Blue", color: "#34C6F4"},
         {name: "Green", color: "#99CA3C"},
@@ -55,6 +56,7 @@ const DrinkBuilder = ({ onSend }) =>{
         setColor(null);
         setFillPercentage(0);
         setColorSelected(false);
+        setCupPlaced(false);
     };
 
     const handleSend = () => {
@@ -82,6 +84,14 @@ const DrinkBuilder = ({ onSend }) =>{
         }
         setColor(selectedColor);
         setColorSelected(true);
+    };
+
+    const selectCupSize = (size) => {
+        if (cupPlaced) {
+            return;
+        }
+        setCupSize(size);
+        setCupPlaced(true);
     };
 
     return (
@@ -118,24 +128,27 @@ const DrinkBuilder = ({ onSend }) =>{
 
                 <button
                     className="CupSizeButtons"
-                    onClick={() => setCupSize("small")}
+                    onClick={() => selectCupSize("small")}
+                    disabled={cupPlaced}
                 >
                     <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
                 </button>
                 <button
                     className="CupSizeButtons"
-                    onClick={() => setCupSize("medium")}
+                    onClick={() => selectCupSize("medium")}
+                    disabled={cupPlaced}
                 >
                     <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
                 </button>
                 <button
                     className="CupSizeButtons"
-                    onClick={() => setCupSize("large")}
+                    onClick={() => selectCupSize("large")}
+                    disabled={cupPlaced}
                 >
                     <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
                 </button>
             </div>
-            <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}/>
+            {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}/>}
             <div className="ConfirmMessage">
                 {confirmMessage && <p>{confirmMessage}</p>}
             </div>
