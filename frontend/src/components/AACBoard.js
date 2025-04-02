@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import "./AACBoard.css";
 import ItemGrid from "./ItemGrid";
 import SelectedItemsDisplay from "./SelectedItemsDisplay";
@@ -20,15 +20,13 @@ function AACBoard({
     drinkSize,
     orderVisible,
 }) {
-
     const [shiftDown, setShiftDown] = useState(false);
 
-
     const handleClick = (item) => {
-        if (item.name.toLowerCase() === "burger" || item.name.toLowerCase() === "drink") {
+        const name = item.name.toLowerCase();
+        if (name === "burger" || name === "drink") {
             setShiftDown(true);
-        }
-        else if (item.name.toLowerCase() === "back") {
+        } else if (name === "back") {
             setShiftDown(false);
         }
 
@@ -38,6 +36,7 @@ function AACBoard({
                 console.error('Audio playback failed:', err);
             });
         }
+
         onSelectItem(item);
         if (onItemClick) {
             onItemClick(item.name);

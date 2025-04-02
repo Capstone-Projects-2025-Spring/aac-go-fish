@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
-const DrinkBuilder = ({ onSend }) =>{
+const DrinkBuilder = ({
+    onSend,
+    score
+}) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
     const [hasIce, setHasIce] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
     const drinkColors = [
@@ -29,7 +31,6 @@ const DrinkBuilder = ({ onSend }) =>{
 
     const startFilling = () => {
         if (!color) {
-            setErrorMessage("Select a color!");
             return;
         }
 
@@ -58,15 +59,14 @@ const DrinkBuilder = ({ onSend }) =>{
 
     const handleSend = () => {
         if (!color || fillPercentage === 0){
-            setErrorMessage("Cup is empty!");
             return;
         }
 
         onSend({
             color,
-            fillPercentage,
-            hasIce,
-            cupSize,
+            fill: fillPercentage,
+            ice: hasIce,
+            size: cupSize,
         });
         clearCup();
     };
@@ -81,6 +81,7 @@ const DrinkBuilder = ({ onSend }) =>{
 
     return (
         <div className="DrinkBuilder">
+            <p className='ScoreText'>Your score is ${score}</p>
             <div className="DrinkButtons">
                 {drinkColors.map((choice, index) => (
                     <button
@@ -99,35 +100,38 @@ const DrinkBuilder = ({ onSend }) =>{
                 ))}
             </div>
 
+            <div className='ButtonHolder'>
+            <button className="ClearCupButton" onClick={clearCup}>
+                <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
+            </button>
             <button className="FillCupButton"
                     onMouseDown={startFilling}
                     onMouseUp={stopFilling}
                     onMouseLeave={stopFilling}
             >
-                Fill Cup
+                <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
             </button>
 
-            <button className="ClearCupButton" onClick={clearCup}>
-                Clear Cup
-            </button>
             <button
                 className="CupSizeButtons"
                 onClick={() => setCupSize("small")}
             >
-                Small
+                <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
             </button>
             <button
                 className="CupSizeButtons"
                 onClick={() => setCupSize("medium")}
             >
-                Medium
+                <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
             </button>
             <button
                 className="CupSizeButtons"
                 onClick={() => setCupSize("large")}
             >
-                Large
+                <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
             </button>
+            </div>
+
             <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize ={cupSize}/>
             <button className ="SendButton" onClick={handleSend}>Send</button>
         </div>

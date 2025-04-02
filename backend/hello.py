@@ -1,3 +1,4 @@
+import asyncio
 import time
 import typing
 from collections.abc import AsyncGenerator, Awaitable, Callable
@@ -6,10 +7,10 @@ from contextlib import asynccontextmanager
 import structlog
 from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
-from pydantic import ValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from uvicorn.protocols.utils import get_path_with_query_string
 
-from .dependencies import LobbyManager, lobby_manager, settings
+from .dependencies import Channel, LobbyManager, lobby_manager, settings
 from .logging_config import setup_logging
 from .models import Annotated, Initializer, Message
 
@@ -35,6 +36,14 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[settings().frontend_url],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.middleware("http")
@@ -116,18 +125,30 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
     """Handles a WebSocket connection for receiving and responding to messages."""
     await websocket.accept()
 
-    init = Initializer.model_validate(await websocket.receive_text())
-    channel = lm.channel(init.code, init.id)
+    init = Message.model_validate(await websocket.receive_json())
 
+    match init:
+        case Message(data=Initializer(code=code, id=id)):
+            channel = lm.channel(code, id)
+            logger.info("WebSocket connection initialized.", player=id)
+        case _:
+            logger.info("WebSocket connection failed to initialize.", message=init)
+            await websocket.close()
+            return
+
+    await asyncio.gather(_recv_handler(websocket, channel), _send_handler(websocket, channel))
+    await websocket.close()
+
+
+async def _recv_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
     while True:
-        data = await websocket.receive_text()
+        data = Message.model_validate_json(await websocket.receive_text())
+        logger.debug("Received WebSocket message.", message=data)
+        channel.send(data)
 
-        try:
-            incoming_message = Message.model_validate(data)
-        except ValidationError:
-            logger.warning("Unrecognized message.", message=data)
-        else:
-            channel.send(incoming_message)
 
-        if outgoing_message := typing.cast(Message, channel.recv()):
-            await websocket.send_text(outgoing_message.model_dump_json())
+async def _send_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
+    while True:
+        msg: Message = await channel.arecv()
+        logger.debug("Sending WebSocket message.", message=msg)
+        await websocket.send_text(msg.model_dump_json())

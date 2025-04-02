@@ -61,10 +61,10 @@ function CustomerOrder({
                     </div>
                 ) : null}
 
-                {orderVisible ? (
+                {drinkOrder && (
                     <div className="mockDisplayCup" style={{ backgroundColor: drinkOrder[1], color: "#FFFFFF" }}>
                     </div>
-                ) : null}
+                )}
 
             </div>
 

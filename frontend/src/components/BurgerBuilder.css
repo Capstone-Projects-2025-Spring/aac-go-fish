@@ -97,7 +97,7 @@
     border-radius: 6px;
 }
 
-.BurgerDisplay {
+.BurgerStation {
     position: relative;
     width: 600px;
     margin: 0 auto;
@@ -125,9 +125,52 @@
     height: 90%;
 }
 
+.BurgerDisplay {
+    display: flex;
+    flex-direction: column-reverse;
+}
 
 .IngredientOnGrill {
     width: 80px;
     height: auto;
     margin: -3px 0;
+}
+
+.ScoreText {
+    font-size: 36px;
+    border-radius: 6px;
+    color: white;
+    background-color: #9dae88;
+    border: 2px solid;
+    border-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: fit-content;
+    margin: auto;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.SendCustomerOrderImage{
+    height: 100px;
+}
+
+.RepeatOrderImage{
+    height: 100px;
+}
+
+.ClearPlateImage{
+    height: 100px;
+}
+
+.SendImage{
+    height: 100px;
+}
+
+.SendOrderButton{
+    background: white;
+    border: none;
+    cursor: pointer;
 }

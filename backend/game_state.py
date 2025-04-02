@@ -51,12 +51,12 @@ class Player:
 
     Attributes:
         id: The player's internal ID
-        role: The player's role.
+        role: The player's role. None if the game has not started yet.
         channel: Message queue for outgoing messages.
     """
 
     channel: queue.Queue
-    role: Role
+    role: Role | None
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
 
     def send(self, msg: Message) -> None:
