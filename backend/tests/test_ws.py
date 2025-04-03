@@ -47,7 +47,7 @@ def test_websocket(lobby_client: TestClient) -> None:
     assert burger["ingredients"][-1] == "Top Bun"
 
     assert order["drink"] is None
-    assert order["fry"] is None
+    assert order["side"] is None
 
     websocket.close()
 

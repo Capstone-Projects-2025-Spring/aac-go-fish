@@ -38,7 +38,7 @@ from backend.models import (
                     "game_state_update_type": "new_order",
                     "order": {
                         "burger": {"ingredients": ["bread", "bread"]},
-                        "fry": {},
+                        "side": table_state: fries,
                         "drink": {"color": "green", "fill": 0, "ice": true, "size": "S"}
                     }
                 }
@@ -92,7 +92,7 @@ from backend.models import (
                     "game_state_update_type": "order_submission",
                     "order": {
                         "burger": {"ingredients": ["bread", "bread"]},
-                        "fry": {},
+                        "side": table_state: "fries",
                         "drink": {"color": "green", "fill": 0, "ice": true, "size": "S"}
                     }
                 }
