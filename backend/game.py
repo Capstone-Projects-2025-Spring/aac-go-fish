@@ -24,6 +24,7 @@ from .models import (
     PlayerJoin,
     PlayerLeave,
     Role,
+    RoleAssignment,
 )
 
 logger = structlog.stdlib.get_logger(__file__)
@@ -97,6 +98,8 @@ class GameLoop:
 
         for player, role in zip(self.lobby.players.values(), roles, strict=False):
             player.role = role
+
+            player.send(Message(data=RoleAssignment(role=role)))
 
     def generate_order(self) -> Order:
         """Generate an order based on the number of players."""
