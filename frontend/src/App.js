@@ -21,6 +21,7 @@ const App = () => {
     const [sideOrder, setSideOrder] = useState(null);
     const [drinkOrder, setDrinkOrder] = useState(null);
     const [score, setScore] = useState(0);
+    const [day, setDay] = useState(0);
     const { customerImage, setRandomCustomerImage } = useCustomerImages();
     const { message, send } = useContext(WebSocketContext);
 
@@ -41,6 +42,10 @@ const App = () => {
                         setSideOrder(side);
                         setRandomCustomerImage();
                         break;
+                    case "day_end":
+                        const day = data.day ?? 0;
+
+                        setDay(day);
                 }
                 break;
         }
@@ -157,7 +162,7 @@ const App = () => {
                 burger: null,
                 fry: null, // TODO: update to side
                 drink: null
-        }}})
+        }}});
 
         setEmployeeBurger(null);
         setEmployeeSide(null);
@@ -178,7 +183,7 @@ const App = () => {
                                             <Customer customerImage={customerImage} />
                                         </div>
                                         <div className="column">
-                                            <p className='Score'>Your score is ${score}</p>
+                                            <p className='Score'>Day {day} | ${score}</p>
                                             <AACBoard
                                                 selectedItems={selectedItems}
                                                 onSelectItem={addSelectedItem}

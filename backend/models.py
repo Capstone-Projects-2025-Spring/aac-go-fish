@@ -131,6 +131,8 @@ class DayEnd(BaseModel):
     type: Literal[MessageKind.game_state] = MessageKind.game_state
     game_state_update_type: Literal[GameStateUpdateKind.day_end] = GameStateUpdateKind.day_end
 
+    day: int
+
 
 type GameStateUpdate = Annotated[
     NewOrder | RoleAssignment | OrderScore | OrderSubmission | OrderComponent | DayEnd,

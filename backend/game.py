@@ -10,6 +10,7 @@ from .game_state import Lobby, Player
 from .models import (
     Burger,
     Chat,
+    DayEnd,
     Drink,
     Fry,
     GameEnd,
@@ -134,7 +135,7 @@ class GameLoop:
         """Executes game functions regarding updating day count."""
         self.day += 1
         logger.debug(f"New Day: Day {self.day}")
-        # TODO: notify frontend about day change?
+        self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
     def typing_indicator(self, msg: Chat) -> None:
         """Send an indicator that the manager is typing."""
