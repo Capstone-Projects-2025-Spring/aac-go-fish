@@ -2,10 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
 import { WebSocketContext } from "../WebSocketContext";
-const DrinkBuilder = ({
-    onSend,
-    score
-}) =>{
+const DrinkBuilder = ({ score }) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
@@ -65,23 +62,15 @@ const DrinkBuilder = ({
         }
         send({data: {
             type: "game_state",
-            game_state_update_type: "order_submission",
-            order: {
-                burger: { ingredients: [] },
-                drink: {
-                    color: color,
-                    fill: fillPercentage,
-                    ice: hasIce,
-                    size: cupSize,
-                },
-                fry: null
-        }}});
-        onSend({
-            color,
-            fill: fillPercentage,
-            ice: hasIce,
-            size: cupSize,
-        });
+            game_state_update_type: "order_component",
+            component: {
+                type: "drink",
+                color: color,
+                fill: fillPercentage,
+                ice: hasIce,
+                size: cupSize,
+            }
+        }});
         clearCup();
     };
 

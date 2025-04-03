@@ -132,8 +132,19 @@ const App = () => {
     useEffect(() => {
         console.log(message);
         if (!message) return;
-        else if (message.content.data.game_state_update_type === "new_order") return;
-        setEmployeeBurger(message.content.data.order.burger.ingredients);
+        switch (message.content.data.game_state_update_type) {
+            case "new_order":
+                return;
+            case "order_component":
+                if (message.content.data.component.ingredients) {
+                    setEmployeeBurger(message.content.data.component.ingredients);
+                }
+                if (message.content.data.component.color) {
+                    setEmployeeDrink(message.content.data.component);
+                }
+
+
+        }
     });
 
     const handleGiveToCustomer = () => {
@@ -192,7 +203,7 @@ const App = () => {
                         case "burger":
                             return <BurgerBuilder score={score}/>;
                         case "side":
-                            return <SideBuilder onSend={setEmployeeSide} score={score}/>;
+                            return <SideBuilder score={score}/>;
                         case "drink":
                             return <DrinkBuilder onSend={setEmployeeDrink} score={score}/>;
                     }

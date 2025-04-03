@@ -13,13 +13,10 @@ const BurgerBuilder = ({ score }) => {
         const employeeOrder = ingredients.map(ingredient => ingredient.name);
         send({data: {
             type: "game_state",
-            game_state_update_type: "order_submission",
-            order: {
-                burger: {
-                    ingredients: employeeOrder,
-                },
-                drink: null,
-                fry: null
+            game_state_update_type: "order_component",
+            component: {
+                type: "burger",
+                ingredients: employeeOrder,
         }}});
         clearPlate();
     };
