@@ -48,13 +48,6 @@ const App = () => {
     }, [message]);
 
     useEffect(() => console.log(employeeBurger), [employeeBurger]);
-    useEffect(() => {
-        console.log(message);
-        if (!message) return;
-        else if (message.content.data.game_state_update_type === "new_order") return;
-        setEmployeeBurger(message.content.data.order.burger.ingredients);
-    });
-
 
     const addSelectedItem = (item) => {
         setSelectedItems((prev) => [...prev, item]);
@@ -136,6 +129,13 @@ const App = () => {
         console.log(`Score is ${tempScore}`)
         setScore(score + tempScore)
     }
+    useEffect(() => {
+        console.log(message);
+        if (!message) return;
+        else if (message.content.data.game_state_update_type === "new_order") return;
+        setEmployeeBurger(message.content.data.order.burger.ingredients);
+    });
+
     const handleGiveToCustomer = () => {
         console.log("Manager: Sending order to the customer");
         let tempBurger = null;

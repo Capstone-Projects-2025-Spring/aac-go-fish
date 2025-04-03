@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
+import { WebSocketContext } from "../WebSocketContext";
 const DrinkBuilder = ({
     onSend,
     score
@@ -19,6 +20,7 @@ const DrinkBuilder = ({
         {name: "Orange", color: "#F5841F"},
         {name: "Purple", color: "#7E69AF"},
     ];
+    const { send } = useContext(WebSocketContext);
     const maxFill = 100;
     const fillAmount = 5;
     const fillRate = 200;
@@ -61,7 +63,19 @@ const DrinkBuilder = ({
         if (!color || fillPercentage === 0){
             return;
         }
-
+        send({data: {
+            type: "game_state",
+            game_state_update_type: "order_submission",
+            order: {
+                burger: { ingredients: [] },
+                drink: {
+                    color: color,
+                    fill: fillPercentage,
+                    ice: hasIce,
+                    size: cupSize,
+                },
+                fry: null
+        }}});
         onSend({
             color,
             fill: fillPercentage,

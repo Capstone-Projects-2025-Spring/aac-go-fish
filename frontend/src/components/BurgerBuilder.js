@@ -20,7 +20,7 @@ const BurgerBuilder = ({ score }) => {
                 },
                 drink: null,
                 fry: null
-            }}});
+        }}});
         clearPlate();
     };
 
