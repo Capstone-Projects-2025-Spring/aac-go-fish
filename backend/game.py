@@ -3,7 +3,7 @@ import itertools
 import random
 import threading
 from collections.abc import Iterable
-
+from queue import Queue
 import structlog
 
 from .game_state import Lobby, Player
@@ -21,19 +21,19 @@ MESSAGES_PER_LOOP = 5
 class OrderGenerator:
     """Handle generation of orders."""
 
-    def __init__(self, num_players: int = 0) -> None:
-        self.num_players = num_players
-        self.day = 0
-
-    def get_orders(self) -> Iterable[Order]:
+    def get_orders(self, day: int, num_players: int = 0) -> Iterable[Order]:
         """Return the orders for the next day"""
-        return []
+        orders = []
+        for order in range(self.orders_on_day(day)):
+            orders.append(self._generate_order(num_players))
+
+        return orders
 
     def orders_on_day(self, day: int) -> int:
-        """Compute the number of orders on day day."""
+        """Compute the number of orders on a given day."""
         return day * 2 + 1
 
-    def _generate_order(self) -> Order:
+    def _generate_order(self, num_players: int = 0) -> Order:
         """Generate an order based on the number of players."""
         order = Order(
             burger=Burger(
@@ -43,10 +43,10 @@ class OrderGenerator:
             fry=None,
         )
 
-        if self.num_players >= 3:
+        if num_players >= 3:
             order.fry = Fry()
 
-        if self.num_players >= 4:
+        if num_players >= 4:
             order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
 
         return order
@@ -58,8 +58,10 @@ class GameLoop:
     def __init__(self, lobby: Lobby) -> None:
         self.lobby = lobby
         self.day = 0
+        self.num_players=4
 
-        self.orders = OrderGenerator(num_players=4)
+        self.orders = OrderGenerator()
+        self.order_queue = Queue()
 
     def run(self) -> None:
         """
@@ -77,7 +79,7 @@ class GameLoop:
                     case Chat() as c:
                         self.typing_indicator(c)
                     case OrderComponent() as component:
-                        self.manager.send(Message(data=component))
+                        self.handle_next_order()
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
 
@@ -86,7 +88,7 @@ class GameLoop:
         logger.debug("Starting game.")
 
         self.assign_roles()
-        self.manager.send(Message(data=NewOrder(order=)))
+        self.handle_next_order()
 
     def assign_roles(self) -> None:
         """Assign roles to players."""
@@ -95,6 +97,19 @@ class GameLoop:
 
         for player, role in zip(self.lobby.players.values(), roles, strict=False):
             player.role = role
+
+    def handle_next_order(self) -> None:
+        if self.order_queue.empty():
+            self.handle_new_day()
+            for order in self.orders.get_orders(day=self.day, num_players=self.num_players):
+                self.order_queue.put(order)
+        
+        self.manager.send(Message(data=NewOrder(order=self.order_queue.get())))
+        logger.debug("Order sent.")
+
+    def handle_new_day(self) -> None:
+        self.day += 1
+        logger.debug("New day.")
 
     def typing_indicator(self, msg: Chat) -> None:
         """Send an indicator that the manager is typing."""
