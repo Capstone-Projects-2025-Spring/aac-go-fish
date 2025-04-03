@@ -26,17 +26,12 @@
           "title": "Type",
           "type": "string"
         },
-        "id": {
-          "title": "Id",
-          "type": "string"
-        },
         "typing": {
           "title": "Typing",
           "type": "boolean"
         }
       },
       "required": [
-        "id",
         "typing"
       ],
       "title": "Chat",
@@ -449,16 +444,11 @@
           "title": "Game State Update Type",
           "type": "string"
         },
-        "id": {
-          "title": "Id",
-          "type": "string"
-        },
         "role": {
           "$ref": "#/$defs/Role"
         }
       },
       "required": [
-        "id",
         "role"
       ],
       "title": "RoleAssignment",
