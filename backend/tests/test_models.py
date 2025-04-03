@@ -5,7 +5,6 @@ from backend.models import (
     Chat,
     DayEnd,
     Drink,
-    Fry,
     GameEnd,
     GameStart,
     Initializer,
@@ -19,6 +18,7 @@ from backend.models import (
     PlayerLeave,
     Role,
     RoleAssignment,
+    Side,
 )
 
 
@@ -47,8 +47,8 @@ from backend.models import (
                 data=NewOrder(
                     order=Order(
                         burger=Burger(ingredients=["bread", "bread"]),
-                        fry=Fry(),
-                        drink=Drink(color="green", fill=0, ice=True, size="S"),
+                        side=Side(table_state="fries"),
+                        drink=Drink(color="green", fill=0, size="S"),
                     )
                 )
             ),
@@ -101,8 +101,8 @@ from backend.models import (
                 data=OrderSubmission(
                     order=Order(
                         burger=Burger(ingredients=["bread", "bread"]),
-                        fry=Fry(),
-                        drink=Drink(color="green", fill=0, ice=True, size="S"),
+                        side=Side(table_state="fries"),
+                        drink=Drink(color="green", fill=0, size="S"),
                     )
                 )
             ),
