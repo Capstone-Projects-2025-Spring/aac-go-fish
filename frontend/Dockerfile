@@ -1,5 +1,5 @@
 # Stage 1: Build the React app
-FROM node:18-alpine AS build
+FROM node:23.11-bookworm-slim@sha256:f2cf744a59dcdd05b354754704a527de9fb0c5d8e924b0fc3628dedc23573c39 AS builder
 WORKDIR /app
 
 # Leverage caching by installing dependencies first
@@ -11,7 +11,7 @@ COPY . ./
 RUN npm run build
 
 # Stage 2: Development environment
-FROM node:18-alpine AS development
+FROM node:23.11-bookworm-slim@sha256:f2cf744a59dcdd05b354754704a527de9fb0c5d8e924b0fc3628dedc23573c39 AS dev
 WORKDIR /app
 
 # Install dependencies again for development
@@ -28,10 +28,10 @@ CMD ["npm", "start"]
 
 
 # Stage 3: Production environment
-FROM nginx:alpine AS production
+FROM nginx:1.27.4-alpine@sha256:4ff102c5d78d254a6f0da062b3cf39eaf07f01eec0927fd21e219d0af8bc0591 AS prod
 
 # Copy the production build artifacts from the build stage
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
 
 # Expose the default NGINX port
 EXPOSE 80
