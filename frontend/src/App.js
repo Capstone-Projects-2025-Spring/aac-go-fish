@@ -26,6 +26,7 @@ const App = () => {
 
     useEffect(() => {
         if (!message) return;
+        console.log(message);
         const data = message.content.data;
         console.log(data);
         switch (data.type) {
