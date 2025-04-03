@@ -22,7 +22,7 @@ const App = () => {
     const [drinkOrder, setDrinkOrder] = useState(null);
     const [score, setScore] = useState(0);
     const { customerImage, setRandomCustomerImage } = useCustomerImages();
-    const { message } = useContext(WebSocketContext);
+    const { message, send } = useContext(WebSocketContext);
 
     useEffect(() => {
         if (!message) return;
@@ -148,6 +148,16 @@ const App = () => {
 
         // Temporarily score function while no scoring in backend
         getScoring({ burger: tempBurger, side: tempSide, drink: employeeDrink })
+
+        // send order to backend
+        send({data: {
+            type: "game_state",
+            game_state_update_type: "order_submission",
+            order: {
+                burger: null,
+                fry: null, // TODO: update to side
+                drink: null
+        }}})
 
         setEmployeeBurger(null);
         setEmployeeSide(null);

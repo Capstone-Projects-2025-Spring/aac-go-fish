@@ -4,10 +4,24 @@ import random
 import threading
 from collections.abc import Iterable
 from queue import Queue
+
 import structlog
 
 from .game_state import Lobby, Player
-from .models import Burger, Chat, Drink, Fry, GameEnd, GameStart, Message, NewOrder, Order, OrderComponent, Role
+from .models import (
+    Burger,
+    Chat,
+    Drink,
+    Fry,
+    GameEnd,
+    GameStart,
+    Message,
+    NewOrder,
+    Order,
+    OrderComponent,
+    OrderSubmission,
+    Role,
+)
 
 logger = structlog.stdlib.get_logger(__file__)
 
@@ -22,9 +36,9 @@ class OrderGenerator:
     """Handle generation of orders."""
 
     def get_orders(self, day: int, num_players: int = 0) -> Iterable[Order]:
-        """Return the orders for the next day"""
+        """Return the orders for the next day."""
         orders = []
-        for order in range(self.orders_on_day(day)):
+        for _ in range(self.orders_on_day(day)):
             orders.append(self._generate_order(num_players))
 
         return orders
@@ -58,7 +72,7 @@ class GameLoop:
     def __init__(self, lobby: Lobby) -> None:
         self.lobby = lobby
         self.day = 0
-        self.num_players=4
+        self.num_players = 4
 
         self.orders = OrderGenerator()
         self.order_queue = Queue()
@@ -79,6 +93,8 @@ class GameLoop:
                     case Chat() as c:
                         self.typing_indicator(c)
                     case OrderComponent() as component:
+                        self.manager.send(Message(data=component))
+                    case OrderSubmission():  # TODO: handle scoring
                         self.handle_next_order()
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
@@ -99,17 +115,19 @@ class GameLoop:
             player.role = role
 
     def handle_next_order(self) -> None:
+        """Executes game functions regarding giving manager next order."""
         if self.order_queue.empty():
             self.handle_new_day()
             for order in self.orders.get_orders(day=self.day, num_players=self.num_players):
                 self.order_queue.put(order)
-        
+
         self.manager.send(Message(data=NewOrder(order=self.order_queue.get())))
         logger.debug("Order sent.")
 
     def handle_new_day(self) -> None:
+        """Executes game functions regarding updating day count."""
         self.day += 1
-        logger.debug("New day.")
+        logger.debug(f"New Day: Day {self.day}")
 
     def typing_indicator(self, msg: Chat) -> None:
         """Send an indicator that the manager is typing."""
