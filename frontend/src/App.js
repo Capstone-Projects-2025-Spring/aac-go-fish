@@ -35,7 +35,7 @@ const App = () => {
                     case "new_order":
                         const burger = data.order.burger?.ingredients ?? [];
                         const drink = data.order.drink ?? null;
-                        const side = data.order.fry ? { tableState: "fries" } : null; // TODO: update when backend sends more sides
+                        const side = data.order.side ?? null; // TODO: update when backend sends more sides
 
                         setBurgerOrder(burger);
                         setDrinkOrder(drink);
@@ -46,6 +46,26 @@ const App = () => {
                 break;
         }
     }, [message]);
+
+    // updates the employee submitted order
+    useEffect(() => {
+        console.log(message);
+        if (!message) return;
+        switch (message.content.data.game_state_update_type) {
+            case "new_order":
+                return;
+            case "order_component":
+                if (message.content.data.component.ingredients) {
+                    setEmployeeBurger(message.content.data.component.ingredients);
+                }
+                else if (message.content.data.component.color) {
+                    setEmployeeDrink(message.content.data.component);
+                }
+                else if (message.content.data.component.table_state) {
+                    setEmployeeSide(message.content.data.component);
+                }
+        }
+    });
 
     useEffect(() => console.log(employeeBurger), [employeeBurger]);
 
@@ -129,23 +149,6 @@ const App = () => {
         console.log(`Score is ${tempScore}`)
         setScore(score + tempScore)
     }
-    useEffect(() => {
-        console.log(message);
-        if (!message) return;
-        switch (message.content.data.game_state_update_type) {
-            case "new_order":
-                return;
-            case "order_component":
-                if (message.content.data.component.ingredients) {
-                    setEmployeeBurger(message.content.data.component.ingredients);
-                }
-                if (message.content.data.component.color) {
-                    setEmployeeDrink(message.content.data.component);
-                }
-
-
-        }
-    });
 
     const handleGiveToCustomer = () => {
         console.log("Manager: Sending order to the customer");
@@ -156,8 +159,8 @@ const App = () => {
             console.log(`Sending burger (${tempBurger})`)
         }
         if (employeeSide) {
-            tempSide = employeeSide.tableState
-            console.log(`Sending side (${employeeSide.tableState})`)
+            tempSide = employeeSide.table_state
+            console.log(`Sending side (${employeeSide.table_state})`)
         }
         if (employeeDrink) {
             console.log(`Sending drink (${employeeDrink})`)
@@ -205,7 +208,7 @@ const App = () => {
                         case "side":
                             return <SideBuilder score={score}/>;
                         case "drink":
-                            return <DrinkBuilder onSend={setEmployeeDrink} score={score}/>;
+                            return <DrinkBuilder score={score}/>;
                     }
                 })()}
             </div>

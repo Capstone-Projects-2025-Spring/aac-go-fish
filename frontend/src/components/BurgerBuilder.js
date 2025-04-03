@@ -3,6 +3,7 @@ import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import {menu} from "../menuItems";
 import { WebSocketContext } from "../WebSocketContext";
+
 const BurgerBuilder = ({ score }) => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);

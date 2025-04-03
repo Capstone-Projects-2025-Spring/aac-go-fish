@@ -10,7 +10,6 @@ from .models import (
     Burger,
     Chat,
     Drink,
-    Fry,
     GameEnd,
     GameStart,
     Message,
@@ -19,6 +18,7 @@ from .models import (
     OrderComponent,
     OrderSubmission,
     Role,
+    Side,
 )
 
 logger = structlog.stdlib.get_logger(__file__)
@@ -26,6 +26,7 @@ logger = structlog.stdlib.get_logger(__file__)
 BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
 DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
 DRINK_SIZES = ["S", "M", "L"]
+SIDE_TYPES = ["Fries", "Onion Rings"]
 
 MESSAGES_PER_LOOP = 5
 
@@ -82,14 +83,14 @@ class GameLoop:
                 ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
             ),
             drink=None,
-            fry=None,
+            side=None,
         )
 
         if len(self.lobby.players) >= 3:
             order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
 
         if len(self.lobby.players) >= 4:
-            order.fry = Fry()
+            order.side = Side(table_state=random.choice(SIDE_TYPES))
 
         return order
 

@@ -11,7 +11,7 @@ class Role(StrEnum):
 
     manager = auto()
     burger = auto()
-    fry = auto()
+    side = auto()
     drink = auto()
 
 
@@ -86,7 +86,7 @@ class OrderComponent(BaseModel):
     type: Literal[MessageKind.game_state] = MessageKind.game_state
     game_state_update_type: Literal[GameStateUpdateKind.order_component] = GameStateUpdateKind.order_component
 
-    component: Burger | Fry | Drink
+    component: Burger | Side | Drink
 
 
 class OrderSubmission(BaseModel):
@@ -103,7 +103,7 @@ class Order(BaseModel):
 
     burger: Burger | None
     drink: Drink | None
-    fry: Fry | None
+    side: Side | None
 
 
 class Burger(BaseModel):
@@ -121,8 +121,10 @@ class Drink(BaseModel):
     size: str
 
 
-class Fry(BaseModel):
-    """A fries."""
+class Side(BaseModel):
+    """A side."""
+
+    table_state: str
 
 
 class DayEnd(BaseModel):

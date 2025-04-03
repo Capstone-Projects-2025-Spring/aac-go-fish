@@ -1,15 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import "./SideBuilder.css"
 import SideDisplay from "./SideDisplay";
+import { WebSocketContext } from "../WebSocketContext";
 
-const SideBuilder = ({
-    onSend,
-    score
- }) =>{
+const SideBuilder = ({ score }) =>{
     const [tableState, setTableState] = useState("empty");
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
     const fryingIntervalRef = useRef(null);
     const [sideType, setSideType] = useState("");
+    const { send } = useContext(WebSocketContext);
 
     const sideTypes = [
         {type: "potatoes", initialState: "potatoes", choppedState: "choppedPotatoes", finalState: "fries"},
@@ -17,10 +16,13 @@ const SideBuilder = ({
     ];
 
     const handleSend = () => {
-        onSend({
-            tableState,
-            fryTimeLeft,
-        });
+        send({data: {
+            type: "game_state",
+            game_state_update_type: "order_component",
+            component: {
+                type: "side",
+                table_state: tableState,
+        }}});
         reset();
     };
 
@@ -44,7 +46,7 @@ const SideBuilder = ({
     const startFrying = (finalState) => {
         setTableState("frying");
         let timeLeft = 5;
-        setFryTimeLeft(timeLeft)
+        setFryTimeLeft(timeLeft);
 
         if (fryingIntervalRef.current){
             clearInterval(fryingIntervalRef.current);

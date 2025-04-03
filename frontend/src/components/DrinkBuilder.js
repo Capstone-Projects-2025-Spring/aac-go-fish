@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
 import { WebSocketContext } from "../WebSocketContext";
+
 const DrinkBuilder = ({ score }) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
