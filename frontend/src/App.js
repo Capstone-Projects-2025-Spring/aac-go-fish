@@ -8,7 +8,6 @@ import AACBoard from "./components/AACBoard";
 import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
 import { WebSocketContext } from "./WebSocketContext";
-import Customer from "./components/Customer";
 
 const App = () => {
     const [selectedRole, setSelectedRole] = useState(Roles.MANAGER);
@@ -39,24 +38,18 @@ const App = () => {
         if (!message) return;
         const data = message.content.data;
 
-        switch (data.type) {
-            case "game_state":
-                if (data.game_state_update_type === "new_order") {
-                    const burger = data.order.burger?.ingredients ?? [];
-                    const drink = data.order.drink ?? null;
-                    const side = data.order.fry ? { tableState: "fries" } : null;
+        if (data.type === "game_state" && data.game_state_update_type === "new_order") {
+            const burger = data.order.burger?.ingredients ?? [];
+            const drink = data.order.drink ?? null;
+            const side = data.order.fry ? { tableState: "fries" } : null;
 
-                    setBurgerOrder(burger);
-                    setDrinkOrder(drink);
-                    setSideOrder(side);
+            setBurgerOrder(burger);
+            setDrinkOrder(drink);
+            setSideOrder(side);
 
-                    const randIndex = Math.floor(Math.random() * customerBaseImages.length);
-                    const randomCustomer = customerBaseImages[randIndex];
-
-                    setBaseCustomerImage(randomCustomer);
-                    setCurrentCustomerImage(randomCustomer);
-                }
-                break;
+            const randomCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
+            setBaseCustomerImage(randomCustomer);
+            setCurrentCustomerImage(randomCustomer);
         }
     }, [message]);
 
@@ -70,19 +63,13 @@ const App = () => {
         }
     }, [baseCustomerImage]);
 
-    const addSelectedItem = (item) => {
-        setSelectedItems((prev) => [...prev, item]);
-    };
-    const removeSelectedItem = (indexToDelete) => {
+    const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
+    const removeSelectedItem = (indexToDelete) =>
         setSelectedItems((prev) => prev.filter((_, idx) => idx !== indexToDelete));
-    };
-    const clearAllSelected = () => {
-        setSelectedItems([]);
-    };
+    const clearAllSelected = () => setSelectedItems([]);
 
     const onPlayAll = async () => {
         if (selectedItems.length === 0) return;
-
         for (const item of selectedItems) {
             if (item.audio) {
                 const audio = new Audio(item.audio);
@@ -100,83 +87,114 @@ const App = () => {
 
         if (burger) {
             tempScore += 3;
-            if (JSON.stringify(burger) === JSON.stringify(burgerOrder)) {
-                tempScore += 2;
-            }
+            if (JSON.stringify(burger) === JSON.stringify(burgerOrder)) tempScore += 2;
         }
+
         if (side) {
             tempScore += 1;
-            if (side === 'fries') {
-                tempScore += 2;
-            }
+            if (side === 'fries') tempScore += 2;
         }
+
         if (drink) {
             tempScore += 2;
             const drinkObj = { color: null, fillPercentage: 100, hasIce: false, cupSize: null };
-            if (JSON.stringify(drink) === JSON.stringify(drinkObj)) {
-                tempScore += 2;
-            }
+            if (JSON.stringify(drink) === JSON.stringify(drinkObj)) tempScore += 2;
         }
 
         setScore(score + tempScore);
     };
 
     const handleGiveToCustomer = () => {
-        const tempBurger = employeeBurger;
-        const tempSide = employeeSide?.tableState;
-        const tempDrink = employeeDrink;
-
-        getScoring({ burger: tempBurger, side: tempSide, drink: tempDrink });
+        getScoring({
+            burger: employeeBurger,
+            side: employeeSide?.tableState,
+            drink: employeeDrink,
+        });
 
         setEmployeeBurger(null);
         setEmployeeSide(null);
         setEmployeeDrink(null);
     };
+    const handleReceiveOrder = () => {
+        console.log("Test button clicked");
+        const burger = [
+
+            {
+                name: "Bottom Bun",
+                sideImage: "/images/bottom_bun_side.png"
+            },
+
+            {
+                name: "Patty",
+                sideImage: "/images/patty_side.png"
+            },
+            {
+                name: "Lettuce",
+                sideImage: "/images/lettuce_side.png"
+            },
+            {
+                name: "Top Bun",
+                sideImage: "/images/top_bun_side.png"
+            },
+        ];
+
+        const side = { tableState: "fries" };
+        const drink = { color: null, fillPercentage: 100, hasIce: false, cupSize: null };
+
+        setBurgerOrder(burger);
+        setDrinkOrder(drink);
+        setSideOrder(side);
+
+        const randomCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
+        setBaseCustomerImage(randomCustomer);
+        setCurrentCustomerImage(randomCustomer);
+    };
+
+
 
     return (
         <div className="app-container">
             <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
-            {(() => {
-                switch (selectedRole) {
-                    case "manager":
-                        return (
-                            <>
-                                <div className="columns">
-                                    <div className="column">
-                                        <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
-                                    </div>
-                                    <div className="column">
-                                        <p className='Score'>Your score is ${score}</p>
-                                        <AACBoard
-                                            selectedItems={selectedItems}
-                                            onSelectItem={addSelectedItem}
-                                            onDeleteItem={removeSelectedItem}
-                                            onClearAll={clearAllSelected}
-                                            onPlayAll={onPlayAll}
-                                            customerImage={currentCustomerImage}
-                                            burgerOrder={burgerOrder}
-                                            drinkOrder={drinkOrder}
-                                            hasSide={!!sideOrder}
-                                            hasIce={false}
-                                            drinkSize={"medium"}
-                                            orderVisible={true}
-                                        />
-                                        <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
-                                        {(employeeBurger || employeeDrink || employeeSide) && (
-                                            <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
-                                        )}
-                                    </div>
-                                </div>
-                            </>
-                        );
-                    case "burger":
-                        return <BurgerBuilder onSend={setEmployeeBurger} score={score} />;
-                    case "side":
-                        return <SideBuilder onSend={setEmployeeSide} score={score} />;
-                    case "drink":
-                        return <DrinkBuilder onSend={setEmployeeDrink} score={score} />;
-                }
-            })()}
+            {selectedRole === "manager" ? (
+                <>
+                    <div className="columns">
+                        <div className="column">
+                            <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
+                        </div>
+                        <div className="column">
+                            <p className='Score'>Your score is ${score}</p>
+                            <AACBoard
+                                selectedItems={selectedItems}
+                                onSelectItem={addSelectedItem}
+                                onDeleteItem={removeSelectedItem}
+                                onClearAll={clearAllSelected}
+                                onPlayAll={onPlayAll}
+                                customerImage={currentCustomerImage}
+                                burgerOrder={burgerOrder}
+                                drinkOrder={drinkOrder}
+                                hasSide={!!sideOrder}
+                                hasIce={false}
+                                drinkSize={"medium"}
+                                orderVisible={true}
+                            />
+                            <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                            <button onClick={handleReceiveOrder} className="receive-order-btn">
+                                Receive Order (Test)
+                            </button>
+                            {(employeeBurger || employeeDrink || employeeSide) && (
+                                <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
+                            )}
+                        </div>
+
+                    </div>
+                </>
+            ) : selectedRole === "burger" ? (
+                <BurgerBuilder onSend={setEmployeeBurger} score={score} />
+            ) : selectedRole === "side" ? (
+                <SideBuilder onSend={setEmployeeSide} score={score} />
+            ) : (
+                <DrinkBuilder onSend={setEmployeeDrink} score={score} />
+            )}
         </div>
     );
 };

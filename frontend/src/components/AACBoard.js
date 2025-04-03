@@ -3,7 +3,6 @@ import "./AACBoard.css";
 import ItemGrid from "./ItemGrid";
 import SelectedItemsDisplay from "./SelectedItemsDisplay";
 import { menu } from "../menuItems";
-import CustomerOrder from "./CustomerOrder";
 
 function AACBoard({
     onItemClick,
@@ -59,14 +58,7 @@ function AACBoard({
                     alt="Customer"
                     className="manager-image"
                 />
-                <CustomerOrder
-                    burgerOrder={burgerOrder}
-                    drinkOrder={drinkOrder}
-                    hasSide={hasSide}
-                    hasIce={hasIce}
-                    drinkSize={drinkSize}
-                    orderVisible={orderVisible}
-                />
+
             </div>
         </div>
     );
