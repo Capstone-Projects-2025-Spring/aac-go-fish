@@ -1,8 +1,13 @@
-.venv
-node_modules
-npm-debug.log
-Dockerfile
-.dockerignore
-.git
-.gitignore
-.env
+# Ignore everything
+*
+
+# ...except what we need
+!/frontend/package.json
+!/frontend/package-lock.json
+!/frontend/public
+!/frontend/src
+!/nginx.conf
+
+!/backend/
+!/pyproject.toml
+!/uv.lock
