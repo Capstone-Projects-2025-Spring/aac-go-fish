@@ -6,7 +6,20 @@ import threading
 import structlog
 
 from .game_state import Lobby, Player
-from .models import Burger, Chat, Drink, Fry, GameEnd, GameStart, Message, NewOrder, Order, OrderComponent, Role
+from .models import (
+    Burger,
+    Chat,
+    Drink,
+    Fry,
+    GameEnd,
+    GameStart,
+    Message,
+    NewOrder,
+    Order,
+    OrderComponent,
+    OrderSubmission,
+    Role,
+)
 
 logger = structlog.stdlib.get_logger(__file__)
 
@@ -40,6 +53,8 @@ class GameLoop:
                     case Chat() as c:
                         self.typing_indicator(c)
                     case OrderComponent() as component:
+                        self.manager.send(Message(data=component))
+                    case OrderSubmission() as component:
                         self.manager.send(Message(data=component))
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
