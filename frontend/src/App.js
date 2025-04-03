@@ -137,7 +137,7 @@ const App = () => {
             // 2 points for submitting any drink, +2 points if correct
             tempScore += 2
 
-            // Test object, fill and ice are hardcoded for now
+            // Test object; fill is hardcoded for now
             const drinkObj = { color: null, fillPercentage: 100, cupSize: null }
             if (JSON.stringify(drink) === JSON.stringify(drinkObj)) {
                 tempScore += 2
