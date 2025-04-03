@@ -60,16 +60,6 @@ const App = () => {
         }
     }, [message]);
 
-    useEffect(() => {
-        if (baseCustomerImage && !baseCustomerImage.includes("_think")) {
-            const timer = setTimeout(() => {
-                const thinkVersion = baseCustomerImage.replace(".png", "_think.png");
-                setCurrentCustomerImage(thinkVersion);
-            }, 2900);
-            return () => clearTimeout(timer);
-        }
-    }, [baseCustomerImage]);
-
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
     const removeSelectedItem = (indexToDelete) =>
         setSelectedItems((prev) => prev.filter((_, idx) => idx !== indexToDelete));
@@ -126,24 +116,11 @@ const App = () => {
         console.log("Test button clicked");
 
         const burger = [
-            {
-                name: "Bottom Bun",
-                sideImage: "/images/bottom_bun_side.png"
-            },
-            {
-                name: "Patty",
-                sideImage: "/images/patty_side.png"
-            },
-            {
-                name: "Lettuce",
-                sideImage: "/images/lettuce_side.png"
-            },
-            {
-                name: "Top Bun",
-                sideImage: "/images/top_bun_side.png"
-            },
+            { name: "Bottom Bun", sideImage: "/images/bottom_bun_side.png" },
+            { name: "Patty", sideImage: "/images/patty_side.png" },
+            { name: "Lettuce", sideImage: "/images/lettuce_side.png" },
+            { name: "Top Bun", sideImage: "/images/top_bun_side.png" },
         ];
-
         const side = { tableState: "fries" };
         const drink = { color: null, fillPercentage: 100, hasIce: false, cupSize: null };
 
@@ -151,21 +128,28 @@ const App = () => {
         setDrinkOrder(drink);
         setSideOrder(side);
 
-
-
-        let newCustomer;
+        let randomCustomer;
         do {
-            newCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
-        } while (newCustomer === baseCustomerImage);
+            randomCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
+        } while (randomCustomer === baseCustomerImage);
 
-        setBaseCustomerImage(newCustomer);
-        setCurrentCustomerImage(newCustomer);
+        setBaseCustomerImage(randomCustomer);
+        setCurrentCustomerImage(randomCustomer);
 
         setOrderVisible(false);
+
+
+        const delay = Math.floor(Math.random() * 2000) + 3000;
+
         setTimeout(() => {
+            const thinkVersion = randomCustomer.replace(".png", "_think.png");
+            setCurrentCustomerImage(thinkVersion);
             setOrderVisible(true);
-        }, 3000);
+            console.log(`Order and thinking bubble visible after ${delay}ms`);
+        }, delay);
     };
+
+
 
 
 
