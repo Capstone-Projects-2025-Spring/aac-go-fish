@@ -16,7 +16,6 @@ from .models import (
     NewOrder,
     Order,
     OrderComponent,
-    OrderSubmission,
     Role,
     Side,
 )
@@ -54,8 +53,6 @@ class GameLoop:
                     case Chat() as c:
                         self.typing_indicator(c)
                     case OrderComponent() as component:
-                        self.manager.send(Message(data=component))
-                    case OrderSubmission() as component:
                         self.manager.send(Message(data=component))
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
