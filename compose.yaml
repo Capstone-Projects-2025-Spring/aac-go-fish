@@ -7,7 +7,7 @@ services:
       additional_contexts:
         metadata: .
     ports:
-      - "127.0.0.1:8000:8000"
+      - "8000:8000"
 
   frontend:
     build:
@@ -17,5 +17,15 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app
+      - ./node_modules:/app/node_modules
+    environment:
+      NODE_ENV: development
+    stdin_open: true
+    tty: true
     depends_on:
       - backend
+    command: npm start
+
+networks:
+  app-network:
+    driver: bridge
