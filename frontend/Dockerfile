@@ -36,6 +36,8 @@ FROM nginx:1.27.4-alpine@sha256:4ff102c5d78d254a6f0da062b3cf39eaf07f01eec0927fd2
 # Copy the production build artifacts from the build stage
 COPY --from=builder /app/build /usr/share/nginx/html
 
+COPY --from=metadata ./nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose the default NGINX port
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

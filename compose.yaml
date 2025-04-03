@@ -13,6 +13,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       target: prod
+      additional_contexts:
+        metadata: .
     ports:
       - "127.0.0.1:80:80"
     volumes:
