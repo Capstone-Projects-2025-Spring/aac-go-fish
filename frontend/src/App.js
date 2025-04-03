@@ -48,6 +48,12 @@ const App = () => {
     }, [message]);
 
     useEffect(() => console.log(employeeBurger), [employeeBurger]);
+    useEffect(() => {
+        console.log(message);
+        if (!message) return;
+        else if (message.content.data.game_state_update_type === "new_order") return;
+        setEmployeeBurger(message.content.data.order.burger.ingredients);
+    });
 
 
     const addSelectedItem = (item) => {
@@ -132,7 +138,6 @@ const App = () => {
     }
     const handleGiveToCustomer = () => {
         console.log("Manager: Sending order to the customer");
-
         let tempBurger = null;
         let tempSide = null;
         if (employeeBurger) {
@@ -185,7 +190,7 @@ const App = () => {
                                 </>
                             );
                         case "burger":
-                            return <BurgerBuilder onSend={setEmployeeBurger} score={score}/>;
+                            return <BurgerBuilder score={score}/>;
                         case "side":
                             return <SideBuilder onSend={setEmployeeSide} score={score}/>;
                         case "drink":

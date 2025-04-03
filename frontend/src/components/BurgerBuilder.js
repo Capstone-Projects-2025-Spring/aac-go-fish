@@ -3,7 +3,7 @@ import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import {menu} from "../menuItems";
 import { WebSocketContext } from "../WebSocketContext";
-const BurgerBuilder = ({ onSend, score }) => {
+const BurgerBuilder = ({ score }) => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);
 
@@ -11,8 +11,6 @@ const BurgerBuilder = ({ onSend, score }) => {
 
     const handleSend = () => {
         const employeeOrder = ingredients.map(ingredient => ingredient.name);
-        onSend(employeeOrder);
-        console.log(ingredients);
         send({data: {
             type: "game_state",
             game_state_update_type: "order_submission",
