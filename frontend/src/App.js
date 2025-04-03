@@ -138,7 +138,7 @@ const App = () => {
             tempScore += 2
 
             // Test object, fill and ice are hardcoded for now
-            const drinkObj = { color: null, fillPercentage: 100, hasIce: false, cupSize: null }
+            const drinkObj = { color: null, fillPercentage: 100, cupSize: null }
             if (JSON.stringify(drink) === JSON.stringify(drinkObj)) {
                 tempScore += 2
                 console.log(`Manager: Drink order is correct`)

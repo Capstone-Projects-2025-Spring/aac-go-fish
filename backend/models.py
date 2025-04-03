@@ -117,7 +117,6 @@ class Drink(BaseModel):
 
     color: str
     fill: float
-    ice: bool
     size: str
 
 

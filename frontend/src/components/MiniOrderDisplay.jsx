@@ -14,7 +14,7 @@ export default function MiniOrderDisplay({ burger, side, drink }) {
         <div className="mini-order-display">
             {isBurger && (<BurgerDisplay imagePaths={burger.map(ingredient => menuMap.Burger[ingredient].sideImage)}/>)}
             {isSide && (<SideDisplay tableState={side.table_state}/>)}
-            {isDrink && (<DrinkDisplay color={drink.color} hasIce={drink.ice} fillPercentage={drink.fill}
+            {isDrink && (<DrinkDisplay color={drink.color} fillPercentage={drink.fill}
             cupSize={drink.cupSize}/>)}
         </div>
         </>

@@ -7,7 +7,6 @@ const DrinkBuilder = ({ score }) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
-    const [hasIce, setHasIce] = useState(false);
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
     const drinkColors = [
@@ -68,7 +67,6 @@ const DrinkBuilder = ({ score }) =>{
                 type: "drink",
                 color: color,
                 fill: fillPercentage,
-                ice: hasIce,
                 size: cupSize,
             }
         }});

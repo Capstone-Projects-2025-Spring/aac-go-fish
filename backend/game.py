@@ -87,7 +87,7 @@ class GameLoop:
         )
 
         if len(self.lobby.players) >= 3:
-            order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
+            order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, size=random.choice(DRINK_SIZES))
 
         if len(self.lobby.players) >= 4:
             order.side = Side(table_state=random.choice(SIDE_TYPES))
