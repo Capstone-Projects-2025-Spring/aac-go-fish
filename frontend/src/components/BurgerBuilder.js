@@ -16,7 +16,6 @@ const BurgerBuilder = ({ score }) => {
             type: "game_state",
             game_state_update_type: "order_component",
             component: {
-                type: "burger",
                 ingredients: employeeOrder,
         }}});
         clearPlate();

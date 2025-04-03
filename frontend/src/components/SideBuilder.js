@@ -20,7 +20,6 @@ const SideBuilder = ({ score }) =>{
             type: "game_state",
             game_state_update_type: "order_component",
             component: {
-                type: "side",
                 table_state: tableState,
         }}});
         reset();
