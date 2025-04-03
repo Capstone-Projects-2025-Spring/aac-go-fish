@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# ...except what we need
+!/package.json
+!/package-lock.json
+!/public
+!/src
+
+!/nginx.conf

@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
       additional_contexts:
         metadata: .
+    tty: true
     command: ["fastapi", "run", "./hello.py", "--root-path", "/api"]
 
   frontend:
