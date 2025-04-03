@@ -1,11 +1,11 @@
 .mini-order-display {
     position: fixed;
-    bottom: 150px;
-    right: 430px;
+    bottom: 640px;
+    right: 650px;
     display: flex;
     align-items: center;
     gap: 20px;
-    z-index: 999;
+    z-index: 1001;
     transform: scale(0.7);
 
     >* {

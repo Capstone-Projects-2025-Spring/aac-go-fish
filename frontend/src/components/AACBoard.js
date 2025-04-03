@@ -56,10 +56,10 @@ function AACBoard({
                 <img
                     src={customerImage ?? "/images/customers/empty.png"}
                     alt="Customer"
-                    className="manager-image"
+                    className="manager-image top-left-customer"
                 />
-
             </div>
+
         </div>
     );
 }

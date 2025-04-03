@@ -22,8 +22,6 @@
         height: 2.5rem;
         object-fit: contain;
     }
-
-    margin-top: -50px;
 }
 
 .selected-item-delete {
@@ -39,8 +37,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 0.5rem;
-    max-width: 100%;
-    margin-bottom: -20px;
 }
 
 .aacboard-item-btn {
@@ -63,32 +59,11 @@
 }
 
 .manager-image {
-    margin-top: 50px;
-    width: 80%;
-    display: block;
-}
-
-.AACBoardContainer {
-    position: relative;
+    position: fixed;
+    top: 20px;
+    left: 20px;
     width: 700px;
-    min-height: 500px;
-}
+    height: auto;
+    z-index: 1000;
 
-
-.CustomerOrder {
-    position: absolute;
-    top: 120px;
-    left: 1800px;
-    z-index: 10;
-    transform: scale(0.75);
-}
-
-.AACBoardContainer {
-    margin-top: 1rem;
-    position: relative;
-}
-
-.imageAndOrder {
-    display: inline-block;
-    position: relative;
 }

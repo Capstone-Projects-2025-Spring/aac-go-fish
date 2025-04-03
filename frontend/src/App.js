@@ -19,6 +19,8 @@ const App = () => {
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [sideOrder, setSideOrder] = useState(null);
     const [drinkOrder, setDrinkOrder] = useState(null);
+    const [orderVisible, setOrderVisible] = useState(false);
+
 
     const [baseCustomerImage, setBaseCustomerImage] = useState("/images/customers/empty.png");
     const [currentCustomerImage, setCurrentCustomerImage] = useState("/images/customers/empty.png");
@@ -50,6 +52,11 @@ const App = () => {
             const randomCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
             setBaseCustomerImage(randomCustomer);
             setCurrentCustomerImage(randomCustomer);
+
+            setOrderVisible(false);
+            setTimeout(() => {
+                setOrderVisible(true);
+            }, 3000);
         }
     }, [message]);
 
@@ -117,13 +124,12 @@ const App = () => {
     };
     const handleReceiveOrder = () => {
         console.log("Test button clicked");
-        const burger = [
 
+        const burger = [
             {
                 name: "Bottom Bun",
                 sideImage: "/images/bottom_bun_side.png"
             },
-
             {
                 name: "Patty",
                 sideImage: "/images/patty_side.png"
@@ -145,10 +151,22 @@ const App = () => {
         setDrinkOrder(drink);
         setSideOrder(side);
 
-        const randomCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
-        setBaseCustomerImage(randomCustomer);
-        setCurrentCustomerImage(randomCustomer);
+
+
+        let newCustomer;
+        do {
+            newCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
+        } while (newCustomer === baseCustomerImage);
+
+        setBaseCustomerImage(newCustomer);
+        setCurrentCustomerImage(newCustomer);
+
+        setOrderVisible(false);
+        setTimeout(() => {
+            setOrderVisible(true);
+        }, 3000);
     };
+
 
 
 
@@ -159,8 +177,9 @@ const App = () => {
                 <>
                     <div className="columns">
                         <div className="column">
-                            <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
-                        </div>
+                            {orderVisible && (
+                                <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
+                            )}                        </div>
                         <div className="column">
                             <p className='Score'>Your score is ${score}</p>
                             <AACBoard
@@ -175,7 +194,8 @@ const App = () => {
                                 hasSide={!!sideOrder}
                                 hasIce={false}
                                 drinkSize={"medium"}
-                                orderVisible={true}
+                                orderVisible={orderVisible}
+
                             />
                             <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
                             <button onClick={handleReceiveOrder} className="receive-order-btn">
