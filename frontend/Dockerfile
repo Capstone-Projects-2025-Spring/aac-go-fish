@@ -2,6 +2,9 @@
 FROM node:23.11-bookworm-slim@sha256:f2cf744a59dcdd05b354754704a527de9fb0c5d8e924b0fc3628dedc23573c39 AS builder
 WORKDIR /app
 
+ARG REACT_APP_BACKEND_DOMAIN
+ENV REACT_APP_BACKEND_DOMAIN localhost/api
+
 # Leverage caching by installing dependencies first
 COPY package.json package-lock.json ./
 RUN npm install --frozen-lockfile
