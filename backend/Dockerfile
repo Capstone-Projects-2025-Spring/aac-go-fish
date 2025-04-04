@@ -24,4 +24,5 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 WORKDIR /app
 
+ENV env=demo
 CMD ["fastapi", "run", "./hello.py"]
