@@ -10,9 +10,8 @@ from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocke
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn.protocols.utils import get_path_with_query_string
 
-from backend.game_state import TaggedMessage
-
 from .dependencies import Channel, LobbyManager, lobby_manager, settings
+from .game_state import TaggedMessage
 from .logging_config import setup_logging
 from .models import Annotated, Initializer, Message
 

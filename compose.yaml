@@ -1,26 +1,23 @@
 ---
 services:
   backend:
-    build:
-      context: backend
-      dockerfile: Dockerfile
-      additional_contexts:
-        metadata: .
+    image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-backend:main
     tty: true
     command: ["fastapi", "run", "./hello.py", "--root-path", "/api"]
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      target: prod
-      additional_contexts:
-        metadata: .
-    ports:
-      - "127.0.0.1:80:80"
-    volumes:
-      - ./frontend:/app
-      - ./node_modules:/app/node_modules
+    image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-frontend:main
     tty: true
     depends_on:
       - backend
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    profiles: ["prod"]
+    environment:
+      # 1 minute
+      WATCHTOWER_POLL_INTERVAL: 60
+      # clean up old image
+      WATCHTOWER_CLEANUP: true
