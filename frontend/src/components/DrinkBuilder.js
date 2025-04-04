@@ -11,6 +11,7 @@ const DrinkBuilder = ({ onSend }) =>{
     const [cupSize, setCupSize] = useState("medium");
     const [confirmMessage, setConfirmMessage] = useState("");
     const [cupPlaced, setCupPlaced] = useState(false);
+    const [cupPosition, setCupPosition] = useState(0);
     const drinkColors = [
         {name: "Blue", color: "#34C6F4"},
         {name: "Green", color: "#99CA3C"},
@@ -56,6 +57,7 @@ const DrinkBuilder = ({ onSend }) =>{
         setFillPercentage(0);
         setColorSelected(false);
         setCupPlaced(false);
+        setCupPosition(0);
     };
 
     const handleSend = () => {
@@ -99,7 +101,10 @@ const DrinkBuilder = ({ onSend }) =>{
                 {drinkColors.map((choice, index) => (
                     <button
                         key={index}
-                        onClick={() => selectColor(choice.color)}
+                        onClick={() => {
+                            selectColor(choice.color);
+                            setCupPosition(-300 + index * 125);
+                        }}
                         style={{
                             backgroundColor: choice.color,
                             color: "#FFFFFF",
@@ -137,8 +142,7 @@ const DrinkBuilder = ({ onSend }) =>{
                     </button>
                 </div>
                 <div className="DrinkDisplayContainer">
-                    <img src="/images/Dispenser.png" alt="Dispenser" className="DispenserImage"/>
-                    {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}/>}
+                    {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize} cupPosition={cupPosition}/>}
                 </div>
                 <div className="ActionButtonsContainer">
                 <button className="ClearCupButton" onClick={clearCup}>
