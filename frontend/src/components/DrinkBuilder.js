@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import "./DrinkBuilder.css";
 import DrinkDisplay from "./DrinkDisplay";
+import { playSendSound } from "./playSendSound";
+
 const DrinkBuilder = ({
     onSend,
     score
@@ -83,6 +85,7 @@ const DrinkBuilder = ({
             cupSize,
         });
         clearCup();
+        playSendSound();
         setConfirmMessage("Drink sent to manager!");
         setTimeout(() => {
             setConfirmMessage("");
