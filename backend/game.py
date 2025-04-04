@@ -32,51 +32,15 @@ DRINK_SIZES = ["S", "M", "L"]
 MESSAGES_PER_LOOP = 5
 
 
-class OrderGenerator:
-    """Handle generation of orders."""
-
-    def __init__(self, num_players: int = 0) -> None:
-        """Initializes OrderGenerator."""
-        self.queue = Queue()
-        self.num_players = num_players
-
-    def get_orders(self, day: int) -> None:
-        """Fills a queue with orders for the next day."""
-        for _ in range(self._orders_on_day(day)):
-            self.queue.put(self._generate_order())
-
-    def _orders_on_day(self, day: int) -> int:
-        """Compute the number of orders on a given day."""
-        return day * 2 + 1
-
-    def _generate_order(self) -> Order:
-        """Generate an order based on the number of players."""
-        order = Order(
-            burger=Burger(
-                ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
-            ),
-            drink=None,
-            fry=None,
-        )
-
-        if self.num_players >= 3:
-            order.fry = Fry()
-
-        if self.num_players >= 4:
-            order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
-
-        return order
-
-
 class GameLoop:
     """Implements game logic."""
 
     def __init__(self, lobby: Lobby) -> None:
         self.lobby = lobby
-        self.day = 0
+        self.day = 1
         self.num_players = 4
 
-        self.orders = OrderGenerator(num_players=self.num_players)
+        self.orders = get_orders(day=self.day, num_players=self.num_players)
 
     def run(self) -> None:
         """
@@ -95,7 +59,7 @@ class GameLoop:
                         self.typing_indicator(c)
                     case OrderComponent() as component:
                         self.manager.send(Message(data=component))
-                    case OrderSubmission():  # TODO: handle scoring
+                    case OrderSubmission():
                         self.handle_next_order()
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
@@ -116,25 +80,18 @@ class GameLoop:
             player.role = role
 
     def handle_next_order(self) -> None:
-        """Executes game functions regarding giving manager next order."""
-        if self.orders.queue.empty():
-            """
-            When the order queue is empty trigger a new day.
-
-            Day count updated after order generated to offset by 1.
-
-            Day count in frontend starts at 1 rather than 0.
-            """
-            self.orders.get_orders(day=self.day)
+        """Give manager next order."""
+        if self.orders.empty():
             self.handle_new_day()
+            self.orders = get_orders(day=self.day, num_players=self.num_players)
 
-        self.manager.send(Message(data=NewOrder(order=self.orders.queue.get())))
+        self.manager.send(Message(data=NewOrder(order=self.orders.get())))
         logger.debug("Order sent.")
 
     def handle_new_day(self) -> None:
         """Executes game functions regarding updating day count."""
         self.day += 1
-        logger.debug(f"New Day: Day {self.day}")
+        logger.debug("New day.")
         self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
     def typing_indicator(self, msg: Chat) -> None:
@@ -151,3 +108,35 @@ def start_main_loop(lobby: Lobby) -> None:
     """Start the main game loop."""
     loop = GameLoop(lobby)
     threading.Thread(target=loop.run).start()
+
+
+def get_orders(day: int, num_players: int) -> Queue[Order]:
+    """Return a queue of orders for the next day."""
+    orders = Queue()
+    for _ in range(_orders_on_day(day)):
+        orders.put(_generate_order(num_players))
+    return orders
+
+
+def _orders_on_day(day: int) -> int:
+    """Compute the number of orders on a given day."""
+    return day * 2 - 1
+
+
+def _generate_order(num_players: int) -> Order:
+    """Generate an order based on the number of players."""
+    order = Order(
+        burger=Burger(
+            ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
+        ),
+        drink=None,
+        fry=None,
+    )
+
+    if num_players >= 3:
+        order.fry = Fry()
+
+    if num_players >= 4:
+        order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
+
+    return order
