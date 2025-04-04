@@ -28,7 +28,6 @@ const App = () => {
         if (!message) return;
         console.log(message);
         const data = message.content.data;
-        console.log(data);
         switch (data.type) {
             case "game_state":
                 switch (data.game_state_update_type) {
@@ -43,14 +42,19 @@ const App = () => {
                         setRandomCustomerImage();
                         break;
                     case "order_component":
-                        if (message.content.data.component.ingredients) {
-                            setEmployeeBurger(message.content.data.component.ingredients);
-                        }
-                        else if (message.content.data.component.color) {
-                            setEmployeeDrink(message.content.data.component);
-                        }
-                        else if (message.content.data.component.table_state) {
-                            setEmployeeSide(message.content.data.component);
+                        switch(data.component_type) {
+                            case "burger":
+                                console.log("burger");
+                                setEmployeeBurger(message.content.data.component.ingredients);
+                                break;
+                            case "drink":
+                                console.log("drink");
+                                setEmployeeDrink(message.content.data.component);
+                                break;
+                            case "side":
+                                console.log("side");
+                                setEmployeeSide(message.content.data.component);
+                                break;
                         }
                 }
                 break;

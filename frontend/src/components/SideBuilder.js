@@ -19,6 +19,7 @@ const SideBuilder = ({ score }) =>{
         send({data: {
             type: "game_state",
             game_state_update_type: "order_component",
+            component_type: "side",
             component: {
                 table_state: tableState,
         }}});

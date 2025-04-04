@@ -86,6 +86,7 @@ class OrderComponent(BaseModel):
     type: Literal[MessageKind.game_state] = MessageKind.game_state
     game_state_update_type: Literal[GameStateUpdateKind.order_component] = GameStateUpdateKind.order_component
 
+    component_type: str
     component: Burger | Side | Drink
 
 
