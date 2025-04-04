@@ -160,33 +160,35 @@ const App = () => {
                             <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
                         )}                        </div>
                     <div className="column">
+                        <p className='Score'>Your score is ${score}</p>
+                        <img
+                            src={currentCustomerImage ?? "/images/customers/empty.png"}
+                            alt="Customer"
+                            className="manager-image top-left-customer"
+                        />
 
-                        <div className="column">
-                            <p className='Score'>Your score is ${score}</p>
-                            <AACBoard
-                                selectedItems={selectedItems}
-                                onSelectItem={addSelectedItem}
-                                onDeleteItem={removeSelectedItem}
-                                onClearAll={clearAllSelected}
-                                onPlayAll={onPlayAll}
-                                customerImage={currentCustomerImage}
-                                burgerOrder={burgerOrder}
-                                drinkOrder={drinkOrder}
-                                hasSide={!!sideOrder}
-                                hasIce={false}
-                                drinkSize={"medium"}
-                                orderVisible={orderVisible}
-
-                            />
-
-                            {(employeeBurger || employeeDrink || employeeSide) && (
-                                <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
-                            )}
-                        </div>
+                        <AACBoard
+                            selectedItems={selectedItems}
+                            onSelectItem={addSelectedItem}
+                            onDeleteItem={removeSelectedItem}
+                            onClearAll={clearAllSelected}
+                            onPlayAll={onPlayAll}
+                            customerImage={currentCustomerImage}
+                            burgerOrder={burgerOrder}
+                            drinkOrder={drinkOrder}
+                            hasSide={!!sideOrder}
+                            hasIce={false}
+                            drinkSize={"medium"}
+                            orderVisible={orderVisible}
+                        />
+                        {(employeeBurger || employeeDrink || employeeSide) && (
+                            <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
+                        )}
                         <button onClick={handleReceiveOrder} className="receive-order-btn">
                             Receive Order (Test)
                         </button>
                     </div>
+
                 </>
             ) : selectedRole === "burger" ? (
                 <BurgerBuilder onSend={setEmployeeBurger} score={score} />
