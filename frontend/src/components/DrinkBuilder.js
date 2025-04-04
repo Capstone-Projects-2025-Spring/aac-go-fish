@@ -137,10 +137,11 @@ const DrinkBuilder = ({ onSend }) =>{
                     </button>
                 </div>
                 <div className="DrinkDisplayContainer">
+                    <img src="/images/Dispenser.png" alt="Dispenser" className="DispenserImage"/>
                     {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}/>}
                 </div>
                 <div className="ActionButtonsContainer">
-                    <button className="ClearCupButton" onClick={clearCup}>
+                <button className="ClearCupButton" onClick={clearCup}>
                         <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
                     </button>
                     <button className="FillCupButton"
