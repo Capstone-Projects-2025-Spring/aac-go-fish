@@ -81,19 +81,21 @@ sidebar_position: 4
     - Wait for the fries to cook before serving.  
 
 
-#### Scoring System  
+#### Scoring System
 
-- **Base Pricing for Each Item:**  
-  - Burger: **$3**  
-  - Drink: **$2**  
-  - Side: **$1**  
+- **Base Pricing for Each Item:**
+  - Burger: **$3**
+  - Side: **$1**
+  - Drink: **$2**
 - **Bonus Score for Correctness**
-  - Additional **$2** per correct item
-- **Tip Bonus:**  
-  - 0% to 25% based on completion speed.  
+  - Burger: Up to **$2** depending on the similarity between the submitted burger and the ordered burger.
+  - Side: **$2**.
+  - Drink: Up to **$2** depending on the similarity between the submitted drink and the ordered drink.
+- **Tip Bonus:**
+  - 0% to 25% based on completion speed.
 - **Customer Patience Indicator:**  
-  - Displays remaining patience to help gauge the tip amount.  
-  - Faster service results in higher tips.  
+  - Displays remaining patience to help gauge the tip amount.
+  - Faster service results in higher tips.
 
 ## Non-Functional
 - The system must integrate AAC communication seamlessly and ensure it is easy to use.  

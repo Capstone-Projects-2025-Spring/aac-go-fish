@@ -1,66 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
-import { mockBurgerOrders, mockDrinkOrders } from "./MockOrders"
-import RoleSelector from "./components/RoleSelector";
+import RoleSelector, {Roles} from "./components/RoleSelector";
 import AACBoard from "./components/AACBoard";
-import CustomerOrder from "./components/CustomerOrder";
 import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
+import { WebSocketContext } from "./WebSocketContext";
+import { useCustomerImages } from "./useCustomerImages";
+import Customer from "./components/Customer";
 
 const App = () => {
-    const [messages, setMessages] = useState([]);
-    const [selectedRole, setSelectedRole] = useState(null);
+    const [selectedRole, setSelectedRole] = useState(Roles.MANAGER);
     const [selectedItems, setSelectedItems] = useState([]);
-    const [burger, setBurger] = useState(null);
-    const [side, setSide] = useState(null);
-    const [drink, setDrink] = useState(null);
-
-    const [actionLog, setActionLog] = useState([]);
-    const isManager = true;
-
-    const [orderVisible, setOrderVisible] = useState(false)
-
+    const [employeeBurger, setEmployeeBurger] = useState(null);
+    const [employeeSide, setEmployeeSide] = useState(null);
+    const [employeeDrink, setEmployeeDrink] = useState(null);
     const [burgerOrder, setBurgerOrder] = useState([]);
-    const [drinkOrder, setDrinkOrder] = useState([]);
-
-    //// Temporarily not used until ice is fully implemented in the drink station
-    const [orderHasIce, setOrderHasIce] = useState(false);
-    const [drinkSize, setDrinkSize] = useState('medium');
-
-    const [score, setScore] = useState(0)
-
-    const [layers, setLayers] = useState([]);
-    const maxSize = 9;
-
-    const [hasSide, setHasSide] = useState(false);
-    const customerImages = [
-        "/images/customers/customer1.png",
-        "/images/customers/customer2.png",
-        "/images/customers/customer3.png",
-        "/images/customers/customer4.png",
-        "/images/customers/customer5.png",
-
-    ];
-    const [customerImage, setCustomerImage] = useState("/images/customers/empty.png");
-
+    const [sideOrder, setSideOrder] = useState(null);
+    const [drinkOrder, setDrinkOrder] = useState(null);
+    const [score, setScore] = useState(0);
+    const { customerImage, setRandomCustomerImage } = useCustomerImages();
+    const { message } = useContext(WebSocketContext);
 
     useEffect(() => {
-        const socket = new WebSocket("ws://localhost:8000/ws");
-        addMessage("Attempting to connect to WebSocket...");
+        if (!message) return;
+        const data = message.content.data;
+        console.log(data);
+        switch (data.type) {
+            case "game_state":
+                switch (data.game_state_update_type) {
+                    case "new_order":
+                        const burger = data.order.burger?.ingredients ?? [];
+                        const drink = data.order.drink ?? null;
+                        const side = data.order.fry ? { tableState: "fries" } : null; // TODO: update when backend sends more sides
 
-        socket.onopen = () => addMessage("Connected to WebSocket");
-        socket.onmessage = (event) => addMessage(event.data);
-        socket.onclose = () => addMessage("WebSocket closed");
+                        setBurgerOrder(burger);
+                        setDrinkOrder(drink);
+                        setSideOrder(side);
+                        setRandomCustomerImage();
+                        break;
+                }
+                break;
+        }
+    }, [message]);
 
-        return () => socket.close();
-    }, []);
+    useEffect(() => console.log(employeeBurger), [employeeBurger]);
 
-    const addMessage = (msg) => {
-        setMessages((prev) => [...prev, msg]);
-    };
 
     const addSelectedItem = (item) => {
         setSelectedItems((prev) => [...prev, item]);
@@ -74,12 +61,12 @@ const App = () => {
     };
     const onPlayAll = async () => {
         if (selectedItems.length === 0) {
-            addMessage("Manager: No phrase to play!")
+            console.log("Manager: No phrase to play!")
             return;
         }
 
         const names = selectedItems.map((item) => item.name).join(", ");
-        addMessage(`Manager: Playing phrase: ${names}`);
+        console.log(`Manager: Playing phrase: ${names}`);
 
         for (const item of selectedItems) {
             if (item.audio) {
@@ -87,51 +74,43 @@ const App = () => {
                 await new Promise((resolve) => {
                     audio.play()
                         .then(() => {
-                            addMessage(`Manager: Playing ${item.audio}`);
+                            console.log(`Manager: Playing ${item.audio}`);
                             audio.onended = resolve;
                         }, () => {
-                            addMessage(`Manager: Failed to play ${item.audio} (Does the file exist?)`);
+                            console.log(`Manager: Failed to play ${item.audio} (Does the file exist?)`);
                             resolve();
                         })
                 });
             }
         }
 
-        addMessage("Manager: Played phrase!");
+        console.log("Manager: Played phrase!");
     };
-    const handleReceiveOrder = () => {
-        setOrderVisible(true);
-        getBurgerOrder();
-        getDrinkOrder();
-        getSideOrder();
-        const randomIndex = Math.floor(Math.random() * customerImages.length);
-        const randomCustomer = customerImages[randomIndex];
-        setCustomerImage(randomCustomer);
-        console.log("Random customer selected:", randomCustomer);
-        addMessage("Manager: Receiving the order...");
-    };
+
     const getScoring = ({ burger, side, drink }) => {
         // Temporarily scoring function while no scoring in backend
-        var tempScore = 0
+        let tempScore = 0
 
         if (burger) {
             // 3 points for submitting any burger, +2 points if correct
             tempScore += 3
+            console.log(employeeBurger);
+            console.log(burgerOrder);
             if (JSON.stringify(burger) === JSON.stringify(burgerOrder)) {
                 tempScore += 2
-                addMessage(`Manager: Burger order is correct`)
+                console.log(`Manager: Burger order is correct`)
             } else {
-                addMessage(`Manager: Burger order is incorrect`)
+                console.log(`Manager: Burger order is incorrect`)
             }
         }
         if (side) {
             // 1 point for submitting any side, +2 points if correct
             tempScore += 1
-            if (hasSide && side === 'fries') {
+            if (side === 'fries') {
                 tempScore += 2
-                addMessage(`Manager: Side order is correct`)
+                console.log(`Manager: Side order is correct`)
             } else {
-                addMessage(`Manager: Side order is incorrect`)
+                console.log(`Manager: Side order is incorrect`)
             }
         }
         if (drink) {
@@ -139,154 +118,80 @@ const App = () => {
             tempScore += 2
 
             // Test object, fill and ice are hardcoded for now
-            const drinkObj = { color: drinkOrder[1], fillPercentage: 100, hasIce: false, cupSize: drinkSize }
+            const drinkObj = { color: null, fillPercentage: 100, hasIce: false, cupSize: null }
             if (JSON.stringify(drink) === JSON.stringify(drinkObj)) {
                 tempScore += 2
-                addMessage(`Manager: Drink order is correct`)
+                console.log(`Manager: Drink order is correct`)
             } else {
-                addMessage(`Manager: Drink order is incorrect`)
+                console.log(`Manager: Drink order is incorrect`)
             }
         }
-        addMessage(`Score is ${tempScore}`)
+        console.log(`Score is ${tempScore}`)
         setScore(score + tempScore)
     }
     const handleGiveToCustomer = () => {
-        addMessage("Manager: Sending order to the customer");
+        console.log("Manager: Sending order to the customer");
 
-        var tempBurger = null
-        var tempSide = null
-        if (burger) {
-            tempBurger = burger.map((ingredient) => ingredient.name)
-            addMessage(`Sending burger (${JSON.stringify(tempBurger)})`)
+        let tempBurger = null;
+        let tempSide = null;
+        if (employeeBurger) {
+            tempBurger = employeeBurger;
+            console.log(`Sending burger (${tempBurger})`)
         }
-        if (side) {
-            tempSide = side.tableState
-            addMessage(`Sending side (${side.tableState})`)
+        if (employeeSide) {
+            tempSide = employeeSide.tableState
+            console.log(`Sending side (${employeeSide.tableState})`)
         }
-        if (drink) {
-            addMessage(`Sending drink (${JSON.stringify(drink)})`)
+        if (employeeDrink) {
+            console.log(`Sending drink (${employeeDrink})`)
         }
 
         // Temporarily score function while no scoring in backend
-        getScoring({ burger: tempBurger, side: tempSide, drink: drink })
+        getScoring({ burger: tempBurger, side: tempSide, drink: employeeDrink })
 
-        setBurger(null);
-        setSide(null);
-        setDrink(null);
-    };
-
-    const getRandomNumber = (min, max) => {
-        return Math.floor(Math.random() * (max + 1 - min) + min);
-    };
-
-    const getBurgerOrder = () => {
-        console.log('Button clicked!');
-
-
-        const randomIndex = getRandomNumber(0, 2);
-        setBurgerOrder(mockBurgerOrders[randomIndex]);
-    };
-    const getDrinkOrder = () => {
-        console.log('Button clicked!');
-
-        const randomIndex = getRandomNumber(0, 5);
-        setDrinkOrder(mockDrinkOrders[randomIndex]);
-
-        const sizes = ['small', 'medium', 'large']
-        const randomSize = getRandomNumber(0, 2);
-        setDrinkSize(sizes[randomSize]);
-        console.log(drinkSize);
-
-        // Temporarily not used until ice is fully implemented in the drink station
-        const randomIce = getRandomNumber(0, 2);
-        if (randomIce) {
-            setOrderHasIce(!orderHasIce);
-        }
-    };
-    const getSideOrder = () => {
-        const randomSide = getRandomNumber(0, 1);
-
-        if (randomSide) {
-            setHasSide(!hasSide);
-        }
-    };
-
-    const addLayer = (layer) => {
-        if (layers.length <= maxSize) {
-            setLayers([...layers, layer]);
-        }
+        setEmployeeBurger(null);
+        setEmployeeSide(null);
+        setEmployeeDrink(null);
     };
 
     return (
-        <div className="app-container">
-
-            <div className="main-layout">
-                <div className="sidebar">
-                    <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
-                    <h3>Event Log</h3>
-                    <div className="event-log">
-                        {messages.map((msg, idx) => (
-                            <div key={idx}>{msg}</div>
-                        ))}
-                    </div>
-                </div>
-                <div className="main-layout">
-                    <div className="stations">
-                        {(() => {
-                            switch (selectedRole) {
-                                case "manager":
-                                    return (
-                                        <>
-                                            <div className="columns">
-                                                <div className="column">
-                                                    Your score is ${score}
-                                                    <AACBoard
-                                                        selectedItems={selectedItems}
-                                                        onSelectItem={addSelectedItem}
-                                                        onDeleteItem={removeSelectedItem}
-                                                        onClearAll={clearAllSelected}
-                                                        onPlayAll={onPlayAll}
-                                                        customerImage={customerImage}
-                                                    />
-                                                </div>
-                                                <div className="column">
-                                                    <CustomerOrder
-                                                        burgerOrder={burgerOrder}
-                                                        drinkOrder={drinkOrder}
-                                                        hasIce={orderHasIce}
-                                                        hasSide={hasSide}
-                                                        drinkSize={drinkSize}
-                                                        orderVisible={orderVisible}
-
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="columns">
-                                                <div className="column">
-                                                    <ManagerActions
-                                                        onReceiveOrder={handleReceiveOrder}
-                                                        onGiveToCustomer={handleGiveToCustomer}
-                                                    />
-                                                </div>
-                                                <div className="column">
-                                                    <MiniOrderDisplay burger={burger} side={side} drink={drink} />
-                                                </div>
-                                            </div>
-                                        </>
-                                    );
-                                case "burger":
-                                    return <BurgerBuilder onSend={setBurger} />;
-                                case "side":
-                                    return <SideBuilder onSend={setSide} />;
-                                case "drink":
-                                    return <DrinkBuilder onSend={setDrink} />;
-                            }
-                        })()}
-                    </div>
-                </div>
-
+            <div className="app-container">
+                <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
+                {(() => {
+                    switch (selectedRole) {
+                        case "manager":
+                            return (
+                                <>
+                                    <div className="columns">
+                                        <div className="column">
+                                            <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder}/>
+                                            <Customer customerImage={customerImage} />
+                                        </div>
+                                        <div className="column">
+                                            <p className='Score'>Your score is ${score}</p>
+                                            <AACBoard
+                                                selectedItems={selectedItems}
+                                                onSelectItem={addSelectedItem}
+                                                onDeleteItem={removeSelectedItem}
+                                                onClearAll={clearAllSelected}
+                                                onPlayAll={onPlayAll}
+                                                customerImage={customerImage}
+                                            />
+                                            <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                                            {(employeeBurger || employeeDrink || employeeSide) && (<ManagerActions onGiveToCustomer={handleGiveToCustomer}/>)}
+                                        </div>
+                                    </div>
+                                </>
+                            );
+                        case "burger":
+                            return <BurgerBuilder onSend={setEmployeeBurger} score={score}/>;
+                        case "side":
+                            return <SideBuilder onSend={setEmployeeSide} score={score}/>;
+                        case "drink":
+                            return <DrinkBuilder onSend={setEmployeeDrink} score={score}/>;
+                    }
+                })()}
             </div>
-        </div>
     );
 }
 
