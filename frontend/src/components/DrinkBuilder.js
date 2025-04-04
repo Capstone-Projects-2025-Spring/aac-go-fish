@@ -83,10 +83,13 @@ const DrinkBuilder = ({
     };
 
     const selectColor = (selectedColor) => {
-        if (color != null){
+        if (fillPercentage > 0){
             return;
         }
-        setColor(selectedColor);
+        setColor("");
+        setTimeout(() => {
+            setColor(selectedColor);
+        }, 50);
         setColorSelected(true);
     };
 
