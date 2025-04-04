@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import "./DrinkBuilder.css"
+import "./DrinkBuilder.css";
 import DrinkDisplay from "./DrinkDisplay";
 const DrinkBuilder = ({
     onSend,
@@ -102,27 +102,28 @@ const DrinkBuilder = ({
         <div className="DrinkBuilder">
             <p className='ScoreText'>Your score is ${score}</p>
             <div className="DrinkButtons">
-            <div className="DrinkButtonsContainer">
-                {drinkColors.map((choice, index) => (
-                <div className="DrinkButtons" key={index}>
-                        <button
-                            onClick={() => {
-                                selectColor(choice.color);
-                                setCupPosition(-375 + index * 150);
-                            }}
-                            style={{
-                                backgroundColor: choice.color,
-                                color: "#FFFFFF",
-                                border: color === choice.color ? "3px solid black" : "none",
-                                WebkitTextStroke: "1px black",
-                            }}
-                            disabled={fillPercentage > 0}
-                        >
-                            {choice.name}
-                        </button>
-                        <img src="/images/Dispenser.png" alt="Dispenser" className="DispenserImage"/>
+                <div className="DrinkButtonsContainer">
+                    {drinkColors.map((choice, index) => (
+                        <div className="DrinkButtons" key={index}>
+                            <button
+                                onClick={() => {
+                                    selectColor(choice.color);
+                                    setCupPosition(-375 + index * 150);
+                                }}
+                                style={{
+                                    backgroundColor: choice.color,
+                                    color: "#FFFFFF",
+                                    border: color === choice.color ? "3px solid black" : "none",
+                                    WebkitTextStroke: "1px black",
+                                }}
+                                disabled={fillPercentage > 0}
+                            >
+                                {choice.name}
+                            </button>
+                            <img src="/images/Dispenser.png" alt="Dispenser" className="DispenserImage"/>
+                        </div>
+                    ))}
                 </div>
-                ))}
             </div>
             <div className="MainContainer">
                 <div className="CupSizeContainer">
@@ -138,21 +139,25 @@ const DrinkBuilder = ({
                         onClick={() => selectCupSize("medium")}
                         disabled={fillPercentage > 0}
                     >
-                        <img src="/images/MediumButton.png" alt="Small Cup" className="CupSizeImageMedium"/>
+                        <img src="/images/MediumButton.png" alt="Medium Cup" className="CupSizeImageMedium"/>
                     </button>
                     <button
                         className="CupSizeButtons"
                         onClick={() => selectCupSize("large")}
                         disabled={fillPercentage > 0}
                     >
-                        <img src="/images/LargeButton.png" alt="Small Cup" className="CupSizeImageLarge"/>
+                        <img src="/images/LargeButton.png" alt="Large Cup" className="CupSizeImageLarge"/>
                     </button>
                 </div>
                 <div className="DrinkDisplayContainer">
-                    {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize} cupPosition={cupPosition}/>}
+                    {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}
+                                                cupPosition={cupPosition}/>}
+                    <div className="ConfirmMessage">
+                        {confirmMessage && <p>{confirmMessage}</p>}
+                    </div>
                 </div>
                 <div className="ActionButtonsContainer">
-                <button className="ClearCupButton" onClick={clearCup}>
+                    <button className="ClearCupButton" onClick={clearCup}>
                         <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
                     </button>
                     <button className="FillCupButton"
@@ -166,9 +171,6 @@ const DrinkBuilder = ({
                     </button>
                     <button className="SendButton" onClick={handleSend}>Send</button>
                 </div>
-            </div>
-            <div className="ConfirmMessage">
-                {confirmMessage && <p>{confirmMessage}</p>}
             </div>
         </div>
     );
