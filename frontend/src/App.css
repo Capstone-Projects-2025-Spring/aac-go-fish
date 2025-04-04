@@ -18,6 +18,9 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    position: fixed;
+    left: 700px;
+    width: 50%;
 }
 
 .Score {
@@ -34,4 +37,10 @@
     width: fit-content;
     margin-top: 10px;
     padding: 10px;
+}
+
+.receive-order-btn {
+    width: 20%;
+    margin-left: 270px;
+    margin-top: 100px;
 }

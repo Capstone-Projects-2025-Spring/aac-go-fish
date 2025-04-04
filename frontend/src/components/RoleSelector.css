@@ -3,4 +3,5 @@
     top: 1rem;
     right: 15rem;
     justify-items: center;
+    z-index: 2000;
 }

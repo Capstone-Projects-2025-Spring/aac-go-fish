@@ -60,10 +60,14 @@
 
 .manager-image {
     position: fixed;
-    top: 20px;
-    left: 20px;
+    bottom: 350px;
+    right: 720px;
     width: 700px;
     height: auto;
     z-index: 1000;
 
+}
+
+.AACBoardContainer {
+    margin-bottom: -450px;
 }

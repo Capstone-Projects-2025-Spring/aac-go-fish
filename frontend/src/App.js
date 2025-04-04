@@ -122,7 +122,7 @@ const App = () => {
             { name: "Top Bun", sideImage: "/images/top_bun_side.png" },
         ];
         const side = { tableState: "fries" };
-        const drink = { color: null, fillPercentage: 100, hasIce: false, cupSize: null };
+        const drink = { color: "#FF0000", fillPercentage: 100, hasIce: false, cupSize: "M" };
 
         setBurgerOrder(burger);
         setDrinkOrder(drink);
@@ -150,20 +150,17 @@ const App = () => {
     };
 
 
-
-
-
-
     return (
         <div className="app-container">
             <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">
-                        <div className="column">
-                            {orderVisible && (
-                                <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
-                            )}                        </div>
+                        {orderVisible && (
+                            <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
+                        )}                        </div>
+                    <div className="column">
+
                         <div className="column">
                             <p className='Score'>Your score is ${score}</p>
                             <AACBoard
@@ -181,15 +178,14 @@ const App = () => {
                                 orderVisible={orderVisible}
 
                             />
-                            <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
-                            <button onClick={handleReceiveOrder} className="receive-order-btn">
-                                Receive Order (Test)
-                            </button>
+
                             {(employeeBurger || employeeDrink || employeeSide) && (
                                 <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
                             )}
                         </div>
-
+                        <button onClick={handleReceiveOrder} className="receive-order-btn">
+                            Receive Order (Test)
+                        </button>
                     </div>
                 </>
             ) : selectedRole === "burger" ? (

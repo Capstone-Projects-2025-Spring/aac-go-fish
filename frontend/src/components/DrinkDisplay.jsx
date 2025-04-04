@@ -4,10 +4,10 @@ export default function DrinkDisplay({ color, fillPercentage, hasIce, cupSize })
     return (
         <div className={`Cup ${cupSize}`}>
             <div className="Filling"
-                 style={{
-                     backgroundColor: color || "#FFFFFF",
-                     height: `${fillPercentage}%`,
-                 }}
+                style={{
+                    backgroundColor: color ? (color.startsWith("#") ? color : `#${color}`) : "#FFFFFF",
+                    height: `${fillPercentage}%`,
+                }}
             ></div>
 
             {hasIce && (
