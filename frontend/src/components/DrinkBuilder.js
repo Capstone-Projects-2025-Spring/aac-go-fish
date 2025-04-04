@@ -112,48 +112,52 @@ const DrinkBuilder = ({ onSend }) =>{
                     </button>
                 ))}
             </div>
-
-            <div className='ButtonHolder'>
-                <button className="ClearCupButton" onClick={clearCup}>
-                    <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
-                </button>
-                <button className="FillCupButton"
-                        onMouseDown={startFilling}
-                        onMouseUp={stopFilling}
-                        onMouseLeave={stopFilling}
-                        disabled={!cupPlaced || !colorSelected}
-                        title="Press and hold to fill"
-                >
-                    <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
-                </button>
-
-                <button
-                    className="CupSizeButtons"
-                    onClick={() => selectCupSize("small")}
-                    disabled={fillPercentage > 0}
-                >
-                    <img src="/images/cup-small.png" alt="Small Cup" className="CupSizeImageSmall"/>
-                </button>
-                <button
-                    className="CupSizeButtons"
-                    onClick={() => selectCupSize("medium")}
-                    disabled={fillPercentage > 0}
-                >
-                    <img src="/images/cup-medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
-                </button>
-                <button
-                    className="CupSizeButtons"
-                    onClick={() => selectCupSize("large")}
-                    disabled={fillPercentage > 0}
-                >
-                    <img src="/images/cup-large.png" alt="Small Cup" className="CupSizeImageLarge"/>
-                </button>
+            <div className="MainContainer">
+                <div className="CupSizeContainer">
+                    <button
+                        className="CupSizeButtons"
+                        onClick={() => selectCupSize("small")}
+                        disabled={fillPercentage > 0}
+                    >
+                        <img src="/images/cup-small.png" alt="Small Cup" className="CupSizeImageSmall"/>
+                    </button>
+                    <button
+                        className="CupSizeButtons"
+                        onClick={() => selectCupSize("medium")}
+                        disabled={fillPercentage > 0}
+                    >
+                        <img src="/images/cup-medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
+                    </button>
+                    <button
+                        className="CupSizeButtons"
+                        onClick={() => selectCupSize("large")}
+                        disabled={fillPercentage > 0}
+                    >
+                        <img src="/images/cup-large.png" alt="Small Cup" className="CupSizeImageLarge"/>
+                    </button>
+                </div>
+                <div className="DrinkDisplayContainer">
+                    {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}/>}
+                </div>
+                <div className="ActionButtonsContainer">
+                    <button className="ClearCupButton" onClick={clearCup}>
+                        <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
+                    </button>
+                    <button className="FillCupButton"
+                            onMouseDown={startFilling}
+                            onMouseUp={stopFilling}
+                            onMouseLeave={stopFilling}
+                            disabled={!cupPlaced || !colorSelected}
+                            title="Press and hold to fill"
+                    >
+                        <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
+                    </button>
+                    <button className="SendButton" onClick={handleSend}>Send</button>
+                </div>
             </div>
-            {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}/>}
             <div className="ConfirmMessage">
                 {confirmMessage && <p>{confirmMessage}</p>}
             </div>
-            <button className="SendButton" onClick={handleSend}>Send</button>
         </div>
     );
 };
