@@ -97,24 +97,26 @@ const DrinkBuilder = ({ onSend }) =>{
 
     return (
         <div className="DrinkBuilder">
-            <div className="DrinkButtons">
+            <div className="DrinkButtonsContainer">
                 {drinkColors.map((choice, index) => (
-                    <button
-                        key={index}
-                        onClick={() => {
-                            selectColor(choice.color);
-                            setCupPosition(-375 + index * 150);
-                        }}
-                        style={{
-                            backgroundColor: choice.color,
-                            color: "#FFFFFF",
-                            border: color === choice.color ? "3px solid black" : "none",
-                            WebkitTextStroke: "1px black",
-                        }}
-                        disabled={fillPercentage > 0}
-                    >
-                        {choice.name}
-                    </button>
+                <div className="DrinkButtons" key={index}>
+                        <button
+                            onClick={() => {
+                                selectColor(choice.color);
+                                setCupPosition(-375 + index * 150);
+                            }}
+                            style={{
+                                backgroundColor: choice.color,
+                                color: "#FFFFFF",
+                                border: color === choice.color ? "3px solid black" : "none",
+                                WebkitTextStroke: "1px black",
+                            }}
+                            disabled={fillPercentage > 0}
+                        >
+                            {choice.name}
+                        </button>
+                        <img src="/images/Dispenser.png" alt="Dispenser" className="DispenserImage"/>
+                </div>
                 ))}
             </div>
             <div className="MainContainer">
