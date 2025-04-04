@@ -25,7 +25,7 @@ const DrinkBuilder = ({
     ];
     const maxFill = 100;
     const fillAmount = 5;
-    const fillRate = 200;
+    const fillRate = 175;
 
     useEffect(() => {
         setColor(null);
@@ -38,20 +38,27 @@ const DrinkBuilder = ({
             return;
         }
 
+        const fillingSound = playFillingSound();
+
         fillInterval.current = setInterval(() => {
             setFillPercentage((prev) => {
                 if (prev >= maxFill){
                     clearInterval(fillInterval.current);
+                    fillingSound.pause();
                     return maxFill;
                 }
                 return prev + fillAmount;
             });
         }, fillRate);
+        fillInterval.sound = fillingSound;
     };
 
     const stopFilling = () => {
         if (fillInterval.current) {
             clearInterval(fillInterval.current);
+        }
+        if (fillInterval.sound) {
+            fillInterval.sound.pause();
         }
     };
 
@@ -100,6 +107,13 @@ const DrinkBuilder = ({
         setCupSize(size);
         setCupPlaced(true);
     };
+
+    const playFillingSound = () => {
+        const audio = new Audio("/audio/filling.mp3");
+        audio.loop = true;
+        audio.play();
+        return audio;
+    }
 
     return (
         <div className="DrinkBuilder">
