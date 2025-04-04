@@ -47,8 +47,10 @@ def test_websocket(lobby_client: TestClient) -> None:
         assert burger["ingredients"][0] == "bottom bun"
         assert burger["ingredients"][-1] == "top bun"
 
-        assert order["drink"] is None
-        assert order["fry"] is None
+    assert order["drink"] is None
+    assert order["side"] is None
+
+    websocket.close()
 
 
 @pytest.mark.skip(reason="Test function hangs occasionally")
@@ -84,7 +86,7 @@ def test_websocket_submit_burger_order(lobby_client: TestClient) -> None:
         order = websocket.receive_json()["data"]["order"]
         m = Message(
             data=OrderSubmission(
-                order=Order(burger=Burger(ingredients=order["burger"]["ingredients"]), drink=None, fry=None)
+                order=Order(burger=Burger(ingredients=order["burger"]["ingredients"]), drink=None, side=None)
             )
         )
         websocket.send_text(m.model_dump_json())

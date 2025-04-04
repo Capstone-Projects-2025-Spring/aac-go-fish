@@ -1,14 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
-const DrinkBuilder = ({
-    onSend,
-    score
-}) =>{
+import { WebSocketContext } from "../WebSocketContext";
+
+const DrinkBuilder = ({ score }) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
-    const [hasIce, setHasIce] = useState(false);
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
     const drinkColors = [
@@ -19,6 +17,7 @@ const DrinkBuilder = ({
         {name: "Orange", color: "#F5841F"},
         {name: "Purple", color: "#7E69AF"},
     ];
+    const { send } = useContext(WebSocketContext);
     const maxFill = 100;
     const fillAmount = 5;
     const fillRate = 200;
@@ -61,13 +60,16 @@ const DrinkBuilder = ({
         if (!color || fillPercentage === 0){
             return;
         }
-
-        onSend({
-            color,
-            fill: fillPercentage,
-            ice: hasIce,
-            size: cupSize,
-        });
+        send({data: {
+            type: "game_state",
+            game_state_update_type: "order_component",
+            component_type: "drink",
+            component: {
+                color: color,
+                fill: fillPercentage,
+                size: cupSize,
+            }
+        }});
         clearCup();
     };
 

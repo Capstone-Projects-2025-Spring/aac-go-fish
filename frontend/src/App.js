@@ -26,28 +26,42 @@ const App = () => {
 
     useEffect(() => {
         if (!message) return;
+        console.log(message);
         const data = message.content.data;
-        console.log(data);
         switch (data.type) {
             case "game_state":
                 switch (data.game_state_update_type) {
                     case "new_order":
                         const burger = data.order.burger?.ingredients ?? [];
                         const drink = data.order.drink ?? null;
-                        const side = data.order.fry ? { tableState: "fries" } : null; // TODO: update when backend sends more sides
+                        const side = data.order.side ?? null; // TODO: update when backend sends more sides
 
                         setBurgerOrder(burger);
                         setDrinkOrder(drink);
                         setSideOrder(side);
                         setRandomCustomerImage();
                         break;
+                    case "order_component":
+                        switch(data.component_type) {
+                            case "burger":
+                                console.log("burger");
+                                setEmployeeBurger(message.content.data.component.ingredients);
+                                break;
+                            case "drink":
+                                console.log("drink");
+                                setEmployeeDrink(message.content.data.component);
+                                break;
+                            case "side":
+                                console.log("side");
+                                setEmployeeSide(message.content.data.component);
+                                break;
+                        }
                 }
                 break;
         }
     }, [message]);
 
     useEffect(() => console.log(employeeBurger), [employeeBurger]);
-
 
     const addSelectedItem = (item) => {
         setSelectedItems((prev) => [...prev, item]);
@@ -117,8 +131,8 @@ const App = () => {
             // 2 points for submitting any drink, +2 points if correct
             tempScore += 2
 
-            // Test object, fill and ice are hardcoded for now
-            const drinkObj = { color: null, fillPercentage: 100, hasIce: false, cupSize: null }
+            // Test object; fill is hardcoded for now
+            const drinkObj = { color: null, fillPercentage: 100, cupSize: null }
             if (JSON.stringify(drink) === JSON.stringify(drinkObj)) {
                 tempScore += 2
                 console.log(`Manager: Drink order is correct`)
@@ -129,9 +143,9 @@ const App = () => {
         console.log(`Score is ${tempScore}`)
         setScore(score + tempScore)
     }
+
     const handleGiveToCustomer = () => {
         console.log("Manager: Sending order to the customer");
-
         let tempBurger = null;
         let tempSide = null;
         if (employeeBurger) {
@@ -139,8 +153,8 @@ const App = () => {
             console.log(`Sending burger (${tempBurger})`)
         }
         if (employeeSide) {
-            tempSide = employeeSide.tableState
-            console.log(`Sending side (${employeeSide.tableState})`)
+            tempSide = employeeSide.table_state
+            console.log(`Sending side (${employeeSide.table_state})`)
         }
         if (employeeDrink) {
             console.log(`Sending drink (${employeeDrink})`)
@@ -184,11 +198,11 @@ const App = () => {
                                 </>
                             );
                         case "burger":
-                            return <BurgerBuilder onSend={setEmployeeBurger} score={score}/>;
+                            return <BurgerBuilder score={score}/>;
                         case "side":
-                            return <SideBuilder onSend={setEmployeeSide} score={score}/>;
+                            return <SideBuilder score={score}/>;
                         case "drink":
-                            return <DrinkBuilder onSend={setEmployeeDrink} score={score}/>;
+                            return <DrinkBuilder score={score}/>;
                     }
                 })()}
             </div>
