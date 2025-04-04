@@ -37,9 +37,13 @@ const SideBuilder = ({ onSend }) =>{
     };
 
     const chopSide = () =>{
+        playChoppingSound();
         const side = sideTypes.find((side) => side.initialState === tableState);
         if (side) {
-            setTableState(side.choppedState);
+            setTimeout(() => {
+                setTableState(side.choppedState);
+            }, 2000);
+
         }
     };
 
@@ -111,6 +115,11 @@ const SideBuilder = ({ onSend }) =>{
 
     const playFryingSound = () => {
         const audio = new Audio("/audio/frying.mp3");
+        audio.play();
+    }
+
+    const playChoppingSound = () => {
+        const audio = new Audio("/audio/chopping.mp3");
         audio.play();
     }
 
