@@ -142,7 +142,7 @@
 
 
 .CupSizeButtons:hover{
-    border: 3px solid #322e2e;
+    background: #f3f3f3;
 }
 
 .CupSizeButtons:active {
