@@ -1,12 +1,36 @@
 .SideBuilder{
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SideBuilder button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.MainContainer2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    gap: 20px;
+}
+
+.LeftColumn, .RightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .Table{
     margin:20px auto;
     padding: 20px;
-    max-width: 500px;
-    min-height: 150px;
+    width: 500px;
+    min-height: 200px;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -19,7 +43,7 @@
     margin:20px auto;
     padding: 20px;
     max-width: 500px;
-    min-height: 150px;
+    min-height: 200px;
     background-color: #ffffff;
     display: flex;
     justify-content: center;
@@ -59,6 +83,18 @@
 .TableImages{
     width: 150px;
     height:auto;
+}
+
+.LeftButtons, .RightButtons {
+    min-width: 120px;
+    min-height: 120px;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
 }
 
 .SendButton {

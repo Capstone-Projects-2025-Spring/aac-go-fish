@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import "./SideBuilder.css"
+import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
 
 const SideBuilder = ({ onSend }) =>{
@@ -116,38 +116,45 @@ const SideBuilder = ({ onSend }) =>{
 
     return (
         <div className="SideBuilder">
+            <div className="MainContainer2">
+                <div className="LeftColumn">
+                    <button className="LeftButtons" onClick={() => placeSide("potatoes")} disabled={tableState !== "empty"}>
+                        <img src="/images/potatoButton.png" alt="Place Potatoes" className="ButtonImages"/>
+                        Potato
+                    </button>
+                    <button className="LeftButtons" onClick={() => placeSide("onions")} disabled={tableState !== "empty"}>
+                        <img src="/images/onion.png" alt="Place Onions" className="ButtonImages"/>
+                        Onion
+                    </button>
+                </div>
                 <div className="TableBorder">
                     <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart}/>
                 </div>
-                <div className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
-                     onDragOver={handleDragOver}
-                     onDrop={handleDrop}
-                     onDragLeave={handleDragLeave}
-                >
-                    <img src="/images/fryer.png" alt="Fryer" className="FryerImage" />
-                    {tableState === "frying" && getOverlayImage()}
+                <div className="RightColumn">
+                    <button className="RightButtons" onClick={chopSide} disabled={tableState !== "potatoes" && tableState !== "onions"}>
+                        <img src="/images/knife.png" alt="Chop Potatoes" className="ButtonImages"/>
+                        Chop
+                    </button>
+                    <button className="RightButtons" onClick={reset}>
+                        Reset
+                    </button>
+                    <button className="SendButton" onClick={handleSend}
+                            disabled={tableState === "empty" || tableState === "frying"}>Send
+                    </button>
                 </div>
-            <div className="SideButtons">
-                <button onClick={() => placeSide("potatoes")} disabled={tableState !== "empty"}>
-                    <img src="/images/potatoButton.png" alt="Place Potatoes" className="ButtonImages"/>
-                    Potato
-                </button>
-                <button onClick={() => placeSide("onions")} disabled={tableState !== "empty"}>
-                    <img src="/images/onion.png" alt="Place Onions" className="ButtonImages"/>
-                    Onion
-                </button>
-                <button onClick={chopSide} disabled={tableState !== "potatoes" && tableState !== "onions"}>
-                    <img src="/images/knife.png" alt="Chop Potatoes" className="ButtonImages"/>
-                    Chop
-                </button>
-                <button onClick={reset}>
-                    Reset
-                </button>
+            </div>
+
+            <div className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
+                 onDragOver={handleDragOver}
+                 onDrop={handleDrop}
+                 onDragLeave={handleDragLeave}
+            >
+                <img src="/images/fryer.png" alt="Fryer" className="FryerImage"/>
+                {tableState === "frying" && getOverlayImage()}
             </div>
             <div className="ConfirmMessage">
                 {confirmMessage && <p>{confirmMessage}</p>}
             </div>
-            <button className="SendButton" onClick={handleSend} disabled={tableState === "empty" || tableState === "frying"}>Send</button>
         </div>
     );
 };
