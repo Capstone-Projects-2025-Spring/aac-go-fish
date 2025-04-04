@@ -42,30 +42,20 @@ const App = () => {
                         setSideOrder(side);
                         setRandomCustomerImage();
                         break;
+                    case "order_component":
+                        if (message.content.data.component.ingredients) {
+                            setEmployeeBurger(message.content.data.component.ingredients);
+                        }
+                        else if (message.content.data.component.color) {
+                            setEmployeeDrink(message.content.data.component);
+                        }
+                        else if (message.content.data.component.table_state) {
+                            setEmployeeSide(message.content.data.component);
+                        }
                 }
                 break;
         }
     }, [message]);
-
-    // updates the employee submitted order
-    useEffect(() => {
-        console.log(message);
-        if (!message) return;
-        switch (message.content.data.game_state_update_type) {
-            case "new_order":
-                return;
-            case "order_component":
-                if (message.content.data.component.ingredients) {
-                    setEmployeeBurger(message.content.data.component.ingredients);
-                }
-                else if (message.content.data.component.color) {
-                    setEmployeeDrink(message.content.data.component);
-                }
-                else if (message.content.data.component.table_state) {
-                    setEmployeeSide(message.content.data.component);
-                }
-        }
-    });
 
     useEffect(() => console.log(employeeBurger), [employeeBurger]);
 
