@@ -11,13 +11,6 @@ function AACBoard({
     onDeleteItem,
     onClearAll,
     onPlayAll,
-    customerImage,
-    burgerOrder,
-    drinkOrder,
-    hasSide,
-    hasIce,
-    drinkSize,
-    orderVisible,
 }) {
     const [shiftDown, setShiftDown] = useState(false);
 

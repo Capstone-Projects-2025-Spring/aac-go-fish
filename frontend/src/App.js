@@ -173,7 +173,6 @@ const App = () => {
                             onDeleteItem={removeSelectedItem}
                             onClearAll={clearAllSelected}
                             onPlayAll={onPlayAll}
-                            customerImage={currentCustomerImage}
                             burgerOrder={burgerOrder}
                             drinkOrder={drinkOrder}
                             hasSide={!!sideOrder}
