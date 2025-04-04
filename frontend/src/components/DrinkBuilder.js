@@ -83,6 +83,7 @@ const DrinkBuilder = ({
             fillPercentage,
             hasIce,
             cupSize,
+            fillOverlay: { backgroundColor: color, height: `${fillPercentage}%`}
         });
         clearCup();
         playSendSound();
