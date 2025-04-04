@@ -227,21 +227,20 @@
     justify-content: center;
     position: relative;
     align-items: flex-end;
-    width: 150px;
 }
 
 .CupContainer.small{
-    width: 300px;
+    width: 150px;
     height: 300px;
 }
 
 .CupContainer.medium{
-    width: 350px;
+    width: 175px;
     height: 350px;
 }
 
 .CupContainer.large{
-    width: 400px;
+    width: 200px;
     height: 400px;
 }
 .CupImages {

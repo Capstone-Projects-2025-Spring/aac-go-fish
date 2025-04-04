@@ -103,7 +103,7 @@ const DrinkBuilder = ({ onSend }) =>{
                         key={index}
                         onClick={() => {
                             selectColor(choice.color);
-                            setCupPosition(-300 + index * 125);
+                            setCupPosition(-375 + index * 150);
                         }}
                         style={{
                             backgroundColor: choice.color,
