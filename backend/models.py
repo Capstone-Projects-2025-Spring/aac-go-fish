@@ -67,7 +67,6 @@ class RoleAssignment(BaseModel):
     type: Literal[MessageKind.game_state] = MessageKind.game_state
     game_state_update_type: Literal[GameStateUpdateKind.role_assignment] = GameStateUpdateKind.role_assignment
 
-    id: str
     role: Role
 
 
@@ -189,7 +188,6 @@ class Chat(BaseModel):
 
     type: Literal[MessageKind.chat] = MessageKind.chat
 
-    id: str
     typing: bool
 
 
