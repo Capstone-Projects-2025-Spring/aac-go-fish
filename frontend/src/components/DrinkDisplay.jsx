@@ -6,6 +6,7 @@ export default function DrinkDisplay({ color, fillPercentage, hasIce, cupSize, c
         medium: "/images/cup-medium.png",
         large: "/images/cup-large.png",
     };
+    const maxFillHeight = cupSize === "small" ? 175 : cupSize === "medium" ? 205 : 235;
     return (
         <div
             className={`CupContainer ${cupSize}`}
@@ -13,8 +14,9 @@ export default function DrinkDisplay({ color, fillPercentage, hasIce, cupSize, c
             <div
                 className="FillOverlay"
                 style={{
-                    height: `${fillPercentage}%`,
+                    height: `${Math.min(fillPercentage / 100 * maxFillHeight, maxFillHeight)}px`,
                     backgroundColor: color,
+                    maxHeight: `${maxFillHeight}px`
                 }}
             ></div>
 

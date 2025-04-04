@@ -243,6 +243,7 @@
     width: 200px;
     height: 400px;
 }
+
 .CupImages {
     width: 100%;
     height: auto;
@@ -263,6 +264,7 @@
     background-color: transparent;
     transition: height 0.3s ease-in-out;
     z-index: 5;
+    max-height: 200px;
 }
 
 .ConfirmMessage{
