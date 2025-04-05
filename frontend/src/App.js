@@ -33,7 +33,12 @@ const App = () => {
         "/images/customers/customer2.png",
         "/images/customers/customer3.png",
         "/images/customers/customer4.png",
-        "/images/customers/customer5.png"
+        "/images/customers/customer5.png",
+        "/images/customers/customer6.png",
+        "/images/customers/customer7.png",
+        "/images/customers/customer8.png",
+        "/images/customers/customer9.png",
+        "/images/customers/customer10.png",
     ];
 
     useEffect(() => {
