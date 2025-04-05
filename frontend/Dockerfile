@@ -2,7 +2,7 @@ FROM node:23.11-bookworm-slim@sha256:f2cf744a59dcdd05b354754704a527de9fb0c5d8e92
 WORKDIR /app
 
 ARG REACT_APP_BACKEND_DOMAIN
-ENV REACT_APP_BACKEND_DOMAIN=localhost/api
+ENV REACT_APP_BACKEND_DOMAIN=localhost:8000/api
 
 COPY package.json package-lock.json ./
 RUN npm install --frozen-lockfile

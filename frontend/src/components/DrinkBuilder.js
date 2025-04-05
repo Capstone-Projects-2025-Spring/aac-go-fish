@@ -2,13 +2,18 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import "./DrinkBuilder.css"
 import DrinkDisplay from "./DrinkDisplay";
 import { WebSocketContext } from "../WebSocketContext";
+import { playSendSound } from "./playSendSound";
 
 const DrinkBuilder = ({ score }) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
+    const [errorMessage, setErrorMessage] = useState("");
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
+    const [confirmMessage, setConfirmMessage] = useState("");
+    const [cupPlaced, setCupPlaced] = useState(false);
+    const [cupPosition, setCupPosition] = useState(0);
     const drinkColors = [
         {name: "Blue", color: "#34C6F4"},
         {name: "Green", color: "#99CA3C"},
@@ -20,7 +25,7 @@ const DrinkBuilder = ({ score }) =>{
     const { send } = useContext(WebSocketContext);
     const maxFill = 100;
     const fillAmount = 5;
-    const fillRate = 200;
+    const fillRate = 175;
 
     useEffect(() => {
         setColor(null);
@@ -29,24 +34,31 @@ const DrinkBuilder = ({ score }) =>{
     }, []);
 
     const startFilling = () => {
-        if (!color) {
+        if (!color || !cupPlaced) {
             return;
         }
+
+        const fillingSound = playFillingSound();
 
         fillInterval.current = setInterval(() => {
             setFillPercentage((prev) => {
                 if (prev >= maxFill){
                     clearInterval(fillInterval.current);
+                    fillingSound.pause();
                     return maxFill;
                 }
                 return prev + fillAmount;
             });
         }, fillRate);
+        fillInterval.sound = fillingSound;
     };
 
     const stopFilling = () => {
         if (fillInterval.current) {
             clearInterval(fillInterval.current);
+        }
+        if (fillInterval.sound) {
+            fillInterval.sound.pause();
         }
     };
 
@@ -54,10 +66,13 @@ const DrinkBuilder = ({ score }) =>{
         setColor(null);
         setFillPercentage(0);
         setColorSelected(false);
+        setCupPlaced(false);
+        setCupPosition(0);
     };
 
     const handleSend = () => {
         if (!color || fillPercentage === 0){
+            setErrorMessage("Cup is empty!");
             return;
         }
         send({data: {
@@ -71,71 +86,113 @@ const DrinkBuilder = ({ score }) =>{
             }
         }});
         clearCup();
+        playSendSound();
+        setConfirmMessage("Drink sent to manager!");
+        setTimeout(() => {
+            setConfirmMessage("");
+        }, 3000);
     };
 
     const selectColor = (selectedColor) => {
-        if (color != null){
+        if (fillPercentage > 0){
             return;
         }
-        setColor(selectedColor);
+        setColor("");
+        setTimeout(() => {
+            setColor(selectedColor);
+        }, 50);
         setColorSelected(true);
     };
+
+    const selectCupSize = (size) => {
+        if (fillPercentage > 0){
+            return;
+        }
+        setCupSize(size);
+        setCupPlaced(true);
+    };
+
+    const playFillingSound = () => {
+        const audio = new Audio("/audio/filling.mp3");
+        audio.loop = true;
+        audio.play();
+        return audio;
+    }
 
     return (
         <div className="DrinkBuilder">
             <p className='ScoreText'>Your score is ${score}</p>
             <div className="DrinkButtons">
-                {drinkColors.map((choice, index) => (
+                <div className="DrinkButtonsContainer">
+                    {drinkColors.map((choice, index) => (
+                        <div className="DrinkButtons" key={index}>
+                            <button
+                                onClick={() => {
+                                    selectColor(choice.color);
+                                    setCupPosition(-375 + index * 150);
+                                }}
+                                style={{
+                                    backgroundColor: choice.color,
+                                    color: "#FFFFFF",
+                                    border: color === choice.color ? "3px solid black" : "none",
+                                    WebkitTextStroke: "1px black",
+                                }}
+                                disabled={fillPercentage > 0}
+                            >
+                                {choice.name}
+                            </button>
+                            <img src="/images/Dispenser.png" alt="Dispenser" className="DispenserImage"/>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            <div className="MainContainer">
+                <div className="CupSizeContainer">
                     <button
-                        key={index}
-                        onClick={() => selectColor(choice.color)}
-                        style={{
-                            backgroundColor: choice.color,
-                            color: "#FFFFFF",
-                            border: color === choice.color ? "3px solid black" : "none",
-                            WebkitTextStroke: "1px black",
-                        }}
-                        disabled={colorSelected}
+                        className="CupSizeButtons"
+                        onClick={() => selectCupSize("small")}
+                        disabled={fillPercentage > 0}
                     >
-                        {choice.name}
+                        <img src="/images/SmallButton.png" alt="Small Cup" className="CupSizeImageSmall"/>
                     </button>
-                ))}
+                    <button
+                        className="CupSizeButtons"
+                        onClick={() => selectCupSize("medium")}
+                        disabled={fillPercentage > 0}
+                    >
+                        <img src="/images/MediumButton.png" alt="Medium Cup" className="CupSizeImageMedium"/>
+                    </button>
+                    <button
+                        className="CupSizeButtons"
+                        onClick={() => selectCupSize("large")}
+                        disabled={fillPercentage > 0}
+                    >
+                        <img src="/images/LargeButton.png" alt="Large Cup" className="CupSizeImageLarge"/>
+                    </button>
+                </div>
+                <div className="DrinkDisplayContainer">
+                    {cupPlaced && <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize}
+                                                cupPosition={cupPosition}/>}
+                    <div className="ConfirmMessage">
+                        {confirmMessage && <p>{confirmMessage}</p>}
+                    </div>
+                </div>
+                <div className="ActionButtonsContainer">
+                    <button className="ClearCupButton" onClick={clearCup}>
+                        <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
+                    </button>
+                    <button className="FillCupButton"
+                            onMouseDown={startFilling}
+                            onMouseUp={stopFilling}
+                            onMouseLeave={stopFilling}
+                            disabled={!cupPlaced || !colorSelected}
+                            title="Press and hold to fill"
+                    >
+                        <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
+                    </button>
+                    <button className="SendButton" onClick={handleSend}>Send</button>
+                </div>
             </div>
-
-            <div className='ButtonHolder'>
-            <button className="ClearCupButton" onClick={clearCup}>
-                <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
-            </button>
-            <button className="FillCupButton"
-                    onMouseDown={startFilling}
-                    onMouseUp={stopFilling}
-                    onMouseLeave={stopFilling}
-            >
-                <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
-            </button>
-
-            <button
-                className="CupSizeButtons"
-                onClick={() => setCupSize("small")}
-            >
-                <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
-            </button>
-            <button
-                className="CupSizeButtons"
-                onClick={() => setCupSize("medium")}
-            >
-                <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
-            </button>
-            <button
-                className="CupSizeButtons"
-                onClick={() => setCupSize("large")}
-            >
-                <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
-            </button>
-            </div>
-
-            <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize ={cupSize}/>
-            <button className ="SendButton" onClick={handleSend}>Send</button>
         </div>
     );
 };

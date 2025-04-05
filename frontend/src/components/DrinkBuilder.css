@@ -1,13 +1,60 @@
 .DrinkBuilder{
+    display: flex;
     text-align: center;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
 }
 
 .DrinkButtons{
     display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.DrinkButtonsContainer {
+    display: flex;
     justify-content: center;
-    margin-top: 20px;
     gap: 10px;
+    flex-wrap: nowrap;
+}
+
+.DispenserImage {
+    width: 25px;
+    height: auto;
+    margin-top: -10px;
+}
+
+.MainContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     flex-wrap: wrap;
+}
+
+.CupSizeContainer {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   align-items: center;
+   width: 150px;
+}
+
+.DrinkDisplayContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-grow: 1;
+    max-width: 30vw;
+}
+
+.ActionButtonsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 150px;
 }
 
 .DrinkButtons button{
@@ -57,17 +104,6 @@
     font-size: 24px;
 }
 
-.Cup{
-    margin: 20px auto;
-    width: 150px;
-    border: 2px solid #000000;
-    border-radius: 15px;
-    background-color: #ffffff;
-    display:flex;
-    flex-direction: column-reverse;
-    overflow:hidden;
-    position:relative;
-}
 
 .Cup.small { height: 200px; }
 .Cup.medium { height: 275px; }
@@ -102,8 +138,17 @@
     font-size: 24px;
 }
 
+.FillCupButton:disabled{
+    cursor: not-allowed;
+    transform: none !important;
+}
+
 .FillCupButton:hover {
     border: 3px solid #322e2e;
+}
+
+.FillCupButton:hover:disabled{
+    border: 1px solid #322e2e;
 }
 
 .FillCupButton:active {
@@ -116,7 +161,7 @@
 
 
 .CupSizeButtons:hover{
-    border: 3px solid #322e2e;
+    background: #f3f3f3;
 }
 
 .CupSizeButtons:active {
@@ -166,6 +211,12 @@
     border-radius: 6px;
 }
 
+.CupSizeButtons:disabled{
+    cursor: not-allowed;
+    transform: none;
+    border: 1px solid #322e2e;
+}
+
 .CupSizeImageSmall{
     width: 85px;
     height: 85px;
@@ -200,4 +251,61 @@
 }
 .ClearCupImage{
     height: 120px;
+}
+
+.CupContainer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    align-items: flex-end;
+}
+
+.CupContainer.small{
+    width: 150px;
+    height: 300px;
+}
+
+.CupContainer.medium{
+    width: 175px;
+    height: 350px;
+}
+
+.CupContainer.large{
+    width: 200px;
+    height: 400px;
+}
+
+.CupImages {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    max-width: 200px;
+}
+
+.FillOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform:translateX(-50%);
+    width: 80%;
+    height: 0;
+    background-color: transparent;
+    transition: height 0.3s ease-in-out;
+    z-index: 5;
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.ConfirmMessage{
+    text-align: center;
+    font-family: "Comic Sans MS";
+    font-size: 32px;
+    color: #84d838;
+    background-color: #ffffff;
+    border-radius: 5px;
+    transition: opacity 1s ease-in-out;
 }

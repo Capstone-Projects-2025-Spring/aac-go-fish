@@ -1,22 +1,26 @@
 import React from "react";
 
-export default function DrinkDisplay({ color, fillPercentage, hasIce, cupSize }) {
+export default function DrinkDisplay({ color, fillPercentage, hasIce, cupSize, cupPosition }) {
+    const cupImages = {
+        small: "/images/cup-small.png",
+        medium: "/images/cup-medium.png",
+        large: "/images/cup-large.png",
+    };
+    const maxFillHeight = cupSize === "small" ? 175 : cupSize === "medium" ? 205 : 235;
     return (
-        <div className={`Cup ${cupSize}`}>
-            <div className="Filling"
-                 style={{
-                     backgroundColor: color || "#FFFFFF",
-                     height: `${fillPercentage}%`,
-                 }}
+        <div
+            className={`CupContainer ${cupSize}`}
+            style={{ transform: `translateX(${cupPosition}px)`, transition: "transform 0.4s ease-in-out" }}>
+            <div
+                className="FillOverlay"
+                style={{
+                    height: `${Math.min(fillPercentage / 100 * maxFillHeight, maxFillHeight)}px`,
+                    backgroundColor: color,
+                    maxHeight: `${maxFillHeight}px`
+                }}
             ></div>
 
-            {hasIce && (
-                <img
-                    src="/images/ice.png"
-                    alt="Ice"
-                    className="Ice"
-                />
-            )}
+            <img src={`/images/cup-${cupSize}.png`} alt="Cup" className="CupImages" />
         </div>
     );
 }
