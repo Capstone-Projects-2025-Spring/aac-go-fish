@@ -122,7 +122,7 @@ const App = () => {
             { name: "Top Bun", sideImage: "/images/top_bun_side.png" },
         ];
         const side = { tableState: "fries" };
-        const drink = { color: "#FF0000", fillPercentage: 100, hasIce: false, cupSize: "M" };
+        const drink = { color: "#FF0000", fillPercentage: 100, hasIce: false, cupSize: "medium" };
 
         setBurgerOrder(burger);
         setDrinkOrder(drink);
