@@ -8,8 +8,11 @@
 ### Dev
 `docker compose -f compose.yaml -f compose.dev.yaml up --build`
 
+I am currently testing with - andriy
+`docker compose -f compose.dev.yaml up --build`
+
 This will run the frontend and backend. The frontend is accessible at
-`localhost:8000` and the backend is accessible at `localhost:8000/api`.
+`localhost:3000` and the backend is accessible at `localhost:8000`.
 
 ## Backend
 
