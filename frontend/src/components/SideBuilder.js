@@ -114,7 +114,7 @@ const SideBuilder = ({ score }) =>{
             return <img src="/images/choppedPotatoes.png" alt="Chopped Potatoes" className="ChoppedOverlay" />;
         }
         if (sideType === "onionRings"){
-            return <img src="/images/OnionSide.png" alt="Chopped Onions" className="ChoppedOverlay" />;
+            return <img src="/images/onion_side.png" alt="Chopped Onions" className="ChoppedOverlay" />;
         }
         return null;
     }
