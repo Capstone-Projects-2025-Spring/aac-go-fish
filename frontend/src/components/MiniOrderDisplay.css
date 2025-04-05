@@ -35,5 +35,12 @@
         background-color: #ffffff;
         overflow: hidden;
         position: relative;
+        width: 50px;
+        height: 100px;
+    }
+    .CupContainer{
+        width: 50px;
+        height:100px;
+
     }
 }

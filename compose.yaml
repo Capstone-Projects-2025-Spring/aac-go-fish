@@ -1,21 +1,27 @@
 ---
 services:
   backend:
-    build:
-      context: backend
-      dockerfile: Dockerfile
-      additional_contexts:
-        metadata: .
-    ports:
-      - "127.0.0.1:8000:8000"
+    image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-backend:main
+    tty: true
+    command: ["fastapi", "run", "./hello.py", "--root-path", "/api"]
+    environment:
+      ENV: prod
+      LOG_LEVEL: WARNING
+      FRONTEND_URL: bankruptcyassocation.com
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
+    image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-frontend:main
+    tty: true
     depends_on:
       - backend
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    profiles: ["prod"]
+    environment:
+      # 1 minute
+      WATCHTOWER_POLL_INTERVAL: 60
+      # clean up old image
+      WATCHTOWER_CLEANUP: true
