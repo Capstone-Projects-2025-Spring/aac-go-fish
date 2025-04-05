@@ -3,6 +3,7 @@ import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import {menu} from "../menuItems";
 import { WebSocketContext } from "../WebSocketContext";
+import { playSendSound } from "./playSendSound";
 
 const BurgerBuilder = ({ score }) => {
     const [ingredients, setIngredients] = useState([]);
@@ -19,6 +20,7 @@ const BurgerBuilder = ({ score }) => {
             component: {
                 ingredients: employeeOrder,
         }}});
+        playSendSound();
         clearPlate();
     };
 
