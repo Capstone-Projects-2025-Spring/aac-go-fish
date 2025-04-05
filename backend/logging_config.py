@@ -1,152 +1,107 @@
+# Adapted from https://gist.github.com/nymous/f138c7f06062b7c43c060bf03759c29e
+
 import logging
-import logging.config
-import time
-import typing
+import sys
 
 import structlog
-from asgi_correlation_id.context import correlation_id
-from fastapi import Request
-from starlette.types import ASGIApp, Message, Receive, Scope, Send
+from structlog.types import EventDict, Processor
 
 
-def configure_logger(config: dict[str, typing.Any], additional_processors: list[typing.Any] | None = None) -> None:
+def _drop_color_message_key(_, __, event_dict: EventDict) -> EventDict:  # noqa: ANN001
     """
-    Configure the logger instance.
+    Remove "color_message" key from the event dict.
 
-    Args:
-        config: The configuration to be applied.
-        additional_processors: Any additional processors to be configured.
+    Uvicorn logs the message a second time in the extra `color_message`, but we
+    don't need it. This processor drops the key from the event dict if it
+    exists.
     """
-    # Define the shared processors, regardless of whether API is running in prod or dev.
-    shared_processors: list[structlog.types.Processor] = [
+    event_dict.pop("color_message", None)
+    return event_dict
+
+
+def setup_logging(json_logs: bool = False, log_level: str = "INFO") -> None:
+    """Setup logging."""
+    timestamper = structlog.processors.TimeStamper(fmt="iso")
+
+    shared_processors: list[Processor] = [
         structlog.contextvars.merge_contextvars,
+        structlog.stdlib.add_logger_name,
         structlog.stdlib.add_log_level,
         structlog.stdlib.PositionalArgumentsFormatter(),
         structlog.stdlib.ExtraAdder(),
-        structlog.processors.format_exc_info,
-        structlog.processors.TimeStamper(fmt="iso"),
+        _drop_color_message_key,
+        timestamper,
         structlog.processors.StackInfoRenderer(),
-        structlog.processors.CallsiteParameterAdder(
-            {
-                structlog.processors.CallsiteParameter.FILENAME,
-                structlog.processors.CallsiteParameter.FUNC_NAME,
-                structlog.processors.CallsiteParameter.MODULE,
-                structlog.processors.CallsiteParameter.LINENO,
-            },
-        ),
     ]
 
-    if additional_processors:
-        shared_processors.extend(additional_processors)
-
-    config.update(
-        {
-            "version": 1,
-            "formatters": {
-                "json": {
-                    "()": structlog.stdlib.ProcessorFormatter,
-                    "processors": [
-                        structlog.stdlib.ProcessorFormatter.remove_processors_meta,
-                        structlog.processors.JSONRenderer(),
-                    ],
-                    "foreign_pre_chain": shared_processors,
-                },
-                "development": {
-                    "()": structlog.stdlib.ProcessorFormatter,
-                    "processors": [
-                        structlog.stdlib.ProcessorFormatter.remove_processors_meta,
-                        structlog.dev.ConsoleRenderer(colors=False),
-                    ],
-                    "foreign_pre_chain": shared_processors,
-                },
-            },
-        },
-    )
-
-    logging.config.dictConfig(config)
+    if json_logs:
+        # Format the exception only for JSON logs, as we want to pretty-print
+        # them when using the ConsoleRenderer
+        shared_processors.append(structlog.processors.format_exc_info)
 
     structlog.configure(
-        processors=[*shared_processors, structlog.stdlib.ProcessorFormatter.wrap_for_formatter],
+        processors=shared_processors
+        + [
+            # Prepare event dict for `ProcessorFormatter`.
+            structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
+        ],
         logger_factory=structlog.stdlib.LoggerFactory(),
-        wrapper_class=structlog.stdlib.BoundLogger,
         cache_logger_on_first_use=True,
     )
 
+    log_renderer: structlog.types.Processor
+    if json_logs:
+        log_renderer = structlog.processors.JSONRenderer()
+    else:
+        log_renderer = structlog.dev.ConsoleRenderer()
 
-class LoggingMiddleware:
-    """
-    ASGI middleware for logging.
+    formatter = structlog.stdlib.ProcessorFormatter(
+        # These run ONLY on `logging` entries that do NOT originate within
+        # structlog.
+        foreign_pre_chain=shared_processors,
+        # These run on ALL entries after the pre_chain is done.
+        processors=[
+            # Remove _record & _from_structlog.
+            structlog.stdlib.ProcessorFormatter.remove_processors_meta,
+            log_renderer,
+        ],
+    )
 
-    Attributes
-    ----------
-        app: The ASGI app to augment.
-    """
+    handler = logging.StreamHandler()
+    # Use OUR `ProcessorFormatter` to format all `logging` entries.
+    handler.setFormatter(formatter)
+    root_logger = logging.getLogger()
+    root_logger.addHandler(handler)
 
-    def __init__(self, app: ASGIApp) -> None:
-        self.app = app
+    root_logger.setLevel(log_level.upper())
 
-    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+    for _log in ["uvicorn", "uvicorn.error"]:
+        # Clear the log handlers for uvicorn loggers, and enable propagation so
+        # the messages are caught by our root logger and formatted correctly by
+        # structlog
+        logging.getLogger(_log).handlers.clear()
+        logging.getLogger(_log).propagate = True
+
+    # Since we re-create the access logs ourselves, to add all information in
+    # the structured log (see the `logging_middleware` in main.py), we clear
+    # the handlers and prevent the logs to propagate to a logger higher up in
+    # the hierarchy (effectively rendering them silent).
+    logging.getLogger("uvicorn.access").handlers.clear()
+    logging.getLogger("uvicorn.access").propagate = False
+
+    def _handle_exception(exc_type, exc_value, exc_traceback) -> None:  # noqa: ANN001
         """
-        Call the middleware.
+        Log any uncaught exception instead of letting it be printed by Python.
 
-        Args:
-            scope: The scope of the request.
-            receive: The function to read the request data.
-            send: The function to write the response data.
+        (But leave KeyboardInterrupt untouched to allow users to Ctrl+C to
+         stop).
+
+        See https://stackoverflow.com/a/16993115/3641865
         """
-        if scope["type"] != "http":
-            await self.app(scope, receive, send)
-
+        if issubclass(exc_type, KeyboardInterrupt):
+            sys.__excepthook__(exc_type, exc_value, exc_traceback)
             return
 
-        info: Message = {"response": {}}
+        root_logger.error("Uncaught exception", exc_info=(exc_type, exc_value, exc_traceback))
 
-        async def inner_send(message: Message) -> None:
-            if message["type"] == "http.response.start":
-                info["response"] = message
-
-            await send(message)
-
-        request = Request(scope)
-
-        structlog.contextvars.clear_contextvars()
-        request_id = correlation_id.get() or ""
-        url = request.url
-        client_host = request.client.host if request.client else ""
-        client_port = request.client.port if request.client else ""
-
-        structlog.contextvars.bind_contextvars(
-            request_id=request_id,
-            url=url,
-            network={"client": {"ip": client_host, "port": client_port}},
-        )
-
-        logger: structlog.stdlib.BoundLogger = structlog.get_logger()
-        start_time = time.perf_counter_ns()
-
-        try:
-            await self.app(scope, receive, inner_send)
-
-        except Exception:
-            logger.exception("Uncaught exception")
-
-            info["response"]["status"] = 500
-            raise
-        finally:
-            process_time = time.perf_counter_ns() - start_time
-            status_code: int = info["response"]["status"]
-            http_method = request.method
-
-            http_version = request.scope["http_version"]
-            await logger.ainfo(
-                f'{client_host}:{client_port} - "{http_method} {url} HTTP/{http_version}" {status_code}',
-                http={
-                    "url": str(url),
-                    "status_code": status_code,
-                    "method": http_method,
-                    "request_id": request_id,
-                    "version": http_version,
-                },
-                duration=process_time,
-                tag="request",
-            )
+    sys.excepthook = _handle_exception

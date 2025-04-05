@@ -1,4 +1,6 @@
-const Roles = {
+import "./RoleSelector.css"
+
+export const Roles = {
     MANAGER: "manager",
     BURGER: "burger",
     SIDE: "side",
@@ -7,7 +9,7 @@ const Roles = {
 
 export default function RoleSelector({ selectedRole, setSelectedRole }) {
     return (
-        <div>
+        <div className="RoleSelector">
             <h2>Select a Role</h2>
             <div>
                 {Object.values(Roles).map((role) => (

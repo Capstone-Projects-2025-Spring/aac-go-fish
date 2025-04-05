@@ -12,6 +12,7 @@ from backend.models import (
     Message,
     NewOrder,
     Order,
+    OrderComponent,
     OrderScore,
     OrderSubmission,
     PlayerJoin,
@@ -59,17 +60,28 @@ from backend.models import (
                 "data": {
                     "type": "game_state",
                     "game_state_update_type": "role_assignment",
-                    "id": "id",
                     "role": "manager"
                 }
             }""",
-            Message(data=RoleAssignment(id="id", role=Role.manager)),
+            Message(data=RoleAssignment(role=Role.manager)),
             id="RoleAssignment",
         ),
         pytest.param(
             '{"data": {"type": "game_state", "game_state_update_type": "order_score", "score": 1}}',
             Message(data=OrderScore(score=1)),
             id="OrderScore",
+        ),
+        pytest.param(
+            """\
+            {
+                "data": {
+                    "type": "game_state",
+                    "game_state_update_type": "order_component",
+                    "component": {"ingredients": ["bread", "bread"]}
+                }
+            }""",
+            Message(data=OrderComponent(component=Burger(ingredients=["bread", "bread"]))),
+            id="OrderComponent",
         ),
         pytest.param(
             """\
@@ -121,8 +133,8 @@ from backend.models import (
             id="GameEnd",
         ),
         pytest.param(
-            '{"data": {"type": "chat", "id": "id", "typing": false}}',
-            Message(data=Chat(id="id", typing=False)),
+            '{"data": {"type": "chat", "typing": false}}',
+            Message(data=Chat(typing=False)),
             id="Chat",
         ),
     ],

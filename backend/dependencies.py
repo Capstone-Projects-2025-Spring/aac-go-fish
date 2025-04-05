@@ -1,32 +1,42 @@
+import asyncio
+import contextlib
 import queue
 from collections.abc import Callable
 from functools import cache
 
-from backend.game import start_main_loop
-
 from .constants import Settings
-from .game_state import Lobby, Player
-from .models import Role
+from .game import start_main_loop
+from .game_state import Lobby, Player, TaggedMessage
+from .models import Message
 
 
-class Channel[T]:
+class Channel[S, R]:
     """Wrapper class around two queues for two-way communication."""
 
-    def __init__(self, send: queue.Queue[T], recv: queue.Queue[T]) -> None:
+    def __init__(self, send: queue.Queue[S], recv: queue.Queue[R]) -> None:
         self._send = send
         self._recv = recv
 
-    def send(self, msg: T) -> None:
+    def send(self, msg: S) -> None:
         """Send a message."""
         # Can't raise queue.Full because we don't set a max size.
         self._send.put_nowait(msg)
 
-    def recv(self) -> T | None:
+    def recv_nowait(self) -> R | None:
         """Receive a message or None if empty."""
-        try:
-            return self._recv.get_nowait()
-        except queue.Empty:
-            return None
+        return self._recv.get()
+
+    def recv(self) -> R:
+        """Receive a message. Blocks until a message is available."""
+        return self._recv.get()
+
+    async def arecv(self) -> R:
+        """Receive a message."""
+        while True:
+            with contextlib.suppress(queue.Empty):
+                return self._recv.get_nowait()
+
+            await asyncio.sleep(0.05)
 
 
 class LobbyManager:
@@ -59,8 +69,9 @@ class LobbyManager:
             raise ValueError(f"Code {code} is not associated with any existing lobbies!")
 
         channel = queue.Queue()
-        role = list(Role)[len(lobby.players)]
-        player = Player(channel, role)
+
+        # role assigned later when game starts
+        player = Player(channel=channel, role=None)
 
         lobby.players[player.id] = player
 
@@ -80,7 +91,7 @@ class LobbyManager:
 
         return code
 
-    def channel(self, code: str, id: str) -> Channel:
+    def channel(self, code: str, id: str) -> Channel[TaggedMessage, Message]:
         """
         Create a channel for sending and receiving messages to and from the lobby.
 

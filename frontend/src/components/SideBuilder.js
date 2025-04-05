@@ -2,7 +2,10 @@ import React, { useState, useRef } from 'react';
 import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
 
-const SideBuilder = ({ onSend }) =>{
+const SideBuilder = ({
+    onSend,
+    score
+ }) =>{
     const [tableState, setTableState] = useState("empty");
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
     const fryingIntervalRef = useRef(null);
@@ -125,13 +128,16 @@ const SideBuilder = ({ onSend }) =>{
 
     return (
         <div className="SideBuilder">
+            <p className='ScoreText'>Your score is ${score}</p>
             <div className="MainContainer2">
                 <div className="LeftColumn">
-                    <button className="LeftButtons" onClick={() => placeSide("potatoes")} disabled={tableState !== "empty"}>
+                    <button className="LeftButtons" onClick={() => placeSide("potatoes")}
+                            disabled={tableState !== "empty"}>
                         <img src="/images/potatoButton.png" alt="Place Potatoes" className="ButtonImages"/>
                         Potato
                     </button>
-                    <button className="LeftButtons" onClick={() => placeSide("onions")} disabled={tableState !== "empty"}>
+                    <button className="LeftButtons" onClick={() => placeSide("onions")}
+                            disabled={tableState !== "empty"}>
                         <img src="/images/onion.png" alt="Place Onions" className="ButtonImages"/>
                         Onion
                     </button>
@@ -140,7 +146,8 @@ const SideBuilder = ({ onSend }) =>{
                     <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart}/>
                 </div>
                 <div className="RightColumn">
-                    <button className="RightButtons" onClick={chopSide} disabled={tableState !== "potatoes" && tableState !== "onions"}>
+                    <button className="RightButtons" onClick={chopSide}
+                            disabled={tableState !== "potatoes" && tableState !== "onions"}>
                         <img src="/images/knife.png" alt="Chop Potatoes" className="ButtonImages"/>
                         Chop
                     </button>

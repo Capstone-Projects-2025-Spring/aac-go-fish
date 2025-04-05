@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# ...except what we need
+!/**/*.py
+!/pyproject.toml
+!/uv.lock

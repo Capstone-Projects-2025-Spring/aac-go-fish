@@ -1,10 +1,20 @@
-function nameToItem(name, index) {
+function nameToParentItem(name) {
     const key = name.toLowerCase().replace(' ', '_');
     return {
-        id: index,
         name,
         image: `/images/${key}.png`,
         audio: `/audio/${key}.mp3`
+    };
+}
+
+function nameToChildItem(name, index) {
+    const key = name.toLowerCase().replace(' ', '_');
+    return {
+        name,
+        image: `/images/${key}.png`,
+        audio: `/audio/${key}.mp3`,
+        id: index,
+        sideImage: `images/${key}_side.png`
     };
 }
 
@@ -37,10 +47,16 @@ export const menu = [
             "Large"
         ],
     }
-].map(
-    (category, index) =>
-        ({
-            parent: nameToItem(category.name, index),
-            children: category.children.map(nameToItem)
-        })
+].map(category => ({
+    parent: nameToParentItem(category.name),
+    children: category.children.map((childName, childIndex) => nameToChildItem(childName, childIndex))
+}));
+
+export const menuMap = Object.fromEntries(
+    menu.map(({ parent, children }) => [
+        parent.name,
+        Object.fromEntries([
+            ...children.map(child => [child.name, child])
+        ])
+    ])
 );

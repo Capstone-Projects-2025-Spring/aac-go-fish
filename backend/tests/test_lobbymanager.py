@@ -1,7 +1,6 @@
 import pytest
 
 from backend.dependencies import LobbyManager
-from backend.models import Role
 
 
 def test_register_lobby() -> None:
@@ -30,6 +29,6 @@ def test_register_player() -> None:
 
     code = lm.register_lobby()
 
-    id = lm.register_player(code)
+    lm.register_player(code)
 
-    assert lm.lobbies[code].players[id].role == Role.manager
+    assert len(lm.lobbies[code].players) == 1

@@ -6,7 +6,7 @@ from collections.abc import Iterable
 from dataclasses import dataclass
 from uuid import uuid4
 
-from .models import Message, Role
+from .models import Chat, GameStateUpdate, Initializer, LifecycleEvent, Message, Role
 
 
 @dataclass
@@ -24,7 +24,7 @@ class Lobby:
 
     code: str = "ABC"
     players: dict[str, Player] = dataclasses.field(default_factory=dict)
-    channel: queue.Queue = dataclasses.field(default_factory=queue.Queue)
+    channel: queue.Queue[TaggedMessage] = dataclasses.field(default_factory=queue.Queue)
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
     started: bool = False
 
@@ -35,7 +35,7 @@ class Lobby:
             if player.id not in exclude:
                 player.send(msg)
 
-    def messages(self) -> Iterable[Message]:
+    def messages(self) -> Iterable[TaggedMessage]:
         """Iterate over messages that are currently available."""
         while True:
             try:
@@ -51,14 +51,22 @@ class Player:
 
     Attributes:
         id: The player's internal ID
-        role: The player's role.
+        role: The player's role. None if the game has not started yet.
         channel: Message queue for outgoing messages.
     """
 
     channel: queue.Queue
-    role: Role
+    role: Role | None
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
 
     def send(self, msg: Message) -> None:
         """Send a message to this player."""
         self.channel.put(msg)
+
+
+@dataclass(frozen=True)
+class TaggedMessage:
+    """A message with extra metadata attached."""
+
+    data: Initializer | GameStateUpdate | LifecycleEvent | Chat
+    id: str
