@@ -9,7 +9,6 @@ export default function MiniOrderDisplay({ burger, side, drink }) {
     const isBurger = burger && burger.length > 0;
     const isSide = !!side;
     const isDrink = drink !== null;
-    console.log("mini order");
 
 
     return ((isBurger || isSide || isDrink) && <>
@@ -26,13 +25,13 @@ export default function MiniOrderDisplay({ burger, side, drink }) {
                     })}
                 />
             )}
-            {isSide && (<SideDisplay tableState={side.tableState} />)}
+            {isSide && (<SideDisplay tableState={side.table_state} />)}
             {isDrink && (
                 <DrinkDisplay
                     color={drink.color}
-                    fillPercentage={drink.fillPercentage}
-                    cupSize={drink.cupSize}
-                    fillOverlay={drink.fillOverlay}
+                    fillPercentage={drink.fill}
+                    cupSize={drink.size}
+                    fillOverlay={drink.fill_overlay}
                 />
             )}
         </div>

@@ -49,7 +49,6 @@ const App = () => {
             case "game_state":
                 switch (data.game_state_update_type) {
                     case "new_order":
-                        console.log("new order");
                         const burger = data.order.burger?.ingredients ?? [];
                         const drink = data.order.drink ?? null;
                         const side = data.order.side ?? null; // TODO: update when backend sends more sides
@@ -68,7 +67,6 @@ const App = () => {
                         }, 3000);
                         break;
                     case "order_component":
-                        console.log("order_component");
                         switch(data.component_type) {
                             case "burger":
                                 console.log("burger");
@@ -89,6 +87,8 @@ const App = () => {
     }, [message]);
 
     useEffect(() => console.log(employeeBurger), [employeeBurger]);
+    useEffect(() => console.log(employeeDrink), [employeeDrink]);
+    useEffect(() => console.log(employeeSide), [employeeSide]);
 
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
     const removeSelectedItem = (indexToDelete) =>
@@ -124,7 +124,7 @@ const App = () => {
 
         if (drink) {
             tempScore += 2;
-            const drinkObj = { color: null, fillPercentage: 100, cupSize: null };
+            const drinkObj = { color: null, fillPercentage: 100, size: null };
             if (JSON.stringify(drink) === JSON.stringify(drinkObj)) tempScore += 2;
         }
 
@@ -152,7 +152,7 @@ const App = () => {
             { name: "Top Bun", sideImage: "/images/top_bun_side.png" },
         ];
         const side = { tableState: "fries" };
-        const drink = { color: "#FF0000", fillPercentage: 100, cupSize: "medium" };
+        const drink = { color: "#FF0000", fill: 100, size: "medium" };
 
         setBurgerOrder(burger);
         setDrinkOrder(drink);
@@ -209,7 +209,10 @@ const App = () => {
                             drinkSize={"medium"}
                             orderVisible={orderVisible}
                         />
-                        <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                        <div>
+                            <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                        </div>
+
                         {(employeeBurger || employeeDrink || employeeSide) && (
                             <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
                         )}
