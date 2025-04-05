@@ -28,7 +28,6 @@ export default function MiniOrderDisplay({ burger, side, drink }) {
             {isDrink && (
                 <DrinkDisplay
                     color={drink.color}
-                    hasIce={drink.hasIce}
                     fillPercentage={drink.fillPercentage}
                     cupSize={drink.cupSize}
                     fillOverlay={drink.fillOverlay}

@@ -117,7 +117,7 @@ const App = () => {
 
         if (drink) {
             tempScore += 2;
-            const drinkObj = { color: null, fillPercentage: 100, hasIce: false, cupSize: null };
+            const drinkObj = { color: null, fillPercentage: 100, cupSize: null };
             if (JSON.stringify(drink) === JSON.stringify(drinkObj)) tempScore += 2;
         }
 
@@ -145,7 +145,7 @@ const App = () => {
             { name: "Top Bun", sideImage: "/images/top_bun_side.png" },
         ];
         const side = { tableState: "fries" };
-        const drink = { color: "#FF0000", fillPercentage: 100, hasIce: false, cupSize: "medium" };
+        const drink = { color: "#FF0000", fillPercentage: 100, cupSize: "medium" };
 
         setBurgerOrder(burger);
         setDrinkOrder(drink);
