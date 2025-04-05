@@ -59,6 +59,15 @@
 }
 
 .manager-image {
-    width: 100%;
-    display: block;
+    position: fixed;
+    bottom: 350px;
+    right: 720px;
+    width: 700px;
+    height: auto;
+    z-index: 1000;
+
+}
+
+.AACBoardContainer {
+    margin-bottom: -450px;
 }
