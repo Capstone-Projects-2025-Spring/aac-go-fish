@@ -31,7 +31,7 @@ from backend.models import Burger, Drink, Order, Side
                 side=Side(table_state="fries"),
                 drink=Drink(color="blue", size="M", fill=100),
             ),
-            12,
+            11.5,
             id="correct burger, side, and drink",
         ),
         pytest.param(

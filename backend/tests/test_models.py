@@ -77,6 +77,7 @@ from backend.models import (
                 "data": {
                     "type": "game_state",
                     "game_state_update_type": "order_component",
+                    "component_type": "burger",
                     "component": {"ingredients": ["bread", "bread"]}
                 }
             }""",

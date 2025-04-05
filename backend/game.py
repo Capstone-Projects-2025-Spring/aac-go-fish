@@ -151,7 +151,7 @@ class GameLoop:
         if not (self.order.drink is None or order.drink is None):
             drink_score += 2
 
-            score_per_attribute = 1 / 4 * 2
+            score_per_attribute = 0.5
             correct = (self.order.drink.size == order.drink.size) + (self.order.drink.color == order.drink.color)
             drink_score += score_per_attribute * correct
             drink_score += math.sqrt(1 - abs(1 - order.drink.fill / 100)) * score_per_attribute
