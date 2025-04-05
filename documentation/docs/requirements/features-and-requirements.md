@@ -63,8 +63,8 @@ sidebar_position: 4
 - The game can be played with 2-4 players.  
 - Customers will approach the counter and order a combination of three menu items:  
   - **Burger**
+  - **Drink**
   - **Side**
-  - **Drink**  
 
 #### Cooking Process  
 
@@ -72,13 +72,12 @@ sidebar_position: 4
   - Assemble burger by placing ingredients (buns, lettuce, patty, cheese, etc.) in a specific order.  
 
 - **Drinks**  
-  - Fill a cup with the correct drink from a set of machines.  
-  - Ensure the correct drink is selected and adjust for ice/no ice preference.  
+  - Fill drink cups with varying sizes and flavors using a soda fountain.
 
 - **Sides**  
-  - Fries
-    - Chop potatoes and place them in a deep fryer.  
-    - Wait for the fries to cook before serving.  
+  - Make fries or onion rings by choosing ingredients, chopping them, and dragging them into the deep fryer.
+  
+ 
 
 
 #### Scoring System
