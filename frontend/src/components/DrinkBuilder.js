@@ -4,20 +4,20 @@ import DrinkDisplay from "./DrinkDisplay";
 const DrinkBuilder = ({
     onSend,
     score
-}) =>{
-    const [color, setColor] = useState([]);
+}) => {
+    const [color, setColor] = useState(null);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
     const [hasIce, setHasIce] = useState(false);
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
     const drinkColors = [
-        {name: "Blue", color: "#34C6F4"},
-        {name: "Green", color: "#99CA3C"},
-        {name: "Yellow", color: "#F7EC13"},
-        {name: "Red", color: "#FF0000"},
-        {name: "Orange", color: "#F5841F"},
-        {name: "Purple", color: "#7E69AF"},
+        { name: "Blue", color: "#34C6F4" },
+        { name: "Green", color: "#99CA3C" },
+        { name: "Yellow", color: "#F7EC13" },
+        { name: "Red", color: "#FF0000" },
+        { name: "Orange", color: "#F5841F" },
+        { name: "Purple", color: "#7E69AF" },
     ];
     const maxFill = 100;
     const fillAmount = 5;
@@ -36,7 +36,7 @@ const DrinkBuilder = ({
 
         fillInterval.current = setInterval(() => {
             setFillPercentage((prev) => {
-                if (prev >= maxFill){
+                if (prev >= maxFill) {
                     clearInterval(fillInterval.current);
                     return maxFill;
                 }
@@ -51,28 +51,28 @@ const DrinkBuilder = ({
         }
     };
 
-    const clearCup = () =>{
+    const clearCup = () => {
         setColor(null);
         setFillPercentage(0);
         setColorSelected(false);
     };
 
     const handleSend = () => {
-        if (!color || fillPercentage === 0){
+        if (!color || fillPercentage === 0) {
             return;
         }
 
         onSend({
             color,
-            fill: fillPercentage,
-            ice: hasIce,
-            size: cupSize,
+            fillPercentage,
+            hasIce,
+            cupSize,
         });
         clearCup();
     };
 
     const selectColor = (selectedColor) => {
-        if (color != null){
+        if (color != null) {
             return;
         }
         setColor(selectedColor);
@@ -101,39 +101,39 @@ const DrinkBuilder = ({
             </div>
 
             <div className='ButtonHolder'>
-            <button className="ClearCupButton" onClick={clearCup}>
-                <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage"/>
-            </button>
-            <button className="FillCupButton"
+                <button className="ClearCupButton" onClick={clearCup}>
+                    <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage" />
+                </button>
+                <button className="FillCupButton"
                     onMouseDown={startFilling}
                     onMouseUp={stopFilling}
                     onMouseLeave={stopFilling}
-            >
-                <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage"/>
-            </button>
+                >
+                    <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage" />
+                </button>
 
-            <button
-                className="CupSizeButtons"
-                onClick={() => setCupSize("small")}
-            >
-                <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall"/>
-            </button>
-            <button
-                className="CupSizeButtons"
-                onClick={() => setCupSize("medium")}
-            >
-                <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium"/>
-            </button>
-            <button
-                className="CupSizeButtons"
-                onClick={() => setCupSize("large")}
-            >
-                <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge"/>
-            </button>
+                <button
+                    className="CupSizeButtons"
+                    onClick={() => setCupSize("small")}
+                >
+                    <img src="/images/small.png" alt="Small Cup" className="CupSizeImageSmall" />
+                </button>
+                <button
+                    className="CupSizeButtons"
+                    onClick={() => setCupSize("medium")}
+                >
+                    <img src="/images/medium.png" alt="Small Cup" className="CupSizeImageMedium" />
+                </button>
+                <button
+                    className="CupSizeButtons"
+                    onClick={() => setCupSize("large")}
+                >
+                    <img src="/images/large.png" alt="Small Cup" className="CupSizeImageLarge" />
+                </button>
             </div>
 
-            <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize ={cupSize}/>
-            <button className ="SendButton" onClick={handleSend}>Send</button>
+            <DrinkDisplay color={color} fillPercentage={fillPercentage} cupSize={cupSize} />
+            <button className="SendButton" onClick={handleSend}>Send</button>
         </div>
     );
 };
