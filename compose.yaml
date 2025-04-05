@@ -4,6 +4,10 @@ services:
     image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-backend:main
     tty: true
     command: ["fastapi", "run", "./hello.py", "--root-path", "/api"]
+    environment:
+      ENV: prod
+      LOG_LEVEL: WARNING
+      FRONTEND_URL: bankruptcyassocation.com
 
   frontend:
     image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-frontend:main

@@ -6,6 +6,10 @@ services:
       dockerfile: Dockerfile
       additional_contexts:
         metadata: .
+    environment:
+      ENV: demo
+      LOG_LEVEL: DEBUG
+      FRONTEND_URL: localhost:8000
 
   frontend:
     build:
