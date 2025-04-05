@@ -12,7 +12,6 @@ from .models import (
     Burger,
     Chat,
     Drink,
-    Fry,
     GameEnd,
     GameStart,
     Message,
@@ -25,6 +24,7 @@ from .models import (
     PlayerLeave,
     Role,
     RoleAssignment,
+    Side,
 )
 
 logger = structlog.stdlib.get_logger(__file__)
@@ -32,6 +32,7 @@ logger = structlog.stdlib.get_logger(__file__)
 BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
 DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
 DRINK_SIZES = ["S", "M", "L"]
+SIDE_TYPES = ["Fries", "Onion Rings"]
 
 MESSAGES_PER_LOOP = 5
 
@@ -108,14 +109,14 @@ class GameLoop:
                 ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
             ),
             drink=None,
-            fry=None,
+            side=None,
         )
 
         if len(self.lobby.players) >= 3:
-            order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
+            order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, size=random.choice(DRINK_SIZES))
 
         if len(self.lobby.players) >= 4:
-            order.fry = Fry()
+            order.side = Side(table_state=random.choice(SIDE_TYPES))
 
         return order
 
@@ -137,10 +138,10 @@ class GameLoop:
         # Sides are graded based on completeness.
         # Up to 2 extra dollars + 1 base dollar
         side_score = 0
-        if self.order.fry is not None:
+        if self.order.side is not None:
             side_score += 1
 
-            if self.order.fry == order.fry:
+            if self.order.side == order.side:
                 side_score += 2
 
         # Drink attributes are equally weighted, with the fill percentage being
@@ -150,12 +151,8 @@ class GameLoop:
         if not (self.order.drink is None or order.drink is None):
             drink_score += 2
 
-            score_per_attribute = 1 / 4 * 2
-            correct = (
-                (self.order.drink.size == order.drink.size)
-                + (self.order.drink.ice == order.drink.ice)
-                + (self.order.drink.color == order.drink.color)
-            )
+            score_per_attribute = 0.5
+            correct = (self.order.drink.size == order.drink.size) + (self.order.drink.color == order.drink.color)
             drink_score += score_per_attribute * correct
             drink_score += math.sqrt(1 - abs(1 - order.drink.fill / 100)) * score_per_attribute
 
