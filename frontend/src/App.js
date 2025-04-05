@@ -44,6 +44,7 @@ const App = () => {
             case "game_state":
                 switch (data.game_state_update_type) {
                     case "new_order":
+                        console.log("new order");
                         const burger = data.order.burger?.ingredients ?? [];
                         const drink = data.order.drink ?? null;
                         const side = data.order.side ?? null; // TODO: update when backend sends more sides
@@ -62,6 +63,7 @@ const App = () => {
                         }, 3000);
                         break;
                     case "order_component":
+                        console.log("order_component");
                         switch(data.component_type) {
                             case "burger":
                                 console.log("burger");
