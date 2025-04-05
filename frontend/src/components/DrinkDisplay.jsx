@@ -7,6 +7,7 @@ export default function DrinkDisplay({ color, fillPercentage, cupSize, cupPositi
         large: "/images/cup-large.png",
     };
     const maxFillHeight = cupSize === "small" ? 175 : cupSize === "medium" ? 205 : 235;
+    console.log(cupSize);
 
     return (
         <div

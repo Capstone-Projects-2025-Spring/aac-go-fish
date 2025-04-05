@@ -204,6 +204,7 @@ const App = () => {
                             drinkSize={"medium"}
                             orderVisible={orderVisible}
                         />
+                        <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
                         {(employeeBurger || employeeDrink || employeeSide) && (
                             <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
                         )}

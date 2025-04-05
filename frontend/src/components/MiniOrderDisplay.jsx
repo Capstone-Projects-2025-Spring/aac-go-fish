@@ -9,6 +9,8 @@ export default function MiniOrderDisplay({ burger, side, drink }) {
     const isBurger = burger && burger.length > 0;
     const isSide = !!side;
     const isDrink = drink !== null;
+    console.log("mini order");
+
 
     return ((isBurger || isSide || isDrink) && <>
         <div className="mini-order-display">
