@@ -118,20 +118,12 @@ class Drink(BaseModel):
     color: str
     fill: float
     size: str
-    fill_overlay: FillOverlay
 
 
 class Side(BaseModel):
     """A side."""
 
     table_state: str
-
-
-class FillOverlay(BaseModel):
-    """Fill Overlay input for Drink."""
-
-    background_color: str
-    height: str
 
 
 class DayEnd(BaseModel):

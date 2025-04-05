@@ -77,7 +77,6 @@ const DrinkBuilder = ({ score }) =>{
                 color: color,
                 fill: fillPercentage,
                 size: cupSize,
-                fill_overlay: { background_color: color, height: `${fillPercentage}%` }
             }
         }});
         clearCup();

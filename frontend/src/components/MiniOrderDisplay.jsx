@@ -31,7 +31,6 @@ export default function MiniOrderDisplay({ burger, side, drink }) {
                     color={drink.color}
                     fillPercentage={drink.fill}
                     cupSize={drink.size}
-                    fillOverlay={drink.fill_overlay}
                 />
             )}
         </div>
