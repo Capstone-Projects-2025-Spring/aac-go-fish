@@ -67,10 +67,6 @@
           "title": "Fill",
           "type": "number"
         },
-        "ice": {
-          "title": "Ice",
-          "type": "boolean"
-        },
         "size": {
           "title": "Size",
           "type": "string"
@@ -79,16 +75,9 @@
       "required": [
         "color",
         "fill",
-        "ice",
         "size"
       ],
       "title": "Drink",
-      "type": "object"
-    },
-    "Fry": {
-      "description": "A fries.",
-      "properties": {},
-      "title": "Fry",
       "type": "object"
     },
     "GameEnd": {
@@ -260,10 +249,10 @@
             }
           ]
         },
-        "fry": {
+        "side": {
           "anyOf": [
             {
-              "$ref": "#/$defs/Fry"
+              "$ref": "#/$defs/Side"
             },
             {
               "type": "null"
@@ -274,7 +263,7 @@
       "required": [
         "burger",
         "drink",
-        "fry"
+        "side"
       ],
       "title": "Order",
       "type": "object"
@@ -294,13 +283,17 @@
           "title": "Game State Update Type",
           "type": "string"
         },
+        "component_type": {
+          "title": "Component Type",
+          "type": "string"
+        },
         "component": {
           "anyOf": [
             {
               "$ref": "#/$defs/Burger"
             },
             {
-              "$ref": "#/$defs/Fry"
+              "$ref": "#/$defs/Side"
             },
             {
               "$ref": "#/$defs/Drink"
@@ -310,6 +303,7 @@
         }
       },
       "required": [
+        "component_type",
         "component"
       ],
       "title": "OrderComponent",
@@ -423,7 +417,7 @@
       "enum": [
         "manager",
         "burger",
-        "fry",
+        "side",
         "drink"
       ],
       "title": "Role",
@@ -452,6 +446,20 @@
         "role"
       ],
       "title": "RoleAssignment",
+      "type": "object"
+    },
+    "Side": {
+      "description": "A side.",
+      "properties": {
+        "table_state": {
+          "title": "Table State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "table_state"
+      ],
+      "title": "Side",
       "type": "object"
     }
   },
