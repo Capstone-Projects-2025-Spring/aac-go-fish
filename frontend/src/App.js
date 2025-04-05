@@ -184,7 +184,7 @@ const App = () => {
                             <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
                         )}
                         <button onClick={handleReceiveOrder} className="receive-order-btn">
-                            Receive Order (Test)
+                            Receive Order
                         </button>
                     </div>
 
