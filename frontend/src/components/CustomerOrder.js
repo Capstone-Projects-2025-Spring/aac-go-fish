@@ -6,7 +6,6 @@ function CustomerOrder({
     burgerOrder,
     drinkOrder,
     drinkSize,
-    hasIce,
     hasSide,
     orderVisible
 }) {
@@ -32,8 +31,6 @@ function CustomerOrder({
         {name: "Purple", color: "#660099"},
     ];
 
-    // Temporarily set hasIce to false until ice is fully implemented in the drink station
-    hasIce = false;
     return (
         <div className = "CustomerOrder">
             <div className = "orderDisplay">
@@ -75,7 +72,6 @@ function CustomerOrder({
                         color={drinkOrder[1]}
                         fillPercentage={100}
                         cupSize={drinkSize}
-                        hasIce={hasIce}
                         />
                     )
                 : null

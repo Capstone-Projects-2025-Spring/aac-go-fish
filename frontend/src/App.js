@@ -43,27 +43,52 @@ const App = () => {
 
     useEffect(() => {
         if (!message) return;
+        console.log(message);
         const data = message.content.data;
+        switch (data.type) {
+            case "game_state":
+                switch (data.game_state_update_type) {
+                    case "new_order":
+                        const burger = data.order.burger?.ingredients ?? [];
+                        const drink = data.order.drink ?? null;
+                        const side = data.order.side ?? null; // TODO: update when backend sends more sides
 
-        if (data.type === "game_state" && data.game_state_update_type === "new_order") {
-            const burger = data.order.burger?.ingredients ?? [];
-            const drink = data.order.drink ?? null;
-            const side = data.order.fry ? { tableState: "fries" } : null;
+                        setBurgerOrder(burger);
+                        setDrinkOrder(drink);
+                        setSideOrder(side);
 
-            setBurgerOrder(burger);
-            setDrinkOrder(drink);
-            setSideOrder(side);
+                        const randomCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
+                        setBaseCustomerImage(randomCustomer);
+                        setCurrentCustomerImage(randomCustomer);
 
-            const randomCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
-            setBaseCustomerImage(randomCustomer);
-            setCurrentCustomerImage(randomCustomer);
-
-            setOrderVisible(false);
-            setTimeout(() => {
-                setOrderVisible(true);
-            }, 3000);
+                        setOrderVisible(false);
+                        setTimeout(() => {
+                            setOrderVisible(true);
+                        }, 3000);
+                        break;
+                    case "order_component":
+                        switch(data.component_type) {
+                            case "burger":
+                                console.log("burger");
+                                setEmployeeBurger(message.content.data.component.ingredients);
+                                break;
+                            case "drink":
+                                console.log("drink");
+                                setEmployeeDrink(message.content.data.component);
+                                break;
+                            case "side":
+                                console.log("side");
+                                setEmployeeSide(message.content.data.component);
+                                break;
+                        }
+                }
+                break;
         }
     }, [message]);
+
+    useEffect(() => console.log(employeeBurger), [employeeBurger]);
+    useEffect(() => console.log(employeeDrink), [employeeDrink]);
+    useEffect(() => console.log(employeeSide), [employeeSide]);
 
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
     const removeSelectedItem = (indexToDelete) =>
@@ -99,7 +124,7 @@ const App = () => {
 
         if (drink) {
             tempScore += 2;
-            const drinkObj = { color: null, fillPercentage: 100, hasIce: false, cupSize: null };
+            const drinkObj = { color: null, fillPercentage: 100, size: null };
             if (JSON.stringify(drink) === JSON.stringify(drinkObj)) tempScore += 2;
         }
 
@@ -127,7 +152,7 @@ const App = () => {
             { name: "Top Bun", sideImage: "/images/top_bun_side.png" },
         ];
         const side = { tableState: "fries" };
-        const drink = { color: "#FF0000", fillPercentage: 100, hasIce: false, cupSize: "medium" };
+        const drink = { color: "#FF0000", fill: 100, size: "medium" };
 
         setBurgerOrder(burger);
         setDrinkOrder(drink);
@@ -181,10 +206,13 @@ const App = () => {
                             burgerOrder={burgerOrder}
                             drinkOrder={drinkOrder}
                             hasSide={!!sideOrder}
-                            hasIce={false}
                             drinkSize={"medium"}
                             orderVisible={orderVisible}
                         />
+                        <div>
+                            <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                        </div>
+
                         {(employeeBurger || employeeDrink || employeeSide) && (
                             <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
                         )}
@@ -195,11 +223,11 @@ const App = () => {
 
                 </>
             ) : selectedRole === "burger" ? (
-                <BurgerBuilder onSend={setEmployeeBurger} score={score} />
+                <BurgerBuilder score={score} />
             ) : selectedRole === "side" ? (
-                <SideBuilder onSend={setEmployeeSide} score={score} />
+                <SideBuilder score={score} />
             ) : (
-                <DrinkBuilder onSend={setEmployeeDrink} score={score} />
+                <DrinkBuilder score={score} />
             )}
         </div>
     );

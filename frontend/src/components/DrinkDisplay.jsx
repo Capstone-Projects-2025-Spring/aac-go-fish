@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function DrinkDisplay({ color, fillPercentage, hasIce, cupSize, cupPosition }) {
+export default function DrinkDisplay({ color, fillPercentage, cupSize, cupPosition }) {
     const cupImages = {
         small: "/images/cup-small.png",
         medium: "/images/cup-medium.png",
