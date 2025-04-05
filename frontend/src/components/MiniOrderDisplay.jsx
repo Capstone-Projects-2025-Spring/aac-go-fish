@@ -12,11 +12,29 @@ export default function MiniOrderDisplay({ burger, side, drink }) {
 
     return ((isBurger || isSide || isDrink) && <>
         <div className="mini-order-display">
-            {isBurger && (<BurgerDisplay imagePaths={burger.map(ingredient => menuMap.Burger[ingredient].sideImage)}/>)}
-            {isSide && (<SideDisplay tableState={side.tableState}/>)}
-            {isDrink && (<DrinkDisplay color={drink.color} fillPercentage={drink.fillPercentage}
-            cupSize={drink.cupSize} fillOverlay={drink.fillOverlay}/>)}
+            {isBurger && (
+                <BurgerDisplay
+                    imagePaths={burger.map(ingredient => {
+                        if (typeof ingredient === "string") {
+                            return menuMap.Burger[ingredient]?.sideImage ?? "";
+                        } else if (ingredient.sideImage) {
+                            return ingredient.sideImage;
+                        }
+                        return "";
+                    })}
+                />
+            )}
+            {isSide && (<SideDisplay tableState={side.tableState} />)}
+            {isDrink && (
+                <DrinkDisplay
+                    color={drink.color}
+                    hasIce={drink.hasIce}
+                    fillPercentage={drink.fillPercentage}
+                    cupSize={drink.cupSize}
+                    fillOverlay={drink.fillOverlay}
+                />
+            )}
         </div>
-        </>
+    </>
     );
 }
