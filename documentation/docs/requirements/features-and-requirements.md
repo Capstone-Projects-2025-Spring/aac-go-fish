@@ -76,9 +76,6 @@ sidebar_position: 4
 
 - **Sides**  
   - Make fries or onion rings by choosing ingredients, chopping them, and dragging them into the deep fryer.
-  
- 
-
 
 #### Scoring System
 
