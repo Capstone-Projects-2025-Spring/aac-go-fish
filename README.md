@@ -12,4 +12,3 @@
 ## Project Abstract
 
 This project is a web-based cooking game that offers an interactive and accessible social experience for children in elementary school who struggle with verbal communication, using Augmentative and Alternative Communication (AAC).
-
