@@ -2,7 +2,7 @@ import functools
 import itertools
 import random
 import threading
-from queue import Queue
+from collections import deque
 
 import structlog
 
@@ -81,17 +81,17 @@ class GameLoop:
 
     def handle_next_order(self) -> None:
         """Give manager next order."""
-        if self.orders.empty():
+        if len(self.orders) == 0:
             self.handle_new_day()
             self.orders = get_orders(day=self.day, num_players=self.num_players)
 
-        self.manager.send(Message(data=NewOrder(order=self.orders.get())))
+        self.manager.send(Message(data=NewOrder(order=self.orders.pop())))
         logger.debug("Order sent.")
 
     def handle_new_day(self) -> None:
         """Executes game functions regarding updating day count."""
         self.day += 1
-        logger.debug("New day.")
+        logger.debug("New day.", day=self.day)
         self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
     def typing_indicator(self, msg: Chat) -> None:
@@ -110,11 +110,11 @@ def start_main_loop(lobby: Lobby) -> None:
     threading.Thread(target=loop.run).start()
 
 
-def get_orders(day: int, num_players: int) -> Queue[Order]:
+def get_orders(day: int, num_players: int) -> deque[Order]:
     """Return a queue of orders for the next day."""
-    orders = Queue()
+    orders = deque()
     for _ in range(_orders_on_day(day)):
-        orders.put(_generate_order(num_players))
+        orders.append(_generate_order(num_players))
     return orders
 
 
