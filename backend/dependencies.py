@@ -40,12 +40,18 @@ class Channel[S, R]:
             await asyncio.sleep(0.05)
 
 
+@cache
+def settings() -> Settings:
+    """Return the app settings."""
+    return Settings()
+
+
 class LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
 
     def __init__(self) -> None:
         self.lobbies: dict[tuple[str, ...], Lobby] = {}
-        all_codes = list(itertools.product(BURGER_INGREDIENTS, repeat=3))
+        all_codes = list(itertools.product(BURGER_INGREDIENTS, repeat=settings().code_length))
         random.shuffle(all_codes)
         self.available_codes = all_codes
 
@@ -136,9 +142,3 @@ _LobbyManager = LobbyManager()
 def lobby_manager() -> LobbyManager:
     """Return the lobby manager dependency."""
     return _LobbyManager
-
-
-@cache
-def settings() -> Settings:
-    """Return the app settings."""
-    return Settings()
