@@ -97,7 +97,7 @@ logger = structlog.stdlib.get_logger()
 
 
 @app.post("/lobby")
-def create_lobby(lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, list[str]]:
+def create_lobby(lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, tuple[str, ...]]:
     """Creates a new lobby."""
     code = lm.register_lobby()
 

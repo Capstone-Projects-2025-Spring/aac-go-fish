@@ -32,13 +32,13 @@ def test_no_more_lobbies(lm: LobbyManager) -> None:
 def test_different_lobbies_have_different_codes(lm: LobbyManager) -> None:
     """Test that different lobbies have different codes."""
     codes = [lm.register_lobby() for _ in range(10)]
-    assert len(codes) == len(set(tuple(code) for code in codes))
+    assert len(codes) == len(set(codes))
 
 
 def test_register_player_invalid_code(lm: LobbyManager) -> None:
     """Test ValueError is thrown on invalid codes."""
     with pytest.raises(ValueError) as exc_info:
-        lm.register_player(["Top Bun"])
+        lm.register_player(("Top Bun", "Not a real ingredient"))
 
     assert exc_info.type is ValueError
 
@@ -48,4 +48,4 @@ def test_register_player(lm: LobbyManager) -> None:
     code = lm.register_lobby()
     lm.register_player(code)
 
-    assert len(lm.lobbies[tuple(code)].players) == 1
+    assert len(lm.lobbies[code].players) == 1

@@ -37,7 +37,7 @@ class Initializer(BaseModel):
 
     type: Literal[MessageKind.initializer] = MessageKind.initializer
 
-    code: list[str]
+    code: tuple[str, ...]
     id: str
 
 
@@ -49,7 +49,7 @@ class LobbyJoinRequest(BaseModel):
         code: Lobby join code.
     """
 
-    code: list[str]
+    code: tuple[str, ...]
 
 
 class GameStateUpdateKind(StrEnum):

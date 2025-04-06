@@ -27,7 +27,7 @@ from backend.models import (
     [
         pytest.param(
             '{"data": {"type": "initializer", "code": ["Lettuce", "Tomato", "Onion"], "id": "id"}}',
-            Message(data=Initializer(code=["Lettuce", "Tomato", "Onion"], id="id")),
+            Message(data=Initializer(code=("Lettuce", "Tomato", "Onion"), id="id")),
             id="Initializer",
         ),
         pytest.param(

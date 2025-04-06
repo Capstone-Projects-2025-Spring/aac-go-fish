@@ -49,7 +49,7 @@ class LobbyManager:
         random.shuffle(all_codes)
         self.available_codes = all_codes
 
-    def register_player(self, code: list[str]) -> str:
+    def register_player(self, code: tuple[str, ...]) -> str:
         """
         Add a player to a lobby given a lobby join code.
 
@@ -69,7 +69,7 @@ class LobbyManager:
             The id of the newly created player.
         """
         try:
-            lobby = self.lobbies[tuple(code)]
+            lobby = self.lobbies[code]
         except KeyError:
             raise ValueError(f"Code {code} is not associated with any existing lobbies!")
 
@@ -80,7 +80,7 @@ class LobbyManager:
 
         return player.id
 
-    def register_lobby(self) -> list[str]:
+    def register_lobby(self) -> tuple[str, ...]:
         """
         Create a new lobby in its own thread.
 
@@ -93,27 +93,25 @@ class LobbyManager:
         if not self.available_codes:
             raise RuntimeError("No more lobby codes available, server is full")
 
-        code_tuple = self.available_codes.pop()
-        code = list(code_tuple)
+        code = self.available_codes.pop()
         lobby = Lobby(code)
 
-        self.lobbies[tuple(code)] = lobby
+        self.lobbies[code] = lobby
 
         return code
 
-    def delete_lobby(self, code: list[str]) -> None:
+    def delete_lobby(self, code: tuple[str, ...]) -> None:
         """
         Delete a lobby and recycle its code.
 
         Args:
             code: The lobby join code.
         """
-        code_tuple = tuple(code)
-        if code_tuple in self.lobbies:
-            del self.lobbies[code_tuple]
-            self.available_codes.append(code_tuple)
+        if code in self.lobbies:
+            del self.lobbies[code]
+            self.available_codes.append(code)
 
-    def channel(self, code: list[str], id: str) -> Channel[TaggedMessage, Message]:
+    def channel(self, code: tuple[str, ...], id: str) -> Channel[TaggedMessage, Message]:
         """
         Create a channel for sending and receiving messages to and from the lobby.
 
@@ -121,7 +119,7 @@ class LobbyManager:
             code: Lobby join code.
             id: Player id.
         """
-        lobby = self.lobbies[tuple(code)]
+        lobby = self.lobbies[code]
 
         if not lobby.started:
             lobby.started = True
