@@ -53,9 +53,11 @@ class LobbyManager:
         """
         Add a player to a lobby given a lobby join code.
 
-        Role is assigned based on order of joining. The first player has the
-        manager role, the second has the burger role, the third has the fry
-        role, the fourth has the drink role.
+        Creates a channel for the player to send and receive messages.
+        Creates a new player object.
+        Adds the player to the lobby if it is a valid code.
+        Broadcasts the new player count to all players currently in the lobby.
+
 
         Args:
             code: The lobby join code.
