@@ -5,6 +5,7 @@
     border: 2px solid #ddd;
     border-radius: 6px;
     padding: 1rem;
+    width: 30rem;
 }
 
 .aacboard-selected-item {
@@ -58,16 +59,6 @@
     }
 }
 
-.manager-image {
-    position: fixed;
-    bottom: 350px;
-    right: 720px;
-    width: 700px;
-    height: auto;
-    z-index: 1000;
-
-}
-
 .AACBoardContainer {
-    margin-bottom: -450px;
+    margin-top: 10rem;
 }

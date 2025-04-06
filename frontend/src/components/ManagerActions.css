@@ -6,6 +6,7 @@
 
 .manager-actions-buttons {
     margin-bottom: 1rem;
+
     button {
         margin-right: 0.5rem;
     }
@@ -15,7 +16,7 @@
     margin-bottom: 0.25rem;
 }
 
-.MenuButtons{
+.MenuButtons {
     min-width: 120px;
     min-height: 40px;
     margin: 10px;
@@ -27,7 +28,7 @@
     border-radius: 6px;
 }
 
-.SendOrder{
+.SendOrder {
     min-width: 120px;
     min-height: 40px;
     margin: 10px;
@@ -38,6 +39,6 @@
     text-align: center;
 }
 
-.SendCustomerOrder{
+.SendCustomerOrder {
     height: 100px;
 }

@@ -9,19 +9,19 @@
 
 .columns {
     display: flex;
-    width: 100%;
+    flex-direction: row;
     gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-
 
 .column {
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
-    position: fixed;
-    left: 700px;
-    width: 50%;
 }
 
 .Score {
@@ -29,20 +29,29 @@
     border-radius: 6px;
     color: white;
     background-color: #9dae88;
-    border: 2px solid;
-    border-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border: 2px solid black;
     text-align: center;
     width: fit-content;
-    margin-top: 10px;
     padding: 10px;
 }
 
+.manager-image {
+    width: 100%;
+    max-width: 300rem;
+    height: auto;
+    margin-bottom: 0rem;
+    margin-right: 5rem;
+    transform: scale(1.1);
+}
+
+
 .receive-order-btn {
-    width: 20%;
-    margin-left: 270px;
-    margin-top: 100px;
-    position: fixed;
+    width: 200px;
+    margin-top: 2rem;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 1px solid #322e2e;
+    background: #ffffff;
 }

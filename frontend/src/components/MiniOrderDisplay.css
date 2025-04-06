@@ -1,12 +1,13 @@
 .mini-order-display {
     position: fixed;
-    bottom: 640px;
-    right: 650px;
+    bottom: 30rem;
+    right: 40rem;
     display: flex;
     align-items: center;
     gap: 20px;
     z-index: 2001;
     transform: scale(0.7);
+    z-index: 2001;
 
     >* {
         all: unset;
@@ -36,11 +37,30 @@
         overflow: hidden;
         position: relative;
         width: 50px;
-        height: 100px;
+        height: 10px;
     }
-    .CupContainer{
+
+    .CupContainer {
         width: 50px;
-        height:100px;
+        height: 100px;
 
     }
+}
+
+.relative-container {
+    position: relative;
+    display: inline-block;
+
+}
+
+
+.mini-order-display {
+    position: absolute;
+    bottom: 15rem;
+    right: -20%;
+    z-index: 2001;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transform: scale(.7);
 }

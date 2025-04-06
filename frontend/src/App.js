@@ -69,7 +69,7 @@ const App = () => {
                         }, 3000);
                         break;
                     case "order_component":
-                        switch(data.component_type) {
+                        switch (data.component_type) {
                             case "burger":
                                 console.log("burger");
                                 setEmployeeBurger(message.content.data.component.ingredients);
@@ -134,16 +134,19 @@ const App = () => {
     };
 
     const handleGiveToCustomer = () => {
-        send({data: {
-            type: "game_state",
-            game_state_update_type: "order_submission",
-            order: {
-                burger: {
-                    ingredients: employeeBurger
-                },
-                drink: employeeDrink,
-                side: employeeSide
-        }}});
+        send({
+            data: {
+                type: "game_state",
+                game_state_update_type: "order_submission",
+                order: {
+                    burger: {
+                        ingredients: employeeBurger
+                    },
+                    drink: employeeDrink,
+                    side: employeeSide
+                }
+            }
+        });
 
         getScoring({
             burger: employeeBurger,
@@ -157,16 +160,14 @@ const App = () => {
     };
     const handleReceiveOrder = () => {
         console.log("Test button clicked");
-
         const burger = [
             { name: "Bottom Bun", sideImage: "/images/bottom_bun_side.png" },
             { name: "Patty", sideImage: "/images/patty_side.png" },
             { name: "Lettuce", sideImage: "/images/lettuce_side.png" },
             { name: "Top Bun", sideImage: "/images/top_bun_side.png" },
         ];
-        const side = { tableState: "fries" };
+        const side = { table_state: "fries" };
         const drink = { color: "#FF0000", fill: 100, size: "medium" };
-
         setBurgerOrder(burger);
         setDrinkOrder(drink);
         setSideOrder(side);
@@ -181,9 +182,7 @@ const App = () => {
 
         setOrderVisible(false);
 
-
         const delay = Math.floor(Math.random() * 2000) + 3000;
-
         setTimeout(() => {
             const thinkVersion = randomCustomer.replace(".png", "_think.png");
             setCurrentCustomerImage(thinkVersion);
@@ -193,23 +192,39 @@ const App = () => {
     };
 
 
+
     return (
         <div className="app-container">
             <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
-            {selectedRole === "manager" ? (
-                <>
-                    <div className="columns">
-                        {orderVisible && (
-                            <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
-                        )}                        </div>
-                    <div className="column">
-                        <p className='Score'>Your score is ${score}</p>
-                        <img
-                            src={currentCustomerImage ?? "/images/customers/empty.png"}
-                            alt="Customer"
-                            className="manager-image top-left-customer"
-                        />
 
+            {selectedRole === "manager" && (
+                <div className="columns">
+
+                    <div className="column">
+                        <p className="Score">Your score is ${score}</p>
+
+                        <div className="relative-container">
+                            <img
+                                src={currentCustomerImage ?? "/images/customers/empty.png"}
+                                alt="Customer"
+                                className="manager-image"
+                            />
+
+                            {orderVisible && (
+                                <MiniOrderDisplay
+                                    burger={burgerOrder}
+                                    side={sideOrder}
+                                    drink={drinkOrder}
+                                />
+                            )}
+                        </div>
+
+                        <button onClick={handleReceiveOrder} className="receive-order-btn">
+                            Receive Order
+                        </button>
+                    </div>
+
+                    <div className="column">
                         <AACBoard
                             selectedItems={selectedItems}
                             onSelectItem={addSelectedItem}
@@ -219,29 +234,26 @@ const App = () => {
                             burgerOrder={burgerOrder}
                             drinkOrder={drinkOrder}
                             hasSide={!!sideOrder}
-                            drinkSize={"medium"}
+                            drinkSize="medium"
                             orderVisible={orderVisible}
                         />
-                        <div>
-                            <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
-                        </div>
+
+                        <MiniOrderDisplay
+                            burger={employeeBurger}
+                            side={employeeSide}
+                            drink={employeeDrink}
+                        />
 
                         {(employeeBurger || employeeDrink || employeeSide) && (
                             <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
                         )}
-                        <button onClick={handleReceiveOrder} className="receive-order-btn">
-                            Receive Order
-                        </button>
                     </div>
-
-                </>
-            ) : selectedRole === "burger" ? (
-                <BurgerBuilder score={score} />
-            ) : selectedRole === "side" ? (
-                <SideBuilder score={score} />
-            ) : (
-                <DrinkBuilder score={score} />
+                </div>
             )}
+
+            {selectedRole === "burger" && <BurgerBuilder score={score} />}
+            {selectedRole === "side" && <SideBuilder score={score} />}
+            {selectedRole === "drink" && <DrinkBuilder score={score} />}
         </div>
     );
 };
