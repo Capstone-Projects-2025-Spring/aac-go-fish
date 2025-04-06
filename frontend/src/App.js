@@ -10,6 +10,8 @@ import MiniOrderDisplay from "./components/MiniOrderDisplay";
 import { WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
+    const { send } = useContext(WebSocketContext);
+
     const [selectedRole, setSelectedRole] = useState(Roles.MANAGER);
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
@@ -132,6 +134,17 @@ const App = () => {
     };
 
     const handleGiveToCustomer = () => {
+        send({data: {
+            type: "game_state",
+            game_state_update_type: "order_submission",
+            order: {
+                burger: {
+                    ingredients: employeeBurger
+                },
+                drink: employeeDrink,
+                side: employeeSide
+        }}});
+
         getScoring({
             burger: employeeBurger,
             side: employeeSide?.tableState,
