@@ -1,13 +1,8 @@
 .mini-order-display {
-    position: fixed;
-    bottom: 640px;
-    right: 650px;
     display: flex;
     align-items: center;
     gap: 20px;
     z-index: 2001;
-    transform: scale(0.7);
-
     >* {
         all: unset;
         width: 100px !important;
@@ -35,12 +30,6 @@
         background-color: #ffffff;
         overflow: hidden;
         position: relative;
-        width: 50px;
         height: 100px;
-    }
-    .CupContainer{
-        width: 50px;
-        height:100px;
-
     }
 }

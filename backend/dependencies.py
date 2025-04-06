@@ -109,6 +109,7 @@ class LobbyManager:
 
 
 _LobbyManager = LobbyManager(lambda: random.choices(BURGER_INGREDIENTS, k=3))
+# _LobbyManager = LobbyManager(lambda: ["Bottom Bun", "Bottom Bun", "Bottom Bun"]) This makes it easier to test.
 
 
 def lobby_manager() -> LobbyManager:

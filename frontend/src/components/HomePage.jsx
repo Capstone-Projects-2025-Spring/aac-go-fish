@@ -7,9 +7,9 @@ import IngredientScrollPicker from './IngredientScrollPicker';
 
 function HomePage() {
     const [lobbyCode, setLobbyCode] = useState(null);
-    const [ingredient1, setIngredient1] = useState('');
-    const [ingredient2, setIngredient2] = useState('');
-    const [ingredient3, setIngredient3] = useState('');
+    const [ingredient1, setIngredient1] = useState('Bottom Bun');
+    const [ingredient2, setIngredient2] = useState('Bottom Bun');
+    const [ingredient3, setIngredient3] = useState('Bottom Bun');
     const { send } = useContext(WebSocketContext);
 
     const handleJoin = async (codeArray) => {

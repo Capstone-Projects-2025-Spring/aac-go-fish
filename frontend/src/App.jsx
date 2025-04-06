@@ -4,7 +4,6 @@ import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
 import AACBoard from "./components/AACBoard";
-import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
 import { WebSocketContext } from "./WebSocketContext";
@@ -163,16 +162,26 @@ const App = () => {
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">
-                        {orderVisible && (
-                            <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
-                        )}                        </div>
                     <div className="column">
+                        <div className="customer-container">
+                            <img
+                                src={customerNumber ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png` : "/images/customers/empty.png"}
+                                alt="Customer"
+                                className="customer-image"
+                            />
+                            {orderVisible && (
+                                <div className="customer-mini-order-overlay">
+                                    <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
+                                </div>
+                            )}
+                            <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/send_order.png" alt="send customer order" />
+                            <div className="manager-mini-order-overlay">
+                                    <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="right-column">
                         <p className='Score'>Your score is ${score}</p>
-                        <img
-                            src={customerNumber ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png` : "/images/customers/empty.png"}
-                            alt="Customer"
-                            className="manager-image top-left-customer"
-                        />
 
                         <AACBoard
                             selectedItems={selectedItems}
@@ -186,14 +195,8 @@ const App = () => {
                             drinkSize={"medium"}
                             orderVisible={orderVisible}
                         />
-                        <div>
-                            <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
-                        </div>
-
-                        <ManagerActions onGiveToCustomer={handleGiveToCustomer}/>
-
                     </div>
-
+                    </div>
                 </>
             ) : selectedRole === "burger" ? (
                 <BurgerBuilder score={score} />
