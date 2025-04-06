@@ -7,7 +7,7 @@ from functools import cache
 from .constants import Settings
 from .game import start_main_loop
 from .game_state import Lobby, Player, TaggedMessage
-from .models import Message
+from .models import Message, PlayerCount
 
 
 class Channel[S, R]:
@@ -69,11 +69,10 @@ class LobbyManager:
             raise ValueError(f"Code {code} is not associated with any existing lobbies!")
 
         channel = queue.Queue()
-
-        # role assigned later when game starts
         player = Player(channel=channel, role=None)
-
         lobby.players[player.id] = player
+
+        lobby.broadcast(Message(data=PlayerCount(count=len(lobby.players), player_ids=list(lobby.players.keys()))))
 
         return player.id
 

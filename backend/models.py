@@ -144,6 +144,7 @@ class LobbyLifecycleEventKind(StrEnum):
 
     player_join = "player_join"
     player_leave = "player_leave"
+    player_count = "player_count"
     game_start = "game_start"
     game_end = "game_end"
 
@@ -166,6 +167,16 @@ class PlayerLeave(BaseModel):
     id: str
 
 
+class PlayerCount(BaseModel):
+    """Current number of players in the lobby."""
+
+    type: Literal[MessageKind.lobby_lifecycle] = MessageKind.lobby_lifecycle
+    lifecycle_type: Literal[LobbyLifecycleEventKind.player_count] = LobbyLifecycleEventKind.player_count
+
+    count: int
+    player_ids: list[str] = Field(default_factory=list)
+
+
 class GameStart(BaseModel):
     """The host starts the game."""
 
@@ -180,7 +191,9 @@ class GameEnd(BaseModel):
     lifecycle_type: Literal[LobbyLifecycleEventKind.game_end] = LobbyLifecycleEventKind.game_end
 
 
-type LifecycleEvent = Annotated[PlayerJoin | PlayerLeave | GameStart | GameEnd, Field(discriminator="lifecycle_type")]
+type LifecycleEvent = Annotated[
+    PlayerJoin | PlayerLeave | PlayerCount | GameStart | GameEnd, Field(discriminator="lifecycle_type")
+]
 
 
 class Chat(BaseModel):

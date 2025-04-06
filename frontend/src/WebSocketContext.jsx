@@ -10,6 +10,8 @@ export function WebSocketProvider({ children }) {
 
     useEffect(() => {
         ws.current = new WebSocket(`ws://${process.env.REACT_APP_BACKEND_DOMAIN}/ws`);
+
+        // Must join lobby only after WebSocket connection is established
         ws.current.onopen = () => joinLobby().catch(console.error);
         ws.current.onmessage = (event) => setTimestampedMessage(JSON.parse(event.data));
 

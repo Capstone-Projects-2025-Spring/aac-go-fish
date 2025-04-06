@@ -94,10 +94,6 @@ const App = () => {
         }
     }, [message]);
 
-    useEffect(() => console.log(employeeBurger), [employeeBurger]);
-    useEffect(() => console.log(employeeDrink), [employeeDrink]);
-    useEffect(() => console.log(employeeSide), [employeeSide]);
-
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
     const removeSelectedItem = (indexToDelete) =>
         setSelectedItems((prev) => prev.filter((_, idx) => idx !== indexToDelete));
