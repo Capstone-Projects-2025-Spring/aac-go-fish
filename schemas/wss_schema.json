@@ -161,8 +161,11 @@
           "type": "string"
         },
         "code": {
+          "items": {
+            "type": "string"
+          },
           "title": "Code",
-          "type": "string"
+          "type": "array"
         },
         "id": {
           "title": "Id",
@@ -181,6 +184,7 @@
         "mapping": {
           "game_end": "#/$defs/GameEnd",
           "game_start": "#/$defs/GameStart",
+          "player_count": "#/$defs/PlayerCount",
           "player_join": "#/$defs/PlayerJoin",
           "player_leave": "#/$defs/PlayerLeave"
         },
@@ -192,6 +196,9 @@
         },
         {
           "$ref": "#/$defs/PlayerLeave"
+        },
+        {
+          "$ref": "#/$defs/PlayerCount"
         },
         {
           "$ref": "#/$defs/GameStart"
@@ -358,6 +365,39 @@
         "order"
       ],
       "title": "OrderSubmission",
+      "type": "object"
+    },
+    "PlayerCount": {
+      "description": "Current number of players in the lobby.",
+      "properties": {
+        "type": {
+          "const": "lobby_lifecycle",
+          "default": "lobby_lifecycle",
+          "title": "Type",
+          "type": "string"
+        },
+        "lifecycle_type": {
+          "const": "player_count",
+          "default": "player_count",
+          "title": "Lifecycle Type",
+          "type": "string"
+        },
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        },
+        "player_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Player Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "count"
+      ],
+      "title": "PlayerCount",
       "type": "object"
     },
     "PlayerJoin": {
