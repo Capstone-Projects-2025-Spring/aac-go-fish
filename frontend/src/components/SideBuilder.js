@@ -3,6 +3,7 @@ import "./SideBuilder.css"
 import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
 import { WebSocketContext } from "../WebSocketContext";
+import { playSendSound } from "./playSendSound";
 
 const SideBuilder = ({ score }) =>{
     const [tableState, setTableState] = useState("empty");
@@ -25,6 +26,7 @@ const SideBuilder = ({ score }) =>{
             component: {
                 table_state: tableState,
         }}});
+        playSendSound();
         reset();
         setConfirmMessage("Side sent to manager!");
         setTimeout(() => {
