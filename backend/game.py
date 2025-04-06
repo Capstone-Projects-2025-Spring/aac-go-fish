@@ -88,7 +88,7 @@ class GameLoop:
         logger.debug("Order sent.")
 
     def handle_new_day(self) -> None:
-        """Executes game functions regarding updating day count."""
+        """Update current day."""
         self.day += 1
         logger.debug("New day.", day=self.day)
         self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
