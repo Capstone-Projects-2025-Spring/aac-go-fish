@@ -22,15 +22,6 @@ function CustomerOrder({
         { id: 11, name: 'Cheese', image: '/images/cheese.png', audio: '/audio/cheese.mp3', sideImage: '/images/CheeseSide.png' },
     ];
 
-    const drinkLayers = [
-        {name: "Blue", color: "#0033CC"},
-        {name: "Green", color: "#00CC00"},
-        {name: "Yellow", color: "#FFFF00"},
-        {name: "Red", color: "#FF0000"},
-        {name: "Orange", color: "#FF9900"},
-        {name: "Purple", color: "#660099"},
-    ];
-
     return (
         <div className = "CustomerOrder">
             <div className = "orderDisplay">

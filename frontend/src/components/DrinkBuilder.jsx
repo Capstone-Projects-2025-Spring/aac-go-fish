@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import "./DrinkBuilder.css"
-import DrinkDisplay from "./DrinkDisplay";
-import { WebSocketContext } from "../WebSocketContext";
-import { playSendSound } from "./playSendSound";
+import "./DrinkBuilder.css";
+import DrinkDisplay from "./DrinkDisplay.jsx";
+import { WebSocketContext } from "../WebSocketContext.jsx";
+import { playSendSound } from "./playSendSound.jsx";
 
 const DrinkBuilder = ({ score }) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
-    const [errorMessage, setErrorMessage] = useState("");
     const [colorSelected, setColorSelected] = useState(false);
     const [cupSize, setCupSize] = useState("medium");
     const [confirmMessage, setConfirmMessage] = useState("");
@@ -65,10 +64,6 @@ const DrinkBuilder = ({ score }) =>{
     };
 
     const handleSend = () => {
-        if (!color || fillPercentage === 0) {
-            setErrorMessage("Cup is empty!");
-            return;
-        }
         send({data: {
             type: "game_state",
             game_state_update_type: "order_component",

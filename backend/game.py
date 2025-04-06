@@ -95,7 +95,6 @@ class GameLoop:
     def assign_roles(self) -> None:
         """Assign roles to players."""
         roles = list(Role)[: len(self.lobby.players)]
-        random.shuffle(roles)
 
         for player, role in zip(self.lobby.players.values(), roles, strict=False):
             player.role = role
