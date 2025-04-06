@@ -38,9 +38,8 @@ class GameLoop:
     def __init__(self, lobby: Lobby) -> None:
         self.lobby = lobby
         self.day = 1
-        self.num_players = 4
 
-        self.orders = get_orders(day=self.day, num_players=self.num_players)
+        self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
     def run(self) -> None:
         """
@@ -83,7 +82,7 @@ class GameLoop:
         """Give manager next order."""
         if len(self.orders) == 0:
             self.handle_new_day()
-            self.orders = get_orders(day=self.day, num_players=self.num_players)
+            self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.manager.send(Message(data=NewOrder(order=self.orders.pop())))
         logger.debug("Order sent.")
