@@ -6,8 +6,8 @@ import SideBuilder from "./components/SideBuilder";
 import AACBoard from "./components/AACBoard";
 import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
+import HomePage from "./components/HomePage";
 import { WebSocketContext } from "./WebSocketContext";
-import Lobby from "./components/Lobby";
 
 const App = () => {
     const { send } = useContext(WebSocketContext);
@@ -201,7 +201,7 @@ const App = () => {
                 <SideBuilder score={score} />
             ) : selectedRole == "drink" ? (
                 <DrinkBuilder score={score} />
-            ) : <Lobby/>}
+            ) : <HomePage/>}
         </div>
     );
 };

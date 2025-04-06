@@ -1,11 +1,12 @@
 import asyncio
 import contextlib
 import queue
+import random
 from collections.abc import Callable
 from functools import cache
 
 from .constants import Settings
-from .game import start_main_loop
+from .game import BURGER_INGREDIENTS, start_main_loop
 from .game_state import Lobby, Player, TaggedMessage
 from .models import Message, PlayerCount
 
@@ -42,11 +43,11 @@ class Channel[S, R]:
 class LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
 
-    def __init__(self, code_generator: Callable[[], str]) -> None:
-        self.lobbies: dict[str, Lobby] = {}
+    def __init__(self, code_generator: Callable[[], list[str]]) -> None:
+        self.lobbies: dict[tuple[str, ...], Lobby] = {}
         self.code_generator = code_generator
 
-    def register_player(self, code: str) -> str:
+    def register_player(self, code: list[str]) -> str:
         """
         Add a player to a lobby given a lobby join code.
 
@@ -64,19 +65,18 @@ class LobbyManager:
             The id of the newly created player.
         """
         try:
-            lobby = self.lobbies[code]
+            lobby = self.lobbies[tuple(code)]
         except KeyError:
             raise ValueError(f"Code {code} is not associated with any existing lobbies!")
 
         channel = queue.Queue()
         player = Player(channel=channel, role=None)
         lobby.players[player.id] = player
-
         lobby.broadcast(Message(data=PlayerCount(count=len(lobby.players), player_ids=list(lobby.players.keys()))))
 
         return player.id
 
-    def register_lobby(self) -> str:
+    def register_lobby(self) -> list[str]:
         """
         Create a new lobby in its own thread.
 
@@ -86,11 +86,11 @@ class LobbyManager:
         code = self.code_generator()
         lobby = Lobby(code)
 
-        self.lobbies[code] = lobby
+        self.lobbies[tuple(code)] = lobby
 
         return code
 
-    def channel(self, code: str, id: str) -> Channel[TaggedMessage, Message]:
+    def channel(self, code: list[str], id: str) -> Channel[TaggedMessage, Message]:
         """
         Create a channel for sending and receiving messages to and from the lobby.
 
@@ -98,7 +98,7 @@ class LobbyManager:
             code: Lobby join code.
             id: Player id.
         """
-        lobby = self.lobbies[code]
+        lobby = self.lobbies[tuple(code)]
 
         if not lobby.started:
             lobby.started = True
@@ -108,7 +108,7 @@ class LobbyManager:
         return channel
 
 
-_LobbyManager = LobbyManager(lambda: "code")
+_LobbyManager = LobbyManager(lambda: random.choices(BURGER_INGREDIENTS, k=3))
 
 
 def lobby_manager() -> LobbyManager:

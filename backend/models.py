@@ -37,8 +37,19 @@ class Initializer(BaseModel):
 
     type: Literal[MessageKind.initializer] = MessageKind.initializer
 
-    code: str
+    code: list[str]
     id: str
+
+
+class LobbyJoinRequest(BaseModel):
+    """
+    Request to join a lobby.
+
+    Attributes:
+        code: Lobby join code.
+    """
+
+    code: list[str]
 
 
 class GameStateUpdateKind(StrEnum):
