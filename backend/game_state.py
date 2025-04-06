@@ -3,7 +3,7 @@ from __future__ import annotations
 import dataclasses
 import queue
 from collections.abc import Iterable
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from uuid import uuid4
 
 from .models import Chat, GameStateUpdate, Initializer, LifecycleEvent, Message, Role
@@ -22,7 +22,7 @@ class Lobby:
         started: Whether the game has started
     """
 
-    code: list[str] = field(default_factory=lambda: ["ABC"])
+    code: list[str]
     players: dict[str, Player] = dataclasses.field(default_factory=dict)
     channel: queue.Queue[TaggedMessage] = dataclasses.field(default_factory=queue.Queue)
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)

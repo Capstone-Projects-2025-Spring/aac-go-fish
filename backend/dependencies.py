@@ -1,8 +1,8 @@
 import asyncio
 import contextlib
+import itertools
 import queue
 import random
-from collections.abc import Callable
 from functools import cache
 
 from .constants import Settings
@@ -43,9 +43,11 @@ class Channel[S, R]:
 class LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
 
-    def __init__(self, code_generator: Callable[[], list[str]]) -> None:
+    def __init__(self) -> None:
         self.lobbies: dict[tuple[str, ...], Lobby] = {}
-        self.code_generator = code_generator
+        all_codes = list(itertools.product(BURGER_INGREDIENTS, repeat=3))
+        random.shuffle(all_codes)
+        self.available_codes = all_codes
 
     def register_player(self, code: list[str]) -> str:
         """
@@ -82,13 +84,32 @@ class LobbyManager:
 
         Returns:
             The lobby's join code
+
+        Raises:
+            RuntimeError: If no more codes are available
         """
-        code = self.code_generator()
+        if not self.available_codes:
+            raise RuntimeError("No more lobby codes available, server is full")
+
+        code_tuple = self.available_codes.pop()
+        code = list(code_tuple)
         lobby = Lobby(code)
 
         self.lobbies[tuple(code)] = lobby
 
         return code
+
+    def delete_lobby(self, code: list[str]) -> None:
+        """
+        Delete a lobby and recycle its code.
+
+        Args:
+            code: The lobby join code.
+        """
+        code_tuple = tuple(code)
+        if code_tuple in self.lobbies:
+            del self.lobbies[code_tuple]
+            self.available_codes.append(code_tuple)
 
     def channel(self, code: list[str], id: str) -> Channel[TaggedMessage, Message]:
         """
@@ -108,8 +129,8 @@ class LobbyManager:
         return channel
 
 
-_LobbyManager = LobbyManager(lambda: random.choices(BURGER_INGREDIENTS, k=3))
-# _LobbyManager = LobbyManager(lambda: ["Bottom Bun", "Bottom Bun", "Bottom Bun"]) This makes it easier to test.
+# Initialize the lobby manager without a code generator function
+_LobbyManager = LobbyManager()
 
 
 def lobby_manager() -> LobbyManager:

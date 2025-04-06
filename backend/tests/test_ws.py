@@ -6,7 +6,7 @@ from backend.game import Message
 from backend.hello import app
 from backend.models import Burger, Order, OrderSubmission
 
-lm = LobbyManager(lambda: ["Lettuce", "Tomato", "Onion"])
+lm = LobbyManager()
 
 
 def lobby_manager_override() -> LobbyManager:

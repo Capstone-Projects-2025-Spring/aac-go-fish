@@ -78,17 +78,15 @@ const App = () => {
                         break;
                     case "role_assignment":
                         console.log("role_assignment");
-                        if (!selectedRole){
-                            setSelectedRole(data.role);
-                        }
+                        setSelectedRole(data.role);
                         break;
                     default:
-                        console.log("Unknown game state update type");
+                        console.log("Unknown game state update type", data.game_state_update_type);
                         break;
                 }
                 break;
             default:
-                console.log("Unknown message type");
+                console.log("Unknown message type", data.type);
                 break;
         }
     }, [message]);

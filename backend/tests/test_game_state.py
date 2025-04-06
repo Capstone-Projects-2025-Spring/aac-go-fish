@@ -15,7 +15,9 @@ def lobby() -> LobbyFixture:
     a_q = queue.Queue()
     b_q = queue.Queue()
 
-    lobby = Lobby(players={"A": Player(a_q, Role.manager), "B": Player(b_q, Role.burger)}, channel=lobby_q)
+    lobby = Lobby(
+        code=["Lettuce"], players={"A": Player(a_q, Role.manager), "B": Player(b_q, Role.burger)}, channel=lobby_q
+    )
 
     return lobby, lobby_q, a_q, b_q
 
