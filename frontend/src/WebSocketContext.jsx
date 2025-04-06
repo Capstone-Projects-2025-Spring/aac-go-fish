@@ -10,20 +10,11 @@ export function WebSocketProvider({ children }) {
 
     useEffect(() => {
         ws.current = new WebSocket(`ws://${process.env.REACT_APP_BACKEND_DOMAIN}/ws`);
-        ws.current.onopen = () => joinLobby().catch(console.error);
         ws.current.onmessage = (event) => setTimestampedMessage(JSON.parse(event.data));
-
         return () => ws.current.close();
     }, []);
 
     const send = (object) => ws.current.send(JSON.stringify(object));
-
-    const joinLobby = async () => {
-        const response = await fetch(`http://${process.env.REACT_APP_BACKEND_DOMAIN}/lobby/code/join`, { method: "POST" });
-        const data = await response.json();
-        send({data: { type: "initializer", code: "code", id: data.id }});
-        send({data: { type: "lobby_lifecycle", lifecycle_type: "game_start" }});
-    };
 
     return (
         <WebSocketContext.Provider value={{ message, send }}>

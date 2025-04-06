@@ -25,14 +25,15 @@ export default function MiniOrderDisplay({ burger, side, drink }) {
                     })}
                 />
             )}
-            {isSide && (<SideDisplay tableState={side.table_state} />)}
             {isDrink && (
                 <DrinkDisplay
                     color={drink.color}
                     fillPercentage={drink.fill}
                     cupSize={drink.size}
+                    mini = {true}
                 />
             )}
+            {isSide && (<SideDisplay tableState={side.table_state} />)}
         </div>
     </>
     );

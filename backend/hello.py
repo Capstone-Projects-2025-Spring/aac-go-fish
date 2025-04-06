@@ -13,7 +13,7 @@ from uvicorn.protocols.utils import get_path_with_query_string
 from .dependencies import Channel, LobbyManager, lobby_manager, settings
 from .game_state import TaggedMessage
 from .logging_config import setup_logging
-from .models import Annotated, Initializer, Message
+from .models import Annotated, Initializer, LobbyJoinRequest, Message
 
 access_logger = structlog.stdlib.get_logger("api.access")
 
@@ -97,18 +97,18 @@ logger = structlog.stdlib.get_logger()
 
 
 @app.post("/lobby")
-def create_lobby(lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, str]:
+def create_lobby(lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, tuple[str, ...]]:
     """Creates a new lobby."""
     code = lm.register_lobby()
 
     return {"code": code}
 
 
-@app.post("/lobby/{code}/join")
-def join_lobby(code: str, lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, str]:
-    """Joins a player to a lobby by its unique game code."""
+@app.post("/lobby/join")
+def join_lobby(req: LobbyJoinRequest, lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> dict[str, str]:
+    """Joins a player to a lobby using a list of ingredients as the code."""
     try:
-        id = lm.register_player(code)
+        id = lm.register_player(req.code)
     except ValueError:
         raise HTTPException(status_code=404, detail="Lobby not found")
 
