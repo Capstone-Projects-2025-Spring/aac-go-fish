@@ -9,7 +9,7 @@ import HomePage from "./components/HomePage";
 import { WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
-    const { send } = useContext(WebSocketContext);
+    const { message, send } = useContext(WebSocketContext);
 
     const [selectedRole, setSelectedRole] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
@@ -26,7 +26,7 @@ const App = () => {
     const [isCustomerThinking, setIsCustomerThinking] = useState(false);
 
     const [score, setScore] = useState(0);
-    const { message } = useContext(WebSocketContext);
+    const [day, setDay] = useState(1);
 
     useEffect(() => {
         if (!message) return;
@@ -57,6 +57,10 @@ const App = () => {
                         }, delay);
 
                         break;
+                    case "day_end":
+                        const day = data.day ?? 0;
+
+                        setDay(day);
                     case "order_component":
                         switch(data.component_type) {
                             case "burger":
@@ -179,7 +183,7 @@ const App = () => {
                         </div>
                     </div>
                     <div className="right-column">
-                        <p className='Score'>Your score is ${score}</p>
+                        <p className='Score'>Day {day} - ${score}</p>
 
                         <AACBoard
                             selectedItems={selectedItems}

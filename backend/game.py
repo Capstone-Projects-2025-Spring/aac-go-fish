@@ -4,6 +4,7 @@ import itertools
 import math
 import random
 import threading
+from collections import deque
 
 import structlog
 
@@ -11,6 +12,7 @@ from .game_state import Lobby, Player, TaggedMessage
 from .models import (
     Burger,
     Chat,
+    DayEnd,
     Drink,
     GameEnd,
     GameStart,
@@ -42,7 +44,9 @@ class GameLoop:
 
     def __init__(self, lobby: Lobby) -> None:
         self.lobby = lobby
-        self.day = 0
+        self.day = 1
+
+        self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.order: Order
 
@@ -73,6 +77,7 @@ class GameLoop:
                         logger.debug("Received order.", order=order)
                         score = self.grade_order(order)
                         self.lobby.broadcast(Message(data=OrderScore(score=score)))
+                        self.handle_next_order()
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
 
@@ -86,11 +91,8 @@ class GameLoop:
         logger.debug("Starting game.")
 
         self.assign_roles()
-        self.day = 1
-        self.order = self.generate_order()
-        self.manager.send(Message(data=NewOrder(order=self.order)))
-
         self.lobby.broadcast(Message(data=GameStart()), exclude=[id])
+        self.handle_next_order()
 
     def assign_roles(self) -> None:
         """Assign roles to players."""
@@ -99,26 +101,23 @@ class GameLoop:
 
         for player, role in zip(self.lobby.players.values(), roles, strict=False):
             player.role = role
-
             player.send(Message(data=RoleAssignment(role=role)))
 
-    def generate_order(self) -> Order:
-        """Generate an order based on the number of players."""
-        order = Order(
-            burger=Burger(
-                ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
-            ),
-            drink=None,
-            side=None,
-        )
+    def handle_next_order(self) -> None:
+        """Give manager next order."""
+        if len(self.orders) == 0:
+            self.handle_new_day()
+            self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
-        if len(self.lobby.players) >= 3:
-            order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, size=random.choice(DRINK_SIZES))
+        self.order = self.orders.pop()
+        self.manager.send(Message(data=NewOrder(order=self.order)))
+        logger.debug("Order sent.")
 
-        if len(self.lobby.players) >= 4:
-            order.side = Side(table_state=random.choice(SIDE_TYPES))
-
-        return order
+    def handle_new_day(self) -> None:
+        """Update current day."""
+        self.day += 1
+        logger.debug("New day.", day=self.day)
+        self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
     def grade_order(self, order: Order) -> float:
         """
@@ -172,3 +171,35 @@ def start_main_loop(lobby: Lobby) -> None:
     """Start the main game loop."""
     loop = GameLoop(lobby)
     threading.Thread(target=loop.run).start()
+
+
+def get_orders(day: int, num_players: int) -> deque[Order]:
+    """Return a queue of orders for the next day."""
+    orders = deque()
+    for _ in range(_orders_on_day(day)):
+        orders.append(_generate_order(num_players))
+    return orders
+
+
+def _orders_on_day(day: int) -> int:
+    """Compute the number of orders on a given day."""
+    return day * 2 - 1
+
+
+def _generate_order(num_players: int) -> Order:
+    """Generate an order based on the number of players."""
+    order = Order(
+        burger=Burger(
+            ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
+        ),
+        drink=None,
+        side=None,
+    )
+
+    if num_players >= 3:
+        order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, size=random.choice(DRINK_SIZES))
+
+    if num_players >= 4:
+        order.side = Side(table_state=random.choice(SIDE_TYPES))
+
+    return order
