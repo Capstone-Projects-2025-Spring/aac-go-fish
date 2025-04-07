@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import "./DrinkBuilder.css";
 import DrinkDisplay from "./DrinkDisplay.jsx";
+import Score from "./Score.jsx";
 import { WebSocketContext } from "../WebSocketContext.jsx";
 import { playSendSound } from "./playSendSound.jsx";
 
-const DrinkBuilder = ({ score }) =>{
+const DrinkBuilder = ({ score, day }) =>{
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
@@ -104,7 +105,7 @@ const DrinkBuilder = ({ score }) =>{
 
     return (
         <div className="DrinkBuilder">
-            <p className='ScoreText'>Your score is ${score}</p>
+            <Score score={score} day={day} />
             <div className="DrinkButtons">
                 <div className="DrinkButtonsContainer">
                     {drinkColors.map((choice, index) => (

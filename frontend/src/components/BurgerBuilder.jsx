@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
 import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
+import Score from "./Score";
 import {menu} from "../menuItems";
 import { WebSocketContext } from "../WebSocketContext";
 import { playSendSound } from "./playSendSound";
 
-const BurgerBuilder = ({ score }) => {
+const BurgerBuilder = ({ score, day }) => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);
 
@@ -50,7 +51,7 @@ const BurgerBuilder = ({ score }) => {
 
     return (
         <div className="BurgerBuilder">
-            <p className='ScoreText'>Your score is ${score}</p>
+            <Score score={score} day={day} />
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>

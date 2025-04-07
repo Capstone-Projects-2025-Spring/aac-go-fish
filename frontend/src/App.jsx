@@ -3,6 +3,7 @@ import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
+import Score from "./components/Score";
 import AACBoard from "./components/AACBoard";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
@@ -183,7 +184,7 @@ const App = () => {
                         </div>
                     </div>
                     <div className="right-column">
-                        <p className='Score'>Day {day} - ${score}</p>
+                        <Score score={score} day={day} />
 
                         <AACBoard
                             selectedItems={selectedItems}
@@ -201,11 +202,11 @@ const App = () => {
                     </div>
                 </>
             ) : selectedRole === "burger" ? (
-                <BurgerBuilder score={score} />
+                <BurgerBuilder score={score} day={day} />
             ) : selectedRole === "side" ? (
-                <SideBuilder score={score} />
+                <SideBuilder score={score} day={day} />
             ) : selectedRole == "drink" ? (
-                <DrinkBuilder score={score} />
+                <DrinkBuilder score={score} day={day} />
             ) : <HomePage/>}
         </div>
     );
