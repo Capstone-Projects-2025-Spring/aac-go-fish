@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
@@ -6,10 +6,10 @@ import SideBuilder from "./components/SideBuilder";
 import AACBoard from "./components/AACBoard";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
-import { WebSocketContext } from "./WebSocketContext";
+import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
-    const { message, send } = useContext(WebSocketContext);
+    const { send } = useContext(WebSocketContext);
 
     const [selectedRole, setSelectedRole] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
@@ -28,10 +28,10 @@ const App = () => {
     const [score, setScore] = useState(0);
     const [day, setDay] = useState(1);
 
-    useEffect(() => {
+    const handleMessage = (message) => {
         if (!message) return;
-        console.log(message);
         const data = message.content.data;
+        console.log(data.type);
         switch (data.type) {
             case "game_state":
                 switch (data.game_state_update_type) {
@@ -97,7 +97,9 @@ const App = () => {
                 console.log("Unknown message type", data.type);
                 break;
         }
-    }, [message]);
+    };
+
+    useWebSocket(handleMessage);
 
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
     const removeSelectedItem = (indexToDelete) =>

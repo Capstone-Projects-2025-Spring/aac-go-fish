@@ -1,24 +1,47 @@
-import React, { createContext, useEffect, useRef, useState } from "react";
+import React, {createContext, useContext, useEffect, useRef} from "react";
 
 export const WebSocketContext = createContext(null);
 
 export function WebSocketProvider({ children }) {
     const ws = useRef(null);
-    const [message, setMessage] = useState(null);
+    const queue = useRef([]);
+    const listeners = useRef(new Set());
 
-    const setTimestampedMessage = (content) => setMessage({content, timestamp: Date.now()});
+    const processMessages = () => {
+        if (queue.current.length === 0) return;
+        const message = queue.current.shift();
+        for (let listener of listeners.current) {
+            listener(message);
+        }
+    };
+
+    const addListener = (fn) => listeners.current.add(fn);
+    const removeListener = (fn) => listeners.current.delete(fn);
 
     useEffect(() => {
         ws.current = new WebSocket(`ws://${process.env.REACT_APP_BACKEND_DOMAIN}/ws`);
-        ws.current.onmessage = (event) => setTimestampedMessage(JSON.parse(event.data));
+        ws.current.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            queue.current.push({ content: data, timestamp: Date.now() });
+			processMessages();
+        };
         return () => ws.current.close();
     }, []);
 
-    const send = (object) => ws.current.send(JSON.stringify(object));
+    const send = (object) => ws.current?.send(JSON.stringify(object));
 
     return (
-        <WebSocketContext.Provider value={{ message, send }}>
+        <WebSocketContext.Provider value={{ addListener, removeListener, send }}>
             {children}
         </WebSocketContext.Provider>
     );
+}
+
+export function useWebSocket(handleMessage) {
+    const { addListener, removeListener } = useContext(WebSocketContext);
+
+    useEffect(() => {
+        addListener(handleMessage);
+        return () => removeListener(handleMessage);
+    }, [addListener, removeListener, handleMessage]);
 }

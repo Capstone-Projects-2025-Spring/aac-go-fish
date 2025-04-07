@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import './Lobby.css';
-import { WebSocketContext } from '../WebSocketContext';
+import { useWebSocket, WebSocketContext } from '../WebSocketContext';
 
 function Lobby() {
-    const { send, message } = useContext(WebSocketContext);
     const [playerCount, setPlayerCount] = useState(1);
+    const { send } = useContext(WebSocketContext);
 
-    useEffect(() => {
+    const handleMessage = (message) => {
         if (!message) return;
         const data = message.content.data;
         if (data &&
@@ -14,7 +14,9 @@ function Lobby() {
             data.lifecycle_type === "player_count") {
             setPlayerCount(data.count);
         }
-    }, [message]);
+    };
+
+    useWebSocket(handleMessage);
 
     const sendStartGame = () => {
         send({
