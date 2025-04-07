@@ -70,7 +70,7 @@ function HomePage() {
     return (
         <div className="homepage-container">
             <div className="lobby-header">
-                <h1 className="lobby-title">AAC Burger</h1>
+                <h1 className="lobby-title">Order Up!</h1>
                 <div className="lobby-subtitle">A Collaborative Cooking Experience</div>
             </div>
 
