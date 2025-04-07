@@ -86,6 +86,7 @@ const App = () => {
                         setSelectedRole(data.role);
                         break;
                     case "order_score":
+                        console.log("order_score")
                         setScore(data.score);
                         break;
                     default:
