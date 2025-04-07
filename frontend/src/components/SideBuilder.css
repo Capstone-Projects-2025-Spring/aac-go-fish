@@ -1,11 +1,11 @@
-.SideBuilder{
+.SideBuilder {
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.SideBuilder button{
+.SideBuilder button {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,14 +20,15 @@
     gap: 20px;
 }
 
-.LeftColumn, .RightColumn {
+.LeftColumn,
+.RightColumn {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.Table{
-    margin:20px auto;
+.Table {
+    margin: 20px auto;
     padding: 20px;
     width: 500px;
     min-height: 200px;
@@ -37,10 +38,10 @@
     align-items: center;
 }
 
-.TableBorder{
+.TableBorder {
     border: 2px solid #000000;
     border-radius: 10px;
-    margin:20px auto;
+    margin: 20px auto;
     padding: 20px;
     max-width: 500px;
     min-height: 200px;
@@ -50,7 +51,7 @@
     align-items: center;
 }
 
-.SideButtons{
+.SideButtons {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -68,24 +69,26 @@
     cursor: pointer;
     text-align: center;
     border-radius: 6px;
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.ButtonImages{
+.ButtonImages {
     width: 50px;
     height: 50px;
-    display:block;
+    vertical-align: middle;
+    display: block;
 }
 
-.TableImages{
+.TableImages {
     width: 150px;
-    height:auto;
+    height: auto;
 }
 
-.LeftButtons, .RightButtons {
+.LeftButtons,
+.RightButtons {
     min-width: 120px;
     min-height: 120px;
     margin: 10px;
@@ -111,7 +114,7 @@
 
 .SendButton:disabled {
     cursor: not-allowed;
-    transform:none;
+    transform: none;
 }
 
 .Fryer {
@@ -125,7 +128,7 @@
     position: relative;
 }
 
-.Fryer:hover{
+.Fryer:hover {
     border-color: #ffa500
 }
 
@@ -142,18 +145,18 @@
     transition: all 0.3s ease-in-out;
 }
 
-.DraggableItem{
+.DraggableItem {
     cursor: grab;
     width: 100px;
     height: auto;
     margin: 10px;
 }
 
-.DraggableItem img{
+.DraggableItem img {
     width: 100%;
 }
 
-.DraggableItem:hover{
+.DraggableItem:hover {
     transform: scale(1.1);
     transition: 0.2s ease;
 }
@@ -165,13 +168,15 @@
 }
 
 @keyframes pulse {
-    0%{
+    0% {
         box-shadow: 0 0 10px 2px #ff8c00;
     }
-    50%{
+
+    50% {
         box-shadow: 0 0 10px 5px #ff4500;
     }
-    100%{
+
+    100% {
         box-shadow: 0 0 10px 2px #ff8c00;
     }
 }
@@ -180,7 +185,7 @@
     position: absolute;
     top: 40%;
     left: 50%;
-    transform: translate(-50%,-50%) scale(0.8);
+    transform: translate(-50%, -50%) scale(0.8);
     width: 80px;
     opacity: 0.9;
     z-index: 10;
@@ -188,22 +193,24 @@
 }
 
 @keyframes fryingAnimation {
-    0%{
+    0% {
         transform: translate(-50%, -50%) scale(0.8);
         opacity: 0.9;
     }
-    50%{
+
+    50% {
         transform: translate(-50%, -50%) scale(1.0);
         opacity: 1.0;
     }
-    100%{
+
+    100% {
         transform: translate(-50%, -50%) scale(0.8);
         opacity: 0.9;
     }
 
 }
 
-.ConfirmMessage{
+.ConfirmMessage {
     text-align: center;
     font-family: "Comic Sans MS";
     font-size: 32px;

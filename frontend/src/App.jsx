@@ -11,7 +11,7 @@ import { WebSocketContext } from "./WebSocketContext";
 const App = () => {
     const { message, send } = useContext(WebSocketContext);
 
-    const [selectedRole, setSelectedRole] = useState();
+    const [selectedRole, setSelectedRole] = useState("manager");
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
@@ -46,9 +46,9 @@ const App = () => {
 
                         setCustomerNumber((customerNumber + 1) % 10);
 
-                        setOrderVisible(false);
+                        setOrderVisible(true);
 
-                        const delay = Math.floor(Math.random() * 2000) + 3000;
+                        const delay = Math.floor(Math.random() * 2000) + 2000;
 
                         setTimeout(() => {
                             setIsCustomerThinking(true);
@@ -62,7 +62,7 @@ const App = () => {
 
                         setDay(day);
                     case "order_component":
-                        switch(data.component_type) {
+                        switch (data.component_type) {
                             case "burger":
                                 console.log("burger");
                                 setEmployeeBurger(message.content.data.component.ingredients);
@@ -137,16 +137,19 @@ const App = () => {
     };
 
     const handleGiveToCustomer = () => {
-        send({data: {
-            type: "game_state",
-            game_state_update_type: "order_submission",
-            order: {
-                burger: {
-                    ingredients: employeeBurger
-                },
-                drink: employeeDrink,
-                side: employeeSide
-        }}});
+        send({
+            data: {
+                type: "game_state",
+                game_state_update_type: "order_submission",
+                order: {
+                    burger: {
+                        ingredients: employeeBurger
+                    },
+                    drink: employeeDrink,
+                    side: employeeSide
+                }
+            }
+        });
 
         getScoring({
             burger: employeeBurger,
@@ -164,40 +167,40 @@ const App = () => {
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">
-                    <div className="column">
-                        <div className="customer-container">
-                            <img
-                                src={customerNumber ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png` : "/images/customers/empty.png"}
-                                alt="Customer"
-                                className="customer-image"
-                            />
-                            {orderVisible && (
-                                <div className="customer-mini-order-overlay">
-                                    <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
-                                </div>
-                            )}
-                            <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/send_order.png" alt="send customer order" />
-                            <div className="manager-mini-order-overlay">
+                        <div className="column">
+                            <div className="customer-container">
+                                <img
+                                    src={customerNumber ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png` : "/images/customers/empty.png"}
+                                    alt="Customer"
+                                    className="customer-image"
+                                />
+                                {orderVisible && (
+                                    <div className="customer-mini-order-overlay">
+                                        <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
+                                    </div>
+                                )}
+                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/send_order.png" alt="send customer order" />
+                                <div className="manager-mini-order-overlay">
                                     <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="right-column">
-                        <p className='Score'>Day {day} - ${score}</p>
+                        <div className="right-column">
+                            <p className='Score'>Day {day} - ${score}</p>
 
-                        <AACBoard
-                            selectedItems={selectedItems}
-                            onSelectItem={addSelectedItem}
-                            onDeleteItem={removeSelectedItem}
-                            onClearAll={clearAllSelected}
-                            onPlayAll={onPlayAll}
-                            burgerOrder={burgerOrder}
-                            drinkOrder={drinkOrder}
-                            hasSide={!!sideOrder}
-                            drinkSize={"medium"}
-                            orderVisible={orderVisible}
-                        />
-                    </div>
+                            <AACBoard
+                                selectedItems={selectedItems}
+                                onSelectItem={addSelectedItem}
+                                onDeleteItem={removeSelectedItem}
+                                onClearAll={clearAllSelected}
+                                onPlayAll={onPlayAll}
+                                burgerOrder={burgerOrder}
+                                drinkOrder={drinkOrder}
+                                hasSide={!!sideOrder}
+                                drinkSize={"medium"}
+                                orderVisible={orderVisible}
+                            />
+                        </div>
                     </div>
                 </>
             ) : selectedRole === "burger" ? (
@@ -206,7 +209,7 @@ const App = () => {
                 <SideBuilder score={score} />
             ) : selectedRole == "drink" ? (
                 <DrinkBuilder score={score} />
-            ) : <HomePage/>}
+            ) : <HomePage />}
         </div>
     );
 };
