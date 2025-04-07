@@ -117,6 +117,7 @@ class GameLoop:
         """Update current day."""
         self.day += 1
         logger.debug("New day.", day=self.day)
+        self.assign_roles()
         self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
     def grade_order(self, order: Order) -> float:
