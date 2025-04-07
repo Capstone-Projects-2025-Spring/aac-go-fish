@@ -48,7 +48,7 @@ const App = () => {
 
                         setOrderVisible(false);
 
-                        const delay = Math.floor(Math.random() * 2000) + 3000;
+                        const delay = Math.floor(Math.random() * 2000) + 2000;
 
                         setTimeout(() => {
                             setIsCustomerThinking(true);
