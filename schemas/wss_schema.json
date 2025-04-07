@@ -51,8 +51,15 @@
           "default": "day_end",
           "title": "Game State Update Type",
           "type": "string"
+        },
+        "day": {
+          "title": "Day",
+          "type": "integer"
         }
       },
+      "required": [
+        "day"
+      ],
       "title": "DayEnd",
       "type": "object"
     },
