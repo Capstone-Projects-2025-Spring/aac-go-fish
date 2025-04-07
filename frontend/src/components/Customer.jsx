@@ -5,7 +5,7 @@ export default function Customer({ customerImage }) {
         <img
             src={customerImage}
             alt="Customer"
-            className="manager-image"
+            className="customer-image"
         />
     );
 }

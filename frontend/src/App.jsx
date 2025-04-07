@@ -3,16 +3,15 @@ import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
 import SideBuilder from "./components/SideBuilder";
-import RoleSelector, { Roles } from "./components/RoleSelector";
 import AACBoard from "./components/AACBoard";
-import ManagerActions from "./components/ManagerActions";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
+import HomePage from "./components/HomePage";
 import { WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
     const { message, send } = useContext(WebSocketContext);
 
-    const [selectedRole, setSelectedRole] = useState(Roles.MANAGER);
+    const [selectedRole, setSelectedRole] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
@@ -23,24 +22,11 @@ const App = () => {
     const [drinkOrder, setDrinkOrder] = useState(null);
     const [orderVisible, setOrderVisible] = useState(false);
 
-    const [baseCustomerImage, setBaseCustomerImage] = useState("/images/customers/empty.png");
-    const [currentCustomerImage, setCurrentCustomerImage] = useState("/images/customers/empty.png");
+    const [customerNumber, setCustomerNumber] = useState(0);
+    const [isCustomerThinking, setIsCustomerThinking] = useState(false);
 
     const [score, setScore] = useState(0);
-    const [day, setDay] = useState(0);
-
-    const customerBaseImages = [
-        "/images/customers/customer1.png",
-        "/images/customers/customer2.png",
-        "/images/customers/customer3.png",
-        "/images/customers/customer4.png",
-        "/images/customers/customer5.png",
-        "/images/customers/customer6.png",
-        "/images/customers/customer7.png",
-        "/images/customers/customer8.png",
-        "/images/customers/customer9.png",
-        "/images/customers/customer10.png",
-    ];
+    const [day, setDay] = useState(1);
 
     useEffect(() => {
         if (!message) return;
@@ -52,20 +38,24 @@ const App = () => {
                     case "new_order":
                         const burger = data.order.burger?.ingredients ?? [];
                         const drink = data.order.drink ?? null;
-                        const side = data.order.side ?? null; // TODO: update when backend sends more sides
+                        const side = data.order.side ?? null;
 
                         setBurgerOrder(burger);
                         setDrinkOrder(drink);
                         setSideOrder(side);
 
-                        const randomCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
-                        setBaseCustomerImage(randomCustomer);
-                        setCurrentCustomerImage(randomCustomer);
+                        setCustomerNumber((customerNumber + 1) % 10);
 
                         setOrderVisible(false);
+
+                        const delay = Math.floor(Math.random() * 2000) + 3000;
+
                         setTimeout(() => {
+                            setIsCustomerThinking(true);
                             setOrderVisible(true);
-                        }, 3000);
+                            console.log(`Order and thinking bubble visible after ${delay}ms`);
+                        }, delay);
+
                         break;
                     case "day_end":
                         const day = data.day ?? 0;
@@ -85,15 +75,25 @@ const App = () => {
                                 console.log("side");
                                 setEmployeeSide(message.content.data.component);
                                 break;
+                            default:
+                                console.log(`Unknown component type=${data.component_type}`);
+                                break;
                         }
+                        break;
+                    case "role_assignment":
+                        console.log("role_assignment");
+                        setSelectedRole(data.role);
+                        break;
+                    default:
+                        console.log("Unknown game state update type", data.game_state_update_type);
+                        break;
                 }
+                break;
+            default:
+                console.log("Unknown message type", data.type);
                 break;
         }
     }, [message]);
-
-    useEffect(() => console.log(employeeBurger), [employeeBurger]);
-    useEffect(() => console.log(employeeDrink), [employeeDrink]);
-    useEffect(() => console.log(employeeSide), [employeeSide]);
 
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
     const removeSelectedItem = (indexToDelete) =>
@@ -158,60 +158,32 @@ const App = () => {
         setEmployeeSide(null);
         setEmployeeDrink(null);
     };
-    const handleReceiveOrder = () => {
-        console.log("Test button clicked");
-
-        const burger = [
-            { name: "Bottom Bun", sideImage: "/images/bottom_bun_side.png" },
-            { name: "Patty", sideImage: "/images/patty_side.png" },
-            { name: "Lettuce", sideImage: "/images/lettuce_side.png" },
-            { name: "Top Bun", sideImage: "/images/top_bun_side.png" },
-        ];
-        const side = { tableState: "fries" };
-        const drink = { color: "#FF0000", fill: 100, size: "medium" };
-
-        setBurgerOrder(burger);
-        setDrinkOrder(drink);
-        setSideOrder(side);
-
-        let randomCustomer;
-        do {
-            randomCustomer = customerBaseImages[Math.floor(Math.random() * customerBaseImages.length)];
-        } while (randomCustomer === baseCustomerImage);
-
-        setBaseCustomerImage(randomCustomer);
-        setCurrentCustomerImage(randomCustomer);
-
-        setOrderVisible(false);
-
-
-        const delay = Math.floor(Math.random() * 2000) + 3000;
-
-        setTimeout(() => {
-            const thinkVersion = randomCustomer.replace(".png", "_think.png");
-            setCurrentCustomerImage(thinkVersion);
-            setOrderVisible(true);
-            console.log(`Order and thinking bubble visible after ${delay}ms`);
-        }, delay);
-    };
-
 
     return (
         <div className="app-container">
-            <RoleSelector selectedRole={selectedRole} setSelectedRole={setSelectedRole} />
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">
-                        {orderVisible && (
-                            <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
-                        )}                        </div>
                     <div className="column">
+                        <div className="customer-container">
+                            <img
+                                src={customerNumber ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png` : "/images/customers/empty.png"}
+                                alt="Customer"
+                                className="customer-image"
+                            />
+                            {orderVisible && (
+                                <div className="customer-mini-order-overlay">
+                                    <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
+                                </div>
+                            )}
+                            <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/send_order.png" alt="send customer order" />
+                            <div className="manager-mini-order-overlay">
+                                    <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="right-column">
                         <p className='Score'>Day {day} - ${score}</p>
-                        <img
-                            src={currentCustomerImage ?? "/images/customers/empty.png"}
-                            alt="Customer"
-                            className="manager-image top-left-customer"
-                        />
 
                         <AACBoard
                             selectedItems={selectedItems}
@@ -225,26 +197,16 @@ const App = () => {
                             drinkSize={"medium"}
                             orderVisible={orderVisible}
                         />
-                        <div>
-                            <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
-                        </div>
-
-                        {(employeeBurger || employeeDrink || employeeSide) && (
-                            <ManagerActions onGiveToCustomer={handleGiveToCustomer} />
-                        )}
-                        <button onClick={handleReceiveOrder} className="receive-order-btn">
-                            Receive Order
-                        </button>
                     </div>
-
+                    </div>
                 </>
             ) : selectedRole === "burger" ? (
                 <BurgerBuilder score={score} />
             ) : selectedRole === "side" ? (
                 <SideBuilder score={score} />
-            ) : (
+            ) : selectedRole == "drink" ? (
                 <DrinkBuilder score={score} />
-            )}
+            ) : <HomePage/>}
         </div>
     );
 };
