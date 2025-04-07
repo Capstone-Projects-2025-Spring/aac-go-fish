@@ -11,7 +11,7 @@ import { WebSocketContext } from "./WebSocketContext";
 const App = () => {
     const { message, send } = useContext(WebSocketContext);
 
-    const [selectedRole, setSelectedRole] = useState("manager");
+    const [selectedRole, setSelectedRole] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
