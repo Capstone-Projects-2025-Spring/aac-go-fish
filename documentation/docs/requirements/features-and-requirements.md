@@ -63,8 +63,8 @@ sidebar_position: 4
 - The game can be played with 2-4 players.  
 - Customers will approach the counter and order a combination of three menu items:  
   - **Burger**
+  - **Drink**
   - **Side**
-  - **Drink**  
 
 #### Cooking Process  
 
@@ -72,28 +72,26 @@ sidebar_position: 4
   - Assemble burger by placing ingredients (buns, lettuce, patty, cheese, etc.) in a specific order.  
 
 - **Drinks**  
-  - Fill a cup with the correct drink from a set of machines.  
-  - Ensure the correct drink is selected and adjust for ice/no ice preference.  
+  - Fill drink cups with varying sizes and flavors using a soda fountain.
 
 - **Sides**  
-  - Fries
-    - Chop potatoes and place them in a deep fryer.  
-    - Wait for the fries to cook before serving.  
+  - Make fries or onion rings by choosing ingredients, chopping them, and dragging them into the deep fryer.
 
+#### Scoring System
 
-#### Scoring System  
-
-- **Base Pricing for Each Item:**  
-  - Burger: **$3**  
-  - Drink: **$2**  
-  - Side: **$1**  
+- **Base Pricing for Each Item:**
+  - Burger: **$3**
+  - Side: **$1**
+  - Drink: **$2**
 - **Bonus Score for Correctness**
-  - Additional **$2** per correct item
-- **Tip Bonus:**  
-  - 0% to 25% based on completion speed.  
+  - Burger: Up to **$2** depending on the similarity between the submitted burger and the ordered burger.
+  - Side: **$2**.
+  - Drink: Up to **$2** depending on the similarity between the submitted drink and the ordered drink.
+- **Tip Bonus:**
+  - 0% to 25% based on completion speed.
 - **Customer Patience Indicator:**  
-  - Displays remaining patience to help gauge the tip amount.  
-  - Faster service results in higher tips.  
+  - Displays remaining patience to help gauge the tip amount.
+  - Faster service results in higher tips.
 
 ## Non-Functional
 - The system must integrate AAC communication seamlessly and ensure it is easy to use.  

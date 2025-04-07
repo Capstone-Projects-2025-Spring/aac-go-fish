@@ -1,11 +1,35 @@
 .SideBuilder{
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SideBuilder button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.MainContainer2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    gap: 20px;
+}
+
+.LeftColumn, .RightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .Table{
     margin:20px auto;
     padding: 20px;
-    max-width: 500px;
+    width: 500px;
     min-height: 200px;
     background-color: #ffffff;
     display: flex;
@@ -57,8 +81,20 @@
     display:block;
 }
 .TableImages{
-    max-width: 150px;
-    max-height: 150px;
+    width: 150px;
+    height:auto;
+}
+
+.LeftButtons, .RightButtons {
+    min-width: 120px;
+    min-height: 120px;
+    margin: 10px;
+    padding: 0;
+    border: 1px solid #322e2e;
+    background: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 6px;
 }
 
 .SendButton {
@@ -76,6 +112,106 @@
 .SendButton:disabled {
     cursor: not-allowed;
     transform:none;
+}
+
+.Fryer {
+    width: 250px;
+    height: 250px;
+    border: 3px #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    position: relative;
+}
+
+.Fryer:hover{
+    border-color: #ffa500
+}
+
+.FryerImage {
+    max-height: 100%;
+    max-width: 100%;
+    position: absolute;
+    z-index: 0;
+}
+
+.Fryer.drop-hover {
+    border: 4px dashed #ffa500;
+    background-color: #292929;
+    transition: all 0.3s ease-in-out;
+}
+
+.DraggableItem{
+    cursor: grab;
+    width: 100px;
+    height: auto;
+    margin: 10px;
+}
+
+.DraggableItem img{
+    width: 100%;
+}
+
+.DraggableItem:hover{
+    transform: scale(1.1);
+    transition: 0.2s ease;
+}
+
+.Fryer.frying {
+    border: 4px solid #ff8c00;
+    box-shadow: 0 0 20px 5px #ff8c00;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%{
+        box-shadow: 0 0 10px 2px #ff8c00;
+    }
+    50%{
+        box-shadow: 0 0 10px 5px #ff4500;
+    }
+    100%{
+        box-shadow: 0 0 10px 2px #ff8c00;
+    }
+}
+
+.ChoppedOverlay {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0.8);
+    width: 80px;
+    opacity: 0.9;
+    z-index: 10;
+    animation: fryingAnimation 2s infinite;
+}
+
+@keyframes fryingAnimation {
+    0%{
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.9;
+    }
+    50%{
+        transform: translate(-50%, -50%) scale(1.0);
+        opacity: 1.0;
+    }
+    100%{
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.9;
+    }
+
+}
+
+.ConfirmMessage{
+    text-align: center;
+    font-family: "Comic Sans MS";
+    font-size: 32px;
+    color: #84d838;
+    background-color: #ffffff;
+    border-radius: 5px;
+    opacity: 0.9;
+    transition: opacity 1s ease-in-out;
 }
 
 .ScoreText {

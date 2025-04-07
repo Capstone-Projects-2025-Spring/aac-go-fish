@@ -5,7 +5,6 @@ from backend.models import (
     Chat,
     DayEnd,
     Drink,
-    Fry,
     GameEnd,
     GameStart,
     Initializer,
@@ -19,6 +18,7 @@ from backend.models import (
     PlayerLeave,
     Role,
     RoleAssignment,
+    Side,
 )
 
 
@@ -38,7 +38,7 @@ from backend.models import (
                     "game_state_update_type": "new_order",
                     "order": {
                         "burger": {"ingredients": ["bread", "bread"]},
-                        "fry": {},
+                        "side": {"table_state": "fries"},
                         "drink": {"color": "green", "fill": 0, "ice": true, "size": "S"}
                     }
                 }
@@ -47,8 +47,8 @@ from backend.models import (
                 data=NewOrder(
                     order=Order(
                         burger=Burger(ingredients=["bread", "bread"]),
-                        fry=Fry(),
-                        drink=Drink(color="green", fill=0, ice=True, size="S"),
+                        side=Side(table_state="fries"),
+                        drink=Drink(color="green", fill=0, size="S"),
                     )
                 )
             ),
@@ -60,11 +60,10 @@ from backend.models import (
                 "data": {
                     "type": "game_state",
                     "game_state_update_type": "role_assignment",
-                    "id": "id",
                     "role": "manager"
                 }
             }""",
-            Message(data=RoleAssignment(id="id", role=Role.manager)),
+            Message(data=RoleAssignment(role=Role.manager)),
             id="RoleAssignment",
         ),
         pytest.param(
@@ -78,10 +77,11 @@ from backend.models import (
                 "data": {
                     "type": "game_state",
                     "game_state_update_type": "order_component",
+                    "component_type": "burger",
                     "component": {"ingredients": ["bread", "bread"]}
                 }
             }""",
-            Message(data=OrderComponent(component=Burger(ingredients=["bread", "bread"]))),
+            Message(data=OrderComponent(component_type="burger", component=Burger(ingredients=["bread", "bread"]))),
             id="OrderComponent",
         ),
         pytest.param(
@@ -92,7 +92,7 @@ from backend.models import (
                     "game_state_update_type": "order_submission",
                     "order": {
                         "burger": {"ingredients": ["bread", "bread"]},
-                        "fry": {},
+                        "side": {"table_state": "fries"},
                         "drink": {"color": "green", "fill": 0, "ice": true, "size": "S"}
                     }
                 }
@@ -101,8 +101,8 @@ from backend.models import (
                 data=OrderSubmission(
                     order=Order(
                         burger=Burger(ingredients=["bread", "bread"]),
-                        fry=Fry(),
-                        drink=Drink(color="green", fill=0, ice=True, size="S"),
+                        side=Side(table_state="fries"),
+                        drink=Drink(color="green", fill=0, size="S"),
                     )
                 )
             ),
@@ -134,8 +134,8 @@ from backend.models import (
             id="GameEnd",
         ),
         pytest.param(
-            '{"data": {"type": "chat", "id": "id", "typing": false}}',
-            Message(data=Chat(id="id", typing=False)),
+            '{"data": {"type": "chat", "typing": false}}',
+            Message(data=Chat(typing=False)),
             id="Chat",
         ),
     ],

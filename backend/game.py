@@ -1,26 +1,32 @@
+import difflib
 import functools
 import itertools
+import math
 import random
 import threading
 from collections import deque
 
 import structlog
 
-from .game_state import Lobby, Player
+from .game_state import Lobby, Player, TaggedMessage
 from .models import (
     Burger,
     Chat,
     DayEnd,
     Drink,
-    Fry,
     GameEnd,
     GameStart,
     Message,
     NewOrder,
     Order,
     OrderComponent,
+    OrderScore,
     OrderSubmission,
+    PlayerJoin,
+    PlayerLeave,
     Role,
+    RoleAssignment,
+    Side,
 )
 
 logger = structlog.stdlib.get_logger(__file__)
@@ -28,6 +34,7 @@ logger = structlog.stdlib.get_logger(__file__)
 BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
 DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
 DRINK_SIZES = ["S", "M", "L"]
+SIDE_TYPES = ["Fries", "Onion Rings"]
 
 MESSAGES_PER_LOOP = 5
 
@@ -41,6 +48,8 @@ class GameLoop:
 
         self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
+        self.order: Order
+
     def run(self) -> None:
         """
         Main game loop.
@@ -51,23 +60,38 @@ class GameLoop:
             for message in itertools.islice(self.lobby.messages(), MESSAGES_PER_LOOP):
                 match message.data:
                     case GameStart():
-                        self.start_game()
+                        self.start_game(message.id)
                     case GameEnd():
                         return
-                    case Chat() as c:
-                        self.typing_indicator(c)
+                    case PlayerJoin():
+                        self.lobby.broadcast(Message(data=message.data), exclude=[message.id])
+                    case PlayerLeave(id=id):
+                        self.lobby.players.pop(id)
+
+                        self.lobby.broadcast(Message(data=message.data))
+                    case Chat():
+                        self.typing_indicator(message)
                     case OrderComponent() as component:
                         self.manager.send(Message(data=component))
-                    case OrderSubmission():
+                    case OrderSubmission(order=order):
+                        logger.debug("Received order.", order=order)
+                        score = self.grade_order(order)
+                        self.lobby.broadcast(Message(data=OrderScore(score=score)))
                         self.handle_next_order()
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
 
-    def start_game(self) -> None:
-        """Start game and generate the first order."""
+    def start_game(self, id: str) -> None:
+        """
+        Start game and generate the first order.
+
+        Args:
+            id: The id of the player that started the game.
+        """
         logger.debug("Starting game.")
 
         self.assign_roles()
+        self.lobby.broadcast(Message(data=GameStart()), exclude=[id])
         self.handle_next_order()
 
     def assign_roles(self) -> None:
@@ -77,6 +101,7 @@ class GameLoop:
 
         for player, role in zip(self.lobby.players.values(), roles, strict=False):
             player.role = role
+            player.send(Message(data=RoleAssignment(role=role)))
 
     def handle_next_order(self) -> None:
         """Give manager next order."""
@@ -84,7 +109,8 @@ class GameLoop:
             self.handle_new_day()
             self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
-        self.manager.send(Message(data=NewOrder(order=self.orders.pop())))
+        self.order = self.orders.pop()
+        self.manager.send(Message(data=NewOrder(order=self.order)))
         logger.debug("Order sent.")
 
     def handle_new_day(self) -> None:
@@ -93,9 +119,47 @@ class GameLoop:
         logger.debug("New day.", day=self.day)
         self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
-    def typing_indicator(self, msg: Chat) -> None:
+    def grade_order(self, order: Order) -> float:
+        """
+        Grade order based on correctness.
+
+        See capstone-projects-2025-spring.github.io/aac-go-fish/docs/requirements/features-and-requirements#scoring
+        """
+        # Burgers are graded based on edit distance to the correct burger for up to 2 extra dollars + 3 base dollars
+        burger_score = 3
+        if order.burger is not None:
+            # this is never None, but the type checker doesn't know that
+            assert self.order.burger is not None
+
+            similarity = difflib.SequenceMatcher(None, order.burger.ingredients, self.order.burger.ingredients).ratio()
+            burger_score += 2 * similarity
+
+        # Sides are graded based on completeness.
+        # Up to 2 extra dollars + 1 base dollar
+        side_score = 0
+        if self.order.side is not None:
+            side_score += 1
+
+            if self.order.side == order.side:
+                side_score += 2
+
+        # Drink attributes are equally weighted, with the fill percentage being
+        # graded on the square root of the error from the correct fill
+        # percentage. up to 2 bonus dollars + 2 base dollars
+        drink_score = 0
+        if not (self.order.drink is None or order.drink is None):
+            drink_score += 2
+
+            score_per_attribute = 0.5
+            correct = (self.order.drink.size == order.drink.size) + (self.order.drink.color == order.drink.color)
+            drink_score += score_per_attribute * correct
+            drink_score += math.sqrt(1 - abs(1 - order.drink.fill / 100)) * score_per_attribute
+
+        return round(burger_score + side_score + drink_score, 2)
+
+    def typing_indicator(self, msg: TaggedMessage) -> None:
         """Send an indicator that the manager is typing."""
-        self.lobby.broadcast(Message(data=msg), exclude=[msg.id])
+        self.lobby.broadcast(Message(data=msg.data), exclude=[msg.id])
 
     @functools.cached_property
     def manager(self) -> Player:
@@ -129,13 +193,13 @@ def _generate_order(num_players: int) -> Order:
             ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
         ),
         drink=None,
-        fry=None,
+        side=None,
     )
 
     if num_players >= 3:
-        order.fry = Fry()
+        order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, size=random.choice(DRINK_SIZES))
 
     if num_players >= 4:
-        order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, ice=True, size=random.choice(DRINK_SIZES))
+        order.side = Side(table_state=random.choice(SIDE_TYPES))
 
     return order

@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from uvicorn.protocols.utils import get_path_with_query_string
 
 from .dependencies import Channel, LobbyManager, lobby_manager, settings
+from .game_state import TaggedMessage
 from .logging_config import setup_logging
 from .models import Annotated, Initializer, Message
 
@@ -136,19 +137,19 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
             await websocket.close()
             return
 
-    await asyncio.gather(_recv_handler(websocket, channel), _send_handler(websocket, channel))
+    await asyncio.gather(_recv_handler(id, websocket, channel), _send_handler(id, websocket, channel))
     await websocket.close()
 
 
-async def _recv_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
+async def _recv_handler(id: str, websocket: WebSocket, channel: Channel[TaggedMessage, Message]) -> typing.Never:
     while True:
         data = Message.model_validate_json(await websocket.receive_text())
-        logger.debug("Received WebSocket message.", message=data)
-        channel.send(data)
+        logger.debug("Received WebSocket message.", message=data, player=id)
+        channel.send(TaggedMessage(data=data.data, id=id))
 
 
-async def _send_handler(websocket: WebSocket, channel: Channel[Message]) -> typing.Never:
+async def _send_handler(id: str, websocket: WebSocket, channel: Channel[TaggedMessage, Message]) -> typing.Never:
     while True:
-        msg: Message = await channel.arecv()
-        logger.debug("Sending WebSocket message.", message=msg)
+        msg = await channel.arecv()
+        logger.debug("Sending WebSocket message.", message=msg, player=id)
         await websocket.send_text(msg.model_dump_json())

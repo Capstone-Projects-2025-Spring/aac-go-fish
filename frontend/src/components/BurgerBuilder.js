@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import {menu} from "../menuItems";
-const BurgerBuilder = ({ onSend, score }) => {
+import { WebSocketContext } from "../WebSocketContext";
+import { playSendSound } from "./playSendSound";
+
+const BurgerBuilder = ({ score }) => {
     const [ingredients, setIngredients] = useState([]);
+    const { send } = useContext(WebSocketContext);
 
     const foodItems = menu[0].children;
 
     const handleSend = () => {
-        onSend(ingredients.map(ingredient => ingredient.name));
+        const employeeOrder = ingredients.map(ingredient => ingredient.name);
+        send({data: {
+            type: "game_state",
+            game_state_update_type: "order_component",
+            component_type: "burger",
+            component: {
+                ingredients: employeeOrder,
+        }}});
+        playSendSound();
         clearPlate();
     };
 
