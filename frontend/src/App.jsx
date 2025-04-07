@@ -11,7 +11,7 @@ import { WebSocketContext } from "./WebSocketContext";
 const App = () => {
     const { message, send } = useContext(WebSocketContext);
 
-    const [selectedRole, setSelectedRole] = useState();
+    const [selectedRole, setSelectedRole] = useState("manager");
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
@@ -46,7 +46,7 @@ const App = () => {
 
                         setCustomerNumber((customerNumber + 1) % 10);
 
-                        setOrderVisible(false);
+                        setOrderVisible(true);
 
                         const delay = Math.floor(Math.random() * 2000) + 2000;
 
