@@ -85,6 +85,9 @@ const App = () => {
                         console.log("role_assignment");
                         setSelectedRole(data.role);
                         break;
+                    case "order_score":
+                        setScore(data.score);
+                        break;
                     default:
                         console.log("Unknown game state update type", data.game_state_update_type);
                         break;
@@ -115,28 +118,6 @@ const App = () => {
         }
     };
 
-    const getScoring = ({ burger, side, drink }) => {
-        let tempScore = 0;
-
-        if (burger) {
-            tempScore += 3;
-            if (JSON.stringify(burger) === JSON.stringify(burgerOrder)) tempScore += 2;
-        }
-
-        if (side) {
-            tempScore += 1;
-            if (side === 'fries') tempScore += 2;
-        }
-
-        if (drink) {
-            tempScore += 2;
-            const drinkObj = { color: null, fillPercentage: 100, size: null };
-            if (JSON.stringify(drink) === JSON.stringify(drinkObj)) tempScore += 2;
-        }
-
-        setScore(score + tempScore);
-    };
-
     const handleGiveToCustomer = () => {
         send({
             data: {
@@ -150,12 +131,6 @@ const App = () => {
                     side: employeeSide
                 }
             }
-        });
-
-        getScoring({
-            burger: employeeBurger,
-            side: employeeSide?.tableState,
-            drink: employeeDrink,
         });
 
         setEmployeeBurger(null);
