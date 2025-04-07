@@ -58,10 +58,6 @@ const App = () => {
                         }, delay);
 
                         break;
-                    case "day_end":
-                        const day = data.day ?? 0;
-
-                        setDay(day);
                     case "order_component":
                         switch(data.component_type) {
                             case "burger":
@@ -80,6 +76,14 @@ const App = () => {
                                 console.log(`Unknown component type=${data.component_type}`);
                                 break;
                         }
+                        break;
+                    case "order_score" :
+                        const tempScore = data.score ?? 0;
+                        setScore(tempScore);
+                        break;
+                    case "day_end":
+                        const tempDay = data.day ?? 0;
+                        setDay(tempDay);
                         break;
                     case "role_assignment":
                         console.log("role_assignment");
@@ -115,28 +119,6 @@ const App = () => {
         }
     };
 
-    const getScoring = ({ burger, side, drink }) => {
-        let tempScore = 0;
-
-        if (burger) {
-            tempScore += 3;
-            if (JSON.stringify(burger) === JSON.stringify(burgerOrder)) tempScore += 2;
-        }
-
-        if (side) {
-            tempScore += 1;
-            if (side === 'fries') tempScore += 2;
-        }
-
-        if (drink) {
-            tempScore += 2;
-            const drinkObj = { color: null, fillPercentage: 100, size: null };
-            if (JSON.stringify(drink) === JSON.stringify(drinkObj)) tempScore += 2;
-        }
-
-        setScore(score + tempScore);
-    };
-
     const handleGiveToCustomer = () => {
         send({data: {
             type: "game_state",
@@ -148,12 +130,6 @@ const App = () => {
                 drink: employeeDrink,
                 side: employeeSide
         }}});
-
-        getScoring({
-            burger: employeeBurger,
-            side: employeeSide?.tableState,
-            drink: employeeDrink,
-        });
 
         setEmployeeBurger(null);
         setEmployeeSide(null);
