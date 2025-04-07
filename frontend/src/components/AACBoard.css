@@ -5,9 +5,7 @@
     border: 2px solid #ddd;
     border-radius: 6px;
     padding: 1rem;
-    width: 700px;
-    max-width: 700px;
-    height: 400px;
+    width: 30rem;
 }
 
 .aacboard-selected-item {
@@ -60,4 +58,10 @@
         height: auto;
         object-fit: contain;
     }
+}
+
+.AACBoardContainer {
+    margin-left: -20rem;
+    margin-bottom: 20rem;
+    z-index: 9999;
 }

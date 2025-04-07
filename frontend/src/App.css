@@ -7,18 +7,22 @@
     box-sizing: border-box;
 }
 
+
 .columns {
     display: flex;
-    justify-content: space-around;
     flex-direction: row;
-    width: 100%;
     gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
+
 .column {
+    flex: 1;
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
 }
 
@@ -26,15 +30,16 @@
     display: flex;
     justify-content: space-around;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
 }
 
 .SendCustomerOrder{
     bottom: 10px;
-    right: 10px;
+    right: 350px;
     position: absolute;
     width: 200px;
-    height:auto;
+    height: auto;
     margin: 10px;
     padding: 0;
     border: None;
@@ -48,7 +53,11 @@
 }
 
 .customer-image {
-    width: 100%;
+    width: 75%;
+    max-width: 300rem;
+    height: auto;
+    margin-bottom: 0rem;
+    margin-left: -5rem;
 }
 
 .customer-mini-order-overlay {

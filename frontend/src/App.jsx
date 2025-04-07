@@ -47,9 +47,9 @@ const App = () => {
 
                         setCustomerNumber((customerNumber + 1) % 10);
 
-                        setOrderVisible(false);
+                        setOrderVisible(true);
 
-                        const delay = Math.floor(Math.random() * 2000) + 3000;
+                        const delay = Math.floor(Math.random() * 2000) + 2000;
 
                         setTimeout(() => {
                             setIsCustomerThinking(true);
@@ -59,7 +59,7 @@ const App = () => {
 
                         break;
                     case "order_component":
-                        switch(data.component_type) {
+                        switch (data.component_type) {
                             case "burger":
                                 console.log("burger");
                                 setEmployeeBurger(message.content.data.component.ingredients);
@@ -120,16 +120,19 @@ const App = () => {
     };
 
     const handleGiveToCustomer = () => {
-        send({data: {
-            type: "game_state",
-            game_state_update_type: "order_submission",
-            order: {
-                burger: {
-                    ingredients: employeeBurger
-                },
-                drink: employeeDrink,
-                side: employeeSide
-        }}});
+        send({
+            data: {
+                type: "game_state",
+                game_state_update_type: "order_submission",
+                order: {
+                    burger: {
+                        ingredients: employeeBurger
+                    },
+                    drink: employeeDrink,
+                    side: employeeSide
+                }
+            }
+        });
 
         setEmployeeBurger(null);
         setEmployeeSide(null);
@@ -141,27 +144,27 @@ const App = () => {
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">
-                    <div className="column">
-                        <div className="customer-container">
-                            <img
-                                src={customerNumber ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png` : "/images/customers/empty.png"}
-                                alt="Customer"
-                                className="customer-image"
-                            />
-                            {orderVisible && (
-                                <div className="customer-mini-order-overlay">
-                                    <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
-                                </div>
-                            )}
-                            <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/send_order.png" alt="send customer order" />
-                            <div className="manager-mini-order-overlay">
+                        <div className="column">
+                            <div className="customer-container">
+                                <img
+                                    src={customerNumber ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png` : "/images/customers/empty.png"}
+                                    alt="Customer"
+                                    className="customer-image"
+                                />
+                                {orderVisible && (
+                                    <div className="customer-mini-order-overlay">
+                                        <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
+                                    </div>
+                                )}
+                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/send_order.png" alt="send customer order" />
+                                <div className="manager-mini-order-overlay">
                                     <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div className="right-column">
                         <Score score={score} day={day} />
-
                         <AACBoard
                             selectedItems={selectedItems}
                             onSelectItem={addSelectedItem}
@@ -174,7 +177,6 @@ const App = () => {
                             drinkSize={"medium"}
                             orderVisible={orderVisible}
                         />
-                    </div>
                     </div>
                 </>
             ) : selectedRole === "burger" ? (

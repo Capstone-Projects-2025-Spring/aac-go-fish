@@ -1,4 +1,4 @@
-.DrinkBuilder{
+.DrinkBuilder {
     display: flex;
     text-align: center;
     flex-direction: column;
@@ -6,8 +6,8 @@
     align-items: center;
 }
 
-.DrinkButtons{
-    display:flex;
+.DrinkButtons {
+    display: flex;
     flex-direction: column;
     align-items: center;
 }
@@ -34,11 +34,11 @@
 }
 
 .CupSizeContainer {
-   display: flex;
-   flex-direction: column;
-   gap: 10px;
-   align-items: center;
-   width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 150px;
 }
 
 .DrinkDisplayContainer {
@@ -57,7 +57,7 @@
     width: 150px;
 }
 
-.DrinkButtons button{
+.DrinkButtons button {
     min-width: 120px;
     min-height: 120px;
     margin: 10px;
@@ -69,13 +69,14 @@
     border-radius: 6px;
     font-size: 32px;
 }
+
 .DrinkButtons button:active {
     transform: scale(.95);
 }
 
 .DrinkButtons button:disabled {
     cursor: not-allowed;
-    transform:none;
+    transform: none;
 }
 
 .ClearCupButton {
@@ -92,18 +93,26 @@
 }
 
 
-.Cup.small { height: 200px; }
-.Cup.medium { height: 275px; }
-.Cup.large { height: 350px; }
+.Cup.small {
+    height: 200px;
+}
 
-.Filling{
+.Cup.medium {
+    height: 275px;
+}
+
+.Cup.large {
+    height: 350px;
+}
+
+.Filling {
     width: 100%;
-    position:absolute;
+    position: absolute;
     bottom: 0;
     transition: height 0.3s ease, background-color 0.3s ease;
 }
 
-.FillCupButton{
+.FillCupButton {
     min-width: 120px;
     min-height: 120px;
     margin: 10px;
@@ -116,7 +125,7 @@
     font-size: 24px;
 }
 
-.FillCupButton:disabled{
+.FillCupButton:disabled {
     cursor: not-allowed;
     transform: none !important;
 }
@@ -125,7 +134,7 @@
     border: 3px solid #322e2e;
 }
 
-.FillCupButton:hover:disabled{
+.FillCupButton:hover:disabled {
     border: 1px solid #322e2e;
 }
 
@@ -138,7 +147,7 @@
 }
 
 
-.CupSizeButtons:hover{
+.CupSizeButtons:hover {
     background: #f3f3f3;
 }
 
@@ -146,7 +155,7 @@
     transform: scale(.95);
 }
 
-.SendButton{
+.SendButton {
     min-width: 120px;
     min-height: 40px;
     margin: 10px;
@@ -172,45 +181,48 @@
     border-radius: 6px;
 }
 
-.CupSizeButtons:disabled{
+.CupSizeButtons:disabled {
     cursor: not-allowed;
     transform: none;
     border: 1px solid #322e2e;
 }
 
-.CupSizeImageSmall{
+.CupSizeImageSmall {
     width: 85px;
     height: 85px;
     object-fit: contain;
 }
-.CupSizeImageMedium{
+
+.CupSizeImageMedium {
     width: 100px;
     height: 100px;
     object-fit: contain;
 }
-.CupSizeImageLarge{
+
+.CupSizeImageLarge {
     width: 115px;
     height: 115px;
     object-fit: contain;
 }
 
-.ButtonHolder{
+.ButtonHolder {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: row;
 }
 
-.FillCupImage{
+.FillCupImage {
     width: 100px;
     height: 100px;
     object-fit: contain;
 }
 
-.ClearCupButton{
+.ClearCupButton {
     border: none;
 }
-.ClearCupImage{
+
+.ClearCupImage {
     height: 120px;
 }
 
@@ -221,17 +233,17 @@
     align-items: flex-end;
 }
 
-.CupContainer.small{
+.CupContainer.small {
     width: 150px;
     height: 300px;
 }
 
-.CupContainer.medium{
+.CupContainer.medium {
     width: 175px;
     height: 350px;
 }
 
-.CupContainer.large{
+.CupContainer.large {
     width: 200px;
     height: 400px;
 }
@@ -244,24 +256,24 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    max-width: 200px;
+    max-width: 5rem;
 }
 
 .FillOverlay {
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform:translateX(-50%);
+    transform: translateX(-50%);
     width: 80%;
     height: 0;
     background-color: transparent;
     transition: height 0.3s ease-in-out;
     z-index: 5;
-    max-height: 200px;
-    max-width: 200px;
+    max-height: 7rem;
+    max-width: 4rem;
 }
 
-.ConfirmMessage{
+.ConfirmMessage {
     text-align: center;
     font-family: "Comic Sans MS";
     font-size: 32px;
