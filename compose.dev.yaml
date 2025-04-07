@@ -16,6 +16,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       target: prod
+      args:
+        REACT_APP_BACKEND_DOMAIN: localhost/api
       additional_contexts:
         metadata: .
     ports:
