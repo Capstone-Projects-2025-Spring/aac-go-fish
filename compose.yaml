@@ -16,6 +16,8 @@ services:
       - backend
     ports:
       - "0.0.0.0:80:80"
+    args:
+      REACT_APP_BACKEND_DOMAIN: bankruptcyassocation.com
 
   watchtower:
     image: containrrr/watchtower
