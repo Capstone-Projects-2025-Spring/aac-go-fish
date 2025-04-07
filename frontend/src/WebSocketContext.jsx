@@ -21,8 +21,7 @@ export function WebSocketProvider({ children }) {
     useEffect(() => {
         ws.current = new WebSocket(`ws://${process.env.REACT_APP_BACKEND_DOMAIN}/ws`);
         ws.current.onmessage = (event) => {
-            const data = JSON.parse(event.data);
-            queue.current.push({ content: data, timestamp: Date.now() });
+            queue.current.push(JSON.parse(event.data));
 			processMessages();
         };
         return () => ws.current.close();

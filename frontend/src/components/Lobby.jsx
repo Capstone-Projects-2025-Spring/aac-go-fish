@@ -8,11 +8,10 @@ function Lobby() {
 
     const handleMessage = (message) => {
         if (!message) return;
-        const data = message.content.data;
-        if (data &&
-            data.type === "lobby_lifecycle" &&
-            data.lifecycle_type === "player_count") {
-            setPlayerCount(data.count);
+        if (message &&
+            message.type === "lobby_lifecycle" &&
+            message.lifecycle_type === "player_count") {
+            setPlayerCount(message.count);
         }
     };
 
