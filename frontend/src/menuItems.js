@@ -29,7 +29,7 @@ export const menu = [
     {
         name: "Sides",
         children: [
-            "Fries", "Onion Rings"
+            "Fries", "Onion Rings", "Mozzarella Sticks"
         ],
     },
     {
