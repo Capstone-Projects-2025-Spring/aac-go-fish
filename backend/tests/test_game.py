@@ -80,7 +80,7 @@ from backend.models import Burger, Drink, Order, Side
 )
 def test_grade_order(correct_order: Order, inp_order: Order, exp: float) -> None:
     """Test grade order."""
-    game_loop = GameLoop(lobby=Lobby())
+    game_loop = GameLoop(lobby=Lobby(code=("Lettuce", "Tomato", "Onion")))
     game_loop.order = correct_order
 
     out = game_loop.grade_order(inp_order)
@@ -120,7 +120,7 @@ def test_grade_order_drink(
     inp_fill: float,
 ) -> None:
     """Grade order test for drinks specifically to take advantage of parameter matrix."""
-    game_loop = GameLoop(lobby=Lobby())
+    game_loop = GameLoop(lobby=Lobby(("Lettuce", "Tomato", "Onion")))
     game_loop.order = Order(
         burger=Burger(ingredients=["a", "b"]),
         side=Side(table_state="fries"),

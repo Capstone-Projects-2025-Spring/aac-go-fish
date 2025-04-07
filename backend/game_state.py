@@ -22,7 +22,7 @@ class Lobby:
         started: Whether the game has started
     """
 
-    code: str = "ABC"
+    code: tuple[str, ...]
     players: dict[str, Player] = dataclasses.field(default_factory=dict)
     channel: queue.Queue[TaggedMessage] = dataclasses.field(default_factory=queue.Queue)
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)

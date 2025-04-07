@@ -1,5 +1,4 @@
 import React, { useState, useRef, useContext } from 'react';
-import "./SideBuilder.css"
 import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
 import { WebSocketContext } from "../WebSocketContext";
