@@ -61,6 +61,7 @@ const App = () => {
                         const day = data.day ?? 0;
 
                         setDay(day);
+                        break;
                     case "order_component":
                         switch (data.component_type) {
                             case "burger":
