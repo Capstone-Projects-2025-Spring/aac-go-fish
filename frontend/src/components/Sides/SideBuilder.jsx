@@ -123,7 +123,7 @@ const SideBuilder = ({ score }) => {
             return <img src="/images/food_side_view/onion_side.png" alt="Chopped Onions" className="ChoppedOverlay" />;
         }
         if (sideType === "mozzarellaSticks"){
-            return <img src="/images/cheese_side.png" alt="Chopped Cheese" className="ChoppedOverlay" />;
+            return <img src="/images/food_side_view/cheese_side.png" alt="Chopped Cheese" className="ChoppedOverlay" />;
         }
         return null;
     }
@@ -155,7 +155,7 @@ const SideBuilder = ({ score }) => {
                     </button>
                     <button className="LeftButtons" onClick={() => placeSide("cheese")}
                             disabled={tableState !== "empty"}>
-                        <img src="/images/cheese.png" alt="Place Cheese" className="ButtonImages"/>
+                        <img src="/images/aac_icons/cheese.png" alt="Place Cheese" className="ButtonImages"/>
                         Cheese
                     </button>
                 </div>
@@ -164,10 +164,8 @@ const SideBuilder = ({ score }) => {
                 </div>
                 <div className="RightColumn">
                     <button className="RightButtons" onClick={chopSide}
-                        disabled={tableState !== "potatoes" && tableState !== "onions"}>
+                        disabled={tableState !== "potatoes" && tableState !== "onions" && tableState !== "cheese"}>
                         <img src="/images/station_specific/knife.png" alt="Chop Potatoes" className="ButtonImages" />
-                            disabled={tableState !== "potatoes" && tableState !== "onions" && tableState !== "cheese"}>
-                        <img src="/images/knife.png" alt="Chop Potatoes" className="ButtonImages"/>
                         Chop
                     </button>
                     <button className="RightButtons" onClick={reset}>
