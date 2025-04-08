@@ -14,8 +14,9 @@ const SideBuilder = ({ score }) => {
     const { send } = useContext(WebSocketContext);
 
     const sideTypes = [
-        { type: "potatoes", initialState: "potatoes", choppedState: "choppedPotatoes", finalState: "fries" },
-        { type: "onions", initialState: "onions", choppedState: "choppedOnions", finalState: "onionRings" },
+        {type: "potatoes", initialState: "potatoes", choppedState: "choppedPotatoes", finalState: "fries"},
+        {type: "onions", initialState: "onions", choppedState: "choppedOnions", finalState: "onionRings"},
+        {type: "cheese", initialState: "cheese", choppedState: "choppedCheese", finalState: "mozzarellaSticks"},
     ];
 
     const handleSend = () => {
@@ -121,6 +122,9 @@ const SideBuilder = ({ score }) => {
         if (sideType === "onionRings") {
             return <img src="/images/food_side_view/onion_side.png" alt="Chopped Onions" className="ChoppedOverlay" />;
         }
+        if (sideType === "mozzarellaSticks"){
+            return <img src="/images/food_side_view/cheese_side.png" alt="Chopped Cheese" className="ChoppedOverlay" />;
+        }
         return null;
     }
 
@@ -149,13 +153,18 @@ const SideBuilder = ({ score }) => {
                         <img src="/images/aac_icons/onion.png" alt="Place Onions" className="ButtonImages" />
                         Onion
                     </button>
+                    <button className="LeftButtons" onClick={() => placeSide("cheese")}
+                            disabled={tableState !== "empty"}>
+                        <img src="/images/aac_icons/cheese.png" alt="Place Cheese" className="ButtonImages"/>
+                        Cheese
+                    </button>
                 </div>
                 <div className="TableBorder">
                     <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} />
                 </div>
                 <div className="RightColumn">
                     <button className="RightButtons" onClick={chopSide}
-                        disabled={tableState !== "potatoes" && tableState !== "onions"}>
+                        disabled={tableState !== "potatoes" && tableState !== "onions" && tableState !== "cheese"}>
                         <img src="/images/station_specific/knife.png" alt="Chop Potatoes" className="ButtonImages" />
                         Chop
                     </button>
