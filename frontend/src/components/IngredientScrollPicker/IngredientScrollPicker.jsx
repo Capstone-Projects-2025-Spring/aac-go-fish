@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './IngredientScrollPicker.css';
-import { menu } from '../menuItems';
-
+import { menu } from "../../menuItems";
 const burgerOptions = menu[0].children;
 
 const IngredientScrollPicker = ({ selected, setSelected }) => {

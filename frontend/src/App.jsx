@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
-import BurgerBuilder from "./components/BurgerBuilder";
-import DrinkBuilder from "./components/DrinkBuilder";
-import SideBuilder from "./components/SideBuilder";
-import AACBoard from "./components/AACBoard";
-import MiniOrderDisplay from "./components/MiniOrderDisplay";
+import BurgerBuilder from "./components/Burger/BurgerBuilder";
+import DrinkBuilder from "./components/Drinks/DrinkBuilder";
+import SideBuilder from "./components/Sides/SideBuilder";
+import AACBoard from "./components/AACBoard/AACBoard";
+import MiniOrderDisplay from "./components/Manager/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
 import { WebSocketContext } from "./WebSocketContext";
 

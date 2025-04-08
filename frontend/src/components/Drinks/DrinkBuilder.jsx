@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import "./DrinkBuilder.css";
 import DrinkDisplay from "./DrinkDisplay.jsx";
-import { WebSocketContext } from "../WebSocketContext.jsx";
-import { playSendSound } from "./playSendSound.jsx";
-
+import { WebSocketContext } from "../../WebSocketContext";
+import { playSendSound } from "../Manager/playSendSound";
 const DrinkBuilder = ({ score }) => {
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);

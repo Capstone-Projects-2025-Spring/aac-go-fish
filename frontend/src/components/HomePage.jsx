@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import Lobby from './Lobby';
-import './HomePage.css';
+import Lobby from "./Lobby/Lobby";
+import "./HomePage.css";
 import { WebSocketContext } from '../WebSocketContext';
-import IngredientScrollPicker from './IngredientScrollPicker';
-
+import IngredientScrollPicker from "./IngredientScrollPicker/IngredientScrollPicker";
 
 function HomePage() {
     const [lobbyCode, setLobbyCode] = useState(null);

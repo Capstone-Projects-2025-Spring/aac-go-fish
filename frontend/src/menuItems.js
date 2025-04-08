@@ -14,7 +14,7 @@ function nameToChildItem(name, index) {
         image: `images/aac_icons/${key}.png`,
         audio: `/audio/${key}.mp3`,
         id: index,
-        sideImage: `images/aac_icons/${key}_side.png`
+        sideImage: `images/food_side_view/${key}_side.png`
     };
 }
 

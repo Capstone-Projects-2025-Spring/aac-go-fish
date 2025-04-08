@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './Lobby.css';
-import { WebSocketContext } from '../WebSocketContext';
-
+import { WebSocketContext } from "../../WebSocketContext";
 function Lobby() {
     const { send, message } = useContext(WebSocketContext);
     const [playerCount, setPlayerCount] = useState(1);

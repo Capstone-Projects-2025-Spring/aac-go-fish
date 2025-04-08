@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
-import { menu } from "../menuItems";
-import { WebSocketContext } from "../WebSocketContext";
-import { playSendSound } from "./playSendSound";
+import { menu } from "../../menuItems";
+import { WebSocketContext } from "../../WebSocketContext";
+import { playSendSound } from "../Manager/playSendSound";
 
 const BurgerBuilder = ({ score }) => {
     const [ingredients, setIngredients] = useState([]);

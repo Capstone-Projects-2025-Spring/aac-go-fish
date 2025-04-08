@@ -1,8 +1,9 @@
 import React, { useState, useRef, useContext } from 'react';
 import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
-import { WebSocketContext } from "../WebSocketContext";
-import { playSendSound } from "./playSendSound";
+import { WebSocketContext } from "../../WebSocketContext";
+import { playSendSound } from "../Manager/playSendSound";
+
 
 const SideBuilder = ({ score }) => {
     const [tableState, setTableState] = useState("empty");

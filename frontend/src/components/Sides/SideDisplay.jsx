@@ -1,8 +1,8 @@
 export default function SideDisplay({ tableState, fryTimeLeft, onDragStart }) {
     return (<div className="Table">
         {tableState === "empty" && <p>Table is empty</p>}
-        {tableState === "potatoes" && (<img src="/images/aac-icons/potato.png" alt="Potato" className="TableImages" />)}
-        {tableState === "onions" && (<img src="/images/aac-icons/onion.png" alt="Onions" className="TableImages" />)}
+        {tableState === "potatoes" && (<img src="/images/aac_icons/potato.png" alt="Potato" className="TableImages" />)}
+        {tableState === "onions" && (<img src="/images/aac_icons/onion.png" alt="Onions" className="TableImages" />)}
         {tableState === "choppedPotatoes" && (
             <div
                 className="DraggableItem"
