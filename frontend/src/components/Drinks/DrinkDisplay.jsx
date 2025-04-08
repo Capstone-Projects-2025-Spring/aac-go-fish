@@ -3,12 +3,12 @@ import "./DrinkDisplay.css";
 
 export default function DrinkDisplay({ color, fillPercentage, cupSize, cupPosition, mini }) {
     const cupImages = {
-        small: "/images/cup-small.png",
-        medium: "/images/cup-medium.png",
-        large: "/images/cup-large.png",
-        S: "/images/cup-small.png",
-        M: "/images/cup-medium.png",
-        L: "/images/cup-large.png",
+        small: "/images/drink_sizes/cup-small.png",
+        medium: "/images/drink_sizes/cup-medium.png",
+        large: "/images/drink_sizes/cup-large.png",
+        S: "/images/drink_sizes/cup-small.png",
+        M: "/images/drink_sizes/cup-medium.png",
+        L: "/images/drink_sizes/cup-large.png",
     };
     const maxFillHeight = cupSize === "small" ? 175 : cupSize === "medium" ? 100 : 235;
     return (

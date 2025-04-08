@@ -1,10 +1,11 @@
 import React, { useState, useRef, useContext } from 'react';
 import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
-import { WebSocketContext } from "../WebSocketContext";
-import { playSendSound } from "./playSendSound";
+import { WebSocketContext } from "../../WebSocketContext";
+import { playSendSound } from "../Manager/playSendSound";
 
-const SideBuilder = ({ score }) =>{
+
+const SideBuilder = ({ score }) => {
     const [tableState, setTableState] = useState("empty");
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
     const fryingIntervalRef = useRef(null);
@@ -13,18 +14,21 @@ const SideBuilder = ({ score }) =>{
     const { send } = useContext(WebSocketContext);
 
     const sideTypes = [
-        {type: "potatoes", initialState: "potatoes", choppedState: "choppedPotatoes", finalState: "fries"},
-        {type: "onions", initialState: "onions", choppedState: "choppedOnions", finalState: "onionRings"},
+        { type: "potatoes", initialState: "potatoes", choppedState: "choppedPotatoes", finalState: "fries" },
+        { type: "onions", initialState: "onions", choppedState: "choppedOnions", finalState: "onionRings" },
     ];
 
     const handleSend = () => {
-        send({data: {
-            type: "game_state",
-            game_state_update_type: "order_component",
-            component_type: "side",
-            component: {
-                table_state: tableState,
-        }}});
+        send({
+            data: {
+                type: "game_state",
+                game_state_update_type: "order_component",
+                component_type: "side",
+                component: {
+                    table_state: tableState,
+                }
+            }
+        });
         playSendSound();
         reset();
         setConfirmMessage("Side sent to manager!");
@@ -34,7 +38,7 @@ const SideBuilder = ({ score }) =>{
     };
 
     const placeSide = (type) => {
-        if (tableState === "empty"){
+        if (tableState === "empty") {
             const side = sideTypes.find((side) => side.type === type);
             if (side) {
                 setTableState(side.initialState);
@@ -43,7 +47,7 @@ const SideBuilder = ({ score }) =>{
         }
     };
 
-    const chopSide = () =>{
+    const chopSide = () => {
         playChoppingSound();
         const side = sideTypes.find((side) => side.initialState === tableState);
         if (side) {
@@ -59,7 +63,7 @@ const SideBuilder = ({ score }) =>{
         let timeLeft = 5;
         setFryTimeLeft(timeLeft);
 
-        if (fryingIntervalRef.current){
+        if (fryingIntervalRef.current) {
             clearInterval(fryingIntervalRef.current);
         }
 
@@ -79,14 +83,14 @@ const SideBuilder = ({ score }) =>{
     const reset = () => {
         setTableState("empty");
         setFryTimeLeft(0);
-        if (fryingIntervalRef.current){
+        if (fryingIntervalRef.current) {
             clearInterval(fryingIntervalRef.current);
             fryingIntervalRef.current = null;
         }
     };
 
-    const handleDragStart = (event, itemType) =>{
-        event.dataTransfer.setData("itemType",itemType);
+    const handleDragStart = (event, itemType) => {
+        event.dataTransfer.setData("itemType", itemType);
     };
 
     const handleDragOver = (event) => {
@@ -111,11 +115,11 @@ const SideBuilder = ({ score }) =>{
     };
 
     const getOverlayImage = () => {
-        if (sideType === "fries"){
-            return <img src="/images/choppedPotatoes.png" alt="Chopped Potatoes" className="ChoppedOverlay" />;
+        if (sideType === "fries") {
+            return <img src="/images/station_specific/choppedPotatoes.png" alt="Chopped Potatoes" className="ChoppedOverlay" />;
         }
-        if (sideType === "onionRings"){
-            return <img src="/images/onion_side.png" alt="Chopped Onions" className="ChoppedOverlay" />;
+        if (sideType === "onionRings") {
+            return <img src="/images/food_side_view/onion_side.png" alt="Chopped Onions" className="ChoppedOverlay" />;
         }
         return null;
     }
@@ -136,40 +140,40 @@ const SideBuilder = ({ score }) =>{
             <div className="MainContainer2">
                 <div className="LeftColumn">
                     <button className="LeftButtons" onClick={() => placeSide("potatoes")}
-                            disabled={tableState !== "empty"}>
-                        <img src="/images/potatoButton.png" alt="Place Potatoes" className="ButtonImages"/>
+                        disabled={tableState !== "empty"}>
+                        <img src="/images/station_specific/potatoButton.png" alt="Place Potatoes" className="ButtonImages" />
                         Potato
                     </button>
                     <button className="LeftButtons" onClick={() => placeSide("onions")}
-                            disabled={tableState !== "empty"}>
-                        <img src="/images/onion.png" alt="Place Onions" className="ButtonImages"/>
+                        disabled={tableState !== "empty"}>
+                        <img src="/images/aac_icons/onion.png" alt="Place Onions" className="ButtonImages" />
                         Onion
                     </button>
                 </div>
                 <div className="TableBorder">
-                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart}/>
+                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} />
                 </div>
                 <div className="RightColumn">
                     <button className="RightButtons" onClick={chopSide}
-                            disabled={tableState !== "potatoes" && tableState !== "onions"}>
-                        <img src="/images/knife.png" alt="Chop Potatoes" className="ButtonImages"/>
+                        disabled={tableState !== "potatoes" && tableState !== "onions"}>
+                        <img src="/images/station_specific/knife.png" alt="Chop Potatoes" className="ButtonImages" />
                         Chop
                     </button>
                     <button className="RightButtons" onClick={reset}>
                         Reset
                     </button>
                     <button className="SendButton" onClick={handleSend}
-                            disabled={tableState === "empty" || tableState === "frying"}>Send
+                        disabled={tableState === "empty" || tableState === "frying"}>Send
                     </button>
                 </div>
             </div>
 
             <div className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
-                 onDragOver={handleDragOver}
-                 onDrop={handleDrop}
-                 onDragLeave={handleDragLeave}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                onDragLeave={handleDragLeave}
             >
-                <img src="/images/fryer.png" alt="Fryer" className="FryerImage"/>
+                <img src="/images/station_specific/fryer.png" alt="Fryer" className="FryerImage" />
                 {tableState === "frying" && getOverlayImage()}
             </div>
             <div className="ConfirmMessage">

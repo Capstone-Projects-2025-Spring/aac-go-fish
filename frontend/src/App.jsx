@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import "./App.css";
-import BurgerBuilder from "./components/BurgerBuilder";
-import DrinkBuilder from "./components/DrinkBuilder";
-import SideBuilder from "./components/SideBuilder";
-import AACBoard from "./components/AACBoard";
-import MiniOrderDisplay from "./components/MiniOrderDisplay";
+import BurgerBuilder from "./components/Burger/BurgerBuilder";
+import DrinkBuilder from "./components/Drinks/DrinkBuilder";
+import SideBuilder from "./components/Sides/SideBuilder";
+import AACBoard from "./components/AACBoard/AACBoard";
+import MiniOrderDisplay from "./components/Manager/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
 import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 
@@ -156,7 +156,7 @@ const App = () => {
                                         <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
                                     </div>
                                 )}
-                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/send_order.png" alt="send customer order" />
+                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/button_icons/send_order.png" alt="send customer order" />
                                 <div className="manager-mini-order-overlay">
                                     <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
                                 </div>

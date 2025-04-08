@@ -1,6 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import './Lobby.css';
-import { useWebSocket, WebSocketContext } from '../WebSocketContext';
+import { useWebSocket, WebSocketContext } from "../../WebSocketContext";
 
 function Lobby() {
     const [playerCount, setPlayerCount] = useState(1);
