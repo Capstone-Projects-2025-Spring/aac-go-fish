@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./App.css";
 import BurgerBuilder from "./components/BurgerBuilder";
 import DrinkBuilder from "./components/DrinkBuilder";
@@ -7,10 +7,10 @@ import Score from "./components/Score";
 import AACBoard from "./components/AACBoard";
 import MiniOrderDisplay from "./components/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
-import { WebSocketContext } from "./WebSocketContext";
+import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
-    const { message, send } = useContext(WebSocketContext);
+    const { send } = useContext(WebSocketContext);
 
     const [selectedRole, setSelectedRole] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
@@ -29,10 +29,10 @@ const App = () => {
     const [score, setScore] = useState(0);
     const [day, setDay] = useState(1);
 
-    useEffect(() => {
+    const handleMessage = (message) => {
         if (!message) return;
-        console.log(message);
-        const data = message.content.data;
+        const data = message.data;
+        console.log(data);
         switch (data.type) {
             case "game_state":
                 switch (data.game_state_update_type) {
@@ -58,19 +58,24 @@ const App = () => {
                         }, delay);
 
                         break;
+                    case "day_end":
+                        const day = data.day ?? 0;
+
+                        setDay(day);
+                        break;
                     case "order_component":
                         switch (data.component_type) {
                             case "burger":
                                 console.log("burger");
-                                setEmployeeBurger(message.content.data.component.ingredients);
+                                setEmployeeBurger(data.component.ingredients);
                                 break;
                             case "drink":
                                 console.log("drink");
-                                setEmployeeDrink(message.content.data.component);
+                                setEmployeeDrink(data.component);
                                 break;
                             case "side":
                                 console.log("side");
-                                setEmployeeSide(message.content.data.component);
+                                setEmployeeSide(data.component);
                                 break;
                             default:
                                 console.log(`Unknown component type=${data.component_type}`);
@@ -86,8 +91,10 @@ const App = () => {
                         setDay(tempDay);
                         break;
                     case "role_assignment":
-                        console.log("role_assignment");
                         setSelectedRole(data.role);
+                        break;
+                    case "order_score":
+                        setScore(data.score);
                         break;
                     default:
                         console.log("Unknown game state update type", data.game_state_update_type);
@@ -95,10 +102,12 @@ const App = () => {
                 }
                 break;
             default:
-                console.log("Unknown message type", data.type);
+                console.log("Unknown message type", data);
                 break;
         }
-    }, [message]);
+    };
+
+    useWebSocket(handleMessage);
 
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
     const removeSelectedItem = (indexToDelete) =>

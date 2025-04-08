@@ -27,6 +27,6 @@ export default function SideDisplay({ tableState, fryTimeLeft, onDragStart }) {
             </>
         )}
         {tableState === "fries" && (<img src="/images/fries.png" alt="Fries" className="TableImages" />)}
-        {tableState === "onionRings" && (<img src="/images/OnionRings.png" alt="OnionRings" className="TableImages" />)}
+        {tableState === "onionRings" && (<img src="/images/onion_rings.png" alt="OnionRings" className="TableImages" />)}
     </div>)
 }
