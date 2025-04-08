@@ -31,6 +31,7 @@ function Lobby({ lobbyCode }) {
     const copyCode = () => {
         const URI = window.location.protocol + "//" + window.location.hostname + "/" + encodeURIComponent(lobbyCode)
         navigator.clipboard.writeText(URI)
+        alert("Link copied to clipboard")
     }
 
     return (
