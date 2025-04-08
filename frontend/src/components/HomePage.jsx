@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Lobby from './Lobby';
 import './HomePage.css';
 import { WebSocketContext } from '../WebSocketContext';
@@ -11,6 +11,18 @@ function HomePage() {
     const [ingredient2, setIngredient2] = useState('Bottom Bun');
     const [ingredient3, setIngredient3] = useState('Bottom Bun');
     const { send } = useContext(WebSocketContext);
+
+    useEffect(() => {
+        if (window.location.pathname !== "/"){
+            const pathname = window.location.pathname.slice(1);
+            console.log("Pathname is " + pathname);
+
+            const ingredients = decodeURIComponent(pathname).split('-')
+            setIngredient1(ingredients[0] ?? 'Bottom Bun');
+            setIngredient2(ingredients[1] ?? 'Bottom Bun');
+            setIngredient3(ingredients[2] ?? 'Bottom Bun');
+        }
+    },[])
 
     const handleJoin = async (codeArray) => {
         try {
@@ -32,7 +44,7 @@ function HomePage() {
                 }
             });
 
-            setLobbyCode(codeArray.join(' + '));
+            setLobbyCode(codeArray.join('-'));
         } catch (err) {
             console.error("Join failed:", err);
             alert("Failed to join lobby.");
@@ -108,7 +120,7 @@ function HomePage() {
                 <>
                     <div className="lobby-code-display">
                         <div className="code-images">
-                            {lobbyCode.split(' + ').map((name, i) => (
+                            {lobbyCode.split('-').map((name, i) => (
                                 <img
                                     key={i}
                                     src={`/images/${name.toLowerCase().replace(' ', '_')}.png`}

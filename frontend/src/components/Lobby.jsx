@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import './Lobby.css';
 import { useWebSocket, WebSocketContext } from '../WebSocketContext';
 
-function Lobby() {
+function Lobby({ lobbyCode }) {
     const [playerCount, setPlayerCount] = useState(1);
     const { send } = useContext(WebSocketContext);
 
@@ -27,10 +27,15 @@ function Lobby() {
         });
     };
 
+    const copyCode = () => {
+        const URI = window.location.protocol + "//" + window.location.hostname + "/" + encodeURIComponent(lobbyCode)
+        navigator.clipboard.writeText(URI)
+    }
+
     return (
         <div className="lobby-content">
             <div className="player-status">
-                <h3>Players in Lobby: {Math.min(playerCount, 4)} / 4</h3>
+                <h3>Players in Lobby: {Math.min(playerCount, 4)} / 4 <button onClick={copyCode}>Copy Link</button></h3>
                 {playerCount < 2 && <h4>Waiting for more players to join...</h4>}
                 {(playerCount == 2 || playerCount == 3) && <h4>You have company! Wait for more players or start game now!</h4>}
                 {playerCount >= 4 && <h4>Max players have joined!</h4>}
