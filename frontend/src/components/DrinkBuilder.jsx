@@ -4,7 +4,7 @@ import DrinkDisplay from "./DrinkDisplay.jsx";
 import { WebSocketContext } from "../WebSocketContext.jsx";
 import { playSendSound } from "./playSendSound.jsx";
 
-const DrinkBuilder = ({ score }) =>{
+const DrinkBuilder = ({ score }) => {
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
@@ -64,16 +64,18 @@ const DrinkBuilder = ({ score }) =>{
     };
 
     const handleSend = () => {
-        send({data: {
-            type: "game_state",
-            game_state_update_type: "order_component",
-            component_type: "drink",
-            component: {
-                color: color,
-                fill: fillPercentage,
-                size: cupSize,
+        send({
+            data: {
+                type: "game_state",
+                game_state_update_type: "order_component",
+                component_type: "drink",
+                component: {
+                    color: color,
+                    fill: fillPercentage,
+                    size: cupSize,
+                }
             }
-        }});
+        });
         clearCup();
         playSendSound();
         setConfirmMessage("Drink sent to manager!");
@@ -124,7 +126,7 @@ const DrinkBuilder = ({ score }) =>{
                             >
                                 {choice.name}
                             </button>
-                            <img src="/images/Dispenser.png" alt="Dispenser" className="DispenserImage" />
+                            <img src="/images/station_specific/Dispenser.png" alt="Dispenser" className="DispenserImage" />
                         </div>
                     ))}
                 </div>
@@ -136,21 +138,21 @@ const DrinkBuilder = ({ score }) =>{
                         onClick={() => selectCupSize("small")}
                         disabled={fillPercentage > 0}
                     >
-                        <img src="/images/SmallButton.png" alt="Small Cup" className="CupSizeImageSmall" />
+                        <img src="/images/button_icons/SmallButton.png" alt="Small Cup" className="CupSizeImageSmall" />
                     </button>
                     <button
                         className="CupSizeButtons"
                         onClick={() => selectCupSize("medium")}
                         disabled={fillPercentage > 0}
                     >
-                        <img src="/images/MediumButton.png" alt="Medium Cup" className="CupSizeImageMedium" />
+                        <img src="/images/button_icons/MediumButton.png" alt="Medium Cup" className="CupSizeImageMedium" />
                     </button>
                     <button
                         className="CupSizeButtons"
                         onClick={() => selectCupSize("large")}
                         disabled={fillPercentage > 0}
                     >
-                        <img src="/images/LargeButton.png" alt="Large Cup" className="CupSizeImageLarge" />
+                        <img src="/images/button_icons/LargeButton.png" alt="Large Cup" className="CupSizeImageLarge" />
                     </button>
                 </div>
                 <div className="DrinkDisplayContainer">
@@ -168,7 +170,7 @@ const DrinkBuilder = ({ score }) =>{
                 </div>
                 <div className="ActionButtonsContainer">
                     <button className="ClearCupButton" onClick={clearCup}>
-                        <img src="/images/undo.png" alt="Clear Cup" className="ClearCupImage" />
+                        <img src="/images/button_icons/undo.png" alt="Clear Cup" className="ClearCupImage" />
                     </button>
                     <button
                         className="FillCupButton"
@@ -178,7 +180,7 @@ const DrinkBuilder = ({ score }) =>{
                         disabled={!cupPlaced || !colorSelected}
                         title="Press and hold to fill"
                     >
-                        <img src="/images/pouring.png" alt="Fill Cup" className="FillCupImage" />
+                        <img src="/images/button_icons/pouring.png" alt="Fill Cup" className="FillCupImage" />
                     </button>
                     <button className="SendButton" onClick={handleSend}>Send</button>
                 </div>

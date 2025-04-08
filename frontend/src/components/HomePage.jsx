@@ -111,7 +111,7 @@ function HomePage() {
                             {lobbyCode.split(' + ').map((name, i) => (
                                 <img
                                     key={i}
-                                    src={`/images/${name.toLowerCase().replace(' ', '_')}.png`}
+                                    src={`/images/aac_icons/${name.toLowerCase().replace(' ', '_')}.png`}
                                     alt={name}
                                     className="code-image"
                                 />

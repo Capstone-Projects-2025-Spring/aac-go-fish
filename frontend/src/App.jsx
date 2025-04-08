@@ -180,7 +180,7 @@ const App = () => {
                                         <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
                                     </div>
                                 )}
-                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/send_order.png" alt="send customer order" />
+                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/button_icons/send_order.png" alt="send customer order" />
                                 <div className="manager-mini-order-overlay">
                                     <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
                                 </div>
