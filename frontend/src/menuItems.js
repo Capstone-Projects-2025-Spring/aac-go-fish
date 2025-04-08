@@ -2,7 +2,7 @@ function nameToParentItem(name) {
     const key = name.toLowerCase().replace(' ', '_');
     return {
         name,
-        image: `/images/${key}.png`,
+        image: `images/aac_icons/${key}.png`,
         audio: `/audio/${key}.mp3`
     };
 }
@@ -11,10 +11,10 @@ function nameToChildItem(name, index) {
     const key = name.toLowerCase().replace(' ', '_');
     return {
         name,
-        image: `/images/${key}.png`,
+        image: `images/aac_icons/${key}.png`,
         audio: `/audio/${key}.mp3`,
         id: index,
-        sideImage: `images/${key}_side.png`
+        sideImage: `images/food_side_view/${key}_side.png`
     };
 }
 
