@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./App.css";
 import BurgerBuilder from "./components/Burger/BurgerBuilder";
 import DrinkBuilder from "./components/Drinks/DrinkBuilder";
@@ -6,10 +6,10 @@ import SideBuilder from "./components/Sides/SideBuilder";
 import AACBoard from "./components/AACBoard/AACBoard";
 import MiniOrderDisplay from "./components/Manager/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
-import { WebSocketContext } from "./WebSocketContext";
+import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
-    const { message, send } = useContext(WebSocketContext);
+    const { send } = useContext(WebSocketContext);
 
     const [selectedRole, setSelectedRole] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
@@ -28,10 +28,10 @@ const App = () => {
     const [score, setScore] = useState(0);
     const [day, setDay] = useState(1);
 
-    useEffect(() => {
+    const handleMessage = (message) => {
         if (!message) return;
-        console.log(message);
-        const data = message.content.data;
+        const data = message.data;
+        console.log(data);
         switch (data.type) {
             case "game_state":
                 switch (data.game_state_update_type) {
@@ -66,15 +66,15 @@ const App = () => {
                         switch (data.component_type) {
                             case "burger":
                                 console.log("burger");
-                                setEmployeeBurger(message.content.data.component.ingredients);
+                                setEmployeeBurger(data.component.ingredients);
                                 break;
                             case "drink":
                                 console.log("drink");
-                                setEmployeeDrink(message.content.data.component);
+                                setEmployeeDrink(data.component);
                                 break;
                             case "side":
                                 console.log("side");
-                                setEmployeeSide(message.content.data.component);
+                                setEmployeeSide(data.component);
                                 break;
                             default:
                                 console.log(`Unknown component type=${data.component_type}`);
@@ -82,8 +82,10 @@ const App = () => {
                         }
                         break;
                     case "role_assignment":
-                        console.log("role_assignment");
                         setSelectedRole(data.role);
+                        break;
+                    case "order_score":
+                        setScore(data.score);
                         break;
                     default:
                         console.log("Unknown game state update type", data.game_state_update_type);
@@ -91,10 +93,12 @@ const App = () => {
                 }
                 break;
             default:
-                console.log("Unknown message type", data.type);
+                console.log("Unknown message type", data);
                 break;
         }
-    }, [message]);
+    };
+
+    useWebSocket(handleMessage);
 
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
     const removeSelectedItem = (indexToDelete) =>
@@ -115,28 +119,6 @@ const App = () => {
         }
     };
 
-    const getScoring = ({ burger, side, drink }) => {
-        let tempScore = 0;
-
-        if (burger) {
-            tempScore += 3;
-            if (JSON.stringify(burger) === JSON.stringify(burgerOrder)) tempScore += 2;
-        }
-
-        if (side) {
-            tempScore += 1;
-            if (side === 'fries') tempScore += 2;
-        }
-
-        if (drink) {
-            tempScore += 2;
-            const drinkObj = { color: null, fillPercentage: 100, size: null };
-            if (JSON.stringify(drink) === JSON.stringify(drinkObj)) tempScore += 2;
-        }
-
-        setScore(score + tempScore);
-    };
-
     const handleGiveToCustomer = () => {
         send({
             data: {
@@ -150,12 +132,6 @@ const App = () => {
                     side: employeeSide
                 }
             }
-        });
-
-        getScoring({
-            burger: employeeBurger,
-            side: employeeSide?.tableState,
-            drink: employeeDrink,
         });
 
         setEmployeeBurger(null);
