@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import ItemButton from "./ItemButton";
 
 export default function ItemGrid({ items, onClick }) {
@@ -20,7 +20,7 @@ export default function ItemGrid({ items, onClick }) {
                         item={{
                             id: "back",
                             name: "Back",
-                            image: "/images/back.png",
+                            image: "images/button_icons/back.png"
                         }}
                         onClick={() => setOpenIndex(null)}
                     />
