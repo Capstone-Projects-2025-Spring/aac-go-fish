@@ -34,7 +34,7 @@ logger = structlog.stdlib.get_logger(__file__)
 BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
 DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
 DRINK_SIZES = ["S", "M", "L"]
-SIDE_TYPES = ["Fries", "Onion Rings"]
+SIDE_TYPES = ["Fries", "Onion Rings", "Mozzarella Sticks"]
 
 MESSAGES_PER_LOOP = 5
 
