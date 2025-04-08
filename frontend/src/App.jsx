@@ -30,14 +30,15 @@ const App = () => {
 
     const handleMessage = (message) => {
         if (!message) return;
-        console.log(message.type);
-        switch (message.type) {
+        const data = message.data;
+        console.log(data);
+        switch (data.type) {
             case "game_state":
-                switch (message.game_state_update_type) {
+                switch (data.game_state_update_type) {
                     case "new_order":
-                        const burger = message.order.burger?.ingredients ?? [];
-                        const drink = message.order.drink ?? null;
-                        const side = message.order.side ?? null;
+                        const burger = data.order.burger?.ingredients ?? [];
+                        const drink = data.order.drink ?? null;
+                        const side = data.order.side ?? null;
 
                         setBurgerOrder(burger);
                         setDrinkOrder(drink);
@@ -57,42 +58,42 @@ const App = () => {
 
                         break;
                     case "day_end":
-                        const day = message.day ?? 0;
+                        const day = data.day ?? 0;
 
                         setDay(day);
                         break;
                     case "order_component":
-                        switch (message.component_type) {
+                        switch (data.component_type) {
                             case "burger":
                                 console.log("burger");
-                                setEmployeeBurger(message.content.data.component.ingredients);
+                                setEmployeeBurger(data.component.ingredients);
                                 break;
                             case "drink":
                                 console.log("drink");
-                                setEmployeeDrink(message.content.data.component);
+                                setEmployeeDrink(data.component);
                                 break;
                             case "side":
                                 console.log("side");
-                                setEmployeeSide(message.content.data.component);
+                                setEmployeeSide(data.component);
                                 break;
                             default:
-                                console.log(`Unknown component type=${message.component_type}`);
+                                console.log(`Unknown component type=${data.component_type}`);
                                 break;
                         }
                         break;
                     case "role_assignment":
-                        setSelectedRole(message.role);
+                        setSelectedRole(data.role);
                         break;
                     case "order_score":
-                        setScore(message.score);
+                        setScore(data.score);
                         break;
                     default:
-                        console.log("Unknown game state update type", message.game_state_update_type);
+                        console.log("Unknown game state update type", data.game_state_update_type);
                         break;
                 }
                 break;
             default:
-                console.log("Unknown message type", message.type);
+                console.log("Unknown message type", data);
                 break;
         }
     };
