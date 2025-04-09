@@ -5,13 +5,13 @@ export default function BurgerDisplay({ imagePaths }) {
     return (
         <div className="BurgerDisplay">
             {imagePaths.map((path, idx) => {
-                const ingredientType = path.split("/").pop().split(".")[0];
+                const ingredientName = path.split("/").pop().replace("_side.png","");
                 return (
                     <img
                         key={idx}
-                        className={`IngredientOnGrill ${ingredientType}-Ingredient`}
+                        className={`IngredientOnGrill ${ingredientName}-Ingredient`}
                         src={path}
-                        alt={`ingredient-${idx}`}
+                        alt={ingredientName}
                         style={{zIndex: idx + 1}}
                     />
                 );

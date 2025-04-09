@@ -128,12 +128,13 @@
 .BurgerDisplay {
     display: flex;
     flex-direction: column-reverse;
+    align-items: center;
 }
 
 .IngredientOnGrill {
     width: 80px;
     height: auto;
-    margin: -3px 0;
+    align-items: center;
 }
 
 .ScoreText {
@@ -175,6 +176,51 @@
     cursor: pointer;
 }
 
-.Cheese-Ingredient {
-    margin: -6px 0;
+.bottom_bun-Ingredient{
+    margin-top: -2px;
+    margin-bottom: -2px;
+    width: 75px;
+}
+
+.cheese-Ingredient{
+    margin-top: -5px;
+    margin-bottom: -11px;
+}
+
+.ketchup-Ingredient{
+    margin: 0px 0;
+}
+
+.lettuce-Ingredient{
+    margin-top: -10px;
+    margin-bottom: -4px;
+    width: 70px;
+}
+
+.mustard-Ingredient{
+    margin: 0px 0;
+}
+
+.onion-Ingredient{
+    margin-top: -2px;
+    margin-bottom: -2px;
+    width: 70px;
+}
+
+.patty-Ingredient{
+    margin-top: -5px;
+    margin-bottom: -2px;
+    width: 72px;
+}
+
+.tomato-Ingredient{
+    margin-top: -2px;
+    margin-bottom: -2px;
+    width: 70px;
+}
+
+.top_bun-Ingredient{
+    margin-top: 0;
+    margin-bottom: -6px;
+    width: 75px;
 }
