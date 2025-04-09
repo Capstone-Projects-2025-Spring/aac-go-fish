@@ -1,4 +1,6 @@
 ---
+name: order-up
+
 services:
   backend:
     image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-backend:main
