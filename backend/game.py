@@ -1,5 +1,4 @@
 import difflib
-import functools
 import itertools
 import math
 import random
@@ -162,7 +161,7 @@ class GameLoop:
         """Send an indicator that the manager is typing."""
         self.lobby.broadcast(Message(data=msg.data), exclude=[msg.id])
 
-    @functools.cached_property
+    @property
     def manager(self) -> Player:
         """The player with the manager role."""
         return next(player for player in self.lobby.players.values() if player.role == Role.manager)
