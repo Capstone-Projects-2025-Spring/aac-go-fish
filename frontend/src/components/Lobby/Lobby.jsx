@@ -43,6 +43,11 @@ function Lobby() {
                 >
                     Start Game
                 </button>
+                <button
+                    className="play-all-btn"
+                >
+                    🔊Play Code
+                </button>
             </div>
         </div>
     );

@@ -98,15 +98,3 @@
     gap: 2rem;
     margin: 2rem 0;
 }
-
-
-.play-all-btn {
-    background-color: #e66273;
-    color: white;
-    box-shadow: 0 4px 0 #aa4855;
-}
-
-.play-all-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 0 #aa4855;
-}

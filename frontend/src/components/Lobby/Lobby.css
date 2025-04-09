@@ -69,3 +69,16 @@ h3 {
     font-size: 2rem;
     margin-bottom: 1rem;
 }
+
+.play-all-btn {
+    background-color: #e66273;
+    color: white;
+    box-shadow: 0 4px 0 #aa4855;
+    max-height: 6rem;
+    white-space: nowrap;
+}
+
+.play-all-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 #aa4855;
+}

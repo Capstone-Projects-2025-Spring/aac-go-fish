@@ -99,12 +99,6 @@ function HomePage() {
                         >
                             Join Lobby
                         </button>
-                        <button
-                            className="play-all-btn"
-
-                        >
-                            🔊Play Code
-                        </button>
 
                     </div>
                 </>
