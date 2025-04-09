@@ -67,7 +67,6 @@ class GameLoop:
                         self.lobby.broadcast(Message(data=message.data), exclude=[message.id])
                     case PlayerLeave(id=id):
                         self.lobby.players.pop(id)
-
                         self.lobby.broadcast(Message(data=message.data))
                     case Chat():
                         self.typing_indicator(message)
@@ -107,7 +106,8 @@ class GameLoop:
         """Give manager next order."""
         if len(self.orders) == 0:
             self.handle_new_day()
-            self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
+
+        self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.order = self.orders.pop()
         self.manager.send(Message(data=NewOrder(order=self.order)))

@@ -46,7 +46,7 @@ const App = () => {
 
                         setCustomerNumber((customerNumber + 1) % 10);
 
-                        setOrderVisible(true);
+                        setOrderVisible(false);
 
                         const delay = Math.floor(Math.random() * 2000) + 2000;
 
@@ -65,15 +65,12 @@ const App = () => {
                     case "order_component":
                         switch (data.component_type) {
                             case "burger":
-                                console.log("burger");
                                 setEmployeeBurger(data.component.ingredients);
                                 break;
                             case "drink":
-                                console.log("drink");
                                 setEmployeeDrink(data.component);
                                 break;
                             case "side":
-                                console.log("side");
                                 setEmployeeSide(data.component);
                                 break;
                             default:
