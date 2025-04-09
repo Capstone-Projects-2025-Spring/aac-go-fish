@@ -5,6 +5,7 @@ import { WebSocketContext } from '../WebSocketContext';
 import IngredientScrollPicker from "./IngredientScrollPicker/IngredientScrollPicker";
 
 function HomePage() {
+
     const [lobbyCode, setLobbyCode] = useState(null);
     const [ingredient1, setIngredient1] = useState('Bottom Bun');
     const [ingredient2, setIngredient2] = useState('Bottom Bun');
@@ -97,6 +98,12 @@ function HomePage() {
                             disabled={!ingredient1 || !ingredient2 || !ingredient3}
                         >
                             Join Lobby
+                        </button>
+                        <button
+                            className="play-all-btn"
+
+                        >
+                            🔊Play Code
                         </button>
 
                     </div>

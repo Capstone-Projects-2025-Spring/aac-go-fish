@@ -12,7 +12,7 @@
     background-color: #fff8e1;
     font-family: 'Poppins', sans-serif;
     background-image: linear-gradient(rgba(255, 248, 225, 0.8), rgba(255, 248, 225, 0.95)),
-                      url('../../public/images/restaurant_background.avif');
+        url('../../public/images/restaurant_background.avif');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -87,7 +87,7 @@
     margin: 2rem 0;
 }
 
-.code-image{
+.code-image {
     max-width: 200px;
     max-height: 200px;
 }
@@ -97,4 +97,16 @@
     justify-content: center;
     gap: 2rem;
     margin: 2rem 0;
+}
+
+
+.play-all-btn {
+    background-color: #e66273;
+    color: white;
+    box-shadow: 0 4px 0 #aa4855;
+}
+
+.play-all-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 #aa4855;
 }
