@@ -32,9 +32,16 @@ from .models import (
 logger = structlog.stdlib.get_logger(__file__)
 
 BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
-DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
+DRINK_COLORS = [
+    ["Blue", "#34C6F4"],
+    ["Green", "#99CA3C"],
+    ["Yellow", "#F7EC13"],
+    ["Red", "#FF0000"],
+    ["Orange", "#F5841F"],
+    ["Purple", "#7E69AF"],
+]
 DRINK_SIZES = ["S", "M", "L"]
-SIDE_TYPES = ["Fries", "Onion Rings", "Mozzarella Sticks"]
+SIDE_TYPES = ["fries", "onionRings", "mozzarellaStics"]
 
 MESSAGES_PER_LOOP = 5
 
@@ -197,9 +204,9 @@ def _generate_order(num_players: int) -> Order:
     )
 
     if num_players >= 3:
-        order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, size=random.choice(DRINK_SIZES))
+        order.side = Side(table_state=random.choice(SIDE_TYPES))
 
     if num_players >= 4:
-        order.side = Side(table_state=random.choice(SIDE_TYPES))
+        order.drink = Drink(color=random.choice(DRINK_COLORS)[1], fill=100, size=random.choice(DRINK_SIZES))
 
     return order
