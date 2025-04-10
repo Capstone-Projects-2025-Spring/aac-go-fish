@@ -4,6 +4,7 @@ import { useWebSocket, WebSocketContext } from '../../WebSocketContext';
 
 function Lobby({ lobbyCode }) {
     const [playing, setPlaying] = useState(false);
+    const [copied, setCopied] = useState(false);
     const [playerCount, setPlayerCount] = useState(1);
     const { send } = useContext(WebSocketContext);
 
@@ -29,9 +30,13 @@ function Lobby({ lobbyCode }) {
     };
 
     const copyCode = () => {
-        const URI = window.location.protocol + "//" + window.location.hostname + "/" + encodeURIComponent(lobbyCode)
-        navigator.clipboard.writeText(URI)
-        alert("Link copied to clipboard")
+        const URL = window.location.protocol + "//" + window.location.hostname + "/" + encodeURIComponent(lobbyCode);
+        navigator.clipboard.writeText(URL);
+
+        setCopied(true);
+        setTimeout(() => {
+            setCopied(false);
+        }, 2000);
     }
 
     const playAll = () => {
@@ -84,7 +89,7 @@ function Lobby({ lobbyCode }) {
                 <button
                     className="copy-link-btn"
                     onClick={copyCode}>
-                    🔗
+                    {copied ? '✅' : '🔗'}
                 </button>
             </div>
         </div >
