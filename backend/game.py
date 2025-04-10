@@ -40,8 +40,8 @@ DRINK_COLORS = [
     ["Orange", "#F5841F"],
     ["Purple", "#7E69AF"],
 ]
-DRINK_SIZES = ["S", "M", "L"]
-SIDE_TYPES = ["fries", "onionRings", "mozzarellaStics"]
+DRINK_SIZES = ["small", "medium", "large"]
+SIDE_TYPES = ["fries", "onionRings", "mozzarellaSticks"]
 
 MESSAGES_PER_LOOP = 5
 
