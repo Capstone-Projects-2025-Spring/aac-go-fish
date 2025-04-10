@@ -1,8 +1,8 @@
+
 import "./AACBoard.css";
 import ItemGrid from "./ItemGrid";
 import SelectedItemsDisplay from "./SelectedItemsDisplay";
-import { menu } from "../menuItems";
-
+import { menu } from "../../menuItems";
 function AACBoard({
     onItemClick,
     selectedItems,
