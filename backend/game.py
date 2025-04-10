@@ -34,7 +34,7 @@ logger = structlog.stdlib.get_logger(__file__)
 BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
 DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
 DRINK_SIZES = ["S", "M", "L"]
-SIDE_TYPES = ["Fries", "Onion Rings"]
+SIDE_TYPES = ["Fries", "Onion Rings", "Mozzarella Sticks"]
 
 MESSAGES_PER_LOOP = 5
 
@@ -44,10 +44,13 @@ class GameLoop:
 
     def __init__(self, lobby: Lobby) -> None:
         self.lobby = lobby
+
+        # Backend stores game score and day
+        # Acts as source of truth in case any messages fail to send
         self.day = 1
+        self.score = 0
 
         self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
-
         self.order: Order
 
     def run(self) -> None:
@@ -75,8 +78,8 @@ class GameLoop:
                         self.manager.send(Message(data=component))
                     case OrderSubmission(order=order):
                         logger.debug("Received order.", order=order)
-                        score = self.grade_order(order)
-                        self.lobby.broadcast(Message(data=OrderScore(score=score)))
+                        self.score += self.grade_order(order)
+                        self.lobby.broadcast(Message(data=OrderScore(score=self.score)))
                         self.handle_next_order()
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
@@ -110,8 +113,8 @@ class GameLoop:
             self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.order = self.orders.pop()
-        self.manager.send(Message(data=NewOrder(order=self.order)))
         logger.debug("Order sent.")
+        self.manager.send(Message(data=NewOrder(order=self.order)))
 
     def handle_new_day(self) -> None:
         """Update current day."""

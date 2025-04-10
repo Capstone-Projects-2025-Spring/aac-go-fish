@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 import "./App.css";
-import BurgerBuilder from "./components/BurgerBuilder";
-import DrinkBuilder from "./components/DrinkBuilder";
-import SideBuilder from "./components/SideBuilder";
-import AACBoard from "./components/AACBoard";
-import MiniOrderDisplay from "./components/MiniOrderDisplay";
+import BurgerBuilder from "./components/Burger/BurgerBuilder";
+import DrinkBuilder from "./components/Drinks/DrinkBuilder";
+import SideBuilder from "./components/Sides/SideBuilder";
+import AACBoard from "./components/AACBoard/AACBoard";
+import MiniOrderDisplay from "./components/Manager/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
+import Score from "./components/Score/Score";
 import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
@@ -80,6 +81,14 @@ const App = () => {
                                 console.log(`Unknown component type=${data.component_type}`);
                                 break;
                         }
+                        break;
+                    case "order_score" :
+                        const tempScore = data.score ?? 0;
+                        setScore(tempScore);
+                        break;
+                    case "day_end":
+                        const tempDay = data.day ?? 0;
+                        setDay(tempDay);
                         break;
                     case "role_assignment":
                         setSelectedRole(data.role);
@@ -156,37 +165,36 @@ const App = () => {
                                         <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
                                     </div>
                                 )}
-                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/send_order.png" alt="send customer order" />
+                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/button_icons/send_order.png" alt="send customer order" />
                                 <div className="manager-mini-order-overlay">
                                     <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
                                 </div>
                             </div>
                         </div>
-                        <div className="right-column">
-                            <p className='Score'>Day {day} - ${score}</p>
-
-                            <AACBoard
-                                selectedItems={selectedItems}
-                                onSelectItem={addSelectedItem}
-                                onDeleteItem={removeSelectedItem}
-                                onClearAll={clearAllSelected}
-                                onPlayAll={onPlayAll}
-                                burgerOrder={burgerOrder}
-                                drinkOrder={drinkOrder}
-                                hasSide={!!sideOrder}
-                                drinkSize={"medium"}
-                                orderVisible={orderVisible}
-                            />
-                        </div>
+                    </div>
+                    <div className="right-column">
+                        <Score score={score} day={day} />
+                        <AACBoard
+                            selectedItems={selectedItems}
+                            onSelectItem={addSelectedItem}
+                            onDeleteItem={removeSelectedItem}
+                            onClearAll={clearAllSelected}
+                            onPlayAll={onPlayAll}
+                            burgerOrder={burgerOrder}
+                            drinkOrder={drinkOrder}
+                            hasSide={!!sideOrder}
+                            drinkSize={"medium"}
+                            orderVisible={orderVisible}
+                        />
                     </div>
                 </>
             ) : selectedRole === "burger" ? (
-                <BurgerBuilder score={score} />
+                <BurgerBuilder score={score} day={day} />
             ) : selectedRole === "side" ? (
-                <SideBuilder score={score} />
+                <SideBuilder score={score} day={day} />
             ) : selectedRole == "drink" ? (
-                <DrinkBuilder score={score} />
-            ) : <HomePage />}
+                <DrinkBuilder score={score} day={day} />
+            ) : <HomePage/>}
         </div>
     );
 };

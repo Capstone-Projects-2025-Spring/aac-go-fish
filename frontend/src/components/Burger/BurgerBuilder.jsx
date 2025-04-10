@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
 import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
-import {menu} from "../menuItems";
-import { WebSocketContext } from "../WebSocketContext";
-import { playSendSound } from "./playSendSound";
+import { menu } from "../../menuItems";
+import { WebSocketContext } from "../../WebSocketContext";
+import { playSendSound } from "../Manager/playSendSound";
+import Score from "../Score/Score";
 
-const BurgerBuilder = ({ score }) => {
+const BurgerBuilder = ({ score, day }) => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);
 
@@ -13,13 +14,16 @@ const BurgerBuilder = ({ score }) => {
 
     const handleSend = () => {
         const employeeOrder = ingredients.map(ingredient => ingredient.name);
-        send({data: {
-            type: "game_state",
-            game_state_update_type: "order_component",
-            component_type: "burger",
-            component: {
-                ingredients: employeeOrder,
-        }}});
+        send({
+            data: {
+                type: "game_state",
+                game_state_update_type: "order_component",
+                component_type: "burger",
+                component: {
+                    ingredients: employeeOrder,
+                }
+            }
+        });
         playSendSound();
         clearPlate();
     };
@@ -50,7 +54,7 @@ const BurgerBuilder = ({ score }) => {
 
     return (
         <div className="BurgerBuilder">
-            <p className='ScoreText'>Your score is ${score}</p>
+            <Score score={score} day={day} />
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>
@@ -61,13 +65,13 @@ const BurgerBuilder = ({ score }) => {
             </div>
             <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
             <button className="ClearPlateButton" onClick={clearPlate}>
-                <img src="/images/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
+                <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="/images/repeat_order.png" alt="Request Repeat" className="RepeatOrderImage" />
+                <img src="/images/button_icons/repeat_order.png" alt="Request Repeat" className="RepeatOrderImage" />
             </button>
             <button onClick={handleSend} className="SendOrderButton">
-                <img src="/images/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
+                <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
         </div>
     );
