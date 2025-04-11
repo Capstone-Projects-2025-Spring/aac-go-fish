@@ -12,7 +12,7 @@ import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 const App = () => {
     const { send } = useContext(WebSocketContext);
 
-    const [selectedRole, setSelectedRole] = useState();
+    const [selectedRole, setSelectedRole] = useState("lobby");
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
@@ -82,7 +82,7 @@ const App = () => {
                                 break;
                         }
                         break;
-                    case "order_score" :
+                    case "order_score":
                         const tempScore = data.score ?? 0;
                         setScore(tempScore);
                         break;
@@ -194,7 +194,7 @@ const App = () => {
                 <SideBuilder score={score} day={day} />
             ) : selectedRole == "drink" ? (
                 <DrinkBuilder score={score} day={day} />
-            ) : <HomePage/>}
+            ) : <HomePage />}
         </div>
     );
 };

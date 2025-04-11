@@ -1,6 +1,6 @@
 .lobby-subtitle {
     font-size: 1.5rem;
-    color: #8d6e63;
+    color: #4e342e;
     margin-top: 0.5rem;
 }
 
@@ -81,4 +81,9 @@ h3 {
 .play-all-btn:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 0 #aa4855;
+}
+
+button:focus {
+    outline: 3px solid #ff7043;
+    outline-offset: 2px;
 }
