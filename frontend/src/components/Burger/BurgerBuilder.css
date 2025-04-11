@@ -136,24 +136,36 @@
     margin: -3px 0;
 }
 
-.SendCustomerOrderImage{
+.SendCustomerOrderImage {
     height: 100px;
 }
 
-.RepeatOrderImage{
+.RepeatOrderImage {
     height: 100px;
 }
 
-.ClearPlateImage{
+.ClearPlateImage {
     height: 100px;
 }
 
-.SendImage{
+.SendImage {
     height: 100px;
 }
 
-.SendOrderButton{
+.SendOrderButton {
     background: white;
     border: none;
     cursor: pointer;
+}
+
+.BottomButtons p {
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.ClearPlateButton p {
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 0;
 }
