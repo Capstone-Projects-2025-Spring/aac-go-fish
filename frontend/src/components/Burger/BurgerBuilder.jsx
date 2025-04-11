@@ -8,6 +8,7 @@ import { playSendSound } from "../Manager/playSendSound";
 const BurgerBuilder = ({ score }) => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const foodItems = menu[0].children;
 
@@ -32,9 +33,10 @@ const BurgerBuilder = ({ score }) => {
     const addIngredient = (ingredient) => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
+            setErrorMessage("");
         }
         else {
-            alert("Plate is full!");
+            setErrorMessage("Plate is Full!");
         }
 
     };
@@ -72,6 +74,9 @@ const BurgerBuilder = ({ score }) => {
             <button onClick={handleSend} className="SendOrderButton">
                 <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
+            <div className="ErrorMessage">
+                {errorMessage && <p>{errorMessage}</p>}
+            </div>
         </div>
     );
 };
