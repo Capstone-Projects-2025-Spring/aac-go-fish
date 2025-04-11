@@ -167,23 +167,6 @@
     border-radius: 6px;
 }
 
-.ScoreText {
-    font-size: 36px;
-    border-radius: 6px;
-    color: white;
-    background-color: #9dae88;
-    border: 2px solid;
-    border-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: fit-content;
-    margin: auto;
-    margin-top: 10px;
-    padding: 10px;
-}
-
 .CupSizeButtons {
     display: inline-flex;
     justify-content: center;

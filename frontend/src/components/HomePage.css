@@ -12,7 +12,7 @@
     background-color: #fff8e1;
     font-family: 'Poppins', sans-serif;
     background-image: linear-gradient(rgba(255, 248, 225, 0.8), rgba(255, 248, 225, 0.95)),
-                      url('../../public/images/restaurant_background.avif');
+        url('../../public/images/restaurant_background.avif');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -87,7 +87,7 @@
     margin: 2rem 0;
 }
 
-.code-image{
+.code-image {
     max-width: 200px;
     max-height: 200px;
 }

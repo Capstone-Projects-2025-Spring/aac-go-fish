@@ -1,4 +1,6 @@
 ---
+name: order-up
+
 services:
   backend:
     image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-backend:main
@@ -27,3 +29,5 @@ services:
       WATCHTOWER_POLL_INTERVAL: 60
       # clean up old image
       WATCHTOWER_CLEANUP: true
+      WATCHTOWER_LOG_LEVEL: warn
+      WATCHTOWER_LOG_FORMAT: json
