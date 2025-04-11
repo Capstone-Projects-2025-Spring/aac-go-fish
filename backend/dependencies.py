@@ -3,6 +3,7 @@ import contextlib
 import itertools
 import queue
 import random
+from collections.abc import Iterable
 from functools import cache
 
 from .constants import Settings
@@ -49,9 +50,9 @@ def settings() -> Settings:
 class LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
 
-    def __init__(self) -> None:
+    def __init__(self, codes: Iterable[str]) -> None:
         self.lobbies: dict[tuple[str, ...], Lobby] = {}
-        all_codes = list(itertools.product(BURGER_INGREDIENTS, repeat=settings().code_length))
+        all_codes = list(itertools.product(codes, repeat=settings().code_length))
         random.shuffle(all_codes)
         self.available_codes = all_codes
 
@@ -65,7 +66,6 @@ class LobbyManager:
         Raises:
             LobbyNotFound: The lobby does not exist.
             LobbyFull: The lobby is full.
-
 
         Returns:
             The id of the newly created player.
@@ -135,7 +135,7 @@ class LobbyManager:
 
 
 # Initialize the lobby manager without a code generator function
-_LobbyManager = LobbyManager()
+_LobbyManager = LobbyManager(BURGER_INGREDIENTS)
 
 
 def lobby_manager() -> LobbyManager:
