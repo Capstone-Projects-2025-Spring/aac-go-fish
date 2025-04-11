@@ -8,6 +8,7 @@ import structlog
 from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import ValidationError
 from uvicorn.protocols.utils import get_path_with_query_string
 
 from .dependencies import Channel, LobbyManager, lobby_manager, settings
@@ -128,7 +129,12 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
     """Handles a WebSocket connection for receiving and responding to messages."""
     await websocket.accept()
 
-    init = Message.model_validate(await websocket.receive_json())
+    try:
+        init = Message.model_validate(await websocket.receive_json())
+    except ValidationError:
+        logger.debug("Received invalid websocket message.")
+        await websocket.close()
+        return
 
     match init:
         case Message(data=Initializer(code=code, id=id)):
@@ -140,14 +146,18 @@ async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, D
             return
 
     await asyncio.gather(_recv_handler(id, websocket, channel), _send_handler(id, websocket, channel))
-    await websocket.close()
 
 
 async def _recv_handler(id: str, websocket: WebSocket, channel: Channel[TaggedMessage, Message]) -> typing.Never:
     while True:
-        data = Message.model_validate_json(await websocket.receive_text())
-        logger.debug("Received WebSocket message.", message=data, player=id)
-        channel.send(TaggedMessage(data=data.data, id=id))
+        raw = await websocket.receive_text()
+        try:
+            data = Message.model_validate_json(raw)
+        except ValidationError:
+            logger.warning("Received invalid websocket message.", data=raw)
+        else:
+            logger.debug("Received WebSocket message.", message=data, player=id)
+            channel.send(TaggedMessage(data=data.data, id=id))
 
 
 async def _send_handler(id: str, websocket: WebSocket, channel: Channel[TaggedMessage, Message]) -> typing.Never:
