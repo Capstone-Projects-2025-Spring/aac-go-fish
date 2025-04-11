@@ -2,6 +2,7 @@ import pytest
 
 from backend.dependencies import LobbyManager
 from backend.game import BURGER_INGREDIENTS
+from backend.game_state import LobbyNotFound
 
 
 @pytest.fixture
@@ -35,12 +36,19 @@ def test_different_lobbies_have_different_codes(lm: LobbyManager) -> None:
     assert len(codes) == len(set(codes))
 
 
-def test_register_player_invalid_code(lm: LobbyManager) -> None:
-    """Test ValueError is thrown on invalid codes."""
+def test_register_player_lobby_not_found(lm: LobbyManager) -> None:
+    """Test LobbyNotFound is thrown on invalid codes."""
+
     with pytest.raises(ValueError) as exc_info:
         lm.register_player(("Top Bun", "Not a real ingredient"))
 
-    assert exc_info.type is ValueError
+    assert exc_info.type is LobbyNotFoundError
+
+
+def test_register_player_lobby_full(lm: LobbyManager) -> None:
+    """Test LobbyFull is thrown on invalid codes."""
+
+    pytest.fail()
 
 
 def test_register_player(lm: LobbyManager) -> None:
