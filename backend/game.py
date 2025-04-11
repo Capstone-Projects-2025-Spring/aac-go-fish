@@ -1,5 +1,4 @@
 import difflib
-import functools
 import itertools
 import math
 import random
@@ -120,6 +119,7 @@ class GameLoop:
         """Update current day."""
         self.day += 1
         logger.debug("New day.", day=self.day)
+        self.assign_roles()
         self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
     def grade_order(self, order: Order) -> float:
@@ -164,7 +164,7 @@ class GameLoop:
         """Send an indicator that the manager is typing."""
         self.lobby.broadcast(Message(data=msg.data), exclude=[msg.id])
 
-    @functools.cached_property
+    @property
     def manager(self) -> Player:
         """The player with the manager role."""
         return next(player for player in self.lobby.players.values() if player.role == Role.manager)
