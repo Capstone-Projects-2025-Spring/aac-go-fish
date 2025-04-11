@@ -12,7 +12,7 @@ import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 const App = () => {
     const { send } = useContext(WebSocketContext);
 
-    const [selectedRole, setSelectedRole] = useState("lobby");
+    const [selectedRole, setSelectedRole] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);

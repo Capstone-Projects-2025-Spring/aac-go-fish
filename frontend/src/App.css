@@ -34,7 +34,7 @@
     gap: 1rem;
 }
 
-.SendCustomerOrder{
+.SendCustomerOrder {
     bottom: 10px;
     right: 350px;
     position: absolute;
@@ -45,6 +45,12 @@
     border: None;
     cursor: pointer;
     text-align: center;
+
+}
+
+.SendCustomerOrder:focus {
+    outline: 3px solid #ff7043;
+    outline-offset: 4px;
 }
 
 .customer-container {
@@ -75,4 +81,9 @@
     left: 10px;
     position: absolute;
     max-width: 350px;
+}
+
+button:focus {
+    outline: 3px solid #ff7043;
+    outline-offset: 2px;
 }

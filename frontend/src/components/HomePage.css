@@ -98,3 +98,9 @@
     gap: 2rem;
     margin: 2rem 0;
 }
+
+
+button:focus {
+    outline: 3px solid #ff7043;
+    outline-offset: 2px;
+}
