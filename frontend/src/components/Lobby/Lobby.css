@@ -21,11 +21,12 @@
 
 .lobby-actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
     width: 80%;
     max-width: 300px;
     margin-bottom: 2rem;
+    justify-content: center;
 }
 
 .lobby-actions button {
@@ -36,6 +37,8 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
+    max-height: 6rem;
+    white-space: nowrap;
 }
 
 .start-button {
@@ -54,6 +57,28 @@
     box-shadow: 0 0 0 #e64a19;
 }
 
+.play-all-btn {
+    background-color: #e66273;
+    color: white;
+    box-shadow: 0 4px 0 #aa4855;
+}
+
+.play-all-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 #aa4855;
+}
+
+.copy-link-btn {
+    background-color: #90D5FF;
+    color: white;
+    box-shadow: 0 4px 0 #57B9FF;
+}
+
+.copy-link-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 #57B9FF;
+}
+
 .game-description {
     text-align: center;
     line-height: 1.6;
@@ -68,17 +93,4 @@ h2 {
 h3 {
     font-size: 2rem;
     margin-bottom: 1rem;
-}
-
-.play-all-btn {
-    background-color: #e66273;
-    color: white;
-    box-shadow: 0 4px 0 #aa4855;
-    max-height: 6rem;
-    white-space: nowrap;
-}
-
-.play-all-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 0 #aa4855;
 }

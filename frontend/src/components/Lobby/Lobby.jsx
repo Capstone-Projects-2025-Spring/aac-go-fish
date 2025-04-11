@@ -4,6 +4,7 @@ import { useWebSocket, WebSocketContext } from '../../WebSocketContext';
 
 function Lobby({ lobbyCode }) {
     const [playing, setPlaying] = useState(false);
+    const [copied, setCopied] = useState(false);
     const [playerCount, setPlayerCount] = useState(1);
     const { send } = useContext(WebSocketContext);
 
@@ -27,11 +28,21 @@ function Lobby({ lobbyCode }) {
             }
         });
     };
+
+    const copyCode = () => {
+        const URL = window.location.protocol + "//" + window.location.hostname + "/" + encodeURIComponent(lobbyCode);
+        navigator.clipboard.writeText(URL);
+
+        setCopied(true);
+        setTimeout(() => {
+            setCopied(false);
+        }, 2000);
+    }
+
     const playAll = () => {
         if (playing) return;
-
         if (!lobbyCode) return;
-        const names = lobbyCode.split(' + ');
+        const names = lobbyCode.split('-');
         if (names.length !== 3) return;
         const paths = names.map(n =>
             `/audio/${n.toLowerCase().replace(' ', '_')}.mp3`
@@ -72,8 +83,13 @@ function Lobby({ lobbyCode }) {
                 <button
                     className="play-all-btn"
                     onClick={playAll}
-                    disabled={playing || !lobbyCode || lobbyCode.split(' + ').length !== 3}                >
-                    {playing ? 'Playing…' : '🔊 Play Code'}
+                    disabled={playing || !lobbyCode || lobbyCode.split('-').length !== 3}                >
+                    {playing ? '🗣️' : '🔊'}
+                </button>
+                <button
+                    className="copy-link-btn"
+                    onClick={copyCode}>
+                    {copied ? '✅' : '🔗'}
                 </button>
             </div>
         </div >
