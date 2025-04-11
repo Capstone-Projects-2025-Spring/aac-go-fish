@@ -9,6 +9,7 @@ import Score from "../Score/Score";
 const BurgerBuilder = ({ score, day }) => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);
+    const [fullMessage, setFullMessage] = useState("");
 
     const foodItems = menu[0].children;
 
@@ -33,9 +34,10 @@ const BurgerBuilder = ({ score, day }) => {
     const addIngredient = (ingredient) => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
+            setFullMessage("");
         }
         else {
-            alert("Plate is full!");
+            setFullMessage("Plate is Full!");
         }
 
     };
@@ -50,7 +52,6 @@ const BurgerBuilder = ({ score, day }) => {
             console.error("Audio playback failed:", err);
         });
     };
-
 
     return (
         <div className="BurgerBuilder">
@@ -73,6 +74,9 @@ const BurgerBuilder = ({ score, day }) => {
             <button onClick={handleSend} className="SendOrderButton">
                 <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
+            <div className="ErrorMessage">
+                {fullMessage && <p>{fullMessage}</p>}
+            </div>
         </div>
     );
 };
