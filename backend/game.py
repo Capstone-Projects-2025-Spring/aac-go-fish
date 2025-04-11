@@ -52,6 +52,8 @@ class GameLoop:
         self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
         self.order: Order
 
+        self.started = False
+
     def run(self) -> None:
         """
         Main game loop.
@@ -90,7 +92,11 @@ class GameLoop:
         Args:
             id: The id of the player that started the game.
         """
+        if self.started:
+            return
+
         logger.debug("Starting game.")
+        self.started = True
 
         self.assign_roles()
         self.lobby.broadcast(Message(data=GameStart()), exclude=[id])
