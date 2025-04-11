@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="generator" content="Docusaurus v3.7.0">
 <title data-rh="true">AAC Go Fish | Aac Go Fish</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://Capstone-Projects-2025-Spring.github.io/aac-go-fish/docs/api-specification/openapi-spec"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="AAC Go Fish | Aac Go Fish"><meta data-rh="true" name="description" content="API Specification from openapi.yml"><meta data-rh="true" property="og:description" content="API Specification from openapi.yml"><link data-rh="true" rel="icon" href="/aac-go-fish/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://Capstone-Projects-2025-Spring.github.io/aac-go-fish/docs/api-specification/openapi-spec"><link data-rh="true" rel="alternate" href="https://Capstone-Projects-2025-Spring.github.io/aac-go-fish/docs/api-specification/openapi-spec" hreflang="en"><link data-rh="true" rel="alternate" href="https://Capstone-Projects-2025-Spring.github.io/aac-go-fish/docs/api-specification/openapi-spec" hreflang="x-default"><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script><link rel="stylesheet" href="/aac-go-fish/assets/css/styles.2f89b08d.css">
-<script src="/aac-go-fish/assets/js/runtime~main.970c2b03.js" defer="defer"></script>
-<script src="/aac-go-fish/assets/js/main.b07fecb1.js" defer="defer"></script>
+<script src="/aac-go-fish/assets/js/runtime~main.8b598360.js" defer="defer"></script>
+<script src="/aac-go-fish/assets/js/main.2c8b44ad.js" defer="defer"></script>
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/aac-go-fish/"><div class="navbar__logo"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Aac Go Fish</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/aac-go-fish/docs/intro">Documentation</a><a class="navbar__item navbar__link" href="/aac-go-fish/tutorial/Intro">Docusaurus Tutorial</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/Capstone-Projects-2025-Spring/aac-go-fish" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite" aria-pressed="false"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/aac-go-fish/docs/intro">Introduction</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/aac-go-fish/docs/category/requirements-specification">Requirements Specification</a><button aria-label="Expand sidebar category &#x27;Requirements Specification&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/aac-go-fish/docs/category/system-architecture">System Architecture</a><button aria-label="Expand sidebar category &#x27;System Architecture&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" href="/aac-go-fish/docs/category/api-specification">API Specification</a><button aria-label="Collapse sidebar category &#x27;API Specification&#x27;" aria-expanded="true" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/aac-go-fish/docs/api-specification/openapi-spec">AAC Go Fish</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/aac-go-fish/docs/api-specification/wss-schema">WebSocket Schema</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" href="/aac-go-fish/docs/category/test-procedures">Test Procedures</a><button aria-label="Expand sidebar category &#x27;Test Procedures&#x27;" aria-expanded="false" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/aac-go-fish/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/aac-go-fish/docs/category/api-specification"><span itemprop="name">API Specification</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">AAC Go Fish</span><meta itemprop="position" content="2"></li></ul></nav><div class="theme-doc-markdown markdown"><header><h1>AAC Go Fish</h1></header><div class="redocusaurus-styles"><style>html:not([data-theme='dark']) .BhXef{width:calc(100% - 40%);padding:0 40px;}/*!sc*/
@@ -123,6 +123,8 @@ html:not([data-theme='dark']) .cfVXnF >button :hover,html:not([data-theme='dark'
 html:not([data-theme='dark']) data-styled.g33[id="sc-lertIE"]{content:"cfVXnF,"}/*!sc*/
 html:not([data-theme='dark']) .jMdEeM{position:relative;}/*!sc*/
 html:not([data-theme='dark']) data-styled.g37[id="sc-dOUtaJ"]{content:"jMdEeM,"}/*!sc*/
+html:not([data-theme='dark']) .lcGauM{margin-left:10px;text-transform:none;font-size:0.929em;color:black;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g41[id="sc-dslWvo"]{content:"lcGauM,"}/*!sc*/
 html:not([data-theme='dark']) .dzPjrZ{font-family:var(--ifm-font-family-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);}/*!sc*/
 html:not([data-theme='dark']) .dzPjrZ p:last-child{margin-bottom:0;}/*!sc*/
 html:not([data-theme='dark']) .dzPjrZ h1{font-family:var(--ifm-heading-font-family);font-weight:var(--ifm-heading-font-weight);font-size:1.85714em;line-height:var(--ifm-heading-line-height);color:#25c2a0;margin-top:0;}/*!sc*/
@@ -146,6 +148,32 @@ html:not([data-theme='dark']) .dzPjrZ h1:hover>.share-link::before,html:not([dat
 html:not([data-theme='dark']) .dzPjrZ a{text-decoration:auto;color:#25c2a0;}/*!sc*/
 html:not([data-theme='dark']) .dzPjrZ a:visited{color:#25c2a0;}/*!sc*/
 html:not([data-theme='dark']) .dzPjrZ a:hover{color:#6ae3c9;text-decoration:auto;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz{font-family:var(--ifm-font-family-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz p:last-child{margin-bottom:0;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz p:first-child{margin-top:0;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz p:last-child{margin-bottom:0;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz p{display:inline-block;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz h1{font-family:var(--ifm-heading-font-family);font-weight:var(--ifm-heading-font-weight);font-size:1.85714em;line-height:var(--ifm-heading-line-height);color:#25c2a0;margin-top:0;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz h2{font-family:var(--ifm-heading-font-family);font-weight:var(--ifm-heading-font-weight);font-size:1.57143em;line-height:var(--ifm-heading-line-height);color:#333333;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz code{color:#e53935;background-color:rgba(38, 50, 56, 0.05);font-family:var(--ifm-font-family-monospace);border-radius:2px;border:1px solid rgba(38, 50, 56, 0.1);padding:0 5px;font-size:13px;font-weight:var(--ifm-font-weight-base);word-break:break-word;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz pre{font-family:var(--ifm-font-family-monospace);white-space:pre;background-color:#1b2028;color:white;padding:20px;overflow-x:auto;line-height:normal;border-radius:0;border:1px solid rgba(38, 50, 56, 0.1);}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz pre code{background-color:transparent;color:white;padding:0;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz pre code:before,html:not([data-theme='dark']) .kLlTyz pre code:after{content:none;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz blockquote{margin:0;margin-bottom:1em;padding:0 15px;color:#777;border-left:4px solid #ddd;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz img{max-width:100%;box-sizing:content-box;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz ul,html:not([data-theme='dark']) .kLlTyz ol{padding-left:2em;margin:0;margin-bottom:1em;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz ul ul,html:not([data-theme='dark']) .kLlTyz ol ul,html:not([data-theme='dark']) .kLlTyz ul ol,html:not([data-theme='dark']) .kLlTyz ol ol{margin-bottom:0;margin-top:0;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all;border-collapse:collapse;border-spacing:0;margin-top:1.5em;margin-bottom:1.5em;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz table tr{background-color:#fff;border-top:1px solid #ccc;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz table tr:nth-child(2n){background-color:#fafafa;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz table th,html:not([data-theme='dark']) .kLlTyz table td{padding:6px 13px;border:1px solid #ddd;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz table th{text-align:left;font-weight:bold;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz .share-link{cursor:pointer;margin-left:-20px;padding:0;line-height:1;width:20px;display:inline-block;outline:0;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz .share-link:before{content:'';width:15px;height:15px;background-size:contain;background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMCIgeT0iMCIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cGF0aCBmaWxsPSIjMDEwMTAxIiBkPSJNNDU5LjcgMjMzLjRsLTkwLjUgOTAuNWMtNTAgNTAtMTMxIDUwLTE4MSAwIC03LjktNy44LTE0LTE2LjctMTkuNC0yNS44bDQyLjEtNDIuMWMyLTIgNC41LTMuMiA2LjgtNC41IDIuOSA5LjkgOCAxOS4zIDE1LjggMjcuMiAyNSAyNSA2NS42IDI0LjkgOTAuNSAwbDkwLjUtOTAuNWMyNS0yNSAyNS02NS42IDAtOTAuNSAtMjQuOS0yNS02NS41LTI1LTkwLjUgMGwtMzIuMiAzMi4yYy0yNi4xLTEwLjItNTQuMi0xMi45LTgxLjYtOC45bDY4LjYtNjguNmM1MC01MCAxMzEtNTAgMTgxIDBDNTA5LjYgMTAyLjMgNTA5LjYgMTgzLjQgNDU5LjcgMjMzLjR6TTIyMC4zIDM4Mi4ybC0zMi4yIDMyLjJjLTI1IDI0LjktNjUuNiAyNC45LTkwLjUgMCAtMjUtMjUtMjUtNjUuNiAwLTkwLjVsOTAuNS05MC41YzI1LTI1IDY1LjUtMjUgOTAuNSAwIDcuOCA3LjggMTIuOSAxNy4yIDE1LjggMjcuMSAyLjQtMS40IDQuOC0yLjUgNi44LTQuNWw0Mi4xLTQyYy01LjQtOS4yLTExLjYtMTgtMTkuNC0yNS44IC01MC01MC0xMzEtNTAtMTgxIDBsLTkwLjUgOTAuNWMtNTAgNTAtNTAgMTMxIDAgMTgxIDUwIDUwIDEzMSA1MCAxODEgMGw2OC42LTY4LjZDMjc0LjYgMzk1LjEgMjQ2LjQgMzkyLjMgMjIwLjMgMzgyLjJ6Ii8+PC9zdmc+Cg==');opacity:0.5;visibility:hidden;display:inline-block;vertical-align:middle;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz h1:hover>.share-link::before,html:not([data-theme='dark']) .kLlTyz h2:hover>.share-link::before,html:not([data-theme='dark']) .kLlTyz .share-link:hover::before{visibility:visible;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz a{text-decoration:auto;color:#25c2a0;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz a:visited{color:#25c2a0;}/*!sc*/
+html:not([data-theme='dark']) .kLlTyz a:hover{color:#6ae3c9;text-decoration:auto;}/*!sc*/
 html:not([data-theme='dark']) .hGKWqP{font-family:var(--ifm-font-family-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);}/*!sc*/
 html:not([data-theme='dark']) .hGKWqP p:last-child{margin-bottom:0;}/*!sc*/
 html:not([data-theme='dark']) .hGKWqP p:first-child{margin-top:0;}/*!sc*/
@@ -171,9 +199,9 @@ html:not([data-theme='dark']) .hGKWqP h1:hover>.share-link::before,html:not([dat
 html:not([data-theme='dark']) .hGKWqP a{text-decoration:auto;color:#25c2a0;}/*!sc*/
 html:not([data-theme='dark']) .hGKWqP a:visited{color:#25c2a0;}/*!sc*/
 html:not([data-theme='dark']) .hGKWqP a:hover{color:#6ae3c9;text-decoration:auto;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g42[id="sc-eXfTSZ"]{content:"dzPjrZ,hGKWqP,"}/*!sc*/
-html:not([data-theme='dark']) .iWCNbi{display:inline;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g43[id="sc-dXYVqG"]{content:"iWCNbi,"}/*!sc*/
+html:not([data-theme='dark']) data-styled.g42[id="sc-eXfTSZ"]{content:"dzPjrZ,kLlTyz,hGKWqP,"}/*!sc*/
+html:not([data-theme='dark']) .iaKqXk{display:inline;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g43[id="sc-dXYVqG"]{content:"iaKqXk,"}/*!sc*/
 html:not([data-theme='dark']) .kPewJt{position:relative;}/*!sc*/
 html:not([data-theme='dark']) data-styled.g44[id="sc-fCSSOr"]{content:"kPewJt,"}/*!sc*/
 html:not([data-theme='dark']) .fhJHli:hover>.sc-lertIE{opacity:1;}/*!sc*/
@@ -211,103 +239,99 @@ html:not([data-theme='dark']) .cMqjKH{color:rgba(102,102,102,0.9);}/*!sc*/
 html:not([data-theme='dark']) data-styled.g59[id="sc-cAQujh"]{content:"cMqjKH,"}/*!sc*/
 html:not([data-theme='dark']) .YIflu{color:#666;}/*!sc*/
 html:not([data-theme='dark']) data-styled.g60[id="sc-haUlXw"]{content:"YIflu,"}/*!sc*/
-html:not([data-theme='dark']) .caRgDJ{color:#666;word-break:break-word;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g61[id="sc-gIivzS"]{content:"caRgDJ,"}/*!sc*/
-html:not([data-theme='dark']) .cJSTOB{color:#d41f1c;font-size:0.9em;font-weight:normal;margin-left:20px;line-height:1;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g62[id="sc-incsXD"]{content:"cJSTOB,"}/*!sc*/
-html:not([data-theme='dark']) .etEGmz{margin-top:0;margin-bottom:0.5em;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g91[id="sc-fylWoh"]{content:"etEGmz,"}/*!sc*/
-html:not([data-theme='dark']) .iriSvq{border:1px solid #25c2a0;color:#25c2a0;font-weight:normal;margin-left:0.5em;padding:4px 8px 4px;display:inline-block;text-decoration:none;cursor:pointer;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g92[id="sc-jYpOcw"]{content:"iriSvq,"}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE{width:9ex;display:inline-block;height:13px;line-height:13px;background-color:#333;border-radius:3px;background-repeat:no-repeat;background-position:6px 4px;font-size:7px;font-family:Verdana,sans-serif;color:white;text-transform:uppercase;text-align:center;font-weight:bold;vertical-align:middle;margin-right:6px;margin-top:2px;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.get{background-color:#2F8132;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.post{background-color:#186FAF;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.put{background-color:#95507c;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.options{background-color:#947014;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.patch{background-color:#bf581d;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.delete{background-color:#cc3333;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.basic{background-color:#707070;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.link{background-color:#07818F;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.head{background-color:#A23DAD;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.hook{background-color:#25c2a0;}/*!sc*/
-html:not([data-theme='dark']) .hOlGtE.schema{background-color:#707070;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g99[id="sc-dLPjTJ"]{content:"hOlGtE,"}/*!sc*/
-html:not([data-theme='dark']) .guNene{margin:0;padding:0;}/*!sc*/
-html:not([data-theme='dark']) .guNene:first-child{padding-bottom:32px;}/*!sc*/
-html:not([data-theme='dark']) .sc-ilTbHY .sc-ilTbHY{font-size:0.929em;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g100[id="sc-ilTbHY"]{content:"guNene,"}/*!sc*/
-html:not([data-theme='dark']) .hWwlcB{list-style:none inside none;overflow:hidden;text-overflow:ellipsis;padding:0;}/*!sc*/
+html:not([data-theme='dark']) .dvwEJw{margin-top:0;margin-bottom:0.5em;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g92[id="sc-jYpOcw"]{content:"dvwEJw,"}/*!sc*/
+html:not([data-theme='dark']) .gusXaO{border:1px solid #25c2a0;color:#25c2a0;font-weight:normal;margin-left:0.5em;padding:4px 8px 4px;display:inline-block;text-decoration:none;cursor:pointer;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g93[id="sc-fQNqfz"]{content:"gusXaO,"}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv{width:9ex;display:inline-block;height:13px;line-height:13px;background-color:#333;border-radius:3px;background-repeat:no-repeat;background-position:6px 4px;font-size:7px;font-family:Verdana,sans-serif;color:white;text-transform:uppercase;text-align:center;font-weight:bold;vertical-align:middle;margin-right:6px;margin-top:2px;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.get{background-color:#2F8132;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.post{background-color:#186FAF;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.put{background-color:#95507c;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.options{background-color:#947014;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.patch{background-color:#bf581d;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.delete{background-color:#cc3333;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.basic{background-color:#707070;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.link{background-color:#07818F;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.head{background-color:#A23DAD;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.hook{background-color:#25c2a0;}/*!sc*/
+html:not([data-theme='dark']) .iaoeNv.schema{background-color:#707070;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g100[id="sc-ilTbHY"]{content:"iaoeNv,"}/*!sc*/
+html:not([data-theme='dark']) .hWwlcB{margin:0;padding:0;}/*!sc*/
+html:not([data-theme='dark']) .hWwlcB:first-child{padding-bottom:32px;}/*!sc*/
+html:not([data-theme='dark']) .sc-kDeqfd .sc-kDeqfd{font-size:0.929em;}/*!sc*/
 html:not([data-theme='dark']) data-styled.g101[id="sc-kDeqfd"]{content:"hWwlcB,"}/*!sc*/
-html:not([data-theme='dark']) .hvuhXv{cursor:pointer;color:#333333;margin:0;padding:12.5px 20px;display:flex;justify-content:space-between;font-family:var(--ifm-heading-font-family);background-color:#ffffff;}/*!sc*/
-html:not([data-theme='dark']) .hvuhXv:hover{color:#25c2a0;background-color:#f2f2f2;}/*!sc*/
-html:not([data-theme='dark']) .hvuhXv .sc-cSaEAk{height:1.5em;width:1.5em;}/*!sc*/
-html:not([data-theme='dark']) .hvuhXv .sc-cSaEAk polygon{fill:#333333;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g102[id="sc-UBoew"]{content:"hvuhXv,"}/*!sc*/
-html:not([data-theme='dark']) .eiqpDY{display:inline-block;vertical-align:middle;width:calc(100% - 38px);overflow:hidden;text-overflow:ellipsis;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g103[id="sc-edctFj"]{content:"eiqpDY,"}/*!sc*/
-html:not([data-theme='dark']) .eiBzZy{font-size:0.8em;margin-top:10px;text-align:center;position:fixed;width:300px;bottom:0;background:#ffffff;}/*!sc*/
-html:not([data-theme='dark']) .eiBzZy a,html:not([data-theme='dark']) .eiBzZy a:visited,html:not([data-theme='dark']) .eiBzZy a:hover{color:#333333!important;padding:5px 0;border-top:1px solid #e6e6e6;text-decoration:none;display:flex;align-items:center;justify-content:center;}/*!sc*/
-html:not([data-theme='dark']) .eiBzZy img{width:15px;margin-right:5px;}/*!sc*/
-@media screen and (max-width: 50rem){html:not([data-theme='dark']) .eiBzZy{width:100%;}}/*!sc*/
-html:not([data-theme='dark']) data-styled.g104[id="sc-fJVbdy"]{content:"eiBzZy,"}/*!sc*/
-html:not([data-theme='dark']) .iQlcjo{cursor:pointer;position:relative;margin-bottom:5px;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g110[id="sc-cOTGOU"]{content:"iQlcjo,"}/*!sc*/
-html:not([data-theme='dark']) .lhGsaF{font-family:var(--ifm-font-family-monospace);margin-left:10px;flex:1;overflow-x:hidden;text-overflow:ellipsis;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g111[id="sc-dNMyuw"]{content:"lhGsaF,"}/*!sc*/
-html:not([data-theme='dark']) .dhPFcF{outline:0;color:inherit;width:100%;text-align:left;cursor:pointer;padding:10px 30px 10px 20px;border-radius:4px 4px 0 0;background-color:#1b2028;display:flex;white-space:nowrap;align-items:center;border:1px solid transparent;border-bottom:0;transition:border-color 0.25s ease;}/*!sc*/
-html:not([data-theme='dark']) .dhPFcF ..sc-dNMyuw{color:#ffffff;}/*!sc*/
-html:not([data-theme='dark']) .dhPFcF:focus{box-shadow:inset 0 2px 2px rgba(0, 0, 0, 0.45),0 2px 0 rgba(128, 128, 128, 0.25);}/*!sc*/
-html:not([data-theme='dark']) data-styled.g112[id="sc-ijEwUV"]{content:"dhPFcF,"}/*!sc*/
-html:not([data-theme='dark']) .gFIfdN{font-size:0.929em;line-height:20px;background-color:#186FAF;color:#ffffff;padding:3px 10px;text-transform:uppercase;font-family:var(--ifm-heading-font-family);margin:0;}/*!sc*/
-html:not([data-theme='dark']) .hPmDyb{font-size:0.929em;line-height:20px;background-color:#2F8132;color:#ffffff;padding:3px 10px;text-transform:uppercase;font-family:var(--ifm-heading-font-family);margin:0;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g113[id="sc-iNzRy"]{content:"gFIfdN,hPmDyb,"}/*!sc*/
-html:not([data-theme='dark']) .fENReE{position:absolute;width:100%;z-index:100;background:#fafafa;color:#263238;box-sizing:border-box;box-shadow:0 0 6px rgba(0, 0, 0, 0.33);overflow:hidden;border-bottom-left-radius:4px;border-bottom-right-radius:4px;transition:all 0.25s ease;visibility:hidden;transform:translateY(-50%) scaleY(0);}/*!sc*/
-html:not([data-theme='dark']) data-styled.g114[id="sc-eEFyrX"]{content:"fENReE,"}/*!sc*/
-html:not([data-theme='dark']) .cIiuCa{padding:10px;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g115[id="sc-dHpROs"]{content:"cIiuCa,"}/*!sc*/
-html:not([data-theme='dark']) .gsqWN{padding:5px;border:1px solid #ccc;background:#fff;word-break:break-all;color:#25c2a0;}/*!sc*/
-html:not([data-theme='dark']) .gsqWN >span{color:#333333;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g116[id="sc-idhQoR"]{content:"gsqWN,"}/*!sc*/
-html:not([data-theme='dark']) .fIRZzM{display:block;border:0;width:100%;text-align:left;padding:10px;border-radius:2px;margin-bottom:4px;line-height:1.5em;cursor:pointer;color:#1d8127;background-color:rgba(29,129,39,0.07);}/*!sc*/
-html:not([data-theme='dark']) .fIRZzM:focus{outline:auto #1d8127;}/*!sc*/
-html:not([data-theme='dark']) .dhdtjI{display:block;border:0;width:100%;text-align:left;padding:10px;border-radius:2px;margin-bottom:4px;line-height:1.5em;cursor:pointer;color:#d41f1c;background-color:rgba(212,31,28,0.07);cursor:default;}/*!sc*/
-html:not([data-theme='dark']) .dhdtjI:focus{outline:auto #d41f1c;}/*!sc*/
-html:not([data-theme='dark']) .dhdtjI::before{content:"—";font-weight:bold;width:1.5em;text-align:center;display:inline-block;vertical-align:top;}/*!sc*/
-html:not([data-theme='dark']) .dhdtjI:focus{outline:0;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g119[id="sc-fIeReU"]{content:"fIRZzM,dhdtjI,"}/*!sc*/
-html:not([data-theme='dark']) .dqKUKh{vertical-align:top;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g122[id="sc-bAomZO"]{content:"dqKUKh,"}/*!sc*/
-html:not([data-theme='dark']) .ehlUEW{font-size:1.3em;padding:0.2em 0;margin:3em 0 1.1em;color:#333333;font-weight:normal;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g123[id="sc-dxpuJR"]{content:"ehlUEW,"}/*!sc*/
-html:not([data-theme='dark']) .jvCEAX{margin-bottom:30px;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g128[id="sc-fkXaGc"]{content:"jvCEAX,"}/*!sc*/
-html:not([data-theme='dark']) .cpcsos{user-select:none;width:20px;height:20px;align-self:center;display:flex;flex-direction:column;color:#25c2a0;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g129[id="sc-bACthX"]{content:"cpcsos,"}/*!sc*/
-html:not([data-theme='dark']) .eMGHiK{width:300px;background-color:#ffffff;overflow:hidden;display:flex;flex-direction:column;backface-visibility:hidden;height:100vh;position:sticky;position:-webkit-sticky;top:0;}/*!sc*/
-@media screen and (max-width: 50rem){html:not([data-theme='dark']) .eMGHiK{position:fixed;z-index:20;width:100%;background:#ffffff;display:none;}}/*!sc*/
-@media print{html:not([data-theme='dark']) .eMGHiK{display:none;}}/*!sc*/
-html:not([data-theme='dark']) data-styled.g130[id="sc-duGFKm"]{content:"eMGHiK,"}/*!sc*/
-html:not([data-theme='dark']) .jQIORC{outline:none;user-select:none;background-color:#f2f2f2;color:#25c2a0;display:none;cursor:pointer;position:fixed;right:20px;z-index:100;border-radius:50%;box-shadow:0 0 20px rgba(0, 0, 0, 0.3);bottom:44px;width:60px;height:60px;padding:0 20px;}/*!sc*/
-@media screen and (max-width: 50rem){html:not([data-theme='dark']) .jQIORC{display:flex;}}/*!sc*/
-html:not([data-theme='dark']) .jQIORC svg{color:#0065FB;}/*!sc*/
-@media print{html:not([data-theme='dark']) .jQIORC{display:none;}}/*!sc*/
-html:not([data-theme='dark']) data-styled.g131[id="sc-egnSlO"]{content:"jQIORC,"}/*!sc*/
-html:not([data-theme='dark']) .fTPRBl{font-family:var(--ifm-font-family-base);font-size:var(--ifm-font-size-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);color:#333333;display:flex;position:relative;text-align:left;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;text-rendering:optimizeSpeed!important;tap-highlight-color:rgba(0, 0, 0, 0);text-size-adjust:100%;}/*!sc*/
-html:not([data-theme='dark']) .fTPRBl *{box-sizing:border-box;-webkit-tap-highlight-color:rgba(255, 255, 255, 0);}/*!sc*/
-html:not([data-theme='dark']) data-styled.g132[id="sc-iCfQMn"]{content:"fTPRBl,"}/*!sc*/
-html:not([data-theme='dark']) .hkMkLL{z-index:1;position:relative;overflow:hidden;width:calc(100% - 300px);contain:layout;}/*!sc*/
-@media print,screen and (max-width: 50rem){html:not([data-theme='dark']) .hkMkLL{width:100%;}}/*!sc*/
-html:not([data-theme='dark']) data-styled.g133[id="sc-kSwkvc"]{content:"hkMkLL,"}/*!sc*/
-html:not([data-theme='dark']) .suCwY{background:#303846;position:absolute;top:0;bottom:0;right:0;width:calc((100% - 300px) * 0.4);}/*!sc*/
-@media print,screen and (max-width: 130rem){html:not([data-theme='dark']) .suCwY{display:none;}}/*!sc*/
-html:not([data-theme='dark']) data-styled.g134[id="sc-dYSzwF"]{content:"suCwY,"}/*!sc*/
-html:not([data-theme='dark']) .jeCODh{padding:5px 0;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g135[id="sc-dZRlFK"]{content:"jeCODh,"}/*!sc*/
-html:not([data-theme='dark']) .hDhcM{width:calc(100% - 40px);box-sizing:border-box;margin:0 20px;padding:5px 10px 5px 20px;border:0;border-bottom:1px solid #e6e6e6;font-family:var(--ifm-font-family-base);font-weight:bold;font-size:13px;color:#333333;background-color:transparent;outline:none;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g136[id="sc-ivJkgj"]{content:"hDhcM,"}/*!sc*/
-html:not([data-theme='dark']) .klEZnJ{position:absolute;left:20px;height:1.8em;width:0.9em;}/*!sc*/
-html:not([data-theme='dark']) .klEZnJ path{fill:#333333;}/*!sc*/
-html:not([data-theme='dark']) data-styled.g137[id="sc-kLZDOY"]{content:"klEZnJ,"}/*!sc*/
+html:not([data-theme='dark']) .eNDREy{list-style:none inside none;overflow:hidden;text-overflow:ellipsis;padding:0;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g102[id="sc-UBoew"]{content:"eNDREy,"}/*!sc*/
+html:not([data-theme='dark']) .isZRob{cursor:pointer;color:#333333;margin:0;padding:12.5px 20px;display:flex;justify-content:space-between;font-family:var(--ifm-heading-font-family);background-color:#ffffff;}/*!sc*/
+html:not([data-theme='dark']) .isZRob:hover{color:#25c2a0;background-color:#f2f2f2;}/*!sc*/
+html:not([data-theme='dark']) .isZRob .sc-cSaEAk{height:1.5em;width:1.5em;}/*!sc*/
+html:not([data-theme='dark']) .isZRob .sc-cSaEAk polygon{fill:#333333;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g103[id="sc-edctFj"]{content:"isZRob,"}/*!sc*/
+html:not([data-theme='dark']) .lbPVHv{display:inline-block;vertical-align:middle;width:calc(100% - 38px);overflow:hidden;text-overflow:ellipsis;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g104[id="sc-fJVbdy"]{content:"lbPVHv,"}/*!sc*/
+html:not([data-theme='dark']) .JhMem{font-size:0.8em;margin-top:10px;text-align:center;position:fixed;width:300px;bottom:0;background:#ffffff;}/*!sc*/
+html:not([data-theme='dark']) .JhMem a,html:not([data-theme='dark']) .JhMem a:visited,html:not([data-theme='dark']) .JhMem a:hover{color:#333333!important;padding:5px 0;border-top:1px solid #e6e6e6;text-decoration:none;display:flex;align-items:center;justify-content:center;}/*!sc*/
+html:not([data-theme='dark']) .JhMem img{width:15px;margin-right:5px;}/*!sc*/
+@media screen and (max-width: 50rem){html:not([data-theme='dark']) .JhMem{width:100%;}}/*!sc*/
+html:not([data-theme='dark']) data-styled.g105[id="sc-kwHJyZ"]{content:"JhMem,"}/*!sc*/
+html:not([data-theme='dark']) .jSOGEJ{cursor:pointer;position:relative;margin-bottom:5px;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g111[id="sc-dNMyuw"]{content:"jSOGEJ,"}/*!sc*/
+html:not([data-theme='dark']) .iPRGkP{font-family:var(--ifm-font-family-monospace);margin-left:10px;flex:1;overflow-x:hidden;text-overflow:ellipsis;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g112[id="sc-ijEwUV"]{content:"iPRGkP,"}/*!sc*/
+html:not([data-theme='dark']) .jzPPmt{outline:0;color:inherit;width:100%;text-align:left;cursor:pointer;padding:10px 30px 10px 20px;border-radius:4px 4px 0 0;background-color:#1b2028;display:flex;white-space:nowrap;align-items:center;border:1px solid transparent;border-bottom:0;transition:border-color 0.25s ease;}/*!sc*/
+html:not([data-theme='dark']) .jzPPmt ..sc-ijEwUV{color:#ffffff;}/*!sc*/
+html:not([data-theme='dark']) .jzPPmt:focus{box-shadow:inset 0 2px 2px rgba(0, 0, 0, 0.45),0 2px 0 rgba(128, 128, 128, 0.25);}/*!sc*/
+html:not([data-theme='dark']) data-styled.g113[id="sc-iNzRy"]{content:"jzPPmt,"}/*!sc*/
+html:not([data-theme='dark']) .zdxky{font-size:0.929em;line-height:20px;background-color:#186FAF;color:#ffffff;padding:3px 10px;text-transform:uppercase;font-family:var(--ifm-heading-font-family);margin:0;}/*!sc*/
+html:not([data-theme='dark']) .knoieI{font-size:0.929em;line-height:20px;background-color:#2F8132;color:#ffffff;padding:3px 10px;text-transform:uppercase;font-family:var(--ifm-heading-font-family);margin:0;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g114[id="sc-eEFyrX"]{content:"zdxky,knoieI,"}/*!sc*/
+html:not([data-theme='dark']) .kGJkmP{position:absolute;width:100%;z-index:100;background:#fafafa;color:#263238;box-sizing:border-box;box-shadow:0 0 6px rgba(0, 0, 0, 0.33);overflow:hidden;border-bottom-left-radius:4px;border-bottom-right-radius:4px;transition:all 0.25s ease;visibility:hidden;transform:translateY(-50%) scaleY(0);}/*!sc*/
+html:not([data-theme='dark']) data-styled.g115[id="sc-dHpROs"]{content:"kGJkmP,"}/*!sc*/
+html:not([data-theme='dark']) .fLVjhV{padding:10px;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g116[id="sc-idhQoR"]{content:"fLVjhV,"}/*!sc*/
+html:not([data-theme='dark']) .fQzrkz{padding:5px;border:1px solid #ccc;background:#fff;word-break:break-all;color:#25c2a0;}/*!sc*/
+html:not([data-theme='dark']) .fQzrkz >span{color:#333333;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g117[id="sc-cqTlu"]{content:"fQzrkz,"}/*!sc*/
+html:not([data-theme='dark']) .ekXmXe{display:block;border:0;width:100%;text-align:left;padding:10px;border-radius:2px;margin-bottom:4px;line-height:1.5em;cursor:pointer;color:#1d8127;background-color:rgba(29,129,39,0.07);}/*!sc*/
+html:not([data-theme='dark']) .ekXmXe:focus{outline:auto #1d8127;}/*!sc*/
+html:not([data-theme='dark']) .eRKbbW{display:block;border:0;width:100%;text-align:left;padding:10px;border-radius:2px;margin-bottom:4px;line-height:1.5em;cursor:pointer;color:#d41f1c;background-color:rgba(212,31,28,0.07);cursor:default;}/*!sc*/
+html:not([data-theme='dark']) .eRKbbW:focus{outline:auto #d41f1c;}/*!sc*/
+html:not([data-theme='dark']) .eRKbbW::before{content:"—";font-weight:bold;width:1.5em;text-align:center;display:inline-block;vertical-align:top;}/*!sc*/
+html:not([data-theme='dark']) .eRKbbW:focus{outline:0;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g120[id="sc-kdWPFt"]{content:"ekXmXe,eRKbbW,"}/*!sc*/
+html:not([data-theme='dark']) .bniiic{vertical-align:top;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g123[id="sc-dxpuJR"]{content:"bniiic,"}/*!sc*/
+html:not([data-theme='dark']) .kllPod{font-size:1.3em;padding:0.2em 0;margin:3em 0 1.1em;color:#333333;font-weight:normal;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g124[id="sc-frtHmg"]{content:"kllPod,"}/*!sc*/
+html:not([data-theme='dark']) .lllQIL{margin-bottom:30px;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g129[id="sc-bACthX"]{content:"lllQIL,"}/*!sc*/
+html:not([data-theme='dark']) .bvizsa{user-select:none;width:20px;height:20px;align-self:center;display:flex;flex-direction:column;color:#25c2a0;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g130[id="sc-duGFKm"]{content:"bvizsa,"}/*!sc*/
+html:not([data-theme='dark']) .hrBrgw{width:300px;background-color:#ffffff;overflow:hidden;display:flex;flex-direction:column;backface-visibility:hidden;height:100vh;position:sticky;position:-webkit-sticky;top:0;}/*!sc*/
+@media screen and (max-width: 50rem){html:not([data-theme='dark']) .hrBrgw{position:fixed;z-index:20;width:100%;background:#ffffff;display:none;}}/*!sc*/
+@media print{html:not([data-theme='dark']) .hrBrgw{display:none;}}/*!sc*/
+html:not([data-theme='dark']) data-styled.g131[id="sc-egnSlO"]{content:"hrBrgw,"}/*!sc*/
+html:not([data-theme='dark']) .iAIFLM{outline:none;user-select:none;background-color:#f2f2f2;color:#25c2a0;display:none;cursor:pointer;position:fixed;right:20px;z-index:100;border-radius:50%;box-shadow:0 0 20px rgba(0, 0, 0, 0.3);bottom:44px;width:60px;height:60px;padding:0 20px;}/*!sc*/
+@media screen and (max-width: 50rem){html:not([data-theme='dark']) .iAIFLM{display:flex;}}/*!sc*/
+html:not([data-theme='dark']) .iAIFLM svg{color:#0065FB;}/*!sc*/
+@media print{html:not([data-theme='dark']) .iAIFLM{display:none;}}/*!sc*/
+html:not([data-theme='dark']) data-styled.g132[id="sc-iCfQMn"]{content:"iAIFLM,"}/*!sc*/
+html:not([data-theme='dark']) .bnUrkG{font-family:var(--ifm-font-family-base);font-size:var(--ifm-font-size-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);color:#333333;display:flex;position:relative;text-align:left;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;text-rendering:optimizeSpeed!important;tap-highlight-color:rgba(0, 0, 0, 0);text-size-adjust:100%;}/*!sc*/
+html:not([data-theme='dark']) .bnUrkG *{box-sizing:border-box;-webkit-tap-highlight-color:rgba(255, 255, 255, 0);}/*!sc*/
+html:not([data-theme='dark']) data-styled.g133[id="sc-kSwkvc"]{content:"bnUrkG,"}/*!sc*/
+html:not([data-theme='dark']) .bUNEeT{z-index:1;position:relative;overflow:hidden;width:calc(100% - 300px);contain:layout;}/*!sc*/
+@media print,screen and (max-width: 50rem){html:not([data-theme='dark']) .bUNEeT{width:100%;}}/*!sc*/
+html:not([data-theme='dark']) data-styled.g134[id="sc-dYSzwF"]{content:"bUNEeT,"}/*!sc*/
+html:not([data-theme='dark']) .iUyEtg{background:#303846;position:absolute;top:0;bottom:0;right:0;width:calc((100% - 300px) * 0.4);}/*!sc*/
+@media print,screen and (max-width: 130rem){html:not([data-theme='dark']) .iUyEtg{display:none;}}/*!sc*/
+html:not([data-theme='dark']) data-styled.g135[id="sc-dZRlFK"]{content:"iUyEtg,"}/*!sc*/
+html:not([data-theme='dark']) .fgXvUT{padding:5px 0;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g136[id="sc-ivJkgj"]{content:"fgXvUT,"}/*!sc*/
+html:not([data-theme='dark']) .fMtHmI{width:calc(100% - 40px);box-sizing:border-box;margin:0 20px;padding:5px 10px 5px 20px;border:0;border-bottom:1px solid #e6e6e6;font-family:var(--ifm-font-family-base);font-weight:bold;font-size:13px;color:#333333;background-color:transparent;outline:none;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g137[id="sc-kLZDOY"]{content:"fMtHmI,"}/*!sc*/
+html:not([data-theme='dark']) .kyIWIr{position:absolute;left:20px;height:1.8em;width:0.9em;}/*!sc*/
+html:not([data-theme='dark']) .kyIWIr path{fill:#333333;}/*!sc*/
+html:not([data-theme='dark']) data-styled.g138[id="sc-dSvSQB"]{content:"kyIWIr,"}/*!sc*/
 </style><style>html([data-theme='dark']) .BhXef{width:calc(100% - 40%);padding:0 40px;}/*!sc*/
 @media print,screen and (max-width: 130rem){html([data-theme='dark']) .BhXef{width:100%;padding:40px 40px;}}/*!sc*/
 html([data-theme='dark']) data-styled.g4[id="sc-fLDLck"]{content:"BhXef,"}/*!sc*/
@@ -423,6 +447,8 @@ html([data-theme='dark']) .cfVXnF >button :hover,html([data-theme='dark']) .cfVX
 html([data-theme='dark']) data-styled.g33[id="sc-lertIE"]{content:"cfVXnF,"}/*!sc*/
 html([data-theme='dark']) .jMdEeM{position:relative;}/*!sc*/
 html([data-theme='dark']) data-styled.g37[id="sc-dOUtaJ"]{content:"jMdEeM,"}/*!sc*/
+html([data-theme='dark']) .lcGauM{margin-left:10px;text-transform:none;font-size:0.929em;color:black;}/*!sc*/
+html([data-theme='dark']) data-styled.g41[id="sc-dslWvo"]{content:"lcGauM,"}/*!sc*/
 html([data-theme='dark']) .fGOfsh{font-family:var(--ifm-font-family-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);}/*!sc*/
 html([data-theme='dark']) .fGOfsh p:last-child{margin-bottom:0;}/*!sc*/
 html([data-theme='dark']) .fGOfsh h1{font-family:var(--ifm-heading-font-family);font-weight:var(--ifm-heading-font-weight);font-size:1.85714em;line-height:var(--ifm-heading-line-height);color:#25c2a0;margin-top:0;}/*!sc*/
@@ -446,6 +472,32 @@ html([data-theme='dark']) .fGOfsh h1:hover>.share-link::before,html([data-theme=
 html([data-theme='dark']) .fGOfsh a{text-decoration:auto;color:#25c2a0;}/*!sc*/
 html([data-theme='dark']) .fGOfsh a:visited{color:#25c2a0;}/*!sc*/
 html([data-theme='dark']) .fGOfsh a:hover{color:#6ae3c9;text-decoration:auto;}/*!sc*/
+html([data-theme='dark']) .gZLhMz{font-family:var(--ifm-font-family-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);}/*!sc*/
+html([data-theme='dark']) .gZLhMz p:last-child{margin-bottom:0;}/*!sc*/
+html([data-theme='dark']) .gZLhMz p:first-child{margin-top:0;}/*!sc*/
+html([data-theme='dark']) .gZLhMz p:last-child{margin-bottom:0;}/*!sc*/
+html([data-theme='dark']) .gZLhMz p{display:inline-block;}/*!sc*/
+html([data-theme='dark']) .gZLhMz h1{font-family:var(--ifm-heading-font-family);font-weight:var(--ifm-heading-font-weight);font-size:1.85714em;line-height:var(--ifm-heading-line-height);color:#25c2a0;margin-top:0;}/*!sc*/
+html([data-theme='dark']) .gZLhMz h2{font-family:var(--ifm-heading-font-family);font-weight:var(--ifm-heading-font-weight);font-size:1.57143em;line-height:var(--ifm-heading-line-height);color:#f5f6f7;}/*!sc*/
+html([data-theme='dark']) .gZLhMz code{color:#e53935;background-color:rgba(38, 50, 56, 0.05);font-family:var(--ifm-font-family-monospace);border-radius:2px;border:1px solid rgba(38, 50, 56, 0.1);padding:0 5px;font-size:13px;font-weight:var(--ifm-font-weight-base);word-break:break-word;}/*!sc*/
+html([data-theme='dark']) .gZLhMz pre{font-family:var(--ifm-font-family-monospace);white-space:pre;background-color:#11171a;color:white;padding:20px;overflow-x:auto;line-height:normal;border-radius:0;border:1px solid rgba(38, 50, 56, 0.1);}/*!sc*/
+html([data-theme='dark']) .gZLhMz pre code{background-color:transparent;color:white;padding:0;}/*!sc*/
+html([data-theme='dark']) .gZLhMz pre code:before,html([data-theme='dark']) .gZLhMz pre code:after{content:none;}/*!sc*/
+html([data-theme='dark']) .gZLhMz blockquote{margin:0;margin-bottom:1em;padding:0 15px;color:#777;border-left:4px solid #ddd;}/*!sc*/
+html([data-theme='dark']) .gZLhMz img{max-width:100%;box-sizing:content-box;}/*!sc*/
+html([data-theme='dark']) .gZLhMz ul,html([data-theme='dark']) .gZLhMz ol{padding-left:2em;margin:0;margin-bottom:1em;}/*!sc*/
+html([data-theme='dark']) .gZLhMz ul ul,html([data-theme='dark']) .gZLhMz ol ul,html([data-theme='dark']) .gZLhMz ul ol,html([data-theme='dark']) .gZLhMz ol ol{margin-bottom:0;margin-top:0;}/*!sc*/
+html([data-theme='dark']) .gZLhMz table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all;border-collapse:collapse;border-spacing:0;margin-top:1.5em;margin-bottom:1.5em;}/*!sc*/
+html([data-theme='dark']) .gZLhMz table tr{background-color:#fff;border-top:1px solid #ccc;}/*!sc*/
+html([data-theme='dark']) .gZLhMz table tr:nth-child(2n){background-color:rgb(24, 25, 26);}/*!sc*/
+html([data-theme='dark']) .gZLhMz table th,html([data-theme='dark']) .gZLhMz table td{padding:6px 13px;border:1px solid #ddd;}/*!sc*/
+html([data-theme='dark']) .gZLhMz table th{text-align:left;font-weight:bold;}/*!sc*/
+html([data-theme='dark']) .gZLhMz .share-link{cursor:pointer;margin-left:-20px;padding:0;line-height:1;width:20px;display:inline-block;outline:0;}/*!sc*/
+html([data-theme='dark']) .gZLhMz .share-link:before{content:'';width:15px;height:15px;background-size:contain;background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgeD0iMCIgeT0iMCIgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiB4bWw6c3BhY2U9InByZXNlcnZlIj48cGF0aCBmaWxsPSIjMDEwMTAxIiBkPSJNNDU5LjcgMjMzLjRsLTkwLjUgOTAuNWMtNTAgNTAtMTMxIDUwLTE4MSAwIC03LjktNy44LTE0LTE2LjctMTkuNC0yNS44bDQyLjEtNDIuMWMyLTIgNC41LTMuMiA2LjgtNC41IDIuOSA5LjkgOCAxOS4zIDE1LjggMjcuMiAyNSAyNSA2NS42IDI0LjkgOTAuNSAwbDkwLjUtOTAuNWMyNS0yNSAyNS02NS42IDAtOTAuNSAtMjQuOS0yNS02NS41LTI1LTkwLjUgMGwtMzIuMiAzMi4yYy0yNi4xLTEwLjItNTQuMi0xMi45LTgxLjYtOC45bDY4LjYtNjguNmM1MC01MCAxMzEtNTAgMTgxIDBDNTA5LjYgMTAyLjMgNTA5LjYgMTgzLjQgNDU5LjcgMjMzLjR6TTIyMC4zIDM4Mi4ybC0zMi4yIDMyLjJjLTI1IDI0LjktNjUuNiAyNC45LTkwLjUgMCAtMjUtMjUtMjUtNjUuNiAwLTkwLjVsOTAuNS05MC41YzI1LTI1IDY1LjUtMjUgOTAuNSAwIDcuOCA3LjggMTIuOSAxNy4yIDE1LjggMjcuMSAyLjQtMS40IDQuOC0yLjUgNi44LTQuNWw0Mi4xLTQyYy01LjQtOS4yLTExLjYtMTgtMTkuNC0yNS44IC01MC01MC0xMzEtNTAtMTgxIDBsLTkwLjUgOTAuNWMtNTAgNTAtNTAgMTMxIDAgMTgxIDUwIDUwIDEzMSA1MCAxODEgMGw2OC42LTY4LjZDMjc0LjYgMzk1LjEgMjQ2LjQgMzkyLjMgMjIwLjMgMzgyLjJ6Ii8+PC9zdmc+Cg==');opacity:0.5;visibility:hidden;display:inline-block;vertical-align:middle;}/*!sc*/
+html([data-theme='dark']) .gZLhMz h1:hover>.share-link::before,html([data-theme='dark']) .gZLhMz h2:hover>.share-link::before,html([data-theme='dark']) .gZLhMz .share-link:hover::before{visibility:visible;}/*!sc*/
+html([data-theme='dark']) .gZLhMz a{text-decoration:auto;color:#25c2a0;}/*!sc*/
+html([data-theme='dark']) .gZLhMz a:visited{color:#25c2a0;}/*!sc*/
+html([data-theme='dark']) .gZLhMz a:hover{color:#6ae3c9;text-decoration:auto;}/*!sc*/
 html([data-theme='dark']) .fFfECr{font-family:var(--ifm-font-family-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);}/*!sc*/
 html([data-theme='dark']) .fFfECr p:last-child{margin-bottom:0;}/*!sc*/
 html([data-theme='dark']) .fFfECr p:first-child{margin-top:0;}/*!sc*/
@@ -471,9 +523,9 @@ html([data-theme='dark']) .fFfECr h1:hover>.share-link::before,html([data-theme=
 html([data-theme='dark']) .fFfECr a{text-decoration:auto;color:#25c2a0;}/*!sc*/
 html([data-theme='dark']) .fFfECr a:visited{color:#25c2a0;}/*!sc*/
 html([data-theme='dark']) .fFfECr a:hover{color:#6ae3c9;text-decoration:auto;}/*!sc*/
-html([data-theme='dark']) data-styled.g42[id="sc-eXfTSZ"]{content:"fGOfsh,fFfECr,"}/*!sc*/
-html([data-theme='dark']) .iWCNbi{display:inline;}/*!sc*/
-html([data-theme='dark']) data-styled.g43[id="sc-dXYVqG"]{content:"iWCNbi,"}/*!sc*/
+html([data-theme='dark']) data-styled.g42[id="sc-eXfTSZ"]{content:"fGOfsh,gZLhMz,fFfECr,"}/*!sc*/
+html([data-theme='dark']) .iaKqXk{display:inline;}/*!sc*/
+html([data-theme='dark']) data-styled.g43[id="sc-dXYVqG"]{content:"iaKqXk,"}/*!sc*/
 html([data-theme='dark']) .kPewJt{position:relative;}/*!sc*/
 html([data-theme='dark']) data-styled.g44[id="sc-fCSSOr"]{content:"kPewJt,"}/*!sc*/
 html([data-theme='dark']) .fhJHli:hover>.sc-lertIE{opacity:1;}/*!sc*/
@@ -511,104 +563,100 @@ html([data-theme='dark']) .QRrUy{color:rgba(255,255,255,0.9);}/*!sc*/
 html([data-theme='dark']) data-styled.g59[id="sc-cAQujh"]{content:"QRrUy,"}/*!sc*/
 html([data-theme='dark']) .frusQf{color:rgba(255, 255, 255, 1);}/*!sc*/
 html([data-theme='dark']) data-styled.g60[id="sc-haUlXw"]{content:"frusQf,"}/*!sc*/
-html([data-theme='dark']) .bJazEc{color:rgba(255, 255, 255, 1);word-break:break-word;}/*!sc*/
-html([data-theme='dark']) data-styled.g61[id="sc-gIivzS"]{content:"bJazEc,"}/*!sc*/
-html([data-theme='dark']) .cJSTOB{color:#d41f1c;font-size:0.9em;font-weight:normal;margin-left:20px;line-height:1;}/*!sc*/
-html([data-theme='dark']) data-styled.g62[id="sc-incsXD"]{content:"cJSTOB,"}/*!sc*/
-html([data-theme='dark']) .etEGmz{margin-top:0;margin-bottom:0.5em;}/*!sc*/
-html([data-theme='dark']) data-styled.g91[id="sc-fylWoh"]{content:"etEGmz,"}/*!sc*/
-html([data-theme='dark']) .iriSvq{border:1px solid #25c2a0;color:#25c2a0;font-weight:normal;margin-left:0.5em;padding:4px 8px 4px;display:inline-block;text-decoration:none;cursor:pointer;}/*!sc*/
-html([data-theme='dark']) data-styled.g92[id="sc-jYpOcw"]{content:"iriSvq,"}/*!sc*/
-html([data-theme='dark']) .hOlGtE{width:9ex;display:inline-block;height:13px;line-height:13px;background-color:#333;border-radius:3px;background-repeat:no-repeat;background-position:6px 4px;font-size:7px;font-family:Verdana,sans-serif;color:white;text-transform:uppercase;text-align:center;font-weight:bold;vertical-align:middle;margin-right:6px;margin-top:2px;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.get{background-color:#2F8132;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.post{background-color:#186FAF;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.put{background-color:#95507c;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.options{background-color:#947014;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.patch{background-color:#bf581d;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.delete{background-color:#cc3333;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.basic{background-color:#707070;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.link{background-color:#07818F;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.head{background-color:#A23DAD;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.hook{background-color:#25c2a0;}/*!sc*/
-html([data-theme='dark']) .hOlGtE.schema{background-color:#707070;}/*!sc*/
-html([data-theme='dark']) data-styled.g99[id="sc-dLPjTJ"]{content:"hOlGtE,"}/*!sc*/
-html([data-theme='dark']) .guNene{margin:0;padding:0;}/*!sc*/
-html([data-theme='dark']) .guNene:first-child{padding-bottom:32px;}/*!sc*/
-html([data-theme='dark']) .sc-ilTbHY .sc-ilTbHY{font-size:0.929em;}/*!sc*/
-html([data-theme='dark']) data-styled.g100[id="sc-ilTbHY"]{content:"guNene,"}/*!sc*/
-html([data-theme='dark']) .hWwlcB{list-style:none inside none;overflow:hidden;text-overflow:ellipsis;padding:0;}/*!sc*/
+html([data-theme='dark']) .dvwEJw{margin-top:0;margin-bottom:0.5em;}/*!sc*/
+html([data-theme='dark']) data-styled.g92[id="sc-jYpOcw"]{content:"dvwEJw,"}/*!sc*/
+html([data-theme='dark']) .gusXaO{border:1px solid #25c2a0;color:#25c2a0;font-weight:normal;margin-left:0.5em;padding:4px 8px 4px;display:inline-block;text-decoration:none;cursor:pointer;}/*!sc*/
+html([data-theme='dark']) data-styled.g93[id="sc-fQNqfz"]{content:"gusXaO,"}/*!sc*/
+html([data-theme='dark']) .iaoeNv{width:9ex;display:inline-block;height:13px;line-height:13px;background-color:#333;border-radius:3px;background-repeat:no-repeat;background-position:6px 4px;font-size:7px;font-family:Verdana,sans-serif;color:white;text-transform:uppercase;text-align:center;font-weight:bold;vertical-align:middle;margin-right:6px;margin-top:2px;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.get{background-color:#2F8132;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.post{background-color:#186FAF;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.put{background-color:#95507c;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.options{background-color:#947014;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.patch{background-color:#bf581d;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.delete{background-color:#cc3333;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.basic{background-color:#707070;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.link{background-color:#07818F;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.head{background-color:#A23DAD;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.hook{background-color:#25c2a0;}/*!sc*/
+html([data-theme='dark']) .iaoeNv.schema{background-color:#707070;}/*!sc*/
+html([data-theme='dark']) data-styled.g100[id="sc-ilTbHY"]{content:"iaoeNv,"}/*!sc*/
+html([data-theme='dark']) .hWwlcB{margin:0;padding:0;}/*!sc*/
+html([data-theme='dark']) .hWwlcB:first-child{padding-bottom:32px;}/*!sc*/
+html([data-theme='dark']) .sc-kDeqfd .sc-kDeqfd{font-size:0.929em;}/*!sc*/
 html([data-theme='dark']) data-styled.g101[id="sc-kDeqfd"]{content:"hWwlcB,"}/*!sc*/
-html([data-theme='dark']) .iVnRdW{cursor:pointer;color:#f5f6f7;margin:0;padding:12.5px 20px;display:flex;justify-content:space-between;font-family:var(--ifm-heading-font-family);background-color:rgb(24, 25, 26);}/*!sc*/
-html([data-theme='dark']) .iVnRdW:hover{color:#f5f6f7;background-color:#0c0c0d;}/*!sc*/
-html([data-theme='dark']) .iVnRdW .sc-cSaEAk{height:1.5em;width:1.5em;}/*!sc*/
-html([data-theme='dark']) .iVnRdW .sc-cSaEAk polygon{fill:#f5f6f7;}/*!sc*/
-html([data-theme='dark']) data-styled.g102[id="sc-UBoew"]{content:"iVnRdW,"}/*!sc*/
-html([data-theme='dark']) .eiqpDY{display:inline-block;vertical-align:middle;width:calc(100% - 38px);overflow:hidden;text-overflow:ellipsis;}/*!sc*/
-html([data-theme='dark']) data-styled.g103[id="sc-edctFj"]{content:"eiqpDY,"}/*!sc*/
-html([data-theme='dark']) .hZYRpP{font-size:0.8em;margin-top:10px;text-align:center;position:fixed;width:300px;bottom:0;background:rgb(24, 25, 26);}/*!sc*/
-html([data-theme='dark']) .hZYRpP a,html([data-theme='dark']) .hZYRpP a:visited,html([data-theme='dark']) .hZYRpP a:hover{color:#f5f6f7!important;padding:5px 0;border-top:1px solid #000;text-decoration:none;display:flex;align-items:center;justify-content:center;}/*!sc*/
-html([data-theme='dark']) .hZYRpP img{width:15px;margin-right:5px;}/*!sc*/
-@media screen and (max-width: 50rem){html([data-theme='dark']) .hZYRpP{width:100%;}}/*!sc*/
-html([data-theme='dark']) data-styled.g104[id="sc-fJVbdy"]{content:"hZYRpP,"}/*!sc*/
-html([data-theme='dark']) .iQlcjo{cursor:pointer;position:relative;margin-bottom:5px;}/*!sc*/
-html([data-theme='dark']) data-styled.g110[id="sc-cOTGOU"]{content:"iQlcjo,"}/*!sc*/
-html([data-theme='dark']) .lhGsaF{font-family:var(--ifm-font-family-monospace);margin-left:10px;flex:1;overflow-x:hidden;text-overflow:ellipsis;}/*!sc*/
-html([data-theme='dark']) data-styled.g111[id="sc-dNMyuw"]{content:"lhGsaF,"}/*!sc*/
-html([data-theme='dark']) .hUYuek{outline:0;color:inherit;width:100%;text-align:left;cursor:pointer;padding:10px 30px 10px 20px;border-radius:4px 4px 0 0;background-color:#11171a;display:flex;white-space:nowrap;align-items:center;border:1px solid transparent;border-bottom:0;transition:border-color 0.25s ease;}/*!sc*/
-html([data-theme='dark']) .hUYuek ..sc-dNMyuw{color:#ffffff;}/*!sc*/
-html([data-theme='dark']) .hUYuek:focus{box-shadow:inset 0 2px 2px rgba(0, 0, 0, 0.45),0 2px 0 rgba(128, 128, 128, 0.25);}/*!sc*/
-html([data-theme='dark']) data-styled.g112[id="sc-ijEwUV"]{content:"hUYuek,"}/*!sc*/
-html([data-theme='dark']) .gFIfdN{font-size:0.929em;line-height:20px;background-color:#186FAF;color:#ffffff;padding:3px 10px;text-transform:uppercase;font-family:var(--ifm-heading-font-family);margin:0;}/*!sc*/
-html([data-theme='dark']) .hPmDyb{font-size:0.929em;line-height:20px;background-color:#2F8132;color:#ffffff;padding:3px 10px;text-transform:uppercase;font-family:var(--ifm-heading-font-family);margin:0;}/*!sc*/
-html([data-theme='dark']) data-styled.g113[id="sc-iNzRy"]{content:"gFIfdN,hPmDyb,"}/*!sc*/
-html([data-theme='dark']) .fENReE{position:absolute;width:100%;z-index:100;background:#fafafa;color:#263238;box-sizing:border-box;box-shadow:0 0 6px rgba(0, 0, 0, 0.33);overflow:hidden;border-bottom-left-radius:4px;border-bottom-right-radius:4px;transition:all 0.25s ease;visibility:hidden;transform:translateY(-50%) scaleY(0);}/*!sc*/
-html([data-theme='dark']) data-styled.g114[id="sc-eEFyrX"]{content:"fENReE,"}/*!sc*/
-html([data-theme='dark']) .cIiuCa{padding:10px;}/*!sc*/
-html([data-theme='dark']) data-styled.g115[id="sc-dHpROs"]{content:"cIiuCa,"}/*!sc*/
-html([data-theme='dark']) .gnVXZP{padding:5px;border:1px solid #ccc;background:#fff;word-break:break-all;color:#25c2a0;}/*!sc*/
-html([data-theme='dark']) .gnVXZP >span{color:#f5f6f7;}/*!sc*/
-html([data-theme='dark']) data-styled.g116[id="sc-idhQoR"]{content:"gnVXZP,"}/*!sc*/
-html([data-theme='dark']) .fIRZzM{display:block;border:0;width:100%;text-align:left;padding:10px;border-radius:2px;margin-bottom:4px;line-height:1.5em;cursor:pointer;color:#1d8127;background-color:rgba(29,129,39,0.07);}/*!sc*/
-html([data-theme='dark']) .fIRZzM:focus{outline:auto #1d8127;}/*!sc*/
-html([data-theme='dark']) .dhdtjI{display:block;border:0;width:100%;text-align:left;padding:10px;border-radius:2px;margin-bottom:4px;line-height:1.5em;cursor:pointer;color:#d41f1c;background-color:rgba(212,31,28,0.07);cursor:default;}/*!sc*/
-html([data-theme='dark']) .dhdtjI:focus{outline:auto #d41f1c;}/*!sc*/
-html([data-theme='dark']) .dhdtjI::before{content:"—";font-weight:bold;width:1.5em;text-align:center;display:inline-block;vertical-align:top;}/*!sc*/
-html([data-theme='dark']) .dhdtjI:focus{outline:0;}/*!sc*/
-html([data-theme='dark']) data-styled.g119[id="sc-fIeReU"]{content:"fIRZzM,dhdtjI,"}/*!sc*/
-html([data-theme='dark']) .dqKUKh{vertical-align:top;}/*!sc*/
-html([data-theme='dark']) data-styled.g122[id="sc-bAomZO"]{content:"dqKUKh,"}/*!sc*/
-html([data-theme='dark']) .cEoRFE{font-size:1.3em;padding:0.2em 0;margin:3em 0 1.1em;color:#f5f6f7;font-weight:normal;}/*!sc*/
-html([data-theme='dark']) data-styled.g123[id="sc-dxpuJR"]{content:"cEoRFE,"}/*!sc*/
-html([data-theme='dark']) .jvCEAX{margin-bottom:30px;}/*!sc*/
-html([data-theme='dark']) data-styled.g128[id="sc-fkXaGc"]{content:"jvCEAX,"}/*!sc*/
-html([data-theme='dark']) .cpcsos{user-select:none;width:20px;height:20px;align-self:center;display:flex;flex-direction:column;color:#25c2a0;}/*!sc*/
-html([data-theme='dark']) data-styled.g129[id="sc-bACthX"]{content:"cpcsos,"}/*!sc*/
-html([data-theme='dark']) .gnzzZO{width:300px;background-color:rgb(24, 25, 26);overflow:hidden;display:flex;flex-direction:column;backface-visibility:hidden;height:100vh;position:sticky;position:-webkit-sticky;top:0;}/*!sc*/
-@media screen and (max-width: 50rem){html([data-theme='dark']) .gnzzZO{position:fixed;z-index:20;width:100%;background:rgb(24, 25, 26);display:none;}}/*!sc*/
-@media print{html([data-theme='dark']) .gnzzZO{display:none;}}/*!sc*/
-html([data-theme='dark']) data-styled.g130[id="sc-duGFKm"]{content:"gnzzZO,"}/*!sc*/
-html([data-theme='dark']) .jQIORC{outline:none;user-select:none;background-color:#f2f2f2;color:#25c2a0;display:none;cursor:pointer;position:fixed;right:20px;z-index:100;border-radius:50%;box-shadow:0 0 20px rgba(0, 0, 0, 0.3);bottom:44px;width:60px;height:60px;padding:0 20px;}/*!sc*/
-@media screen and (max-width: 50rem){html([data-theme='dark']) .jQIORC{display:flex;}}/*!sc*/
-html([data-theme='dark']) .jQIORC svg{color:#0065FB;}/*!sc*/
-@media print{html([data-theme='dark']) .jQIORC{display:none;}}/*!sc*/
-html([data-theme='dark']) data-styled.g131[id="sc-egnSlO"]{content:"jQIORC,"}/*!sc*/
-html([data-theme='dark']) .iAgMRP{font-family:var(--ifm-font-family-base);font-size:var(--ifm-font-size-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);color:#f5f6f7;display:flex;position:relative;text-align:left;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;text-rendering:optimizeSpeed!important;tap-highlight-color:rgba(0, 0, 0, 0);text-size-adjust:100%;}/*!sc*/
-html([data-theme='dark']) .iAgMRP *{box-sizing:border-box;-webkit-tap-highlight-color:rgba(255, 255, 255, 0);}/*!sc*/
-html([data-theme='dark']) data-styled.g132[id="sc-iCfQMn"]{content:"iAgMRP,"}/*!sc*/
-html([data-theme='dark']) .hkMkLL{z-index:1;position:relative;overflow:hidden;width:calc(100% - 300px);contain:layout;}/*!sc*/
-@media print,screen and (max-width: 50rem){html([data-theme='dark']) .hkMkLL{width:100%;}}/*!sc*/
-html([data-theme='dark']) data-styled.g133[id="sc-kSwkvc"]{content:"hkMkLL,"}/*!sc*/
-html([data-theme='dark']) .fpQWkM{background:#263238;position:absolute;top:0;bottom:0;right:0;width:calc((100% - 300px) * 0.4);}/*!sc*/
-@media print,screen and (max-width: 130rem){html([data-theme='dark']) .fpQWkM{display:none;}}/*!sc*/
-html([data-theme='dark']) data-styled.g134[id="sc-dYSzwF"]{content:"fpQWkM,"}/*!sc*/
-html([data-theme='dark']) .jeCODh{padding:5px 0;}/*!sc*/
-html([data-theme='dark']) data-styled.g135[id="sc-dZRlFK"]{content:"jeCODh,"}/*!sc*/
-html([data-theme='dark']) .DSwMc{width:calc(100% - 40px);box-sizing:border-box;margin:0 20px;padding:5px 10px 5px 20px;border:0;border-bottom:1px solid #303335;font-family:var(--ifm-font-family-base);font-weight:bold;font-size:13px;color:#f5f6f7;background-color:transparent;outline:none;}/*!sc*/
-html([data-theme='dark']) data-styled.g136[id="sc-ivJkgj"]{content:"DSwMc,"}/*!sc*/
-html([data-theme='dark']) .bYJZCL{position:absolute;left:20px;height:1.8em;width:0.9em;}/*!sc*/
-html([data-theme='dark']) .bYJZCL path{fill:#f5f6f7;}/*!sc*/
-html([data-theme='dark']) data-styled.g137[id="sc-kLZDOY"]{content:"bYJZCL,"}/*!sc*/
-</style></div><div class="redocusaurus"><div class="sc-iCfQMn fTPRBl redoc-wrap"><div class="sc-duGFKm eMGHiK menu-content" style="top:0px;height:calc(100vh - 0px)"><div role="search" class="sc-dZRlFK jeCODh"><svg class="sc-kLZDOY klEZnJ search-icon" version="1.1" viewBox="0 0 1000 1000" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px"><path d="M968.2,849.4L667.3,549c83.9-136.5,66.7-317.4-51.7-435.6C477.1-25,252.5-25,113.9,113.4c-138.5,138.3-138.5,362.6,0,501C219.2,730.1,413.2,743,547.6,666.5l301.9,301.4c43.6,43.6,76.9,14.9,104.2-12.4C981,928.3,1011.8,893,968.2,849.4z M524.5,522c-88.9,88.7-233,88.7-321.8,0c-88.9-88.7-88.9-232.6,0-321.3c88.9-88.7,233-88.7,321.8,0C613.4,289.4,613.4,433.3,524.5,522z"></path></svg><input placeholder="Search..." aria-label="Search" type="text" class="sc-ivJkgj hDhcM search-input" value=""></div><div class="sc-dOUtaJ jMdEeM scrollbar-container undefined"><ul role="menu" class="sc-ilTbHY guNene"><li tabindex="0" depth="2" data-item-id="operation/lobby_post" role="menuitem" class="sc-kDeqfd hWwlcB"><label class="sc-UBoew hvuhXv -depth2"><span type="post" class="sc-dLPjTJ hOlGtE operation-type post">post</span><span tabindex="0" width="calc(100% - 38px)" class="sc-edctFj eiqpDY">Create Lobby</span></label></li><li tabindex="0" depth="2" data-item-id="operation/lobby_code_post" role="menuitem" class="sc-kDeqfd hWwlcB"><label class="sc-UBoew hvuhXv -depth2"><span type="post" class="sc-dLPjTJ hOlGtE operation-type post">post</span><span tabindex="0" width="calc(100% - 38px)" class="sc-edctFj eiqpDY">Join Lobby</span></label></li><li tabindex="0" depth="2" data-item-id="/paths/~1ws~1/get" role="menuitem" class="sc-kDeqfd hWwlcB"><label class="sc-UBoew hvuhXv -depth2"><span type="get" class="sc-dLPjTJ hOlGtE operation-type get">get</span><span tabindex="0" width="calc(100% - 38px)" class="sc-edctFj eiqpDY">Websocket Connection</span></label></li></ul><div class="sc-fJVbdy eiBzZy"><a target="_blank" rel="noopener noreferrer" href="https://redocly.com/redoc/">API docs by Redocly</a></div></div></div><div class="sc-egnSlO jQIORC"><div class="sc-bACthX cpcsos"><svg class="" style="transform:translate(2px, -4px) rotate(180deg);transition:transform 0.2s ease" viewBox="0 0 926.23699 573.74994" version="1.1" x="0px" y="0px" width="15" height="15"><g transform="translate(904.92214,-879.1482)"><path d="
+html([data-theme='dark']) .eNDREy{list-style:none inside none;overflow:hidden;text-overflow:ellipsis;padding:0;}/*!sc*/
+html([data-theme='dark']) data-styled.g102[id="sc-UBoew"]{content:"eNDREy,"}/*!sc*/
+html([data-theme='dark']) .emSGZW{cursor:pointer;color:#f5f6f7;margin:0;padding:12.5px 20px;display:flex;justify-content:space-between;font-family:var(--ifm-heading-font-family);background-color:rgb(24, 25, 26);}/*!sc*/
+html([data-theme='dark']) .emSGZW:hover{color:#f5f6f7;background-color:#0c0c0d;}/*!sc*/
+html([data-theme='dark']) .emSGZW .sc-cSaEAk{height:1.5em;width:1.5em;}/*!sc*/
+html([data-theme='dark']) .emSGZW .sc-cSaEAk polygon{fill:#f5f6f7;}/*!sc*/
+html([data-theme='dark']) data-styled.g103[id="sc-edctFj"]{content:"emSGZW,"}/*!sc*/
+html([data-theme='dark']) .lbPVHv{display:inline-block;vertical-align:middle;width:calc(100% - 38px);overflow:hidden;text-overflow:ellipsis;}/*!sc*/
+html([data-theme='dark']) data-styled.g104[id="sc-fJVbdy"]{content:"lbPVHv,"}/*!sc*/
+html([data-theme='dark']) .hTFCML{font-size:0.8em;margin-top:10px;text-align:center;position:fixed;width:300px;bottom:0;background:rgb(24, 25, 26);}/*!sc*/
+html([data-theme='dark']) .hTFCML a,html([data-theme='dark']) .hTFCML a:visited,html([data-theme='dark']) .hTFCML a:hover{color:#f5f6f7!important;padding:5px 0;border-top:1px solid #000;text-decoration:none;display:flex;align-items:center;justify-content:center;}/*!sc*/
+html([data-theme='dark']) .hTFCML img{width:15px;margin-right:5px;}/*!sc*/
+@media screen and (max-width: 50rem){html([data-theme='dark']) .hTFCML{width:100%;}}/*!sc*/
+html([data-theme='dark']) data-styled.g105[id="sc-kwHJyZ"]{content:"hTFCML,"}/*!sc*/
+html([data-theme='dark']) .jSOGEJ{cursor:pointer;position:relative;margin-bottom:5px;}/*!sc*/
+html([data-theme='dark']) data-styled.g111[id="sc-dNMyuw"]{content:"jSOGEJ,"}/*!sc*/
+html([data-theme='dark']) .iPRGkP{font-family:var(--ifm-font-family-monospace);margin-left:10px;flex:1;overflow-x:hidden;text-overflow:ellipsis;}/*!sc*/
+html([data-theme='dark']) data-styled.g112[id="sc-ijEwUV"]{content:"iPRGkP,"}/*!sc*/
+html([data-theme='dark']) .kVWxvk{outline:0;color:inherit;width:100%;text-align:left;cursor:pointer;padding:10px 30px 10px 20px;border-radius:4px 4px 0 0;background-color:#11171a;display:flex;white-space:nowrap;align-items:center;border:1px solid transparent;border-bottom:0;transition:border-color 0.25s ease;}/*!sc*/
+html([data-theme='dark']) .kVWxvk ..sc-ijEwUV{color:#ffffff;}/*!sc*/
+html([data-theme='dark']) .kVWxvk:focus{box-shadow:inset 0 2px 2px rgba(0, 0, 0, 0.45),0 2px 0 rgba(128, 128, 128, 0.25);}/*!sc*/
+html([data-theme='dark']) data-styled.g113[id="sc-iNzRy"]{content:"kVWxvk,"}/*!sc*/
+html([data-theme='dark']) .zdxky{font-size:0.929em;line-height:20px;background-color:#186FAF;color:#ffffff;padding:3px 10px;text-transform:uppercase;font-family:var(--ifm-heading-font-family);margin:0;}/*!sc*/
+html([data-theme='dark']) .knoieI{font-size:0.929em;line-height:20px;background-color:#2F8132;color:#ffffff;padding:3px 10px;text-transform:uppercase;font-family:var(--ifm-heading-font-family);margin:0;}/*!sc*/
+html([data-theme='dark']) data-styled.g114[id="sc-eEFyrX"]{content:"zdxky,knoieI,"}/*!sc*/
+html([data-theme='dark']) .kGJkmP{position:absolute;width:100%;z-index:100;background:#fafafa;color:#263238;box-sizing:border-box;box-shadow:0 0 6px rgba(0, 0, 0, 0.33);overflow:hidden;border-bottom-left-radius:4px;border-bottom-right-radius:4px;transition:all 0.25s ease;visibility:hidden;transform:translateY(-50%) scaleY(0);}/*!sc*/
+html([data-theme='dark']) data-styled.g115[id="sc-dHpROs"]{content:"kGJkmP,"}/*!sc*/
+html([data-theme='dark']) .fLVjhV{padding:10px;}/*!sc*/
+html([data-theme='dark']) data-styled.g116[id="sc-idhQoR"]{content:"fLVjhV,"}/*!sc*/
+html([data-theme='dark']) .kNrtRx{padding:5px;border:1px solid #ccc;background:#fff;word-break:break-all;color:#25c2a0;}/*!sc*/
+html([data-theme='dark']) .kNrtRx >span{color:#f5f6f7;}/*!sc*/
+html([data-theme='dark']) data-styled.g117[id="sc-cqTlu"]{content:"kNrtRx,"}/*!sc*/
+html([data-theme='dark']) .ekXmXe{display:block;border:0;width:100%;text-align:left;padding:10px;border-radius:2px;margin-bottom:4px;line-height:1.5em;cursor:pointer;color:#1d8127;background-color:rgba(29,129,39,0.07);}/*!sc*/
+html([data-theme='dark']) .ekXmXe:focus{outline:auto #1d8127;}/*!sc*/
+html([data-theme='dark']) .eRKbbW{display:block;border:0;width:100%;text-align:left;padding:10px;border-radius:2px;margin-bottom:4px;line-height:1.5em;cursor:pointer;color:#d41f1c;background-color:rgba(212,31,28,0.07);cursor:default;}/*!sc*/
+html([data-theme='dark']) .eRKbbW:focus{outline:auto #d41f1c;}/*!sc*/
+html([data-theme='dark']) .eRKbbW::before{content:"—";font-weight:bold;width:1.5em;text-align:center;display:inline-block;vertical-align:top;}/*!sc*/
+html([data-theme='dark']) .eRKbbW:focus{outline:0;}/*!sc*/
+html([data-theme='dark']) data-styled.g120[id="sc-kdWPFt"]{content:"ekXmXe,eRKbbW,"}/*!sc*/
+html([data-theme='dark']) .bniiic{vertical-align:top;}/*!sc*/
+html([data-theme='dark']) data-styled.g123[id="sc-dxpuJR"]{content:"bniiic,"}/*!sc*/
+html([data-theme='dark']) .gXLekr{font-size:1.3em;padding:0.2em 0;margin:3em 0 1.1em;color:#f5f6f7;font-weight:normal;}/*!sc*/
+html([data-theme='dark']) data-styled.g124[id="sc-frtHmg"]{content:"gXLekr,"}/*!sc*/
+html([data-theme='dark']) .lllQIL{margin-bottom:30px;}/*!sc*/
+html([data-theme='dark']) data-styled.g129[id="sc-bACthX"]{content:"lllQIL,"}/*!sc*/
+html([data-theme='dark']) .bvizsa{user-select:none;width:20px;height:20px;align-self:center;display:flex;flex-direction:column;color:#25c2a0;}/*!sc*/
+html([data-theme='dark']) data-styled.g130[id="sc-duGFKm"]{content:"bvizsa,"}/*!sc*/
+html([data-theme='dark']) .dkQRIg{width:300px;background-color:rgb(24, 25, 26);overflow:hidden;display:flex;flex-direction:column;backface-visibility:hidden;height:100vh;position:sticky;position:-webkit-sticky;top:0;}/*!sc*/
+@media screen and (max-width: 50rem){html([data-theme='dark']) .dkQRIg{position:fixed;z-index:20;width:100%;background:rgb(24, 25, 26);display:none;}}/*!sc*/
+@media print{html([data-theme='dark']) .dkQRIg{display:none;}}/*!sc*/
+html([data-theme='dark']) data-styled.g131[id="sc-egnSlO"]{content:"dkQRIg,"}/*!sc*/
+html([data-theme='dark']) .iAIFLM{outline:none;user-select:none;background-color:#f2f2f2;color:#25c2a0;display:none;cursor:pointer;position:fixed;right:20px;z-index:100;border-radius:50%;box-shadow:0 0 20px rgba(0, 0, 0, 0.3);bottom:44px;width:60px;height:60px;padding:0 20px;}/*!sc*/
+@media screen and (max-width: 50rem){html([data-theme='dark']) .iAIFLM{display:flex;}}/*!sc*/
+html([data-theme='dark']) .iAIFLM svg{color:#0065FB;}/*!sc*/
+@media print{html([data-theme='dark']) .iAIFLM{display:none;}}/*!sc*/
+html([data-theme='dark']) data-styled.g132[id="sc-iCfQMn"]{content:"iAIFLM,"}/*!sc*/
+html([data-theme='dark']) .cVRcjw{font-family:var(--ifm-font-family-base);font-size:var(--ifm-font-size-base);font-weight:var(--ifm-font-weight-base);line-height:var(--ifm-line-height-base);color:#f5f6f7;display:flex;position:relative;text-align:left;-webkit-font-smoothing:antialiased;font-smoothing:antialiased;text-rendering:optimizeSpeed!important;tap-highlight-color:rgba(0, 0, 0, 0);text-size-adjust:100%;}/*!sc*/
+html([data-theme='dark']) .cVRcjw *{box-sizing:border-box;-webkit-tap-highlight-color:rgba(255, 255, 255, 0);}/*!sc*/
+html([data-theme='dark']) data-styled.g133[id="sc-kSwkvc"]{content:"cVRcjw,"}/*!sc*/
+html([data-theme='dark']) .bUNEeT{z-index:1;position:relative;overflow:hidden;width:calc(100% - 300px);contain:layout;}/*!sc*/
+@media print,screen and (max-width: 50rem){html([data-theme='dark']) .bUNEeT{width:100%;}}/*!sc*/
+html([data-theme='dark']) data-styled.g134[id="sc-dYSzwF"]{content:"bUNEeT,"}/*!sc*/
+html([data-theme='dark']) .dvhyHs{background:#263238;position:absolute;top:0;bottom:0;right:0;width:calc((100% - 300px) * 0.4);}/*!sc*/
+@media print,screen and (max-width: 130rem){html([data-theme='dark']) .dvhyHs{display:none;}}/*!sc*/
+html([data-theme='dark']) data-styled.g135[id="sc-dZRlFK"]{content:"dvhyHs,"}/*!sc*/
+html([data-theme='dark']) .fgXvUT{padding:5px 0;}/*!sc*/
+html([data-theme='dark']) data-styled.g136[id="sc-ivJkgj"]{content:"fgXvUT,"}/*!sc*/
+html([data-theme='dark']) .bZFnfY{width:calc(100% - 40px);box-sizing:border-box;margin:0 20px;padding:5px 10px 5px 20px;border:0;border-bottom:1px solid #303335;font-family:var(--ifm-font-family-base);font-weight:bold;font-size:13px;color:#f5f6f7;background-color:transparent;outline:none;}/*!sc*/
+html([data-theme='dark']) data-styled.g137[id="sc-kLZDOY"]{content:"bZFnfY,"}/*!sc*/
+html([data-theme='dark']) .egfpQt{position:absolute;left:20px;height:1.8em;width:0.9em;}/*!sc*/
+html([data-theme='dark']) .egfpQt path{fill:#f5f6f7;}/*!sc*/
+html([data-theme='dark']) data-styled.g138[id="sc-dSvSQB"]{content:"egfpQt,"}/*!sc*/
+</style></div><div class="redocusaurus"><div class="sc-kSwkvc bnUrkG redoc-wrap"><div class="sc-egnSlO hrBrgw menu-content" style="top:0px;height:calc(100vh - 0px)"><div role="search" class="sc-ivJkgj fgXvUT"><svg class="sc-dSvSQB kyIWIr search-icon" version="1.1" viewBox="0 0 1000 1000" x="0px" xmlns="http://www.w3.org/2000/svg" y="0px"><path d="M968.2,849.4L667.3,549c83.9-136.5,66.7-317.4-51.7-435.6C477.1-25,252.5-25,113.9,113.4c-138.5,138.3-138.5,362.6,0,501C219.2,730.1,413.2,743,547.6,666.5l301.9,301.4c43.6,43.6,76.9,14.9,104.2-12.4C981,928.3,1011.8,893,968.2,849.4z M524.5,522c-88.9,88.7-233,88.7-321.8,0c-88.9-88.7-88.9-232.6,0-321.3c88.9-88.7,233-88.7,321.8,0C613.4,289.4,613.4,433.3,524.5,522z"></path></svg><input placeholder="Search..." aria-label="Search" type="text" class="sc-kLZDOY fMtHmI search-input" value=""></div><div class="sc-dOUtaJ jMdEeM scrollbar-container undefined"><ul role="menu" class="sc-kDeqfd hWwlcB"><li tabindex="0" depth="2" data-item-id="operation/lobby_post" role="menuitem" class="sc-UBoew eNDREy"><label class="sc-edctFj isZRob -depth2"><span type="post" class="sc-ilTbHY iaoeNv operation-type post">post</span><span tabindex="0" width="calc(100% - 38px)" class="sc-fJVbdy lbPVHv">Create Lobby</span></label></li><li tabindex="0" depth="2" data-item-id="operation/lobby_code_post" role="menuitem" class="sc-UBoew eNDREy"><label class="sc-edctFj isZRob -depth2"><span type="post" class="sc-ilTbHY iaoeNv operation-type post">post</span><span tabindex="0" width="calc(100% - 38px)" class="sc-fJVbdy lbPVHv">Join Lobby</span></label></li><li tabindex="0" depth="2" data-item-id="/paths/~1ws~1/get" role="menuitem" class="sc-UBoew eNDREy"><label class="sc-edctFj isZRob -depth2"><span type="get" class="sc-ilTbHY iaoeNv operation-type get">get</span><span tabindex="0" width="calc(100% - 38px)" class="sc-fJVbdy lbPVHv">Websocket Connection</span></label></li></ul><div class="sc-kwHJyZ JhMem"><a target="_blank" rel="noopener noreferrer" href="https://redocly.com/redoc/">API docs by Redocly</a></div></div></div><div class="sc-iCfQMn iAIFLM"><div class="sc-duGFKm bvizsa"><svg class="" style="transform:translate(2px, -4px) rotate(180deg);transition:transform 0.2s ease" viewBox="0 0 926.23699 573.74994" version="1.1" x="0px" y="0px" width="15" height="15"><g transform="translate(904.92214,-879.1482)"><path d="
           m -673.67664,1221.6502 -231.2455,-231.24803 55.6165,
           -55.627 c 30.5891,-30.59485 56.1806,-55.627 56.8701,-55.627 0.6894,
           0 79.8637,78.60862 175.9427,174.68583 l 174.6892,174.6858 174.6892,
@@ -626,22 +674,22 @@ html([data-theme='dark']) data-styled.g137[id="sc-kLZDOY"]{content:"bYJZCL,"}/*!
           55.627 l 55.6165,55.627 -231.245496,231.24803 c -127.185,127.1864
           -231.5279,231.248 -231.873,231.248 -0.3451,0 -104.688,
           -104.0616 -231.873,-231.248 z
-        " fill="currentColor"></path></g></svg></div></div><div class="sc-kSwkvc hkMkLL api-content"><div class="sc-dycHyt crgBeO"><div class="sc-kfeOyU hJzEmC"><div class="sc-fLDLck BhXef api-info"><h1 class="sc-hRDKVd sc-fylWoh gGaBWx etEGmz">AAC Team Sec2 - API Docs<!-- --> </h1><p>Download OpenAPI specification<!-- -->:<a download="" target="_blank" href="https://Capstone-Projects-2025-Spring.github.io/aac-go-fish/redocusaurus/using-single-yaml.yaml" class="sc-jYpOcw iriSvq">Download</a></p><div class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"></div><div data-role="redoc-summary" html="" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"></div><div data-role="redoc-description" html="&lt;p&gt;This API controls basic lobby functionality of the AAC game&lt;/p&gt;
+        " fill="currentColor"></path></g></svg></div></div><div class="sc-dYSzwF bUNEeT api-content"><div class="sc-dycHyt crgBeO"><div class="sc-kfeOyU hJzEmC"><div class="sc-fLDLck BhXef api-info"><h1 class="sc-hRDKVd sc-jYpOcw gGaBWx dvwEJw">AAC Team Sec2 - API Docs<!-- --> </h1><p>Download OpenAPI specification<!-- -->:<a download="" target="_blank" href="https://Capstone-Projects-2025-Spring.github.io/aac-go-fish/redocusaurus/using-single-yaml.yaml" rel="noreferrer" class="sc-fQNqfz gusXaO">Download</a></p><div class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"></div><div data-role="redoc-summary" html="" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"></div><div data-role="redoc-description" html="&lt;p&gt;This API controls basic lobby functionality of the AAC game&lt;/p&gt;
 " class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"><p>This API controls basic lobby functionality of the AAC game</p>
-</div></div></div></div><div id="operation/lobby_post" data-section-id="operation/lobby_post" class="sc-dycHyt bjEOiR"><div data-section-id="operation/lobby_post" id="operation/lobby_post" class="sc-kfeOyU hJzEmC"><div class="sc-fLDLck BhXef"><h2 class="sc-jBIHhB cNKTBx"><a class="sc-jHswkR elMihT" href="#operation/lobby_post" aria-label="operation/lobby_post"></a>Create Lobby<!-- --> </h2><div class="sc-fkXaGc jvCEAX"><div html="&lt;p&gt;Creates a new lobby, returning lobby code.&lt;/p&gt;
+</div></div></div></div><div id="operation/lobby_post" data-section-id="operation/lobby_post" class="sc-dycHyt bjEOiR"><div data-section-id="operation/lobby_post" id="operation/lobby_post" class="sc-kfeOyU hJzEmC"><div class="sc-fLDLck BhXef"><h2 class="sc-jBIHhB cNKTBx"><a class="sc-jHswkR elMihT" href="#operation/lobby_post" aria-label="operation/lobby_post"></a>Create Lobby<!-- --> </h2><div class="sc-bACthX lllQIL"><div html="&lt;p&gt;Creates a new lobby, returning lobby code.&lt;/p&gt;
 " class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"><p>Creates a new lobby, returning lobby code.</p>
-</div></div><div><h3 class="sc-dxpuJR ehlUEW">Responses</h3><div><button class="sc-fIeReU fIRZzM"><svg class="sc-cSaEAk dLyMbj" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg><strong class="sc-bAomZO dqKUKh">201<!-- --> </strong><div html="&lt;p&gt;Successful Response&lt;/p&gt;
-" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ sc-dXYVqG iWCNbi"><p>Successful Response</p>
-</div></button></div></div></div><div class="sc-jbAkgO sc-gNZgCX jHwZtM kBIQEu"><div class="sc-cOTGOU iQlcjo"><button class="sc-ijEwUV dhPFcF"><span type="post" class="sc-iNzRy gFIfdN http-verb post">post</span><span class="sc-dNMyuw lhGsaF">/lobby</span><svg class="sc-cSaEAk hKyhIj" style="margin-right:-25px" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg></button><div aria-hidden="true" class="sc-eEFyrX fENReE"><div class="sc-dHpROs cIiuCa"><div html="" class="sc-dJkDXt sc-eXfTSZ bOBPCh hGKWqP"></div><div tabindex="0" role="button"><div class="sc-idhQoR gsqWN"><span>https://capstone-projects-2025-spring.github.io</span>/lobby</div></div></div></div></div><div><h3 class="sc-jUkaYT borUjU"> <!-- -->Response samples<!-- --> </h3><div class="sc-bCjwNj kYWwVR" data-rttabs="true"><ul class="react-tabs__tab-list" role="tablist"><li class="tab-success react-tabs__tab--selected" role="tab" id="tab«R9pdahralaqh»0" aria-selected="true" aria-disabled="false" aria-controls="panel«R9pdahralaqh»0" tabindex="0" data-rttab="true">201</li></ul><div class="react-tabs__tab-panel react-tabs__tab-panel--selected" role="tabpanel" id="panel«R9pdahralaqh»0" aria-labelledby="tab«R9pdahralaqh»0"><div><div class="sc-bxmmIP OIIYS"><span class="sc-fEOKFM cTgyIt">Content type</span><div class="sc-beKSRx jqscGt">application/json</div></div><div class="sc-loYsQo exYKuj"><div class="sc-eOrxMY fhJHli"><div class="sc-lertIE cfVXnF"><button><div class="sc-fCSSOr kPewJt">Copy</div></button></div><div class="sc-dJkDXt bOBPCh sc-gtlvkJ gKIeoL"><div class="redoc-json"><code><button class="collapser" aria-label="collapse"></button><span class="token punctuation">{</span><span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property token string">"code"</span>: <span class="token string">&quot;Fish-Turtle-Shark&quot;</span></div></li></ul><span class="token punctuation">}</span></code></div></div></div></div></div></div></div></div></div></div></div><div id="operation/lobby_code_post" data-section-id="operation/lobby_code_post" class="sc-dycHyt bjEOiR"><div data-section-id="operation/lobby_code_post" id="operation/lobby_code_post" class="sc-kfeOyU hJzEmC"><div class="sc-fLDLck BhXef"><h2 class="sc-jBIHhB cNKTBx"><a class="sc-jHswkR elMihT" href="#operation/lobby_code_post" aria-label="operation/lobby_code_post"></a>Join Lobby<!-- --> </h2><div class="sc-fkXaGc jvCEAX"><div html="&lt;p&gt;Joins a player to a lobby by its unique game code, returning new player information and player avatars.&lt;/p&gt;
-" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"><p>Joins a player to a lobby by its unique game code, returning new player information and player avatars.</p>
-</div></div><div><h5 class="sc-deSjom giXoSa">path<!-- --> Parameters</h5><table class="sc-dVupuq eiOZOK"><tbody><tr class="last"><td kind="field" title="code" class="sc-kXOizl sc-dPKAra bmAKev eArqpj"><span class="sc-gjXmFk hYHmyH"></span><span class="property-name">code</span><div class="sc-sediK sc-incsXD bofVia cJSTOB">required</div></td><td class="sc-fuExOL erIHwV"><div><div><span class="sc-sediK sc-cAQujh bofVia cMqjKH"></span><span class="sc-sediK sc-haUlXw bofVia YIflu">string</span><span class="sc-sediK sc-gIivzS bofVia caRgDJ"> (<!-- -->Code<!-- -->) </span></div> <div><div html="&lt;p&gt;Lobby Code&lt;/p&gt;
-" class="sc-dJkDXt sc-eXfTSZ bOBPCh hGKWqP"><p>Lobby Code</p>
-</div></div></div></td></tr></tbody></table></div><div><h3 class="sc-dxpuJR ehlUEW">Responses</h3><div><button class="sc-fIeReU fIRZzM"><svg class="sc-cSaEAk dLyMbj" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg><strong class="sc-bAomZO dqKUKh">200<!-- --> </strong><div html="&lt;p&gt;Successful Response&lt;/p&gt;
-" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ sc-dXYVqG iWCNbi"><p>Successful Response</p>
-</div></button></div><div><button class="sc-fIeReU dhdtjI" disabled=""><strong class="sc-bAomZO dqKUKh">404<!-- --> </strong><div html="&lt;p&gt;Lobby Not Found&lt;/p&gt;
-" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ sc-dXYVqG iWCNbi"><p>Lobby Not Found</p>
-</div></button></div></div></div><div class="sc-jbAkgO sc-gNZgCX jHwZtM kBIQEu"><div class="sc-cOTGOU iQlcjo"><button class="sc-ijEwUV dhPFcF"><span type="post" class="sc-iNzRy gFIfdN http-verb post">post</span><span class="sc-dNMyuw lhGsaF">/lobby/{code}</span><svg class="sc-cSaEAk hKyhIj" style="margin-right:-25px" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg></button><div aria-hidden="true" class="sc-eEFyrX fENReE"><div class="sc-dHpROs cIiuCa"><div html="" class="sc-dJkDXt sc-eXfTSZ bOBPCh hGKWqP"></div><div tabindex="0" role="button"><div class="sc-idhQoR gsqWN"><span>https://capstone-projects-2025-spring.github.io</span>/lobby/{code}</div></div></div></div></div><div><h3 class="sc-jUkaYT borUjU"> <!-- -->Response samples<!-- --> </h3><div class="sc-bCjwNj kYWwVR" data-rttabs="true"><ul class="react-tabs__tab-list" role="tablist"><li class="tab-success react-tabs__tab--selected" role="tab" id="tab«R9plahralaqh»0" aria-selected="true" aria-disabled="false" aria-controls="panel«R9plahralaqh»0" tabindex="0" data-rttab="true">200</li></ul><div class="react-tabs__tab-panel react-tabs__tab-panel--selected" role="tabpanel" id="panel«R9plahralaqh»0" aria-labelledby="tab«R9plahralaqh»0"><div><div class="sc-bxmmIP OIIYS"><span class="sc-fEOKFM cTgyIt">Content type</span><div class="sc-beKSRx jqscGt">application/json</div></div><div class="sc-loYsQo exYKuj"><div class="sc-eOrxMY fhJHli"><div class="sc-lertIE cfVXnF"><button><div class="sc-fCSSOr kPewJt">Copy</div></button><button> Expand all </button><button> Collapse all </button></div><div class="sc-dJkDXt bOBPCh sc-gtlvkJ gKIeoL"><div class="redoc-json"><code><button class="collapser" aria-label="collapse"></button><span class="token punctuation">{</span><span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property token string">"self"</span>: <button class="collapser" aria-label="collapse"></button><span class="token punctuation">{</span><span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable collapsed"><span class="property token string">"avatar"</span>: <span class="token string">&quot;Fish&quot;</span><span class="token punctuation">,</span></div></li><li><div class="hoverable collapsed"><span class="property token string">"uuid"</span>: <span class="token string">&quot;3e6b52bf-23ae-4f50-ba84-ad35ed1df31b&quot;</span></div></li></ul><span class="token punctuation">}</span><span class="token punctuation">,</span></div></li><li><div class="hoverable"><span class="property token string">"players"</span>: <button class="collapser" aria-label="collapse"></button><span class="token punctuation">[</span><span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable collapsed"><span class="token string">&quot;Shark&quot;</span>,</div></li><li><div class="hoverable collapsed"><span class="token string">&quot;Turtle&quot;</span>,</div></li><li><div class="hoverable collapsed"><span class="token string">&quot;Fish&quot;</span></div></li></ul><span class="token punctuation">]</span></div></li></ul><span class="token punctuation">}</span></code></div></div></div></div></div></div></div></div></div></div></div><div id="/paths/~1ws~1/get" data-section-id="/paths/~1ws~1/get" class="sc-dycHyt bjEOiR"><div class="sc-kfeOyU hJzEmC"><div class="sc-fLDLck BhXef"><h2 class="sc-jBIHhB cNKTBx"><a class="sc-jHswkR elMihT" href="#/paths/~1ws~1/get" aria-label="/paths/~1ws~1/get"></a>Websocket Connection<!-- --> </h2><div class="sc-fkXaGc jvCEAX"><div html="&lt;p&gt;Handles a WebSocket connection for receiving and responding to messages.&lt;/p&gt;
-" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"><p>Handles a WebSocket connection for receiving and responding to messages.</p>
-</div></div></div><div class="sc-jbAkgO sc-gNZgCX jHwZtM kBIQEu"><div class="sc-cOTGOU iQlcjo"><button class="sc-ijEwUV dhPFcF"><span type="get" class="sc-iNzRy hPmDyb http-verb get">get</span><span class="sc-dNMyuw lhGsaF">/ws/</span><svg class="sc-cSaEAk hKyhIj" style="margin-right:-25px" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg></button><div aria-hidden="true" class="sc-eEFyrX fENReE"><div class="sc-dHpROs cIiuCa"><div html="" class="sc-dJkDXt sc-eXfTSZ bOBPCh hGKWqP"></div><div tabindex="0" role="button"><div class="sc-idhQoR gsqWN"><span>https://capstone-projects-2025-spring.github.io</span>/ws/</div></div></div></div></div></div></div></div></div><div class="sc-dYSzwF suCwY"></div></div></div></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/Capstone-Projects-2025-Spring/aac-go-fish/edit/main/documentation/docs/api-specification/openapi-spec.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"><details><summary>Revision History</summary><table><thead><tr><th scope="row">Author</th><th scope="row">Revision</th><th scope="row">Date</th></tr></thead><tbody>nothing</tbody></table></details><span class="theme-last-updated">Last updated<!-- --> by <b>jonathan-d-zhang</b></span></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/aac-go-fish/docs/category/api-specification"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">API Specification</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/aac-go-fish/docs/api-specification/wss-schema"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">WebSocket Schema</div></a></nav></div></div></div></div></main></div></div></div><footer class="footer"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/aac-go-fish/docs/intro">Documentation</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/Capstone-Projects-2025-Spring/aac-go-fish" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--dark_xIcU"></div><div class="footer__copyright">Copyright © 2025 Aac Go Fish, Inc. Built with Docusaurus.</div></div></div></footer></div>
+</div></div><div><h3 class="sc-frtHmg kllPod">Responses</h3><div><button class="sc-kdWPFt ekXmXe"><svg class="sc-cSaEAk dLyMbj" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg><strong class="sc-dxpuJR bniiic">201<!-- --> </strong><div html="&lt;p&gt;Successful Response&lt;/p&gt;
+" class="sc-dJkDXt sc-eXfTSZ sc-dXYVqG bOBPCh kLlTyz iaKqXk"><p>Successful Response</p>
+</div></button></div></div></div><div class="sc-jbAkgO sc-gNZgCX jHwZtM kBIQEu"><div class="sc-dNMyuw jSOGEJ"><button class="sc-iNzRy jzPPmt"><span type="post" class="sc-eEFyrX zdxky http-verb post">post</span><span class="sc-ijEwUV iPRGkP">/lobby</span><svg class="sc-cSaEAk hKyhIj" style="margin-right:-25px" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg></button><div aria-hidden="true" class="sc-dHpROs kGJkmP"><div class="sc-idhQoR fLVjhV"><div html="" class="sc-dJkDXt sc-eXfTSZ bOBPCh hGKWqP"></div><div tabindex="0" role="button"><div class="sc-cqTlu fQzrkz"><span>https://capstone-projects-2025-spring.github.io</span>/lobby</div></div></div></div></div><div><h3 class="sc-jUkaYT borUjU"> <!-- -->Response samples<!-- --> </h3><div class="sc-bCjwNj kYWwVR" data-rttabs="true"><ul class="react-tabs__tab-list" role="tablist"><li class="tab-success react-tabs__tab--selected" role="tab" id="tab«R9pdahralaqh»0" aria-selected="true" aria-disabled="false" aria-controls="panel«R9pdahralaqh»0" tabindex="0" data-rttab="true">201</li></ul><div class="react-tabs__tab-panel react-tabs__tab-panel--selected" role="tabpanel" id="panel«R9pdahralaqh»0" aria-labelledby="tab«R9pdahralaqh»0"><div><div class="sc-bxmmIP OIIYS"><span class="sc-fEOKFM cTgyIt">Content type</span><div class="sc-beKSRx jqscGt">application/json</div></div><div class="sc-loYsQo exYKuj"><div class="sc-eOrxMY fhJHli"><div class="sc-lertIE cfVXnF"><button><div class="sc-fCSSOr kPewJt">Copy</div></button><button> Expand all </button><button> Collapse all </button></div><div class="sc-dJkDXt bOBPCh sc-gtlvkJ gKIeoL"><div class="redoc-json"><code><button class="collapser" aria-label="collapse"></button><span class="token punctuation">{</span><span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property token string">"code"</span>: <button class="collapser" aria-label="collapse"></button><span class="token punctuation">[</span><span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable collapsed"><span class="token string">&quot;Patty&quot;</span>,</div></li><li><div class="hoverable collapsed"><span class="token string">&quot;Cheese&quot;</span>,</div></li><li><div class="hoverable collapsed"><span class="token string">&quot;Tomato&quot;</span></div></li></ul><span class="token punctuation">]</span></div></li></ul><span class="token punctuation">}</span></code></div></div></div></div></div></div></div></div></div></div></div><div id="operation/lobby_code_post" data-section-id="operation/lobby_code_post" class="sc-dycHyt bjEOiR"><div data-section-id="operation/lobby_code_post" id="operation/lobby_code_post" class="sc-kfeOyU hJzEmC"><div class="sc-fLDLck BhXef"><h2 class="sc-jBIHhB cNKTBx"><a class="sc-jHswkR elMihT" href="#operation/lobby_code_post" aria-label="operation/lobby_code_post"></a>Join Lobby<!-- --> </h2><div class="sc-bACthX lllQIL"><div html="&lt;p&gt;Joins a player to a lobby by its unique game code, returning new player information.&lt;/p&gt;
+" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"><p>Joins a player to a lobby by its unique game code, returning new player information.</p>
+</div></div><h5 class="sc-deSjom giXoSa">Request Body schema: <span class="sc-dslWvo lcGauM">application/json</span></h5><div html="&lt;p&gt;Lobby Code&lt;/p&gt;
+" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"><p>Lobby Code</p>
+</div><table class="sc-dVupuq eiOZOK"><tbody><tr class="last"><td kind="field" title="code" class="sc-kXOizl sc-dPKAra bmAKev eArqpj"><span class="sc-gjXmFk hYHmyH"></span><span class="property-name">code</span></td><td class="sc-fuExOL erIHwV"><div><div><span class="sc-sediK sc-cAQujh bofVia cMqjKH">Array of </span><span class="sc-sediK sc-haUlXw bofVia YIflu">arrays</span></div> <div><div html="" class="sc-dJkDXt sc-eXfTSZ bOBPCh hGKWqP"></div></div></div></td></tr></tbody></table><div><h3 class="sc-frtHmg kllPod">Responses</h3><div><button class="sc-kdWPFt ekXmXe"><svg class="sc-cSaEAk dLyMbj" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg><strong class="sc-dxpuJR bniiic">200<!-- --> </strong><div html="&lt;p&gt;Successful Response&lt;/p&gt;
+" class="sc-dJkDXt sc-eXfTSZ sc-dXYVqG bOBPCh kLlTyz iaKqXk"><p>Successful Response</p>
+</div></button></div><div><button class="sc-kdWPFt eRKbbW" disabled=""><strong class="sc-dxpuJR bniiic">404<!-- --> </strong><div html="&lt;p&gt;Lobby Not Found&lt;/p&gt;
+" class="sc-dJkDXt sc-eXfTSZ sc-dXYVqG bOBPCh kLlTyz iaKqXk"><p>Lobby Not Found</p>
+</div></button></div></div></div><div class="sc-jbAkgO sc-gNZgCX jHwZtM kBIQEu"><div class="sc-dNMyuw jSOGEJ"><button class="sc-iNzRy jzPPmt"><span type="post" class="sc-eEFyrX zdxky http-verb post">post</span><span class="sc-ijEwUV iPRGkP">/lobby/join</span><svg class="sc-cSaEAk hKyhIj" style="margin-right:-25px" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg></button><div aria-hidden="true" class="sc-dHpROs kGJkmP"><div class="sc-idhQoR fLVjhV"><div html="" class="sc-dJkDXt sc-eXfTSZ bOBPCh hGKWqP"></div><div tabindex="0" role="button"><div class="sc-cqTlu fQzrkz"><span>https://capstone-projects-2025-spring.github.io</span>/lobby/join</div></div></div></div></div><div><h3 class="sc-jUkaYT borUjU"> <!-- -->Request samples<!-- --> </h3><div class="sc-bCjwNj kYWwVR" data-rttabs="true"><ul class="react-tabs__tab-list" role="tablist"><li class="react-tabs__tab react-tabs__tab--selected" role="tab" id="tab«R99lahralaqh»0" aria-selected="true" aria-disabled="false" aria-controls="panel«R99lahralaqh»0" tabindex="0" data-rttab="true">Payload</li></ul><div class="react-tabs__tab-panel react-tabs__tab-panel--selected" role="tabpanel" id="panel«R99lahralaqh»0" aria-labelledby="tab«R99lahralaqh»0"><div><div class="sc-bxmmIP OIIYS"><span class="sc-fEOKFM cTgyIt">Content type</span><div class="sc-beKSRx jqscGt">application/json</div></div><div class="sc-loYsQo exYKuj"><div class="sc-eOrxMY fhJHli"><div class="sc-lertIE cfVXnF"><button><div class="sc-fCSSOr kPewJt">Copy</div></button><button> Expand all </button><button> Collapse all </button></div><div class="sc-dJkDXt bOBPCh sc-gtlvkJ gKIeoL"><div class="redoc-json"><code><button class="collapser" aria-label="collapse"></button><span class="token punctuation">{</span><span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property token string">"code"</span>: <button class="collapser" aria-label="collapse"></button><span class="token punctuation">[</span><span class="ellipsis"></span><ul class="array collapsible"><li><div class="hoverable collapsed"><span class="token string">&quot;Patty&quot;</span>,</div></li><li><div class="hoverable collapsed"><span class="token string">&quot;Cheese&quot;</span>,</div></li><li><div class="hoverable collapsed"><span class="token string">&quot;Tomato&quot;</span></div></li></ul><span class="token punctuation">]</span></div></li></ul><span class="token punctuation">}</span></code></div></div></div></div></div></div></div></div><div><h3 class="sc-jUkaYT borUjU"> <!-- -->Response samples<!-- --> </h3><div class="sc-bCjwNj kYWwVR" data-rttabs="true"><ul class="react-tabs__tab-list" role="tablist"><li class="tab-success react-tabs__tab--selected" role="tab" id="tab«R9plahralaqh»0" aria-selected="true" aria-disabled="false" aria-controls="panel«R9plahralaqh»0" tabindex="0" data-rttab="true">200</li></ul><div class="react-tabs__tab-panel react-tabs__tab-panel--selected" role="tabpanel" id="panel«R9plahralaqh»0" aria-labelledby="tab«R9plahralaqh»0"><div><div class="sc-bxmmIP OIIYS"><span class="sc-fEOKFM cTgyIt">Content type</span><div class="sc-beKSRx jqscGt">application/json</div></div><div class="sc-loYsQo exYKuj"><div class="sc-eOrxMY fhJHli"><div class="sc-lertIE cfVXnF"><button><div class="sc-fCSSOr kPewJt">Copy</div></button></div><div class="sc-dJkDXt bOBPCh sc-gtlvkJ gKIeoL"><div class="redoc-json"><code><button class="collapser" aria-label="collapse"></button><span class="token punctuation">{</span><span class="ellipsis"></span><ul class="obj collapsible"><li><div class="hoverable"><span class="property token string">"id"</span>: <span class="token string">&quot;3e6b52bf-23ae-4f50-ba84-ad35ed1df31b&quot;</span></div></li></ul><span class="token punctuation">}</span></code></div></div></div></div></div></div></div></div></div></div></div><div id="/paths/~1ws~1/get" data-section-id="/paths/~1ws~1/get" class="sc-dycHyt bjEOiR"><div class="sc-kfeOyU hJzEmC"><div class="sc-fLDLck BhXef"><h2 class="sc-jBIHhB cNKTBx"><a class="sc-jHswkR elMihT" href="#/paths/~1ws~1/get" aria-label="/paths/~1ws~1/get"></a>Websocket Connection<!-- --> </h2><div class="sc-bACthX lllQIL"><div html="&lt;p&gt;Handles a WebSocket connection for receiving and responding to messages. For more information see Websocket schema.&lt;/p&gt;
+" class="sc-dJkDXt sc-eXfTSZ bOBPCh dzPjrZ"><p>Handles a WebSocket connection for receiving and responding to messages. For more information see Websocket schema.</p>
+</div></div></div><div class="sc-jbAkgO sc-gNZgCX jHwZtM kBIQEu"><div class="sc-dNMyuw jSOGEJ"><button class="sc-iNzRy jzPPmt"><span type="get" class="sc-eEFyrX knoieI http-verb get">get</span><span class="sc-ijEwUV iPRGkP">/ws/</span><svg class="sc-cSaEAk hKyhIj" style="margin-right:-25px" version="1.1" viewBox="0 0 24 24" x="0" xmlns="http://www.w3.org/2000/svg" y="0" aria-hidden="true"><polygon points="17.3 8.3 12 13.6 6.7 8.3 5.3 9.7 12 16.4 18.7 9.7 "></polygon></svg></button><div aria-hidden="true" class="sc-dHpROs kGJkmP"><div class="sc-idhQoR fLVjhV"><div html="" class="sc-dJkDXt sc-eXfTSZ bOBPCh hGKWqP"></div><div tabindex="0" role="button"><div class="sc-cqTlu fQzrkz"><span>https://capstone-projects-2025-spring.github.io</span>/ws/</div></div></div></div></div></div></div></div></div><div class="sc-dZRlFK iUyEtg"></div></div></div></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="row margin-top--sm theme-doc-footer-edit-meta-row"><div class="col"><a href="https://github.com/Capstone-Projects-2025-Spring/aac-go-fish/edit/main/documentation/docs/api-specification/openapi-spec.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_JAkA"><details><summary>Revision History</summary><table><thead><tr><th scope="row">Author</th><th scope="row">Revision</th><th scope="row">Date</th></tr></thead><tbody>nothing</tbody></table></details><span class="theme-last-updated">Last updated<!-- --> by <b>Andriy Luchko</b></span></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/aac-go-fish/docs/category/api-specification"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">API Specification</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/aac-go-fish/docs/api-specification/wss-schema"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">WebSocket Schema</div></a></nav></div></div></div></div></main></div></div></div><footer class="footer"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/aac-go-fish/docs/intro">Documentation</a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/Capstone-Projects-2025-Spring/aac-go-fish" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="margin-bottom--sm"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--light_NVdE"><img src="https://upload.wikimedia.org/wikipedia/commons/1/17/Temple_T_logo.svg" alt="My Site Logo" class="footer__logo themedComponent_mlkZ themedComponent--dark_xIcU"></div><div class="footer__copyright">Copyright © 2025 Aac Go Fish, Inc. Built with Docusaurus.</div></div></div></footer></div>
 </body>
 </html>
