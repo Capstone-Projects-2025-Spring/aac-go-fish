@@ -1,21 +1,20 @@
 import pytest
 
 from backend.dependencies import LobbyManager
-from backend.game import BURGER_INGREDIENTS
-from backend.game_state import LobbyNotFound
+from backend.game_state import LobbyFullError, LobbyNotFoundError
 
 
 @pytest.fixture
 def lm() -> LobbyManager:
     """Pass lobby manager to tests."""
-    return LobbyManager()
+    return LobbyManager(["a"])
 
 
 def test_register_lobby(lm: LobbyManager) -> None:
     """Test a lobby is created correctly."""
     code = lm.register_lobby()
     assert len(code) == 3
-    assert all(ingredient in BURGER_INGREDIENTS for ingredient in code)
+    assert all(ingredient == "a" for ingredient in code)
 
 
 def test_no_more_lobbies(lm: LobbyManager) -> None:
@@ -30,25 +29,33 @@ def test_no_more_lobbies(lm: LobbyManager) -> None:
     assert str(exc_info.value) == "No more lobby codes available, server is full"
 
 
-def test_different_lobbies_have_different_codes(lm: LobbyManager) -> None:
+def test_different_lobbies_have_different_codes() -> None:
     """Test that different lobbies have different codes."""
-    codes = [lm.register_lobby() for _ in range(10)]
+    lm = LobbyManager(["a", "b", "c"])
+    codes = [lm.register_lobby() for _ in range(3 * 3 * 3)]
     assert len(codes) == len(set(codes))
 
 
 def test_register_player_lobby_not_found(lm: LobbyManager) -> None:
     """Test LobbyNotFound is thrown on invalid codes."""
-
-    with pytest.raises(ValueError) as exc_info:
+    with pytest.raises(LobbyNotFoundError) as exc_info:
         lm.register_player(("Top Bun", "Not a real ingredient"))
 
     assert exc_info.type is LobbyNotFoundError
 
 
 def test_register_player_lobby_full(lm: LobbyManager) -> None:
-    """Test LobbyFull is thrown on invalid codes."""
+    """Test LobbyFull is thrown for full lobbies."""
+    lm.register_lobby()
+    lm.register_player(("a", "a", "a"))
+    lm.register_player(("a", "a", "a"))
+    lm.register_player(("a", "a", "a"))
+    lm.register_player(("a", "a", "a"))
 
-    pytest.fail()
+    with pytest.raises(LobbyFullError) as exc_info:
+        lm.register_player(("a", "a", "a"))
+
+    assert exc_info.type is LobbyFullError
 
 
 def test_register_player(lm: LobbyManager) -> None:
