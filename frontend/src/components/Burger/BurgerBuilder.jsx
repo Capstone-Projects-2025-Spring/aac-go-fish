@@ -52,7 +52,6 @@ const BurgerBuilder = ({ score }) => {
         });
     };
 
-
     return (
         <div className="BurgerBuilder">
             <p className='ScoreText'>Your score is ${score}</p>
