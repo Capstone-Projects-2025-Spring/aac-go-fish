@@ -85,8 +85,8 @@
 }
 
 .manager-mini-order-overlay {
-    bottom: 20px;
-    left: 10px;
+    bottom: -13rem;
+    left: 5rem;
     position: absolute;
     max-width: 350px;
 }
