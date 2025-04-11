@@ -31,7 +31,7 @@ from backend.models import Burger, Drink, Order, Side
                 side=Side(table_state="fries"),
                 drink=Drink(color="blue", size="M", fill=100),
             ),
-            11.5,
+            12,
             id="correct burger, side, and drink",
         ),
         pytest.param(
@@ -92,23 +92,19 @@ def test_grade_order(correct_order: Order, inp_order: Order, exp: float) -> None
     ["correct_color", "inp_color", "color_score"],
     [
         ["blue", "orange", 0],
-        ["blue", "blue", 0.5],
+        ["blue", "blue", 2/3],
     ],
 )
 @pytest.mark.parametrize(
     ["correct_size", "inp_size", "size_score"],
     [
         ["M", "L", 0],
-        ["M", "M", 0.5],
+        ["M", "M", 2/3],
     ],
 )
 @pytest.mark.parametrize(
     "inp_fill",
-    [
-        100,
-        75,
-        80,
-    ],
+    range(100 + 1)
 )
 def test_grade_order_drink(
     correct_color: str,
@@ -136,4 +132,4 @@ def test_grade_order_drink(
 
     out = game_loop.grade_order(inp_order)
 
-    assert round(10 + color_score + size_score + 0.5 * fill_mult, 2) == out
+    assert round(10 + color_score + size_score + 2/3 * fill_mult, 2) == out
