@@ -8,7 +8,7 @@ import { playSendSound } from "../Manager/playSendSound";
 const BurgerBuilder = ({ score }) => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);
-    const [errorMessage, setErrorMessage] = useState("");
+    const [fullMessage, setFullMessage] = useState("");
 
     const foodItems = menu[0].children;
 
@@ -33,10 +33,10 @@ const BurgerBuilder = ({ score }) => {
     const addIngredient = (ingredient) => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
-            setErrorMessage("");
+            setFullMessage("");
         }
         else {
-            setErrorMessage("Plate is Full!");
+            setFullMessage("Plate is Full!");
         }
 
     };
@@ -74,7 +74,7 @@ const BurgerBuilder = ({ score }) => {
                 <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
             <div className="ErrorMessage">
-                {errorMessage && <p>{errorMessage}</p>}
+                {fullMessage && <p>{fullMessage}</p>}
             </div>
         </div>
     );
