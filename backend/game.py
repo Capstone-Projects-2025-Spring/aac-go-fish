@@ -1,5 +1,4 @@
 import difflib
-import functools
 import itertools
 import math
 import random
@@ -44,10 +43,13 @@ class GameLoop:
 
     def __init__(self, lobby: Lobby) -> None:
         self.lobby = lobby
+
+        # Backend stores game score and day
+        # Acts as source of truth in case any messages fail to send
         self.day = 1
+        self.score = 0
 
         self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
-
         self.order: Order
 
     def run(self) -> None:
@@ -75,8 +77,8 @@ class GameLoop:
                         self.manager.send(Message(data=component))
                     case OrderSubmission(order=order):
                         logger.debug("Received order.", order=order)
-                        score = self.grade_order(order)
-                        self.lobby.broadcast(Message(data=OrderScore(score=score)))
+                        self.score += self.grade_order(order)
+                        self.lobby.broadcast(Message(data=OrderScore(score=self.score)))
                         self.handle_next_order()
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
@@ -110,13 +112,14 @@ class GameLoop:
             self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.order = self.orders.pop()
-        self.manager.send(Message(data=NewOrder(order=self.order)))
         logger.debug("Order sent.")
+        self.manager.send(Message(data=NewOrder(order=self.order)))
 
     def handle_new_day(self) -> None:
         """Update current day."""
         self.day += 1
         logger.debug("New day.", day=self.day)
+        self.assign_roles()
         self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
     def grade_order(self, order: Order) -> float:
@@ -161,7 +164,7 @@ class GameLoop:
         """Send an indicator that the manager is typing."""
         self.lobby.broadcast(Message(data=msg.data), exclude=[msg.id])
 
-    @functools.cached_property
+    @property
     def manager(self) -> Player:
         """The player with the manager role."""
         return next(player for player in self.lobby.players.values() if player.role == Role.manager)

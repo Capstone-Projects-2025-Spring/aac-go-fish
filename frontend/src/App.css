@@ -34,21 +34,7 @@
     gap: 1rem;
 }
 
-.Score {
-    font-size: 36px;
-    border-radius: 6px;
-    color: white;
-    background-color: #9dae88;
-    border: 2px solid black;
-    text-align: center;
-    width: fit-content;
-    padding: 10px;
-    margin-left: -30rem;
-
-}
-
-
-.SendCustomerOrder {
+.SendCustomerOrder{
     bottom: 10px;
     right: 350px;
     position: absolute;
