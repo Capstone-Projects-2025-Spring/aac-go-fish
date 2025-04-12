@@ -340,7 +340,7 @@
         },
         "score": {
           "title": "Score",
-          "type": "number"
+          "type": "integer"
         }
       },
       "required": [
