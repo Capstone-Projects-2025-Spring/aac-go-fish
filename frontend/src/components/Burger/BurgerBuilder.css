@@ -137,74 +137,74 @@
     align-items: center;
 }
 
-.SendCustomerOrderImage{
+.SendCustomerOrderImage {
     height: 100px;
 }
 
-.RepeatOrderImage{
+.RepeatOrderImage {
     height: 100px;
 }
 
-.ClearPlateImage{
+.ClearPlateImage {
     height: 100px;
 }
 
-.SendImage{
+.SendImage {
     height: 100px;
 }
 
-.SendOrderButton{
+.SendOrderButton {
     background: white;
     border: none;
     cursor: pointer;
 }
 
-.bottom_bun-Ingredient{
+.bottom_bun-Ingredient {
     margin-top: -2px;
     margin-bottom: -2px;
     width: 75px;
 }
 
-.cheese-Ingredient{
+.cheese-Ingredient {
     margin-top: -5px;
     margin-bottom: -11px;
 }
 
-.ketchup-Ingredient{
+.ketchup-Ingredient {
     margin-top: 0;
     margin-bottom: -5px;
 }
 
-.lettuce-Ingredient{
+.lettuce-Ingredient {
     margin-top: -10px;
     margin-bottom: -4px;
     width: 70px;
 }
 
-.mustard-Ingredient{
+.mustard-Ingredient {
     margin-top: 0;
     margin-bottom: -5px;
 }
 
-.onion-Ingredient{
+.onion-Ingredient {
     margin-top: 1px;
     margin-bottom: -2px;
     width: 70px;
 }
 
-.patty-Ingredient{
+.patty-Ingredient {
     margin-top: -5px;
     margin-bottom: -4px;
     width: 72px;
 }
 
-.tomato-Ingredient{
+.tomato-Ingredient {
     margin-top: -2px;
     margin-bottom: -2px;
     width: 70px;
 }
 
-.top_bun-Ingredient{
+.top_bun-Ingredient {
     margin-top: 0;
     margin-bottom: -6px;
     width: 75px;
@@ -218,4 +218,16 @@
     background-color: #ffffff;
     border-radius: 5px;
     transition: opacity 1s ease-in-out;
+}
+
+.BottomButtons p {
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.ClearPlateButton p {
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 0;
 }

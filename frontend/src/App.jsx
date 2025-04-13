@@ -184,7 +184,7 @@ const App = () => {
                 <SideBuilder score={score} day={day} />
             ) : selectedRole == "drink" ? (
                 <DrinkBuilder score={score} day={day} />
-            ) : <HomePage/>}
+            ) : <HomePage />}
         </div>
     );
 };
