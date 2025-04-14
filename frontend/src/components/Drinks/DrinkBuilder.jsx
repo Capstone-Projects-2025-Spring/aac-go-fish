@@ -179,7 +179,7 @@ const DrinkBuilder = ({ score, day }) => {
                 </div>
                 <div className="ActionButtonsContainer">
                     <button className="ClearCupButton" onClick={clearCup}>
-                        <img src="/images/button_icons/undo.png" alt="Clear Cup" className="ClearCupImage" />
+                        <img src="/images/button_icons/clear_plate.png" alt="Clear Side" className="ClearSideImage" />
                         <p>Clear Cup</p>
                     </button>
                     <button

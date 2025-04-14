@@ -173,16 +173,17 @@ const SideBuilder = ({ score, day }) => {
                 <div className="RightColumn">
                     <button className="RightButtons" onClick={chopSide}
                         disabled={tableState !== "potatoes" && tableState !== "onions" && tableState !== "cheese"}>
-                        <img src="/images/station_specific/knife.png" alt="Chop Potatoes" className="ButtonImages" />
+
                         Chop
                     </button>
                     <button className="RightButtons" onClick={reset}>
+                    <img src="/images/button_icons/clear_plate.png" alt="Chop Potatoes" className="ResetImage" />
                         Reset
                     </button>
                     <button className="SendButton" onClick={handleSend}
                         disabled={tableState === "empty" || tableState === "frying"}>Send
                     </button>
-                    <button className="BottomButtons" onClick={handleRequestRepeat}>
+                    <button className="RightButtons" onClick={handleRequestRepeat}>
                         <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
                         <p>Repeat Order</p>
                     </button>
