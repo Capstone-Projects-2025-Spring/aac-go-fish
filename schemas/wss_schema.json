@@ -464,8 +464,8 @@
       "enum": [
         "manager",
         "burger",
-        "side",
-        "drink"
+        "drink",
+        "side"
       ],
       "title": "Role",
       "type": "string"
