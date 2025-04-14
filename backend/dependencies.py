@@ -3,8 +3,10 @@ import contextlib
 import itertools
 import queue
 import random
-from collections.abc import Iterable
+from collections.abc import AsyncGenerator, Iterable
 from functools import cache
+
+from fastapi import WebSocket, WebSocketDisconnect
 
 from .constants import Settings
 from .game import BURGER_INGREDIENTS, start_main_loop
@@ -66,6 +68,7 @@ class LobbyManager:
         Raises:
             LobbyNotFound: The lobby does not exist.
             LobbyFull: The lobby is full.
+            LobbyClosedError: The game has already started.
 
         Returns:
             The id of the newly created player.
@@ -137,10 +140,22 @@ class LobbyManager:
         return channel
 
 
-# Initialize the lobby manager without a code generator function
 _LobbyManager = LobbyManager(BURGER_INGREDIENTS)
 
 
 def lobby_manager() -> LobbyManager:
     """Return the lobby manager dependency."""
     return _LobbyManager
+
+
+@contextlib.asynccontextmanager
+async def connection_manager(websocket: WebSocket) -> AsyncGenerator[WebSocket, None]:
+    """Handle websocket connect/disconnect."""
+    await websocket.accept()
+
+    try:
+        yield websocket
+    except WebSocketDisconnect:
+        pass
+    except Exception:
+        await websocket.close()
