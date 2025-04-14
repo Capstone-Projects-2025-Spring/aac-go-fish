@@ -6,7 +6,7 @@ from backend.game import Message
 from backend.hello import app
 from backend.models import Burger, Order, OrderSubmission
 
-lm = LobbyManager()
+lm = LobbyManager(["Lettuce"])
 
 
 def lobby_manager_override() -> LobbyManager:
@@ -28,14 +28,14 @@ def lobby_client() -> TestClient:
 @pytest.mark.skip(reason="Test function hangs occasionally")
 def test_websocket(lobby_client: TestClient) -> None:
     """Test that websocket connection does not hang."""
-    player_1_response = lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Tomato", "Onion"]})
-    lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Tomato", "Onion"]})
+    player_1_response = lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]})
+    lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]})
 
     player_1_id = player_1_response.json()["id"]
 
     with lobby_client.websocket_connect("/ws") as websocket:
         websocket.send_text(
-            '{"data": {"type": "initializer", "code": ["Lettuce", "Tomato", "Onion"], "id": "%s"}}' % player_1_id
+            '{"data": {"type": "initializer", "code": ["Lettuce", "Lettuce", "Lettuce"], "id": "%s"}}' % player_1_id
         )
         websocket.send_text('{"data": {"type": "lobby_lifecycle", "lifecycle_type": "game_start"}}')
         msg = websocket.receive_json()["data"]
@@ -59,20 +59,20 @@ def test_websocket(lobby_client: TestClient) -> None:
 @pytest.mark.skip(reason="Test function hangs occasionally")
 def test_websocket_spam_chat(lobby_client: TestClient) -> None:
     """Test that a bunch of chat messages are received and broadcast without pausing."""
-    id = lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Tomato", "Onion"]}).json()["id"]
+    id = lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]}).json()["id"]
 
     client_2 = TestClient(app)
-    id_2 = client_2.post("/lobby/join", json={"code": ["Lettuce", "Tomato", "Onion"]}).json()["id"]
+    id_2 = client_2.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]}).json()["id"]
 
     with (
         lobby_client.websocket_connect("/ws") as websocket_1,
         client_2.websocket_connect("/ws") as websocket_2,
     ):
         websocket_1.send_text(
-            '{"data": {"type": "initializer", "code": ["Lettuce", "Tomato", "Onion"], "id": "%s"}}' % id
+            '{"data": {"type": "initializer", "code": ["Lettuce", "Lettuce", "Lettuce"], "id": "%s"}}' % id
         )
         websocket_2.send_text(
-            '{"data": {"type": "initializer", "code": ["Lettuce", "Tomato", "Onion"], "id": "%s"}}' % id_2
+            '{"data": {"type": "initializer", "code": ["Lettuce", "Lettuce", "Lettuce"], "id": "%s"}}' % id_2
         )
 
         for _ in range(10):
@@ -85,10 +85,10 @@ def test_websocket_spam_chat(lobby_client: TestClient) -> None:
 @pytest.mark.skip(reason="Test function hangs occasionally")
 def test_websocket_submit_burger_order(lobby_client: TestClient) -> None:
     """Test that we get a score after submitting an order."""
-    id = lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Tomato", "Onion"]}).json()["id"]
+    id = lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]}).json()["id"]
     with lobby_client.websocket_connect("/ws") as websocket:
         websocket.send_text(
-            '{"data": {"type": "initializer", "code": ["Lettuce", "Tomato", "Onion"], "id": "%s"}}' % id
+            '{"data": {"type": "initializer", "code": ["Lettuce", "Lettuce", "Lettuce"], "id": "%s"}}' % id
         )
         websocket.send_text('{"data": {"type": "lobby_lifecycle", "lifecycle_type": "game_start"}}')
 

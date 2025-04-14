@@ -3,11 +3,12 @@ import contextlib
 import itertools
 import queue
 import random
+from collections.abc import Iterable
 from functools import cache
 
 from .constants import Settings
 from .game import BURGER_INGREDIENTS, start_main_loop
-from .game_state import Lobby, Player, TaggedMessage
+from .game_state import Lobby, LobbyFullError, LobbyNotFoundError, Player, TaggedMessage
 from .models import Message, PlayerCount
 
 
@@ -49,9 +50,9 @@ def settings() -> Settings:
 class LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
 
-    def __init__(self) -> None:
+    def __init__(self, codes: Iterable[str]) -> None:
         self.lobbies: dict[tuple[str, ...], Lobby] = {}
-        all_codes = list(itertools.product(BURGER_INGREDIENTS, repeat=settings().code_length))
+        all_codes = list(itertools.product(codes, repeat=settings().code_length))
         random.shuffle(all_codes)
         self.available_codes = all_codes
 
@@ -59,17 +60,12 @@ class LobbyManager:
         """
         Add a player to a lobby given a lobby join code.
 
-        Creates a channel for the player to send and receive messages.
-        Creates a new player object.
-        Adds the player to the lobby if it is a valid code.
-        Broadcasts the new player count to all players currently in the lobby.
-
-
         Args:
             code: The lobby join code.
 
         Raises:
-            ValueError: The code is invalid.
+            LobbyNotFound: The lobby does not exist.
+            LobbyFull: The lobby is full.
 
         Returns:
             The id of the newly created player.
@@ -77,7 +73,10 @@ class LobbyManager:
         try:
             lobby = self.lobbies[code]
         except KeyError:
-            raise ValueError(f"Code {code} is not associated with any existing lobbies!")
+            raise LobbyNotFoundError(f"Code {code} is not associated with any existing lobbies!")
+
+        if len(lobby.players) == 4:
+            raise LobbyFullError("Lobby is full.")
 
         channel = queue.Queue()
         player = Player(channel=channel, role=None)
@@ -136,7 +135,7 @@ class LobbyManager:
 
 
 # Initialize the lobby manager without a code generator function
-_LobbyManager = LobbyManager()
+_LobbyManager = LobbyManager(BURGER_INGREDIENTS)
 
 
 def lobby_manager() -> LobbyManager:

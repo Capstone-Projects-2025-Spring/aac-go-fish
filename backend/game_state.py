@@ -70,3 +70,11 @@ class TaggedMessage:
 
     data: Initializer | GameStateUpdate | LifecycleEvent | Chat
     id: str
+
+
+class LobbyNotFoundError(ValueError):
+    """The lobby does not exist."""
+
+
+class LobbyFullError(ValueError):
+    """The lobby is full."""
