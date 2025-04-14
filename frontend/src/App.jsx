@@ -134,8 +134,8 @@ const App = () => {
         });
 
         setEmployeeBurger(null);
-        setEmployeeSide(null);
         setEmployeeDrink(null);
+        setEmployeeSide(null);
     };
 
     return (
@@ -152,12 +152,12 @@ const App = () => {
                                 />
                                 {orderVisible && (
                                     <div className="customer-mini-order-overlay">
-                                        <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
+                                        <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder} />
                                     </div>
                                 )}
                                 <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/button_icons/send_order.png" alt="send customer order" />
                                 <div className="manager-mini-order-overlay">
-                                    <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                                    <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide} />
                                 </div>
                             </div>
                         </div>

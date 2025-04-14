@@ -11,8 +11,8 @@ class Role(StrEnum):
 
     manager = auto()
     burger = auto()
-    side = auto()
     drink = auto()
+    side = auto()
 
 
 class MessageKind(StrEnum):
