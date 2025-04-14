@@ -53,29 +53,39 @@ const BurgerBuilder = ({ score, day }) => {
         });
     };
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/burger_help.mp3");
+        audio.play();
+    }
+
     return (
         <div className="BurgerBuilder">
-            <Score score={score} day={day} />
+            <div className="TopMenu">
+                <button className="HelpButton" onClick={playHelpMessage}>
+                    Help
+                </button>
+                <Score score={score} day={day}/>
+            </div>
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>
-                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage" />
+                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage"/>
                         <p>{ingredient.name}</p>
                     </button>
                 ))}
             </div>
-            <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
+            <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)}/>
             <button className="ClearPlateButton" onClick={clearPlate}>
-                <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
+                <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage"/>
                 <p>Delete Burger</p>
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
+                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage"/>
                 <p>Repeat Order</p>
             </button>
 
             <button onClick={handleSend} className="SendOrderButton">
-                <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
+                <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage"/>
             </button>
             <div className="ErrorMessage">
                 {fullMessage && <p>{fullMessage}</p>}
