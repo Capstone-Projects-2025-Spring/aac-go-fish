@@ -105,9 +105,19 @@ const DrinkBuilder = ({ score, day }) => {
         return audio;
     };
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/drink_help.mp3");
+        audio.play();
+    }
+
     return (
         <div className="DrinkBuilder">
-            <Score score={score} day={day} />
+            <div className="TopMenu">
+                <button className="HelpButton" onClick={playHelpMessage}>
+                    Help
+                </button>
+                <Score score={score} day={day}/>
+            </div>
             <div className="DrinkButtons">
                 <div className="DrinkButtonsContainer">
                     {drinkColors.map((choice, index) => (
