@@ -32,7 +32,10 @@ function HomePage() {
                 body: JSON.stringify({ code: codeArray }),
             });
 
-            if (!response.ok) throw new Error("Lobby not found");
+            if (!response.ok) {
+                if (response.status == 403) throw new Error("Lobby is full");
+                else throw new Error("Lobby not found");
+            } 
 
             const { id } = await response.json();
 
@@ -47,7 +50,7 @@ function HomePage() {
             setLobbyCode(codeArray.join('-'));
         } catch (err) {
             console.error("Join failed:", err);
-            alert("Failed to join lobby.");
+            alert(err.message);
         }
     };
 
