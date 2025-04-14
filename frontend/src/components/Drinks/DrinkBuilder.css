@@ -236,18 +236,18 @@
 }
 
 .CupContainer.small {
-    width: 150px;
-    height: 300px;
+    width: 5rem;
+    height: 1rem;
 }
 
 .CupContainer.medium {
-    width: 175px;
-    height: 350px;
+    width: 5rem;
+    height: 1rem;
 }
 
 .CupContainer.large {
-    width: 200px;
-    height: 400px;
+    width: 5rem;
+    height: 1rem;
 }
 
 .CupImages {
@@ -258,7 +258,15 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    max-width: 5rem;
+    top: 1rem;
+}
+
+.CupImages.medium {
+    width: 115%;
+}
+
+.CupImages.large {
+    width: 130%;
 }
 
 .FillOverlay {
@@ -271,8 +279,22 @@
     background-color: transparent;
     transition: height 0.3s ease-in-out;
     z-index: 5;
-    max-height: 7rem;
+}
+
+.FillOverlay.small {
+    bottom: -9rem;
     max-width: 3.3rem;
+    max-height: 6rem;
+
+}
+
+.FillOverlay.medium {
+    bottom: -10.2rem;
+    max-width: 3.8rem;
+}
+
+.FillOverlay.large {
+    bottom: -12rem;
 }
 
 .ConfirmMessage {
