@@ -138,6 +138,11 @@ const App = () => {
         setEmployeeSide(null);
     };
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/manager_help.mp3");
+        audio.play();
+    }
+
     return (
         <div className="app-container">
             {selectedRole === "manager" ? (
@@ -163,7 +168,10 @@ const App = () => {
                         </div>
                     </div>
                     <div className="right-column">
-                        <Score score={score} day={day} />
+                        <button className="HelpButton" onClick={playHelpMessage}>
+                            Help
+                        </button>
+                        <Score score={score} day={day}/>
                         <AACBoard
                             selectedItems={selectedItems}
                             onSelectItem={addSelectedItem}
@@ -179,7 +187,7 @@ const App = () => {
                     </div>
                 </>
             ) : selectedRole === "burger" ? (
-                <BurgerBuilder score={score} day={day} />
+                <BurgerBuilder score={score} day={day}/>
             ) : selectedRole === "side" ? (
                 <SideBuilder score={score} day={day} />
             ) : selectedRole == "drink" ? (
