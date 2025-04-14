@@ -51,6 +51,10 @@ paths:
                     id:
                       type: string
                       example: 3e6b52bf-23ae-4f50-ba84-ad35ed1df31b
+        '403':
+          description: Lobby is full
+        '403':
+          description: Lobby has already started
         '404':
           description: Lobby Not Found
   /ws/:
