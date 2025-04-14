@@ -10,7 +10,7 @@ export default function DrinkDisplay({ color, fillPercentage, cupSize, cupPositi
         M: "/images/drink_sizes/cup-medium.png",
         L: "/images/drink_sizes/cup-large.png",
     };
-    const maxFillHeight = cupSize === "small" ? 96 : cupSize === "medium" ? 100 : 125;
+    const maxFillHeight = cupSize === "small" ? 5.9 : cupSize === "medium" ? 6.72 : 7.8125;
     return (
         <div
             className={`CupContainer ${cupSize} ${mini ? "mini" : ""}`}
@@ -22,11 +22,12 @@ export default function DrinkDisplay({ color, fillPercentage, cupSize, cupPositi
             <div
                 className={"FillOverlay " + cupSize + "" + (mini ? "mini" : "")}
                 style={{
-                    height: `${Math.min((fillPercentage / 100) * maxFillHeight, maxFillHeight)}px`,
-                    width: "87%",
+                    height: `${Math.min((fillPercentage / 100) * maxFillHeight, maxFillHeight)}rem`,
+                    width: "4.7rem",
                     backgroundColor: color ? (typeof color === "string" && color.startsWith("#") ? color : `#${color}`) : "#FFFFFF",
-                    maxHeight: `${maxFillHeight}px`
+                    maxHeight: `${maxFillHeight}rem`
                 }}
+
             ></div>
 
             <img src={cupImages[cupSize]} alt="Cup" className={"CupImages " + cupSize + "" + (mini ? "mini" : "")} />

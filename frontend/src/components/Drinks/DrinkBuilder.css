@@ -251,7 +251,6 @@
 }
 
 .CupImages {
-    width: 100%;
     height: auto;
     position: absolute;
     bottom: 0;
@@ -261,12 +260,16 @@
     top: 1rem;
 }
 
+.CupImages.small {
+    width: 5rem;
+}
+
 .CupImages.medium {
-    width: 115%;
+    width: 6rem;
 }
 
 .CupImages.large {
-    width: 130%;
+    width: 7rem;
 }
 
 .FillOverlay {
@@ -289,12 +292,14 @@
 }
 
 .FillOverlay.medium {
-    bottom: -10.2rem;
-    max-width: 3.8rem;
+    bottom: -10.6rem;
+    max-width: 4rem;
 }
 
 .FillOverlay.large {
-    bottom: -12rem;
+    bottom: -12.6rem;
+    max-width: 5rem;
+
 }
 
 .ConfirmMessage {
