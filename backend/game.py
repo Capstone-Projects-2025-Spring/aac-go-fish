@@ -96,7 +96,9 @@ class GameLoop:
             return
 
         logger.debug("Starting game.")
+
         self.started = True
+        self.lobby.open = False
 
         self.assign_roles()
         self.lobby.broadcast(Message(data=GameStart()), exclude=[id])

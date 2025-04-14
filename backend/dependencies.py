@@ -8,7 +8,7 @@ from functools import cache
 
 from .constants import Settings
 from .game import BURGER_INGREDIENTS, start_main_loop
-from .game_state import Lobby, LobbyFullError, LobbyNotFoundError, Player, TaggedMessage
+from .game_state import Lobby, LobbyClosedError, LobbyFullError, LobbyNotFoundError, Player, TaggedMessage
 from .models import Message, PlayerCount
 
 
@@ -78,6 +78,9 @@ class LobbyManager:
         if len(lobby.players) == 4:
             raise LobbyFullError("Lobby is full.")
 
+        if not lobby.open:
+            raise LobbyClosedError("Lobby has already started.")
+
         channel = queue.Queue()
         player = Player(channel=channel, role=None)
         lobby.players[player.id] = player
@@ -126,8 +129,8 @@ class LobbyManager:
         """
         lobby = self.lobbies[code]
 
-        if not lobby.started:
-            lobby.started = True
+        if not lobby.loop_started:
+            lobby.loop_started = True
             start_main_loop(lobby)
 
         channel = Channel(lobby.channel, lobby.players[id].channel)

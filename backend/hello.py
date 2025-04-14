@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from uvicorn.protocols.utils import get_path_with_query_string
 
 from .dependencies import Channel, LobbyManager, lobby_manager, settings
-from .game_state import LobbyFullError, LobbyNotFoundError, TaggedMessage
+from .game_state import LobbyClosedError, LobbyFullError, LobbyNotFoundError, TaggedMessage
 from .logging_config import setup_logging
 from .models import Annotated, Initializer, LobbyJoinRequest, Message
 
@@ -113,6 +113,8 @@ def join_lobby(req: LobbyJoinRequest, lm: Annotated[LobbyManager, Depends(lobby_
         raise HTTPException(status_code=403, detail="Lobby is full")
     except LobbyNotFoundError:
         raise HTTPException(status_code=404, detail="Lobby not found")
+    except LobbyClosedError:
+        raise HTTPException(status_code=403, detail="Lobby has already started")
 
     return {"id": id}
 
