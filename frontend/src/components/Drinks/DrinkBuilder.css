@@ -302,3 +302,8 @@
     border-radius: 6px;
     padding: .5rem;
 }
+
+.ClearSideImage {
+    height: 6rem;
+    width: 6rem;
+}
