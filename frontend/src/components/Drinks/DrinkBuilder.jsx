@@ -18,7 +18,7 @@ const DrinkBuilder = ({ score, day }) => {
     const drinkColors = [
         { name: "Blue", color: "#34C6F4" },
         { name: "Green", color: "#99CA3C" },
-        { name: "Yellow", color: "#F7EC13" },
+        { name: "Yellow", color: "#e2d700" },
         { name: "Red", color: "#FF0000" },
         { name: "Orange", color: "#F5841F" },
         { name: "Purple", color: "#7E69AF" },
@@ -105,6 +105,14 @@ const DrinkBuilder = ({ score, day }) => {
         return audio;
     };
 
+    const handleRequestRepeat = () => {
+        console.log("Employee requests manager to repeat order...");
+        const audio = new Audio("/audio/repeat_order.mp3");
+        audio.play().catch((err) => {
+            console.error("Audio playback failed:", err);
+        });
+    };
+
     return (
         <div className="DrinkBuilder">
             <Score score={score} day={day} />
@@ -121,7 +129,7 @@ const DrinkBuilder = ({ score, day }) => {
                                     backgroundColor: choice.color,
                                     color: "#FFFFFF",
                                     border: color === choice.color ? "3px solid black" : "none",
-                                    WebkitTextStroke: "1px black",
+                                    WebkitTextStroke: "",
                                 }}
                                 disabled={fillPercentage > 0}
                             >
@@ -171,7 +179,8 @@ const DrinkBuilder = ({ score, day }) => {
                 </div>
                 <div className="ActionButtonsContainer">
                     <button className="ClearCupButton" onClick={clearCup}>
-                        <img src="/images/button_icons/undo.png" alt="Clear Cup" className="ClearCupImage" />
+                        <img src="/images/button_icons/clear_plate.png" alt="Clear Side" className="ClearSideImage" />
+                        <p>Clear Cup</p>
                     </button>
                     <button
                         className="FillCupButton"
@@ -182,8 +191,14 @@ const DrinkBuilder = ({ score, day }) => {
                         title="Press and hold to fill"
                     >
                         <img src="/images/button_icons/pouring.png" alt="Fill Cup" className="FillCupImage" />
+                        <p>Fill Cup</p>
+
                     </button>
                     <button className="SendButton" onClick={handleSend}>Send</button>
+                    <button className="BottomButtons" onClick={handleRequestRepeat}>
+                        <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
+                        <p>Repeat Order</p>
+                    </button>
                 </div>
             </div>
         </div>

@@ -11,13 +11,13 @@ from backend.models import Burger, Drink, Order, Side
         pytest.param(
             Order(burger=Burger(ingredients=["a", "b"]), side=None, drink=None),
             Order(burger=Burger(ingredients=["a", "b"]), side=None, drink=None),
-            5,
+            500,
             id="correct burger only",
         ),
         pytest.param(
             Order(burger=Burger(ingredients=["a", "b"]), side=Side(table_state="fries"), drink=None),
             Order(burger=Burger(ingredients=["a", "b"]), side=Side(table_state="fries"), drink=None),
-            8,
+            800,
             id="correct burger and side",
         ),
         pytest.param(
@@ -31,7 +31,7 @@ from backend.models import Burger, Drink, Order, Side
                 side=Side(table_state="fries"),
                 drink=Drink(color="blue", size="M", fill=100),
             ),
-            11.5,
+            1200,
             id="correct burger, side, and drink",
         ),
         pytest.param(
@@ -45,7 +45,7 @@ from backend.models import Burger, Drink, Order, Side
                 side=None,
                 drink=None,
             ),
-            3,
+            300,
             id="incorrect burger",
         ),
         pytest.param(
@@ -59,7 +59,7 @@ from backend.models import Burger, Drink, Order, Side
                 side=None,
                 drink=None,
             ),
-            3,
+            300,
             id="missing burger",
         ),
         pytest.param(
@@ -73,7 +73,7 @@ from backend.models import Burger, Drink, Order, Side
                 side=None,
                 drink=None,
             ),
-            6,
+            600,
             id="correct burger and missing side",
         ),
     ],
@@ -92,23 +92,19 @@ def test_grade_order(correct_order: Order, inp_order: Order, exp: float) -> None
     ["correct_color", "inp_color", "color_score"],
     [
         ["blue", "orange", 0],
-        ["blue", "blue", 0.5],
+        ["blue", "blue", 50],
     ],
 )
 @pytest.mark.parametrize(
     ["correct_size", "inp_size", "size_score"],
     [
         ["M", "L", 0],
-        ["M", "M", 0.5],
+        ["M", "M", 50],
     ],
 )
 @pytest.mark.parametrize(
     "inp_fill",
-    [
-        100,
-        75,
-        80,
-    ],
+    range(100 + 1),
 )
 def test_grade_order_drink(
     correct_color: str,
@@ -132,8 +128,8 @@ def test_grade_order_drink(
         side=Side(table_state="fries"),
         drink=Drink(color=inp_color, size=inp_size, fill=inp_fill),
     )
-    fill_mult = (1 - abs(1 - inp_fill / 100)) ** 0.5
+    fill_score = int((1 - abs(1 - inp_fill / 100)) ** 0.5 * 100)
 
     out = game_loop.grade_order(inp_order)
 
-    assert round(10 + color_score + size_score + 0.5 * fill_mult, 2) == out
+    assert 1000 + color_score + size_score + fill_score == out

@@ -11,8 +11,8 @@ class Role(StrEnum):
 
     manager = auto()
     burger = auto()
-    side = auto()
     drink = auto()
+    side = auto()
 
 
 class MessageKind(StrEnum):
@@ -87,7 +87,7 @@ class OrderScore(BaseModel):
     type: Literal[MessageKind.game_state] = MessageKind.game_state
     game_state_update_type: Literal[GameStateUpdateKind.order_score] = GameStateUpdateKind.order_score
 
-    score: float
+    score: int
 
 
 class OrderComponent(BaseModel):

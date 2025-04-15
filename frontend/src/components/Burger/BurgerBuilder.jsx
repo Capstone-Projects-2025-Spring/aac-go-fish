@@ -9,6 +9,7 @@ import Score from "../Score/Score";
 const BurgerBuilder = ({ score, day }) => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);
+    const [fullMessage, setFullMessage] = useState("");
 
     const foodItems = menu[0].children;
 
@@ -33,9 +34,10 @@ const BurgerBuilder = ({ score, day }) => {
     const addIngredient = (ingredient) => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
+            setFullMessage("");
         }
         else {
-            alert("Plate is full!");
+            setFullMessage("Plate is Full!");
         }
 
     };
@@ -51,7 +53,6 @@ const BurgerBuilder = ({ score, day }) => {
         });
     };
 
-
     return (
         <div className="BurgerBuilder">
             <Score score={score} day={day} />
@@ -66,13 +67,19 @@ const BurgerBuilder = ({ score, day }) => {
             <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
             <button className="ClearPlateButton" onClick={clearPlate}>
                 <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
+                <p>Delete Burger</p>
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="/images/button_icons/repeat_order.png" alt="Request Repeat" className="RepeatOrderImage" />
+                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
+                <p>Repeat Order</p>
             </button>
+
             <button onClick={handleSend} className="SendOrderButton">
                 <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
+            <div className="ErrorMessage">
+                {fullMessage && <p>{fullMessage}</p>}
+            </div>
         </div>
     );
 };

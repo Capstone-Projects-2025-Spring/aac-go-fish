@@ -59,9 +59,7 @@ const App = () => {
 
                         break;
                     case "day_end":
-                        const day = data.day ?? 0;
-
-                        setDay(day);
+                        setDay(data.day ?? 0);
                         break;
                     case "order_component":
                         switch (data.component_type) {
@@ -79,19 +77,11 @@ const App = () => {
                                 break;
                         }
                         break;
-                    case "order_score" :
-                        const tempScore = data.score ?? 0;
-                        setScore(tempScore);
-                        break;
-                    case "day_end":
-                        const tempDay = data.day ?? 0;
-                        setDay(tempDay);
-                        break;
                     case "role_assignment":
                         setSelectedRole(data.role);
                         break;
                     case "order_score":
-                        setScore(data.score);
+                        setScore(data.score ?? 0);
                         break;
                     default:
                         console.log("Unknown game state update type", data.game_state_update_type);
@@ -141,8 +131,8 @@ const App = () => {
         });
 
         setEmployeeBurger(null);
-        setEmployeeSide(null);
         setEmployeeDrink(null);
+        setEmployeeSide(null);
     };
 
     return (
@@ -159,12 +149,12 @@ const App = () => {
                                 />
                                 {orderVisible && (
                                     <div className="customer-mini-order-overlay">
-                                        <MiniOrderDisplay burger={burgerOrder} side={sideOrder} drink={drinkOrder} />
+                                        <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder} />
                                     </div>
                                 )}
                                 <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/button_icons/send_order.png" alt="send customer order" />
                                 <div className="manager-mini-order-overlay">
-                                    <MiniOrderDisplay burger={employeeBurger} side={employeeSide} drink={employeeDrink} />
+                                    <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide} />
                                 </div>
                             </div>
                         </div>
@@ -191,7 +181,7 @@ const App = () => {
                 <SideBuilder score={score} day={day} />
             ) : selectedRole == "drink" ? (
                 <DrinkBuilder score={score} day={day} />
-            ) : <HomePage/>}
+            ) : <HomePage />}
         </div>
     );
 };

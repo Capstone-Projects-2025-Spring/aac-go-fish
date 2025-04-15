@@ -59,6 +59,8 @@ class GameLoop:
         self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
         self.order: Order
 
+        self.started = False
+
     def run(self) -> None:
         """
         Main game loop.
@@ -96,7 +98,13 @@ class GameLoop:
         Args:
             id: The id of the player that started the game.
         """
+        if self.started:
+            return
+
         logger.debug("Starting game.")
+
+        self.started = True
+        self.lobby.open = False
 
         self.assign_roles()
         self.lobby.broadcast(Message(data=GameStart()), exclude=[id])
@@ -129,43 +137,43 @@ class GameLoop:
         self.assign_roles()
         self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
-    def grade_order(self, order: Order) -> float:
+    def grade_order(self, order: Order) -> int:
         """
         Grade order based on correctness.
 
         See capstone-projects-2025-spring.github.io/aac-go-fish/docs/requirements/features-and-requirements#scoring
         """
         # Burgers are graded based on edit distance to the correct burger for up to 2 extra dollars + 3 base dollars
-        burger_score = 3
+        burger_score = 300
         if order.burger is not None:
             # this is never None, but the type checker doesn't know that
             assert self.order.burger is not None
 
             similarity = difflib.SequenceMatcher(None, order.burger.ingredients, self.order.burger.ingredients).ratio()
-            burger_score += 2 * similarity
+            burger_score += int(200 * round(similarity, 2))
 
         # Sides are graded based on completeness.
         # Up to 2 extra dollars + 1 base dollar
         side_score = 0
         if self.order.side is not None:
-            side_score += 1
+            side_score += 100
 
             if self.order.side == order.side:
-                side_score += 2
+                side_score += 200
 
         # Drink attributes are equally weighted, with the fill percentage being
         # graded on the square root of the error from the correct fill
         # percentage. up to 2 bonus dollars + 2 base dollars
         drink_score = 0
         if not (self.order.drink is None or order.drink is None):
-            drink_score += 2
+            drink_score += 200
 
-            score_per_attribute = 0.5
             correct = (self.order.drink.size == order.drink.size) + (self.order.drink.color == order.drink.color)
-            drink_score += score_per_attribute * correct
-            drink_score += math.sqrt(1 - abs(1 - order.drink.fill / 100)) * score_per_attribute
+            drink_score += 50 * correct
 
-        return round(burger_score + side_score + drink_score, 2)
+            drink_score += int(math.sqrt(1 - abs(1 - order.drink.fill / 100)) * 100)
+
+        return burger_score + side_score + drink_score
 
     def typing_indicator(self, msg: TaggedMessage) -> None:
         """Send an indicator that the manager is typing."""

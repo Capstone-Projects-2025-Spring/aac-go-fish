@@ -7,7 +7,7 @@ import { menuMap } from "../../menuItems";
 import "./MiniOrderDisplay.css";
 
 
-export default function MiniOrderDisplay({ burger, side, drink }) {
+export default function MiniOrderDisplay({ burger, drink, side}) {
     const isBurger = burger && burger.length > 0;
     const isSide = !!side;
     const isDrink = drink !== null;
