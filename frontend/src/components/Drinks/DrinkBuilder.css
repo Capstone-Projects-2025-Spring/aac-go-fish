@@ -254,10 +254,11 @@
     height: auto;
     position: absolute;
     bottom: 0;
-    left: 50%;
+    left: 2.5rem;
     transform: translateX(-50%);
     z-index: 10;
     top: 1rem;
+    max-width: 7rem;
 }
 
 .CupImages.small {
@@ -285,10 +286,19 @@
 }
 
 .FillOverlay.small {
-    bottom: -9rem;
-    max-width: 3.3rem;
-    max-height: 6rem;
+    height: 7.5rem !important;
+    width: 4.1rem !important;
+    max-height: 8rem !important;
+    left: 2.3rem !important;
 
+}
+
+.FillOverlay.smallmini {
+    height: 5.9rem !important;
+    width: 3.3rem !important;
+    max-height: 8rem !important;
+    left: 2.4rem !important;
+    bottom: -9rem !important;
 }
 
 .FillOverlay.medium {
@@ -296,10 +306,26 @@
     max-width: 4rem;
 }
 
+.FillOverlay.mediummini {
+    height: 7.3rem !important;
+    width: 4.1rem !important;
+    max-height: 8rem !important;
+    left: 2.3rem !important;
+    bottom: -.8rem !important;
+}
+
 .FillOverlay.large {
     bottom: -12.6rem;
     max-width: 5rem;
 
+}
+
+.FillOverlay.largemini {
+    height: 7.5rem !important;
+    width: 4.5rem !important;
+    max-height: 7.5rem !important;
+    left: 2.3rem !important;
+    bottom: -.8rem !important;
 }
 
 .ConfirmMessage {
@@ -328,4 +354,19 @@
     border: 1px solid #322e2e;
     border-radius: 6px;
     padding: .5rem;
+}
+
+.CupImages.Lmini {
+    left: 10rem;
+
+}
+
+.CupImages.Mmini {
+    left: 10rem;
+
+}
+
+.CupImages.Smini {
+    left: 10rem;
+
 }
