@@ -34,7 +34,7 @@ BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard
 DRINK_COLORS = [
     ["Blue", "#34C6F4"],
     ["Green", "#99CA3C"],
-    ["Yellow", "#F7EC13"],
+    ["Yellow", "#e2d700"],
     ["Red", "#FF0000"],
     ["Orange", "#F5841F"],
     ["Purple", "#7E69AF"],
