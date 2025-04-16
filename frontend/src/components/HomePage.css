@@ -105,3 +105,11 @@ button:focus {
     outline: 3px solid #ff7043;
     outline-offset: 2px;
 }
+
+.ErrorMessage {
+    text-align: center;
+    font-family: "Comic Sans MS";
+    font-size: 32px;
+    color: #ff0000;
+    transition: opacity 1s ease-in-out;
+}

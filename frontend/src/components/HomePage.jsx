@@ -7,6 +7,7 @@ import IngredientScrollPicker from "./IngredientScrollPicker/IngredientScrollPic
 function HomePage() {
 
     const [lobbyCode, setLobbyCode] = useState(null);
+    const [errorMsg, setErrorMsg] = useState("");
     const [ingredient1, setIngredient1] = useState('Bottom Bun');
     const [ingredient2, setIngredient2] = useState('Bottom Bun');
     const [ingredient3, setIngredient3] = useState('Bottom Bun');
@@ -35,7 +36,7 @@ function HomePage() {
             if (!response.ok) {
                 if (response.status == 403) throw new Error("Lobby is full");
                 else throw new Error("Lobby not found");
-            } 
+            }
 
             const { id } = await response.json();
 
@@ -50,7 +51,10 @@ function HomePage() {
             setLobbyCode(codeArray.join('-'));
         } catch (err) {
             console.error("Join failed:", err);
-            alert(err.message);
+            setErrorMsg(err.message);
+            setTimeout(() => {
+                setErrorMsg("");
+            }, 3000);
         }
     };
 
@@ -88,6 +92,7 @@ function HomePage() {
                 <h1 className="lobby-title">Order Up!</h1>
                 <div className="lobby-subtitle">A Collaborative Cooking Experience</div>
             </div>
+            <div className="ErrorMessage">{errorMsg && <p>{errorMsg}</p>}</div>
 
             {!lobbyCode && (
                 <>
