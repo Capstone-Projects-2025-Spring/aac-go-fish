@@ -293,11 +293,11 @@
 }
 
 .FillOverlay.smallmini {
-    height: 5.9rem !important;
-    width: 3.3rem !important;
+    height: 8rem !important;
+    width: 4.5rem !important;
     max-height: 8rem !important;
     left: 2.4rem !important;
-    bottom: -9rem !important;
+    bottom: -1rem !important;
 }
 
 .FillOverlay.medium {
@@ -370,4 +370,24 @@
 .ClearSideImage {
     height: 6rem;
     width: 6rem;
+}
+
+img.CupImages.mediummini {
+    top: -11.5rem;
+}
+
+img.CupImages.largemini {
+    top: -11.5rem;
+
+}
+
+img.CupImages.smallmini {
+    top: -11.5rem;
+
+}
+
+.CupImages.Lmini,
+.CupImages.Mmini,
+.CupImages.Smini {
+    left: 40rem;
 }

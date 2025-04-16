@@ -1,4 +1,4 @@
-.mini-order-display {
+/* .mini-order-display {
     position: fixed;
     bottom: 30rem;
     right: 40rem;
@@ -45,6 +45,33 @@
         height: 100px;
 
     }
+} */
+.mini-order-display {
+    position: absolute;
+    bottom: 15rem;
+    right: -5rem;
+    z-index: 2001;
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    transform: scale(0.7);
+}
+
+.mini-order-display .burger,
+.mini-order-display .drink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mini-order-display .drink .CupContainer {
+    height: auto;
+    width: auto;
+}
+
+.mini-order-display .drink .FillOverlay {
+    bottom: auto;
+    position: absolute;
 }
 
 .relative-container {
