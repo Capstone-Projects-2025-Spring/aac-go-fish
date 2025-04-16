@@ -34,8 +34,8 @@ function HomePage() {
             });
 
             if (!response.ok) {
-                if (response.status == 403) throw new Error("Lobby is full");
-                else throw new Error("Lobby not found");
+                const body =  await response.json();
+                throw new Error(body.detail);
             }
 
             const { id } = await response.json();
