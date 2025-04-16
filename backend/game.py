@@ -215,9 +215,9 @@ def _generate_order(num_players: int) -> Order:
     )
 
     if num_players >= 3:
-        order.side = Side(table_state=random.choice(SIDE_TYPES))
+        order.drink = Drink(color=random.choice(DRINK_COLORS)[1], fill=100, size=random.choice(DRINK_SIZES))
 
     if num_players >= 4:
-        order.drink = Drink(color=random.choice(DRINK_COLORS)[1], fill=100, size=random.choice(DRINK_SIZES))
+        order.side = Side(table_state=random.choice(SIDE_TYPES))
 
     return order
