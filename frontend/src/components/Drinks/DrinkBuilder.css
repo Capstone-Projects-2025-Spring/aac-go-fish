@@ -286,10 +286,12 @@
 }
 
 .FillOverlay.small {
-    height: 7.5rem !important;
-    width: 4.1rem !important;
+    height: 6rem !important;
+    width: 3.3rem !important;
     max-height: 8rem !important;
-    left: 2.3rem !important;
+    left: 2.4rem !important;
+    bottom: -9rem !important;
+
 
 }
 
@@ -358,15 +360,17 @@
 
 .CupImages.Lmini {
     left: 10rem;
-
 }
 
 .CupImages.Mmini {
     left: 10rem;
-
 }
 
 .CupImages.Smini {
     left: 10rem;
+}
 
+.ClearSideImage {
+    height: 6rem;
+    width: 6rem;
 }

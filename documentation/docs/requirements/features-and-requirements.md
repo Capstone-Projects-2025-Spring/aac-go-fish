@@ -26,7 +26,7 @@ sidebar_position: 4
 - The system must designate one of up to four roles for each player, with the manager role being mandatory.
 - The system must assign remaining players to one of the three cooking roles, scaled to the number of players:
   - If there are 2 players, the cook must be assigned to making the burger.
-  - If there are 3 players, two cooks must be randomly assigned to making the burger and sides.
+  - If there are 3 players, two cooks must be randomly assigned to making the burger and drinks.
   - If there are 4 players, the three cooks must be randomly assigned to all stations.
 - The system must allow players to start the game.
 
@@ -81,12 +81,12 @@ sidebar_position: 4
 
 - **Base Pricing for Each Item:**
   - Burger: **$3**
-  - Side: **$1**
   - Drink: **$2**
+  - Side: **$1**
 - **Bonus Score for Correctness**
   - Burger: Up to **$2** depending on the similarity between the submitted burger and the ordered burger.
-  - Side: **$2**.
   - Drink: Up to **$2** depending on the similarity between the submitted drink and the ordered drink.
+  - Side: **$2**.
 - **Tip Bonus:**
   - 0% to 25% based on completion speed.
 - **Customer Patience Indicator:**  

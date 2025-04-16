@@ -16,17 +16,19 @@ class Lobby:
 
     Attributes:
         id: The lobby's internal ID
-        players: Map of player id to Players.
-        channel: Message queue for incoming messages.
+        players: Map of player id to Players
+        channel: Message queue for incoming messages
         code: The code used to join the lobby
-        started: Whether the game has started
+        loop_started: Whether the game loop has started
+        open: Whether new players can still join
     """
 
     code: tuple[str, ...]
     players: dict[str, Player] = dataclasses.field(default_factory=dict)
     channel: queue.Queue[TaggedMessage] = dataclasses.field(default_factory=queue.Queue)
     id: str = dataclasses.field(init=False, default_factory=lambda: uuid4().hex)
-    started: bool = False
+    loop_started: bool = False
+    open: bool = True
 
     def broadcast(self, msg: Message, *, exclude: Iterable[str] = ()) -> None:
         """Send a message to all players except those in exclude."""
@@ -70,3 +72,15 @@ class TaggedMessage:
 
     data: Initializer | GameStateUpdate | LifecycleEvent | Chat
     id: str
+
+
+class LobbyNotFoundError(ValueError):
+    """The lobby does not exist."""
+
+
+class LobbyFullError(ValueError):
+    """The lobby is full."""
+
+
+class LobbyClosedError(ValueError):
+    """The lobby is not open."""

@@ -89,8 +89,8 @@
 
 .LeftButtons,
 .RightButtons {
-    min-width: 120px;
-    min-height: 120px;
+    width: 10rem;
+    height: 10rem;
     margin: 10px;
     padding: 0;
     border: 1px solid #322e2e;
@@ -219,4 +219,9 @@
     border-radius: 5px;
     opacity: 0.9;
     transition: opacity 1s ease-in-out;
+}
+
+.ResetImage{
+    height: 7rem;
+    width: 7rem;
 }
