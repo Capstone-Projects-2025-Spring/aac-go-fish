@@ -286,12 +286,9 @@
 }
 
 .FillOverlay.small {
-    height: 6rem !important;
-    width: 3.3rem !important;
-    max-height: 8rem !important;
-    left: 2.4rem !important;
-    bottom: -9rem !important;
 
+    bottom: -9rem;
+    max-width: 3.3rem;
 
 }
 
