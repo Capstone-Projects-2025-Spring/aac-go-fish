@@ -28,7 +28,7 @@ function HomePage() {
 
     const handleJoin = async (codeArray) => {
         try {
-            const response = await fetch(`${API_BASE}/lobby/join`, {
+            const response = await fetch(`/api/lobby/join`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ code: codeArray }),
@@ -64,7 +64,7 @@ function HomePage() {
 
     const createLobby = async () => {
         try {
-            const response = await fetch(`${API_BASE}/lobby`, {
+            const response = await fetch(`/api/lobby`, {
                 method: "POST",
             });
 
