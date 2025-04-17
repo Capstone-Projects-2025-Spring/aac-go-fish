@@ -10,7 +10,7 @@ services:
       ENV: prod
       LOG_LEVEL: WARNING
       FRONTEND_URL: "https://bankruptcyassociation.com"
-        
+
   frontend:
     image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-frontend:main
     tty: true
