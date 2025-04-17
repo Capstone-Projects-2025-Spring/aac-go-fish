@@ -306,11 +306,11 @@
 }
 
 .FillOverlay.mediummini {
-    height: 7.3rem !important;
-    width: 4.1rem !important;
+    height: 8rem !important;
+    width: 4.5rem !important;
     max-height: 8rem !important;
     left: 2.3rem !important;
-    bottom: -.8rem !important;
+    bottom: -1rem !important;
 }
 
 .FillOverlay.large {
@@ -320,11 +320,11 @@
 }
 
 .FillOverlay.largemini {
-    height: 7.5rem !important;
-    width: 4.5rem !important;
-    max-height: 7.5rem !important;
+    height: 8rem !important;
+    width: 4.7rem !important;
+    max-height: 8rem !important;
     left: 2.3rem !important;
-    bottom: -.8rem !important;
+    bottom: -1rem !important;
 }
 
 .ConfirmMessage {
