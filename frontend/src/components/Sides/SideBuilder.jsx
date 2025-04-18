@@ -14,9 +14,9 @@ const SideBuilder = ({ score, day }) => {
     const { send } = useContext(WebSocketContext);
 
     const sideTypes = [
-        {type: "potatoes", initialState: "potatoes", choppedState: "choppedPotatoes", finalState: "fries"},
-        {type: "onions", initialState: "onions", choppedState: "choppedOnions", finalState: "onionRings"},
-        {type: "cheese", initialState: "cheese", choppedState: "choppedCheese", finalState: "mozzarellaSticks"},
+        { type: "potatoes", initialState: "potatoes", choppedState: "choppedPotatoes", finalState: "fries" },
+        { type: "onions", initialState: "onions", choppedState: "choppedOnions", finalState: "onionRings" },
+        { type: "cheese", initialState: "cheese", choppedState: "choppedCheese", finalState: "mozzarellaSticks" },
     ];
 
     const handleSend = () => {
@@ -122,7 +122,7 @@ const SideBuilder = ({ score, day }) => {
         if (sideType === "onionRings") {
             return <img src="/images/food_side_view/onion_side.png" alt="Chopped Onions" className="ChoppedOverlay" />;
         }
-        if (sideType === "mozzarellaSticks"){
+        if (sideType === "mozzarellaSticks") {
             return <img src="/images/food_side_view/cheese_side.png" alt="Chopped Cheese" className="ChoppedOverlay" />;
         }
         return null;
@@ -137,6 +137,14 @@ const SideBuilder = ({ score, day }) => {
         const audio = new Audio("/audio/chopping.mp3");
         audio.play();
     }
+
+    const handleRequestRepeat = () => {
+        console.log("Employee requests manager to repeat order...");
+        const audio = new Audio("/audio/repeat_order.mp3");
+        audio.play().catch((err) => {
+            console.error("Audio playback failed:", err);
+        });
+    };
 
     const playHelpMessage = () => {
         const audio = new Audio("/audio/side_help.mp3");
@@ -164,8 +172,8 @@ const SideBuilder = ({ score, day }) => {
                         Onion
                     </button>
                     <button className="LeftButtons" onClick={() => placeSide("cheese")}
-                            disabled={tableState !== "empty"}>
-                        <img src="/images/aac_icons/cheese.png" alt="Place Cheese" className="ButtonImages"/>
+                        disabled={tableState !== "empty"}>
+                        <img src="/images/aac_icons/cheese.png" alt="Place Cheese" className="ButtonImages" />
                         Cheese
                     </button>
                 </div>
@@ -175,14 +183,19 @@ const SideBuilder = ({ score, day }) => {
                 <div className="RightColumn">
                     <button className="RightButtons" onClick={chopSide}
                         disabled={tableState !== "potatoes" && tableState !== "onions" && tableState !== "cheese"}>
-                        <img src="/images/station_specific/knife.png" alt="Chop Potatoes" className="ButtonImages" />
+                        <img src="/images/station_specific/knife.png" alt="" className='ButtonImages' />
                         Chop
                     </button>
                     <button className="RightButtons" onClick={reset}>
+                        <img src="/images/button_icons/clear_plate.png" alt="Chop Potatoes" className="ResetImage" />
                         Reset
                     </button>
                     <button className="SendButton" onClick={handleSend}
                         disabled={tableState === "empty" || tableState === "frying"}>Send
+                    </button>
+                    <button className="RightButtons" onClick={handleRequestRepeat}>
+                        <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
+                        <p>Repeat Order</p>
                     </button>
                 </div>
             </div>

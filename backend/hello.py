@@ -8,10 +8,11 @@ import structlog
 from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import ValidationError
 from uvicorn.protocols.utils import get_path_with_query_string
 
-from .dependencies import Channel, LobbyManager, lobby_manager, settings
-from .game_state import TaggedMessage
+from .dependencies import Channel, LobbyManager, connection_manager, lobby_manager, settings
+from .game_state import LobbyClosedError, LobbyFullError, LobbyNotFoundError, TaggedMessage
 from .logging_config import setup_logging
 from .models import Annotated, Initializer, LobbyJoinRequest, Message
 
@@ -109,8 +110,12 @@ def join_lobby(req: LobbyJoinRequest, lm: Annotated[LobbyManager, Depends(lobby_
     """Joins a player to a lobby using a list of ingredients as the code."""
     try:
         id = lm.register_player(req.code)
-    except ValueError:
+    except LobbyFullError:
+        raise HTTPException(status_code=403, detail="Lobby is full")
+    except LobbyNotFoundError:
         raise HTTPException(status_code=404, detail="Lobby not found")
+    except LobbyClosedError:
+        raise HTTPException(status_code=403, detail="Lobby has already started")
 
     return {"id": id}
 
@@ -124,28 +129,34 @@ async def read_root() -> dict:
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> None:
     """Handles a WebSocket connection for receiving and responding to messages."""
-    await websocket.accept()
-
-    init = Message.model_validate(await websocket.receive_json())
-
-    match init:
-        case Message(data=Initializer(code=code, id=id)):
-            channel = lm.channel(code, id)
-            logger.info("WebSocket connection initialized.", player=id)
-        case _:
-            logger.info("WebSocket connection failed to initialize.", message=init)
-            await websocket.close()
+    async with connection_manager(websocket):
+        try:
+            init = Message.model_validate(await websocket.receive_json())
+        except ValidationError:
+            logger.debug("Received invalid websocket message.")
             return
 
-    await asyncio.gather(_recv_handler(id, websocket, channel), _send_handler(id, websocket, channel))
-    await websocket.close()
+        match init:
+            case Message(data=Initializer(code=code, id=id)):
+                channel = lm.channel(code, id)
+                logger.info("WebSocket connection initialized.", player=id)
+            case _:
+                logger.info("WebSocket connection failed to initialize.", message=init)
+                return
+
+        await asyncio.gather(_recv_handler(id, websocket, channel), _send_handler(id, websocket, channel))
 
 
 async def _recv_handler(id: str, websocket: WebSocket, channel: Channel[TaggedMessage, Message]) -> typing.Never:
     while True:
-        data = Message.model_validate_json(await websocket.receive_text())
-        logger.debug("Received WebSocket message.", message=data, player=id)
-        channel.send(TaggedMessage(data=data.data, id=id))
+        raw = await websocket.receive_text()
+        try:
+            data = Message.model_validate_json(raw)
+        except ValidationError:
+            logger.warning("Received invalid websocket message.", data=raw)
+        else:
+            logger.debug("Received WebSocket message.", message=data, player=id)
+            channel.send(TaggedMessage(data=data.data, id=id))
 
 
 async def _send_handler(id: str, websocket: WebSocket, channel: Channel[TaggedMessage, Message]) -> typing.Never:

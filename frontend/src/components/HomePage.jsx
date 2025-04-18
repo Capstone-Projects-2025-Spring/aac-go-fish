@@ -5,8 +5,11 @@ import { WebSocketContext } from '../WebSocketContext';
 import IngredientScrollPicker from "./IngredientScrollPicker/IngredientScrollPicker";
 
 function HomePage() {
-
+    const API_PROTOCOL = window.location.protocol === "https:" ? "https://" : "http://";
+    const API_HOST = process.env.REACT_APP_BACKEND_DOMAIN;
+    const API_BASE = `${API_PROTOCOL}${API_HOST}`;
     const [lobbyCode, setLobbyCode] = useState(null);
+    const [errorMsg, setErrorMsg] = useState("");
     const [ingredient1, setIngredient1] = useState('Bottom Bun');
     const [ingredient2, setIngredient2] = useState('Bottom Bun');
     const [ingredient3, setIngredient3] = useState('Bottom Bun');
@@ -26,13 +29,16 @@ function HomePage() {
 
     const handleJoin = async (codeArray) => {
         try {
-            const response = await fetch(`http://${process.env.REACT_APP_BACKEND_DOMAIN}/lobby/join`, {
+            const response = await fetch(`/api/lobby/join`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ code: codeArray }),
             });
 
-            if (!response.ok) throw new Error("Lobby not found");
+            if (!response.ok) {
+                const body =  await response.json();
+                throw new Error(body.detail);
+            }
 
             const { id } = await response.json();
 
@@ -47,7 +53,10 @@ function HomePage() {
             setLobbyCode(codeArray.join('-'));
         } catch (err) {
             console.error("Join failed:", err);
-            alert("Failed to join lobby.");
+            setErrorMsg(err.message);
+            setTimeout(() => {
+                setErrorMsg("");
+            }, 3000);
         }
     };
 
@@ -62,7 +71,7 @@ function HomePage() {
 
     const createLobby = async () => {
         try {
-            const response = await fetch(`http://${process.env.REACT_APP_BACKEND_DOMAIN}/lobby`, {
+            const response = await fetch(`/api/lobby`, {
                 method: "POST",
             });
 
@@ -85,6 +94,7 @@ function HomePage() {
                 <h1 className="lobby-title">Order Up!</h1>
                 <div className="lobby-subtitle">A Collaborative Cooking Experience</div>
             </div>
+            <div className="ErrorMessage">{errorMsg && <p>{errorMsg}</p>}</div>
 
             {!lobbyCode && (
                 <>

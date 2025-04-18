@@ -3,11 +3,14 @@ import contextlib
 import itertools
 import queue
 import random
+from collections.abc import AsyncGenerator, Iterable
 from functools import cache
+
+from fastapi import WebSocket, WebSocketDisconnect
 
 from .constants import Settings
 from .game import BURGER_INGREDIENTS, start_main_loop
-from .game_state import Lobby, Player, TaggedMessage
+from .game_state import Lobby, LobbyClosedError, LobbyFullError, LobbyNotFoundError, Player, TaggedMessage
 from .models import Message, PlayerCount
 
 
@@ -49,9 +52,9 @@ def settings() -> Settings:
 class LobbyManager:
     """Handle creation of lobbies and adding players to lobbies."""
 
-    def __init__(self) -> None:
+    def __init__(self, codes: Iterable[str]) -> None:
         self.lobbies: dict[tuple[str, ...], Lobby] = {}
-        all_codes = list(itertools.product(BURGER_INGREDIENTS, repeat=settings().code_length))
+        all_codes = list(itertools.product(codes, repeat=settings().code_length))
         random.shuffle(all_codes)
         self.available_codes = all_codes
 
@@ -59,17 +62,13 @@ class LobbyManager:
         """
         Add a player to a lobby given a lobby join code.
 
-        Creates a channel for the player to send and receive messages.
-        Creates a new player object.
-        Adds the player to the lobby if it is a valid code.
-        Broadcasts the new player count to all players currently in the lobby.
-
-
         Args:
             code: The lobby join code.
 
         Raises:
-            ValueError: The code is invalid.
+            LobbyNotFound: The lobby does not exist.
+            LobbyFull: The lobby is full.
+            LobbyClosedError: The game has already started.
 
         Returns:
             The id of the newly created player.
@@ -77,7 +76,13 @@ class LobbyManager:
         try:
             lobby = self.lobbies[code]
         except KeyError:
-            raise ValueError(f"Code {code} is not associated with any existing lobbies!")
+            raise LobbyNotFoundError(f"Code {code} is not associated with any existing lobbies!")
+
+        if len(lobby.players) == 4:
+            raise LobbyFullError("Lobby is full.")
+
+        if not lobby.open:
+            raise LobbyClosedError("Lobby has already started.")
 
         channel = queue.Queue()
         player = Player(channel=channel, role=None)
@@ -127,18 +132,30 @@ class LobbyManager:
         """
         lobby = self.lobbies[code]
 
-        if not lobby.started:
-            lobby.started = True
+        if not lobby.loop_started:
+            lobby.loop_started = True
             start_main_loop(lobby)
 
         channel = Channel(lobby.channel, lobby.players[id].channel)
         return channel
 
 
-# Initialize the lobby manager without a code generator function
-_LobbyManager = LobbyManager()
+_LobbyManager = LobbyManager(BURGER_INGREDIENTS)
 
 
 def lobby_manager() -> LobbyManager:
     """Return the lobby manager dependency."""
     return _LobbyManager
+
+
+@contextlib.asynccontextmanager
+async def connection_manager(websocket: WebSocket) -> AsyncGenerator[WebSocket, None]:
+    """Handle websocket connect/disconnect."""
+    await websocket.accept()
+
+    try:
+        yield websocket
+    except WebSocketDisconnect:
+        pass
+    except Exception:
+        await websocket.close()
