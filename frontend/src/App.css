@@ -73,7 +73,7 @@
     max-width: 350px;
     margin-top: 25rem;
     margin-right: 25rem;
-    z-index: 30000;
+    z-index: 500;
 }
 
 .manager-mini-order-overlay {

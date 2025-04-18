@@ -7,6 +7,7 @@ import AACBoard from "./components/AACBoard/AACBoard";
 import MiniOrderDisplay from "./components/Manager/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
 import Score from "./components/Score/Score";
+import GameCompleteModal from "./components/GameCompleteModal/GameCompleteModal"
 import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
 
     const [customerNumber, setCustomerNumber] = useState(0);
     const [isCustomerThinking, setIsCustomerThinking] = useState(false);
+    const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
 
     const [score, setScore] = useState(0);
     const [day, setDay] = useState(1);
@@ -34,6 +36,15 @@ const App = () => {
         const data = message.data;
         console.log(data);
         switch (data.type) {
+            case "lobby_lifecycle":
+                switch (data.lifecycle_type) {
+                    case "game_end":
+                        setIsGameCompleteModalOpen(true);
+                        break
+                    default:
+                        break
+                }
+                break;
             case "game_state":
                 switch (data.game_state_update_type) {
                     case "new_order":
@@ -140,6 +151,7 @@ const App = () => {
 
     return (
         <div className="app-container">
+            {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">

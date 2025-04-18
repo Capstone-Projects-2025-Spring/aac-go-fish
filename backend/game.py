@@ -36,6 +36,7 @@ DRINK_SIZES = ["S", "M", "L"]
 SIDE_TYPES = ["Fries", "Onion Rings", "Mozzarella Sticks"]
 
 MESSAGES_PER_LOOP = 5
+DAYS_PER_GAME = 5
 
 
 class GameLoop:
@@ -71,7 +72,6 @@ class GameLoop:
                         self.lobby.broadcast(Message(data=message.data), exclude=[message.id])
                     case PlayerLeave(id=id):
                         self.lobby.players.pop(id)
-
                         self.lobby.broadcast(Message(data=message.data))
                     case Chat():
                         self.typing_indicator(message)
@@ -126,9 +126,13 @@ class GameLoop:
     def handle_new_day(self) -> None:
         """Update current day."""
         self.day += 1
-        logger.debug("New day.", day=self.day)
-        self.assign_roles()
-        self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
+        if self.day == DAYS_PER_GAME + 1:
+            self.lobby.broadcast(Message(data=GameEnd()))
+            logger.debug("Game complete.")
+        else:
+            logger.debug("New day.", day=self.day)
+            self.assign_roles()
+            self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
     def grade_order(self, order: Order) -> int:
         """
@@ -194,7 +198,7 @@ def get_orders(day: int, num_players: int) -> deque[Order]:
 
 def _orders_on_day(day: int) -> int:
     """Compute the number of orders on a given day."""
-    return day * 2 - 1
+    return day
 
 
 def _generate_order(num_players: int) -> Order:
