@@ -151,10 +151,7 @@ const App = () => {
 
     return (
         <div className="app-container">
-            {isGameCompleteModalOpen && <GameCompleteModal onClose={() => {
-                setIsGameCompleteModalOpen(false);
-                setSelectedRole(undefined);
-            }} dollarsEarned={score}/>}
+            {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">
