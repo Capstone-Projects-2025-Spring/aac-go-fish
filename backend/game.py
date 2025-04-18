@@ -36,7 +36,7 @@ DRINK_SIZES = ["S", "M", "L"]
 SIDE_TYPES = ["Fries", "Onion Rings", "Mozzarella Sticks"]
 
 MESSAGES_PER_LOOP = 5
-DAYS_PER_GAME = 3
+DAYS_PER_GAME = 5
 
 
 class GameLoop:
@@ -198,7 +198,7 @@ def get_orders(day: int, num_players: int) -> deque[Order]:
 
 def _orders_on_day(day: int) -> int:
     """Compute the number of orders on a given day."""
-    return day * 2 - 1
+    return day
 
 
 def _generate_order(num_players: int) -> Order:
