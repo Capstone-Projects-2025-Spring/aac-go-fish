@@ -244,21 +244,12 @@
     align-items: center;
     text-align: center;
     width: fit-content;
-    margin-top: 10px;
-    padding: 10px;
+    padding: .5rem .25rem;
 }
 
-.HelpButton:active {
-    transform: scale(0.95);
-}
-
-.HelpButton:hover {
-    cursor: pointer;
-}
-
-.TopMenu {
+.TopMenuBurger {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-evenly;
+    align-items: baseline;
     padding: 10px;
 }

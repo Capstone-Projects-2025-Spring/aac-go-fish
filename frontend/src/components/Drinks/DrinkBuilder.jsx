@@ -112,7 +112,7 @@ const DrinkBuilder = ({ score, day }) => {
 
     return (
         <div className="DrinkBuilder">
-            <div className="TopMenu">
+            <div className="TopMenuDrink">
                 <button className="HelpButton" onClick={playHelpMessage}>
                     Help
                 </button>

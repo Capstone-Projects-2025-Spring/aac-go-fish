@@ -145,7 +145,7 @@ const SideBuilder = ({ score, day }) => {
 
     return (
         <div className="SideBuilder">
-            <div className="TopMenu">
+            <div className="TopMenuSides">
                 <button className="HelpButton" onClick={playHelpMessage}>
                     Help
                 </button>

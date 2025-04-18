@@ -60,7 +60,7 @@ const BurgerBuilder = ({ score, day }) => {
 
     return (
         <div className="BurgerBuilder">
-            <div className="TopMenu">
+            <div className="TopMenuBurger">
                 <button className="HelpButton" onClick={playHelpMessage}>
                     Help
                 </button>
