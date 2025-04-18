@@ -220,3 +220,10 @@
     opacity: 0.9;
     transition: opacity 1s ease-in-out;
 }
+
+.TopMenu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}

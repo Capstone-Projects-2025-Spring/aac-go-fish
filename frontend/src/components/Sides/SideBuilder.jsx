@@ -138,9 +138,19 @@ const SideBuilder = ({ score, day }) => {
         audio.play();
     }
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/side_help.mp3");
+        audio.play();
+    }
+
     return (
         <div className="SideBuilder">
-            <Score score={score} day={day} />
+            <div className="TopMenu">
+                <button className="HelpButton" onClick={playHelpMessage}>
+                    Help
+                </button>
+                <Score score={score} day={day}/>
+            </div>
             <div className="MainContainer2">
                 <div className="LeftColumn">
                     <button className="LeftButtons" onClick={() => placeSide("potatoes")}
