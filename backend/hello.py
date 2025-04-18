@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import ValidationError
 from uvicorn.protocols.utils import get_path_with_query_string
 
-from .dependencies import Channel, LobbyManager, lobby_manager, settings
+from .dependencies import Channel, LobbyManager, connection_manager, lobby_manager, settings
 from .game_state import LobbyClosedError, LobbyFullError, LobbyNotFoundError, TaggedMessage
 from .logging_config import setup_logging
 from .models import Annotated, Initializer, LobbyJoinRequest, Message
@@ -129,25 +129,22 @@ async def read_root() -> dict:
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket, lm: Annotated[LobbyManager, Depends(lobby_manager)]) -> None:
     """Handles a WebSocket connection for receiving and responding to messages."""
-    await websocket.accept()
-
-    try:
-        init = Message.model_validate(await websocket.receive_json())
-    except ValidationError:
-        logger.debug("Received invalid websocket message.")
-        await websocket.close()
-        return
-
-    match init:
-        case Message(data=Initializer(code=code, id=id)):
-            channel = lm.channel(code, id)
-            logger.info("WebSocket connection initialized.", player=id)
-        case _:
-            logger.info("WebSocket connection failed to initialize.", message=init)
-            await websocket.close()
+    async with connection_manager(websocket):
+        try:
+            init = Message.model_validate(await websocket.receive_json())
+        except ValidationError:
+            logger.debug("Received invalid websocket message.")
             return
 
-    await asyncio.gather(_recv_handler(id, websocket, channel), _send_handler(id, websocket, channel))
+        match init:
+            case Message(data=Initializer(code=code, id=id)):
+                channel = lm.channel(code, id)
+                logger.info("WebSocket connection initialized.", player=id)
+            case _:
+                logger.info("WebSocket connection failed to initialize.", message=init)
+                return
+
+        await asyncio.gather(_recv_handler(id, websocket, channel), _send_handler(id, websocket, channel))
 
 
 async def _recv_handler(id: str, websocket: WebSocket, channel: Channel[TaggedMessage, Message]) -> typing.Never:

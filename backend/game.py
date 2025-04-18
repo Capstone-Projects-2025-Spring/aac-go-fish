@@ -100,8 +100,8 @@ class GameLoop:
         self.started = True
         self.lobby.open = False
 
-        self.assign_roles()
         self.lobby.broadcast(Message(data=GameStart()), exclude=[id])
+        self.assign_roles()
         self.handle_next_order()
 
     def assign_roles(self) -> None:
@@ -120,7 +120,7 @@ class GameLoop:
             self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.order = self.orders.pop()
-        logger.debug("Order sent.")
+        logger.debug("Generated order.", order=self.order)
         self.manager.send(Message(data=NewOrder(order=self.order)))
 
     def handle_new_day(self) -> None:
