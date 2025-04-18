@@ -6,8 +6,8 @@ export default function GameCompleteModal({ score }) {
         <div className="modal-content">
             <div className="text">🎉You win!🎉</div>
             <div className="score-earned">${score}</div>
-            <button onClick={() => window.location.reload()} className="home-button">
-                🏠 Back to lobby
+            <button onClick={() => window.location.href = "/"} className="home-button">
+                🏠 Back to home
             </button>
         </div>
     </div>, document.getElementById("portal"));
