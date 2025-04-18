@@ -22,7 +22,8 @@
 
 .text {
     font-size: 3rem;
-    font-weight: bold
+    font-weight: bold;
+    margin-bottom: -1.5rem;
 }
 
 .score-earned {
@@ -33,21 +34,19 @@
 }
 
 .home-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1.25rem;
-    background-color: deepskyblue;
-    color: white;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
     border: none;
-    border-radius: 2rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    border-radius: 50px;
     cursor: pointer;
-    transition: transform 0.1s;
+    transition: all 0.2s ease;
+    background-color: #2196f3;
+    color: white;
+    box-shadow: 0 4px 0 #1976d2;
 }
 
 .home-button:hover {
-    transform: scale(1.05);
-}
-
-.home-button:active {
-    transform: scale(1.00)
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 #1976d2;
 }
