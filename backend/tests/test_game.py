@@ -1,7 +1,9 @@
+import queue
+
 import pytest
 
 from backend.game import GameLoop
-from backend.game_state import Lobby
+from backend.game_state import Lobby, Player
 from backend.models import Burger, Drink, Order, Side
 
 
@@ -133,3 +135,15 @@ def test_grade_order_drink(
     out = game_loop.grade_order(inp_order)
 
     assert 1000 + color_score + size_score + fill_score == out
+
+
+def test_rotate_role() -> None:
+    """Test that all players have different roles after rotating."""
+    game_loop = GameLoop(lobby=Lobby(("e",)))
+    game_loop.lobby.players = {id: Player(channel=queue.Queue(), role=None) for id in "abcd"}
+    game_loop.assign_roles()
+    roles_before = [player.role for player in game_loop.lobby.players.values()]
+    game_loop.rotate_roles()
+    roles_after = [player.role for player in game_loop.lobby.players.values()]
+
+    assert all(x != y for x, y in zip(roles_before, roles_after, strict=False))
