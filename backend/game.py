@@ -113,9 +113,10 @@ class GameLoop:
 
         for player, role in zip(players, roles, strict=True):
             player.role = role
+            player.send(Message(data=RoleAssignment(role=role)))
 
     def rotate_roles(self) -> None:
-        """Rotate player roles."""
+        """Rotate player roles such that no player has the same role as the last day."""
         players = self.lobby.players.values()
         roles = typing.cast(list[Role], [player.role for player in players])
 
