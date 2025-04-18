@@ -105,6 +105,11 @@ const DrinkBuilder = ({ score, day }) => {
         return audio;
     };
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/drink_help.mp3");
+        audio.play();
+    }
+
     const handleRequestRepeat = () => {
         console.log("Employee requests manager to repeat order...");
         const audio = new Audio("/audio/repeat_order.mp3");
@@ -115,7 +120,12 @@ const DrinkBuilder = ({ score, day }) => {
 
     return (
         <div className="DrinkBuilder">
-            <Score score={score} day={day} />
+            <div className="TopMenuDrink">
+                <button className="HelpButton" onClick={playHelpMessage}>
+                    Help
+                </button>
+                <Score score={score} day={day}/>
+            </div>
             <div className="DrinkButtons">
                 <div className="DrinkButtonsContainer">
                     {drinkColors.map((choice, index) => (
