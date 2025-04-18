@@ -26,7 +26,6 @@ services:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    profiles: ["prod"]
     environment:
       # 1 minute
       WATCHTOWER_POLL_INTERVAL: 60

@@ -1,4 +1,6 @@
 ---
+name: order-up
+
 services:
   backend:
     build:
@@ -6,25 +8,25 @@ services:
       dockerfile: Dockerfile
       additional_contexts:
         metadata: .
+    ports:
+      - "127.0.0.1:8000:8000"
     environment:
       ENV: demo
       LOG_LEVEL: DEBUG
-      FRONTEND_URL: localhost:8000
+      FRONTEND_URL: localhost:3000
 
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
-      target: prod
+      dockerfile: Dockerfile.dev
       args:
-        REACT_APP_BACKEND_DOMAIN: localhost/api
+        REACT_APP_BACKEND_DOMAIN: localhost:8000
       additional_contexts:
         metadata: .
     ports:
-      - "127.0.0.1:8000:80"
+      - "127.0.0.1:3000:3000"
     volumes:
       - ./frontend:/app
-      - ./node_modules:/app/node_modules
       - ./nginx.dev.conf:/etc/nginx/conf.d/default.conf:ro
     tty: true
     depends_on:
