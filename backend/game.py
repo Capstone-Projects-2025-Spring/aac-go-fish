@@ -3,6 +3,7 @@ import itertools
 import math
 import random
 import threading
+import typing
 from collections import deque
 
 import structlog
@@ -106,10 +107,22 @@ class GameLoop:
 
     def assign_roles(self) -> None:
         """Assign roles to players."""
-        roles = list(Role)[: len(self.lobby.players)]
+        players = self.lobby.players.values()
+        roles = list(Role)[: len(players)]
         random.shuffle(roles)
 
-        for player, role in zip(self.lobby.players.values(), roles, strict=False):
+        for player, role in zip(players, roles, strict=True):
+            player.role = role
+
+    def rotate_roles(self) -> None:
+        """Rotate player roles."""
+        players = self.lobby.players.values()
+        roles = typing.cast(list[Role], [player.role for player in players])
+
+        # 4 players; efficiency isn't an issue
+        roles.append(roles.pop(0))
+
+        for player, role in zip(players, roles, strict=False):
             player.role = role
             player.send(Message(data=RoleAssignment(role=role)))
 
@@ -131,7 +144,7 @@ class GameLoop:
             logger.debug("Game complete.")
         else:
             logger.debug("New day.", day=self.day)
-            self.assign_roles()
+            self.rotate_roles()
             self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
 
     def grade_order(self, order: Order) -> int:
