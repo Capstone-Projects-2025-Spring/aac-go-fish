@@ -293,11 +293,14 @@
 }
 
 .FillOverlay.smallmini {
-    height: 8rem !important;
-    width: 4.5rem !important;
+    width: 3.5rem !important;
     max-height: 8rem !important;
     left: 2.4rem !important;
-    bottom: -1rem !important;
+    bottom: 2.5rem !important;
+}
+
+img.CupImages.smallmini {
+    width: 5rem;
 }
 
 .FillOverlay.medium {
@@ -306,11 +309,14 @@
 }
 
 .FillOverlay.mediummini {
-    height: 8rem !important;
-    width: 4.5rem !important;
+    width: 4rem !important;
     max-height: 8rem !important;
     left: 2.3rem !important;
-    bottom: -1rem !important;
+    bottom: .9rem !important;
+}
+
+img.CupImages.mediummini {
+    width: 6rem;
 }
 
 .FillOverlay.large {
@@ -320,7 +326,6 @@
 }
 
 .FillOverlay.largemini {
-    height: 8rem !important;
     width: 4.7rem !important;
     max-height: 8rem !important;
     left: 2.3rem !important;
