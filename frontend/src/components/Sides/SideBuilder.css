@@ -240,5 +240,5 @@
     display: flex;
     justify-content: space-evenly;
     align-items: baseline;
-    padding: 10px;
+    gap: 10rem;
 }
