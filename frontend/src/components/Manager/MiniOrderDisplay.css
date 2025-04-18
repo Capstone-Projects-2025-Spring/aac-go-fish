@@ -1,7 +1,6 @@
 .mini-order-display {
     position: fixed;
     bottom: 30rem;
-    right: 40rem;
     display: flex;
     align-items: center;
     gap: 20px;
@@ -57,7 +56,6 @@
 .mini-order-display {
     position: absolute;
     bottom: 15rem;
-    right: -7.5rem;
     z-index: 2001;
     display: flex;
     align-items: center;
