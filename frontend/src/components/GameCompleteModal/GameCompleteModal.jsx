@@ -4,8 +4,11 @@ import ReactDom from "react-dom"
 export default function GameCompleteModal({ score }) {
     return ReactDom.createPortal(<div className="modal-overlay">
         <div className="modal-content">
-            {`Game complete!\nYou earned $${score}`}
-            <button onClick={() => window.location.reload()}>Back to lobby</button>
+            <div className="text">🎉You win!🎉</div>
+            <div className="score-earned">${score}</div>
+            <button onClick={() => window.location.reload()} className="home-button">
+                🏠 Back to lobby
+            </button>
         </div>
     </div>, document.getElementById("portal"));
 }

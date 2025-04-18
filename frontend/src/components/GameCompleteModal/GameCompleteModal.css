@@ -13,6 +13,41 @@
 
 .modal-content {
     background: white;
-    padding: 1rem;
-    border-radius: 0.5rem;
+    padding: 2rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text {
+    font-size: 3rem;
+    font-weight: bold
+}
+
+.score-earned {
+    font-size: 10rem;
+    font-weight: bold;
+    color: forestgreen;
+    text-shadow: 2px 2px #ccc;
+}
+
+.home-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.25rem;
+    background-color: deepskyblue;
+    color: white;
+    border: none;
+    border-radius: 2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.home-button:hover {
+    transform: scale(1.05);
+}
+
+.home-button:active {
+    transform: scale(1.00)
 }
