@@ -236,43 +236,100 @@
 }
 
 .CupContainer.small {
-    width: 150px;
-    height: 300px;
+    width: 5rem;
+    height: 1rem;
 }
 
 .CupContainer.medium {
-    width: 175px;
-    height: 350px;
+    width: 5rem;
+    height: 1rem;
 }
 
 .CupContainer.large {
-    width: 200px;
-    height: 400px;
+    width: 5rem;
+    height: 1rem;
 }
 
 .CupImages {
-    width: 100%;
     height: auto;
     position: absolute;
     bottom: 0;
-    left: 50%;
+    left: 2.5rem;
     transform: translateX(-50%);
     z-index: 10;
-    max-width: 5rem;
+    top: 1rem;
+    max-width: 7rem;
+}
+
+.CupImages.small {
+    width: 5rem;
+}
+
+.CupImages.medium {
+    width: 6rem;
+}
+
+.CupImages.large {
+    width: 7rem;
 }
 
 .FillOverlay {
     position: absolute;
     bottom: 0;
-    left: 50%;
+    left: 49%;
     transform: translateX(-50%);
     width: 80%;
     height: 0;
     background-color: transparent;
     transition: height 0.3s ease-in-out;
     z-index: 5;
-    max-height: 7rem;
+}
+
+.FillOverlay.small {
+
+    bottom: -9rem;
+    max-width: 3.3rem;
+
+}
+
+.FillOverlay.smallmini {
+    width: 3.5rem !important;
+    max-height: 8rem !important;
+    left: 2.4rem !important;
+    bottom: 2.5rem !important;
+}
+
+img.CupImages.smallmini {
+    width: 5rem;
+}
+
+.FillOverlay.medium {
+    bottom: -10.6rem;
     max-width: 4rem;
+}
+
+.FillOverlay.mediummini {
+    width: 4rem !important;
+    max-height: 8rem !important;
+    left: 2.3rem !important;
+    bottom: .9rem !important;
+}
+
+img.CupImages.mediummini {
+    width: 6rem;
+}
+
+.FillOverlay.large {
+    bottom: -12.6rem;
+    max-width: 5rem;
+
+}
+
+.FillOverlay.largemini {
+    width: 4.7rem !important;
+    max-height: 8rem !important;
+    left: 2.3rem !important;
+    bottom: -1rem !important;
 }
 
 .ConfirmMessage {
@@ -303,7 +360,39 @@
     padding: .5rem;
 }
 
+.CupImages.Lmini {
+    left: 10rem;
+}
+
+.CupImages.Mmini {
+    left: 10rem;
+}
+
+.CupImages.Smini {
+    left: 10rem;
+}
+
 .ClearSideImage {
     height: 6rem;
     width: 6rem;
+}
+
+img.CupImages.mediummini {
+    top: -11.5rem;
+}
+
+img.CupImages.largemini {
+    top: -11.5rem;
+
+}
+
+img.CupImages.smallmini {
+    top: -11.5rem;
+
+}
+
+.CupImages.Lmini,
+.CupImages.Mmini,
+.CupImages.Smini {
+    left: 40rem;
 }
