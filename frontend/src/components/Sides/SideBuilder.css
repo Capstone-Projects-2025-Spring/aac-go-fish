@@ -145,6 +145,19 @@
     transition: all 0.3s ease-in-out;
 }
 
+.RightButtons.drop-hover {
+    border: 4px dashed #ffa500;
+    background-color: #292929;
+    transition: all 0.3s ease-in-out;
+}
+
+.SendButton.drop-hover {
+    border: 4px dashed #ffa500;
+    background-color: #292929;
+    transition: all 0.3s ease-in-out;
+
+}
+
 .DraggableItem {
     cursor: grab;
     width: 100px;
@@ -221,7 +234,7 @@
     transition: opacity 1s ease-in-out;
 }
 
-.ResetImage{
+.ResetImage {
     height: 7rem;
     width: 7rem;
 }
