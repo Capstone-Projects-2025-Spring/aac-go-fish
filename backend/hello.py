@@ -48,7 +48,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-Instrumentator().instrument(app, metric_namespace='fastapi').expose(app, include_in_schema=False)
+Instrumentator().instrument(app, metric_namespace="fastapi").expose(app, include_in_schema=False)
 
 
 @app.middleware("http")

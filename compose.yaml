@@ -3,7 +3,7 @@ name: order-up
 
 services:
   backend:
-    image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-backend:main
+    image: ghcr.io/capstone-projects-2025-spring/order-up-backend:main
     tty: true
     command: ["fastapi", "run", "./hello.py", "--root-path", "/api"]
     environment:
@@ -12,7 +12,7 @@ services:
       FRONTEND_URL: "https://bankruptcyassociation.com"
 
   frontend:
-    image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-frontend:main
+    image: ghcr.io/capstone-projects-2025-spring/order-up-frontend:main
     tty: true
     depends_on:
       - backend
@@ -35,7 +35,7 @@ services:
       WATCHTOWER_LOG_FORMAT: json
 
   prometheus:
-    image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-prometheus:main
+    image: ghcr.io/capstone-projects-2025-spring/order-up-prometheus:main
     volumes:
       - prometheus-data:/prometheus
 
