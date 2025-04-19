@@ -8,6 +8,7 @@ import structlog
 from asgi_correlation_id import CorrelationIdMiddleware, correlation_id
 from fastapi import Depends, FastAPI, HTTPException, Request, Response, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
+from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import ValidationError
 from uvicorn.protocols.utils import get_path_with_query_string
 
@@ -46,6 +47,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+Instrumentator().instrument(app, metric_namespace='fastapi').expose(app, include_in_schema=False)
 
 
 @app.middleware("http")
