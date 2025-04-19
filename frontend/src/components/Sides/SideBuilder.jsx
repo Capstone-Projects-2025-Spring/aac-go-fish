@@ -8,6 +8,7 @@ import Score from "../Score/Score";
 const SideBuilder = ({ score, day }) => {
     const [tableState, setTableState] = useState("empty");
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
+    const [isCutting, setIsCutting] = useState(false);
     const fryingIntervalRef = useRef(null);
     const [sideType, setSideType] = useState("");
     const [confirmMessage, setConfirmMessage] = useState("");
@@ -18,7 +19,7 @@ const SideBuilder = ({ score, day }) => {
         { type: "onions", initialState: "onions", choppedState: "choppedOnions", finalState: "onionRings" },
         { type: "cheese", initialState: "cheese", choppedState: "choppedCheese", finalState: "mozzarellaSticks" },
     ];
-
+    const RAW_STATES = ["potatoes", "onions", "cheese"];
     const handleSend = () => {
         send({
             data: {
@@ -49,16 +50,16 @@ const SideBuilder = ({ score, day }) => {
     };
 
     const chopSide = () => {
+        setIsCutting(true);
         playChoppingSound();
-        const side = sideTypes.find((side) => side.initialState === tableState);
+        const side = sideTypes.find((s) => s.initialState === tableState);
         if (side) {
             setTimeout(() => {
                 setTableState(side.choppedState);
+                setIsCutting(false);
             }, 2000);
-
         }
     };
-
     const startFrying = (finalState) => {
         setTableState("frying");
         let timeLeft = 5;
@@ -94,6 +95,33 @@ const SideBuilder = ({ score, day }) => {
         event.dataTransfer.setData("itemType", itemType);
     };
 
+    const handleTableDrop = (event) => {
+        event.preventDefault();
+        event.currentTarget.classList.remove("drop-hover");
+
+        const itemType = event.dataTransfer.getData("itemType");
+
+        if (itemType === "knife") {
+            chopSide();
+            return;
+        }
+
+        if (itemType === "knife") {
+            chopSide();
+        } else if (RAW_STATES.includes(itemType) && tableState === "empty") {
+            placeSide(itemType);
+        }
+    };
+    const handleKnifeDrop = (event) => {
+        event.preventDefault();
+        event.currentTarget.classList.remove("drop-hover");
+        const itemType = event.dataTransfer.getData("itemType");
+        if (RAW_STATES.includes(itemType)) {
+            chopSide();
+        }
+    };
+
+
     const handleDragOver = (event) => {
         event.preventDefault();
         event.currentTarget.classList.add("drop-hover");
@@ -103,7 +131,7 @@ const SideBuilder = ({ score, day }) => {
         event.currentTarget.classList.remove("drop-hover");
     };
 
-    const handleDrop = (event) => {
+    const handleFryerDrop = (event) => {
         event.preventDefault();
         event.currentTarget.classList.remove("drop-hover");
 
@@ -112,6 +140,20 @@ const SideBuilder = ({ score, day }) => {
         if (side) {
             playFryingSound();
             startFrying(side.finalState);
+        }
+    };
+
+    const handleResetDrop = (event) => {
+        event.preventDefault();
+        event.currentTarget.classList.remove("drop-hover");
+        reset();
+    };
+
+    const handleSendDrop = (event) => {
+        event.preventDefault();
+        event.currentTarget.classList.remove("drop-hover");
+        if (tableState !== "empty" && tableState !== "frying") {
+            handleSend();
         }
     };
 
@@ -151,38 +193,68 @@ const SideBuilder = ({ score, day }) => {
             <Score score={score} day={day} />
             <div className="MainContainer2">
                 <div className="LeftColumn">
-                    <button className="LeftButtons" onClick={() => placeSide("potatoes")}
-                        disabled={tableState !== "empty"}>
+                    <button className="LeftButtons" draggable
+                        onDragStart={(e) => handleDragStart(e, "potatoes")}>
                         <img src="/images/station_specific/potatoButton.png" alt="Place Potatoes" className="ButtonImages" />
                         Potato
                     </button>
-                    <button className="LeftButtons" onClick={() => placeSide("onions")}
-                        disabled={tableState !== "empty"}>
+                    <button className="LeftButtons" draggable
+                        onDragStart={(e) => handleDragStart(e, "onions")}>
                         <img src="/images/aac_icons/onion.png" alt="Place Onions" className="ButtonImages" />
                         Onion
                     </button>
-                    <button className="LeftButtons" onClick={() => placeSide("cheese")}
-                        disabled={tableState !== "empty"}>
+                    <button className="LeftButtons" draggable
+                        onDragStart={(e) => handleDragStart(e, "cheese")}>
                         <img src="/images/aac_icons/cheese.png" alt="Place Cheese" className="ButtonImages" />
                         Cheese
                     </button>
                 </div>
-                <div className="TableBorder">
-                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} />
+                <div
+                    className={`TableBorder ${isCutting ? "cutting" : ""}`}
+                    draggable={tableState !== "empty" && tableState !== "frying"}
+                    onDragStart={(e) => handleDragStart(e, tableState)}
+                    onDragOver={handleDragOver}
+                    onDrop={handleTableDrop}
+                    onDragLeave={handleDragLeave}
+                >
+                    <SideDisplay
+                        tableState={tableState}
+                        fryTimeLeft={fryTimeLeft}
+                        onDragStart={handleDragStart}
+                    />
                 </div>
+
                 <div className="RightColumn">
-                    <button className="RightButtons" onClick={chopSide}
-                        disabled={tableState !== "potatoes" && tableState !== "onions" && tableState !== "cheese"}>
-                        <img src="/images/station_specific/knife.png" alt="" className='ButtonImages' />
+
+                    <button
+                        className="RightButtons"
+                        draggable
+                        onDragStart={(e) => handleDragStart(e, "knife")}
+                        onDragOver={handleDragOver}
+                        onDrop={handleKnifeDrop}
+                        onDragLeave={handleDragLeave}
+                        onClick={chopSide}
+                        disabled={!["potatoes", "onions", "cheese"].includes(tableState)}
+                    >
+                        <img src="/images/station_specific/knife.png" alt="" className="ButtonImages" />
                         Chop
                     </button>
-                    <button className="RightButtons" onClick={reset}>
+                    <button className="RightButtons" onClick={reset} onDragOver={handleDragOver}
+                        onDrop={handleResetDrop}
+                        onDragLeave={handleDragLeave}>
                         <img src="/images/button_icons/clear_plate.png" alt="Chop Potatoes" className="ResetImage" />
                         Reset
                     </button>
-                    <button className="SendButton" onClick={handleSend}
-                        disabled={tableState === "empty" || tableState === "frying"}>Send
-                    </button>
+                    <button
+                        className="SendButton"
+                        onClick={handleSend}
+                        onDragOver={handleDragOver}
+                        onDrop={handleSendDrop}
+                        onDragLeave={handleDragLeave}
+                        disabled={tableState === "empty" || tableState === "frying"}
+                    >
+                        <img src="/images/button_icons/bag.png" alt="Send order" className='SendImg' />
+                        Send      </button>
                     <button className="RightButtons" onClick={handleRequestRepeat}>
                         <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
                         <p>Repeat Order</p>
@@ -192,7 +264,7 @@ const SideBuilder = ({ score, day }) => {
 
             <div className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
                 onDragOver={handleDragOver}
-                onDrop={handleDrop}
+                onDrop={handleFryerDrop}
                 onDragLeave={handleDragLeave}
             >
                 <img src="/images/station_specific/fryer.png" alt="Fryer" className="FryerImage" />
@@ -201,7 +273,7 @@ const SideBuilder = ({ score, day }) => {
             <div className="ConfirmMessage">
                 {confirmMessage && <p>{confirmMessage}</p>}
             </div>
-        </div>
+        </div >
     );
 };
 
