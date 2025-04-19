@@ -94,6 +94,16 @@ const SideBuilder = ({ score, day }) => {
         event.dataTransfer.setData("itemType", itemType);
     };
 
+    const handleTableDrop = (event) => {
+        event.preventDefault();
+        event.currentTarget.classList.remove("drop-hover");
+
+        const itemType = event.dataTransfer.getData("itemType");
+        if (itemType && tableState === "empty") {
+            placeSide(itemType);
+        }
+    };
+
     const handleDragOver = (event) => {
         event.preventDefault();
         event.currentTarget.classList.add("drop-hover");
@@ -165,24 +175,26 @@ const SideBuilder = ({ score, day }) => {
             <Score score={score} day={day} />
             <div className="MainContainer2">
                 <div className="LeftColumn">
-                    <button className="LeftButtons" onClick={() => placeSide("potatoes")}
-                        disabled={tableState !== "empty"}>
+                    <button className="LeftButtons" draggable
+                        onDragStart={(e) => handleDragStart(e, "potatoes")}>
                         <img src="/images/station_specific/potatoButton.png" alt="Place Potatoes" className="ButtonImages" />
                         Potato
                     </button>
-                    <button className="LeftButtons" onClick={() => placeSide("onions")}
-                        disabled={tableState !== "empty"}>
+                    <button className="LeftButtons" draggable
+                        onDragStart={(e) => handleDragStart(e, "onions")}>
                         <img src="/images/aac_icons/onion.png" alt="Place Onions" className="ButtonImages" />
                         Onion
                     </button>
-                    <button className="LeftButtons" onClick={() => placeSide("cheese")}
-                        disabled={tableState !== "empty"}>
+                    <button className="LeftButtons" draggable
+                        onDragStart={(e) => handleDragStart(e, "cheese")}>
                         <img src="/images/aac_icons/cheese.png" alt="Place Cheese" className="ButtonImages" />
                         Cheese
                     </button>
                 </div>
-                <div className="TableBorder">
-                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} />
+                <div className="TableBorder"
+                    onDragOver={handleDragOver}
+                    onDrop={handleTableDrop}
+                    onDragLeave={handleDragLeave}>                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} />
                 </div>
                 <div className="RightColumn">
                     <button className="RightButtons" onClick={chopSide}
