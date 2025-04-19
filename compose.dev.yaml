@@ -31,3 +31,15 @@ services:
     tty: true
     depends_on:
       - backend
+
+  prometheus:
+    build:
+      context: ./prometheus
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:9090:9090"
+    volumes:
+      - prometheus-data:/prometheus
+
+volumes:
+  prometheus-data:

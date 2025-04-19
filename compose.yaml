@@ -33,3 +33,11 @@ services:
       WATCHTOWER_CLEANUP: true
       WATCHTOWER_LOG_LEVEL: warn
       WATCHTOWER_LOG_FORMAT: json
+
+  prometheus:
+    image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-prometheus:main
+    volumes:
+      - prometheus-data:/prometheus
+
+volumes:
+  prometheus-data:
