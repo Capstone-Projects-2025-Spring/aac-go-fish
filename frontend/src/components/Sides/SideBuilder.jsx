@@ -103,7 +103,7 @@ const SideBuilder = ({ score, day }) => {
         event.currentTarget.classList.remove("drop-hover");
     };
 
-    const handleDrop = (event) => {
+    const handleFryerDrop = (event) => {
         event.preventDefault();
         event.currentTarget.classList.remove("drop-hover");
 
@@ -112,6 +112,20 @@ const SideBuilder = ({ score, day }) => {
         if (side) {
             playFryingSound();
             startFrying(side.finalState);
+        }
+    };
+
+    const handleResetDrop = (event) => {
+        event.preventDefault();
+        event.currentTarget.classList.remove("drop-hover");
+        reset();
+    };
+
+    const handleSendDrop = (event) => {
+        event.preventDefault();
+        event.currentTarget.classList.remove("drop-hover");
+        if (tableState !== "empty" && tableState !== "frying") {
+            handleSend();
         }
     };
 
@@ -173,17 +187,17 @@ const SideBuilder = ({ score, day }) => {
                 <div className="RightColumn">
                     <button className="RightButtons" onClick={chopSide}
                         disabled={tableState !== "potatoes" && tableState !== "onions" && tableState !== "cheese"}>
-
+                        <img src="/images/station_specific/knife.png" alt="" className='ButtonImages' />
                         Chop
                     </button>
                     <button className="RightButtons" onClick={reset} onDragOver={handleDragOver}
-                        onDrop={handleDrop}
+                        onDrop={handleResetDrop}
                         onDragLeave={handleDragLeave}>
                         <img src="/images/button_icons/clear_plate.png" alt="Chop Potatoes" className="ResetImage" />
                         Reset
                     </button>
                     <button className="SendButton" onClick={handleSend} onDragOver={handleDragOver}
-                        onDrop={handleDrop}
+                        onDrop={handleSendDrop}
                         onDragLeave={handleDragLeave}
                         disabled={tableState === "empty" || tableState === "frying"}>Send
                     </button>
@@ -196,7 +210,7 @@ const SideBuilder = ({ score, day }) => {
 
             <div className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
                 onDragOver={handleDragOver}
-                onDrop={handleDrop}
+                onDrop={handleFryerDrop}
                 onDragLeave={handleDragLeave}
             >
                 <img src="/images/station_specific/fryer.png" alt="Fryer" className="FryerImage" />
@@ -205,7 +219,7 @@ const SideBuilder = ({ score, day }) => {
             <div className="ConfirmMessage">
                 {confirmMessage && <p>{confirmMessage}</p>}
             </div>
-        </div>
+        </div >
     );
 };
 
