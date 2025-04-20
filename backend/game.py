@@ -51,6 +51,9 @@ class GameLoop:
         self.day = 1
         self.score = 0
 
+        self.customers = dict()
+        self.day_score = {}
+
         self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
         self.order: Order
 
@@ -80,8 +83,7 @@ class GameLoop:
                         self.manager.send(Message(data=component))
                     case OrderSubmission(order=order):
                         logger.debug("Received order.", order=order)
-                        self.score += self.grade_order(order)
-                        self.lobby.broadcast(Message(data=OrderScore(score=self.score)))
+                        self.handle_scoring(order=order)
                         self.handle_next_order()
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
@@ -139,6 +141,8 @@ class GameLoop:
 
     def handle_new_day(self) -> None:
         """Update current day."""
+        customers = self.customers[self.day]
+        day_score = self.day_score[self.day]
         self.day += 1
         if self.day == DAYS_PER_GAME + 1:
             self.lobby.broadcast(Message(data=GameEnd()))
@@ -146,7 +150,15 @@ class GameLoop:
         else:
             logger.debug("New day.", day=self.day)
             self.rotate_roles()
-            self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
+            self.lobby.broadcast(Message(data=DayEnd(day=self.day, customers_served=customers, score=day_score)))
+
+    def handle_scoring(self, order: Order) -> None:
+        """Updates all scores."""
+        score = self.grade_order(order)
+        self.customers[self.day] = self.customers.get(self.day, 0) + 1
+        self.day_score[self.day] = self.day_score.get(self.day, 0) + score
+        self.score += score
+        self.lobby.broadcast(Message(data=OrderScore(score=self.score)))
 
     def grade_order(self, order: Order) -> int:
         """

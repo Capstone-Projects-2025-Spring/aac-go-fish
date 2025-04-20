@@ -144,6 +144,8 @@ class DayEnd(BaseModel):
     game_state_update_type: Literal[GameStateUpdateKind.day_end] = GameStateUpdateKind.day_end
 
     day: int
+    customers_served: int
+    score: int
 
 
 type GameStateUpdate = Annotated[
