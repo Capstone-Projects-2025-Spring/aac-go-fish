@@ -7,7 +7,8 @@ import AACBoard from "./components/AACBoard/AACBoard";
 import MiniOrderDisplay from "./components/Manager/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
 import Score from "./components/Score/Score";
-import GameCompleteModal from "./components/GameCompleteModal/GameCompleteModal"
+import GameCompleteModal from "./components/Modal/GameCompleteModal";
+import DayCompleteModal from "./components/Modal/DayCompleteModal";
 import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
     const [customerNumber, setCustomerNumber] = useState(0);
     const [isCustomerThinking, setIsCustomerThinking] = useState(false);
     const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
+    const [isDayCompleteModalOpen, setIsDayCompleteModalOpen] = useState(false);
 
     const [score, setScore] = useState(0);
     const [day, setDay] = useState(1);
@@ -71,6 +73,8 @@ const App = () => {
                         break;
                     case "day_end":
                         setDay(data.day ?? 0);
+                        setIsDayCompleteModalOpen(true)
+                        setTimeout(() => { setIsDayCompleteModalOpen(false); }, 5000);
                         break;
                     case "order_component":
                         switch (data.component_type) {
@@ -149,9 +153,14 @@ const App = () => {
         setEmployeeSide(null);
     };
 
+    const handleHideDayModal = () => {
+        setIsDayCompleteModalOpen(false)
+    }
+
     return (
         <div className="app-container">
             {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
+            {isDayCompleteModalOpen && <DayCompleteModal score={score} handleClick={handleHideDayModal}/>}
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">
