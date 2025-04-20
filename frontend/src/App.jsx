@@ -33,6 +33,8 @@ const App = () => {
 
     const [score, setScore] = useState("$0.00");
     const [day, setDay] = useState(1);
+    const [dayCustomers, setDayCustomers] = useState(0);
+    const [dayScore, setDayScore] = useState("$0.00");
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -78,7 +80,12 @@ const App = () => {
 
                         break;
                     case "day_end":
+                        const dayScore = data.score ?? 0;
+                        setDayScore(formatter.format(dayScore / 100));
+                        setDayCustomers(data.customers_served)
+
                         setDay(data.day ?? 0);
+
                         setIsDayCompleteModalOpen(true);
                         setTimeout(() => {
                             setIsDayCompleteModalOpen(false);
@@ -107,7 +114,6 @@ const App = () => {
                         setSelectedRole(data.role);
                         break;
                     case "order_score":
-                        // score is given in cents, divide by 100 and format
                         const score = data.score ?? 0;
                         setScore(formatter.format(score / 100));
                         break;
@@ -170,7 +176,7 @@ const App = () => {
     return (
         <div className="app-container">
             {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
-            {isDayCompleteModalOpen && <DayCompleteModal score={score} handleClick={handleHideDayModal}/>}
+            {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={handleHideDayModal}/>}
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">
