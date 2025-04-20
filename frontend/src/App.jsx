@@ -27,6 +27,7 @@ const App = () => {
 
     const [customerNumber, setCustomerNumber] = useState(0);
     const [isCustomerThinking, setIsCustomerThinking] = useState(false);
+
     const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
     const [isDayCompleteModalOpen, setIsDayCompleteModalOpen] = useState(false);
 
@@ -73,8 +74,10 @@ const App = () => {
                         break;
                     case "day_end":
                         setDay(data.day ?? 0);
-                        setIsDayCompleteModalOpen(true)
-                        setTimeout(() => { setIsDayCompleteModalOpen(false); }, 5000);
+                        setIsDayCompleteModalOpen(true);
+                        setTimeout(() => {
+                            setIsDayCompleteModalOpen(false);
+                        }, 5000)
                         break;
                     case "order_component":
                         switch (data.component_type) {
