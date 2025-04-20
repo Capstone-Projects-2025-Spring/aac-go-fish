@@ -7,7 +7,8 @@ import AACBoard from "./components/AACBoard/AACBoard";
 import MiniOrderDisplay from "./components/Manager/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
 import Score from "./components/Score/Score";
-import GameCompleteModal from "./components/GameCompleteModal/GameCompleteModal"
+import GameCompleteModal from "./components/Modal/GameCompleteModal";
+import DayCompleteModal from "./components/Modal/DayCompleteModal";
 import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 
 const App = () => {
@@ -26,10 +27,19 @@ const App = () => {
 
     const [customerNumber, setCustomerNumber] = useState(0);
     const [isCustomerThinking, setIsCustomerThinking] = useState(false);
-    const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
 
-    const [score, setScore] = useState(0);
+    const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
+    const [isDayCompleteModalOpen, setIsDayCompleteModalOpen] = useState(false);
+
+    const [score, setScore] = useState("$0.00");
     const [day, setDay] = useState(1);
+    const [dayCustomers, setDayCustomers] = useState(0);
+    const [dayScore, setDayScore] = useState("$0.00");
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    });
 
     const handleMessage = (message) => {
         if (!message) return;
@@ -70,7 +80,16 @@ const App = () => {
 
                         break;
                     case "day_end":
+                        const dayScore = data.score ?? 0;
+                        setDayScore(formatter.format(dayScore / 100));
+                        setDayCustomers(data.customers_served)
+
                         setDay(data.day ?? 0);
+
+                        setIsDayCompleteModalOpen(true);
+                        setTimeout(() => {
+                            setIsDayCompleteModalOpen(false);
+                        }, 10000)
                         break;
                     case "order_component":
                         switch (data.component_type) {
@@ -95,7 +114,8 @@ const App = () => {
                         setSelectedRole(data.role);
                         break;
                     case "order_score":
-                        setScore(data.score ?? 0);
+                        const score = data.score ?? 0;
+                        setScore(formatter.format(score / 100));
                         break;
                     default:
                         console.log("Unknown game state update type", data.game_state_update_type);
@@ -149,9 +169,14 @@ const App = () => {
         setEmployeeSide(null);
     };
 
+    const handleHideDayModal = () => {
+        setIsDayCompleteModalOpen(false)
+    }
+
     return (
         <div className="app-container">
             {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
+            {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={handleHideDayModal}/>}
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">

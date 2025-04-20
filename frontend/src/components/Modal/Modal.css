@@ -23,6 +23,10 @@
 .text {
     font-size: 3rem;
     font-weight: bold;
+}
+
+.customers {
+    font-size: 3rem;
     margin-bottom: -1.5rem;
 }
 
