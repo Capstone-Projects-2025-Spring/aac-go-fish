@@ -5,7 +5,7 @@ export default function DayCompleteModal({ score, handleClick }) {
     return ReactDom.createPortal(<div className="modal-overlay">
         <div className="modal-content">
             <div className="text">🎉Day Complete!🎉</div>
-            <div className="score-earned">${score}</div>
+            <div className="score-earned">{score}</div>
             <button onClick={handleClick} className="home-button">
                 ☀️ Next Day
             </button>

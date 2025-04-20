@@ -31,8 +31,13 @@ const App = () => {
     const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
     const [isDayCompleteModalOpen, setIsDayCompleteModalOpen] = useState(false);
 
-    const [score, setScore] = useState(0);
+    const [score, setScore] = useState("$0.00");
     const [day, setDay] = useState(1);
+
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    });
 
     const handleMessage = (message) => {
         if (!message) return;
@@ -102,7 +107,9 @@ const App = () => {
                         setSelectedRole(data.role);
                         break;
                     case "order_score":
-                        setScore(data.score ?? 0);
+                        // score is given in cents, divide by 100 and format
+                        const score = data.score ?? 0;
+                        setScore(formatter.format(score / 100));
                         break;
                     default:
                         console.log("Unknown game state update type", data.game_state_update_type);
