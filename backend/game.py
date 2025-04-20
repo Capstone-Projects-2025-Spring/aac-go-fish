@@ -37,7 +37,7 @@ DRINK_SIZES = ["S", "M", "L"]
 SIDE_TYPES = ["Fries", "Onion Rings", "Mozzarella Sticks"]
 
 MESSAGES_PER_LOOP = 5
-DAYS_PER_GAME = 3
+DAYS_PER_GAME = 5
 
 
 class GameLoop:
