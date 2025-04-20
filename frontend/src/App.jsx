@@ -89,7 +89,7 @@ const App = () => {
                         setIsDayCompleteModalOpen(true);
                         setTimeout(() => {
                             setIsDayCompleteModalOpen(false);
-                        }, 5000)
+                        }, 10000)
                         break;
                     case "order_component":
                         switch (data.component_type) {
