@@ -180,10 +180,12 @@ const App = () => {
                         </div>
                     </div>
                     <div className="right-column">
-                        <button className="HelpButton" onClick={playHelpMessage}>
-                            Help
-                        </button>
-                        <Score score={score} day={day}/>
+                        <div className="TopMenu">
+                            <button className="HelpButton" onClick={playHelpMessage}>
+                                Help
+                            </button>
+                            <Score score={score} day={day}/>
+                        </div>
                         <AACBoard
                             selectedItems={selectedItems}
                             onSelectItem={addSelectedItem}

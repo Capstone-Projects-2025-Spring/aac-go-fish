@@ -100,8 +100,8 @@ button:focus {
     align-items: center;
     text-align: center;
     width: fit-content;
-    margin-top: 10px;
-    padding: 10px;
+    height: fit-content;
+    line-height: 1;
 }
 
 .HelpButton:active {
@@ -110,4 +110,17 @@ button:focus {
 
 .HelpButton:hover {
     cursor: pointer;
+}
+
+.TopMenu {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 10rem;
+    width: 100%;
+}
+
+.Score {
+    white-space: nowrap;
+    overflow: hidden;
 }
