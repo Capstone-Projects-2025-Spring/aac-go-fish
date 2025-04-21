@@ -10,6 +10,7 @@ import Score from "./components/Score/Score";
 import GameCompleteModal from "./components/Modal/GameCompleteModal";
 import DayCompleteModal from "./components/Modal/DayCompleteModal";
 import { useWebSocket, WebSocketContext } from "./WebSocketContext";
+import {playPopSound} from "./components/SoundEffects/playPopSound";
 
 const App = () => {
     const { send } = useContext(WebSocketContext);
@@ -194,7 +195,7 @@ const App = () => {
                                         <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder} />
                                     </div>
                                 )}
-                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/button_icons/send_order.png" alt="send customer order" />
+                                <img onClick={() => {handleGiveToCustomer(); playPopSound()}} className="SendCustomerOrder" src="/images/button_icons/send_order.png" alt="send customer order" />
                                 <div className="manager-mini-order-overlay">
                                     <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide} />
                                 </div>

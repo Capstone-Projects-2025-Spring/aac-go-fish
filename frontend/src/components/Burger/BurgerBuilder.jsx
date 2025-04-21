@@ -91,7 +91,7 @@ const BurgerBuilder = ({ score, day }) => {
                 <p>Repeat Order</p>
             </button>
 
-            <button onClick={handleSend} className="SendOrderButton">
+            <button onClick={() => {handleSend(); playPopSound()}} className="SendOrderButton">
                 <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
             <div className="ErrorMessage">
