@@ -28,12 +28,7 @@ async def lifespan(_: FastAPI) -> AsyncGenerator:
         lobby = lobby_manager()
         lobby.register_lobby()
 
-    if s.env == "prod":
-        json_logs = True
-    else:
-        json_logs = False
-
-    setup_logging(json_logs=json_logs, log_level=s.log_level)
+    setup_logging(json_logs=s.json_logs, log_level=s.log_level)
 
     yield
 
