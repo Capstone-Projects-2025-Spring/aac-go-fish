@@ -32,9 +32,16 @@ from .models import (
 logger = structlog.stdlib.get_logger(__file__)
 
 BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
-DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
-DRINK_SIZES = ["S", "M", "L"]
-SIDE_TYPES = ["Fries", "Onion Rings", "Mozzarella Sticks"]
+DRINK_COLORS = [
+    ["Blue", "#34C6F4"],
+    ["Green", "#99CA3C"],
+    ["Yellow", "#e2d700"],
+    ["Red", "#FF0000"],
+    ["Orange", "#F5841F"],
+    ["Purple", "#7E69AF"],
+]
+DRINK_SIZES = ["small", "medium", "large"]
+SIDE_TYPES = ["fries", "onionRings", "mozzarellaSticks"]
 
 MESSAGES_PER_LOOP = 5
 DAYS_PER_GAME = 5
@@ -133,7 +140,8 @@ class GameLoop:
         """Give manager next order."""
         if len(self.orders) == 0:
             self.handle_new_day()
-            self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
+
+        self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.order = self.orders.pop()
         logger.debug("Generated order.", order=self.order)
@@ -238,7 +246,7 @@ def _generate_order(num_players: int) -> Order:
     )
 
     if num_players >= 3:
-        order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, size=random.choice(DRINK_SIZES))
+        order.drink = Drink(color=random.choice(DRINK_COLORS)[1], fill=100, size=random.choice(DRINK_SIZES))
 
     if num_players >= 4:
         order.side = Side(table_state=random.choice(SIDE_TYPES))
