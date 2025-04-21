@@ -1,14 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
-import { menu } from "../../menuItems";
-import { WebSocketContext } from "../../WebSocketContext";
-import { playSendSound } from "../SoundEffects/playSendSound";
-import {playPopSound} from "../SoundEffects/playPopSound";
+import {menu} from "../../menuItems";
+import {WebSocketContext} from "../../WebSocketContext";
+import {playSendSound} from "../SoundEffects/playSendSound";
+import {SoundButton} from "../Employee/SoundButton";
 
 const BurgerBuilder = () => {
     const [ingredients, setIngredients] = useState([]);
-    const { send } = useContext(WebSocketContext);
+    const {send} = useContext(WebSocketContext);
     const [fullMessage, setFullMessage] = useState("");
 
     const foodItems = menu[0].children;
@@ -17,10 +17,7 @@ const BurgerBuilder = () => {
         const employeeOrder = ingredients.map(ingredient => ingredient.name);
         send({
             data: {
-                type: "game_state",
-                game_state_update_type: "order_component",
-                component_type: "burger",
-                component: {
+                type: "game_state", game_state_update_type: "order_component", component_type: "burger", component: {
                     ingredients: employeeOrder,
                 }
             }
@@ -35,14 +32,12 @@ const BurgerBuilder = () => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
             setFullMessage("");
-            playPopSound();
             setTimeout(() => {
                 const audio = new Audio(ingredient.audio);
                 audio.play();
             }, 750);
 
-        }
-        else {
+        } else {
             setFullMessage("Plate is Full!");
         }
 
@@ -64,39 +59,37 @@ const BurgerBuilder = () => {
         audio.play();
     }
 
-    return (
-        <div className="BurgerBuilder">
+    return (<div className="BurgerBuilder">
             <div className="TopMenuBurger">
                 <button className="HelpButton" onClick={playHelpMessage}>
                     Help
                 </button>
             </div>
             <div className="IngredientButtons">
-                {foodItems.map((ingredient, index) => (
-                    <button key={index} onClick={() => addIngredient(ingredient)}>
-                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage" />
+                {foodItems.map((ingredient, index) => (<SoundButton key={index} onClick={() => addIngredient(ingredient)}>
+                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage"/>
                         <p>{ingredient.name}</p>
-                    </button>
-                ))}
+                    </SoundButton>))}
             </div>
-            <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
-            <button className="ClearPlateButton" onClick={() => {clearPlate(); playPopSound();}}>
-                <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
+            <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)}/>
+            <SoundButton className="ClearPlateButton" onClick={() => {
+                clearPlate();
+            }}>
+                <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage"/>
                 <p>Delete Burger</p>
-            </button>
+            </SoundButton>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
                 <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage"/>
                 <p>Repeat Order</p>
             </button>
 
             <button onClick={handleSend} className="SendOrderButton">
-                <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
+                <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage"/>
             </button>
             <div className="ErrorMessage">
                 {fullMessage && <p>{fullMessage}</p>}
             </div>
-        </div>
-    );
+        </div>);
 };
 
 export default BurgerBuilder;

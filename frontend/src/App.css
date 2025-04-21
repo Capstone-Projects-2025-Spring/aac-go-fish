@@ -43,14 +43,12 @@
     width: fit-content;
     height: fit-content;
     line-height: 1;
-}
-
-.HelpButton:active {
-    transform: scale(0.95);
-}
-
-.HelpButton:hover {
-    cursor: pointer;
+    :active {
+        transform: scale(0.95);
+    }
+    :hover {
+        cursor: pointer;
+    }
 }
 
 .TopMenu {

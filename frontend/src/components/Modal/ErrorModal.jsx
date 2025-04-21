@@ -9,5 +9,5 @@ export default function ErrorModal({ msg, handleClick }) {
                 👍 OK
             </button>
         </div>
-    </div>, document.getElementById("portal-error"));
+    </div>, document.getElementById("portal"));
 }

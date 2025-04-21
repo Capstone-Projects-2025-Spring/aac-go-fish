@@ -3,8 +3,7 @@ import "./DrinkBuilder.css";
 import DrinkDisplay from "./DrinkDisplay.jsx";
 import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../SoundEffects/playSendSound";
-import Score from "../Score/Score";
-import {playPopSound} from "../SoundEffects/playPopSound";
+import {SoundButton} from "../Employee/SoundButton";
 
 const DrinkBuilder = () => {
     const [color, setColor] = useState([]);
@@ -93,7 +92,6 @@ const DrinkBuilder = () => {
         setColor("");
         setTimeout(() => setColor(selectedColor), 50);
         setColorSelected(true);
-        playPopSound();
         setTimeout(() => {
             const audio = new Audio(`/audio/${selectedName.toLowerCase()}.mp3`);
             audio.play();
@@ -102,14 +100,8 @@ const DrinkBuilder = () => {
 
     const selectCupSize = (size) => {
         if (fillPercentage > 0) return;
-
         setCupSize(size);
         setCupPlaced(true);
-        playPopSound();
-        setTimeout(() => {
-            const audio = new Audio(`/audio/${size.toLowerCase()}.mp3`);
-            audio.play();
-        }, 750);
     };
 
     const playFillingSound = () => {
@@ -144,7 +136,7 @@ const DrinkBuilder = () => {
                 <div className="DrinkButtonsContainer">
                     {drinkColors.map((choice, index) => (
                         <div className="DrinkButtons" key={index}>
-                            <button
+                            <SoundButton
                                 onClick={() => {
                                     selectColor(choice.color);
                                     setCupPosition(-375 + index * 150);
@@ -158,7 +150,7 @@ const DrinkBuilder = () => {
                                 disabled={fillPercentage > 0}
                             >
                                 {choice.name}
-                            </button>
+                            </SoundButton>
                             <img src="/images/station_specific/Dispenser.png" alt="Dispenser" className="DispenserImage" />
                         </div>
                     ))}
@@ -166,27 +158,27 @@ const DrinkBuilder = () => {
             </div>
             <div className="MainContainer">
                 <div className="CupSizeContainer">
-                    <button
+                    <SoundButton
                         className="CupSizeButtons"
                         onClick={() => selectCupSize("small")}
                         disabled={fillPercentage > 0}
                     >
                         <img src="/images/button_icons/SmallButton.png" alt="Small Cup" className="CupSizeImageSmall" />
-                    </button>
-                    <button
+                    </SoundButton>
+                    <SoundButton
                         className="CupSizeButtons"
                         onClick={() => selectCupSize("medium")}
                         disabled={fillPercentage > 0}
                     >
                         <img src="/images/button_icons/MediumButton.png" alt="Medium Cup" className="CupSizeImageMedium" />
-                    </button>
-                    <button
+                    </SoundButton>
+                    <SoundButton
                         className="CupSizeButtons"
                         onClick={() => selectCupSize("large")}
                         disabled={fillPercentage > 0}
                     >
                         <img src="/images/button_icons/LargeButton.png" alt="Large Cup" className="CupSizeImageLarge" />
-                    </button>
+                    </SoundButton>
                 </div>
                 <div className="DrinkDisplayContainer">
                     {cupPlaced && (
@@ -202,10 +194,10 @@ const DrinkBuilder = () => {
                     </div>
                 </div>
                 <div className="ActionButtonsContainer">
-                    <button className="ClearCupButton" onClick={() => {clearCup(); playPopSound()}}>
+                    <SoundButton className="ClearCupButton" onClick={clearCup}>
                         <img src="/images/button_icons/clear_plate.png" alt="Clear Side" className="ClearSideImage" />
                         <p>Clear Cup</p>
-                    </button>
+                    </SoundButton>
                     <button
                         className="FillCupButton"
                         onMouseDown={startFilling}

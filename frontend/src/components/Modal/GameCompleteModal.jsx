@@ -10,5 +10,5 @@ export default function GameCompleteModal({ score }) {
                 🏠 Back to home
             </button>
         </div>
-    </div>, document.getElementById("portal-game"));
+    </div>, document.getElementById("portal"));
 }

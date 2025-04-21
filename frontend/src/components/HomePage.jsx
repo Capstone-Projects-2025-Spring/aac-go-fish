@@ -6,9 +6,6 @@ import { WebSocketContext } from '../WebSocketContext'
 import IngredientScrollPicker from "./IngredientScrollPicker/IngredientScrollPicker";
 
 function HomePage() {
-    const API_PROTOCOL = window.location.protocol === "https:" ? "https://" : "http://";
-    const API_HOST = process.env.REACT_APP_BACKEND_DOMAIN;
-    const API_BASE = `${API_PROTOCOL}${API_HOST}`;
     const [lobbyCode, setLobbyCode] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [ingredient1, setIngredient1] = useState('Bottom Bun');

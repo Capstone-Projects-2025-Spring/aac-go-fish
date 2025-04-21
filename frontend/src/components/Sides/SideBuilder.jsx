@@ -3,8 +3,7 @@ import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
 import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../SoundEffects/playSendSound";
-import Score from "../Score/Score";
-import {playPopSound} from "../SoundEffects/playPopSound";
+import {SoundButton} from "../Employee/SoundButton";
 
 const SideBuilder = () => {
     const [tableState, setTableState] = useState("empty");
@@ -176,21 +175,21 @@ const SideBuilder = () => {
             </div>
             <div className="MainContainer2">
                 <div className="LeftColumn">
-                    <button className="LeftButtons" onClick={() => {placeSide("potatoes"); playPopSound(); playPotato();}}
+                    <SoundButton className="LeftButtons" onClick={() => {placeSide("potatoes"); playPotato();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/station_specific/potatoButton.png" alt="Place Potatoes" className="ButtonImages" />
                         Potato
-                    </button>
-                    <button className="LeftButtons" onClick={() => {placeSide("onions"); playPopSound(); playOnion();}}
+                    </SoundButton>
+                    <SoundButton className="LeftButtons" onClick={() => {placeSide("onions"); playOnion();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/aac_icons/onion.png" alt="Place Onions" className="ButtonImages" />
                         Onion
-                    </button>
-                    <button className="LeftButtons" onClick={() => {placeSide("cheese"); playPopSound(); playCheese();}}
+                    </SoundButton>
+                    <SoundButton className="LeftButtons" onClick={() => {placeSide("cheese"); playCheese();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/aac_icons/cheese.png" alt="Place Cheese" className="ButtonImages" />
                         Cheese
-                    </button>
+                    </SoundButton>
                 </div>
                 <div className="TableBorder">
                     <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} manager={false}/>
@@ -201,13 +200,13 @@ const SideBuilder = () => {
                         <img src="/images/station_specific/knife.png" alt="" className='ButtonImages' />
                         Chop
                     </button>
-                    <button className="RightButtons" onClick={() => {reset(); playPopSound();}}>
+                    <SoundButton className="RightButtons" onClick={reset}>
                         <img src="/images/button_icons/clear_plate.png" alt="Chop Potatoes" className="ResetImage" />
                         Reset
-                    </button>
-                    <button className="SendButton" onClick={() => {handleSend(); playPopSound();}}
+                    </SoundButton>
+                    <SoundButton className="SendButton" onClick={handleSend}>
                         disabled={tableState === "empty" || tableState === "frying"}>Send
-                    </button>
+                    </SoundButton>
                     <button className="RightButtons" onClick={handleRequestRepeat}>
                         <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
                         <p>Repeat Order</p>

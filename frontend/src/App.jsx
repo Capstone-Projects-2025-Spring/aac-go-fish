@@ -14,7 +14,7 @@ import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 const App = () => {
     const {send} = useContext(WebSocketContext);
 
-    const [selectedRole, setSelectedRole] = useState();
+    const [selectedRole, setSelectedRole] = useState("manager");
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
@@ -28,9 +28,9 @@ const App = () => {
     const [isDayCompleteModalOpen, setIsDayCompleteModalOpen] = useState(false);
 
     const [score, setScore] = useState("$0.00");
+    const [dayScore, setDayScore] = useState("$0.00");
     const [day, setDay] = useState(1);
     const [dayCustomers, setDayCustomers] = useState(0);
-    const [dayScore, setDayScore] = useState("$0.00");
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -154,7 +154,7 @@ const App = () => {
 
     return <div className="app-container">
         {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
-        {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={handleHideDayModal}/>}
+        {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={() => setIsDayCompleteModalOpen(false)}/>}
         {(() => {
             switch (selectedRole) {
                 case "manager":

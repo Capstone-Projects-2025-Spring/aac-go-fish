@@ -57,9 +57,8 @@
     background-color: #2196f3;
     color: white;
     box-shadow: 0 4px 0 #1976d2;
-}
-
-.home-button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 0 #1976d2;
+    :hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 0 #1976d2;
+    }
 }
