@@ -86,9 +86,17 @@ const DrinkBuilder = ({ score, day }) => {
     const selectColor = (selectedColor) => {
         if (fillPercentage > 0) return;
 
+        const selectedDrink = drinkColors.find(drink => drink.color === selectedColor);
+        const selectedName = selectedDrink ? selectedDrink.name : "";
+
         setColor("");
         setTimeout(() => setColor(selectedColor), 50);
         setColorSelected(true);
+        playPopSound();
+        setTimeout(() => {
+            const audio = new Audio(`/audio/${selectedName.toLowerCase()}.mp3`);
+            audio.play();
+        }, 750);
     };
 
     const selectCupSize = (size) => {
@@ -96,6 +104,11 @@ const DrinkBuilder = ({ score, day }) => {
 
         setCupSize(size);
         setCupPlaced(true);
+        playPopSound();
+        setTimeout(() => {
+            const audio = new Audio(`/audio/${size.toLowerCase()}.mp3`);
+            audio.play();
+        }, 750);
     };
 
     const playFillingSound = () => {
@@ -111,6 +124,11 @@ const DrinkBuilder = ({ score, day }) => {
         audio.play().catch((err) => {
             console.error("Audio playback failed:", err);
         });
+    };
+
+    const playPopSound = () => {
+        const audio = new Audio("/audio/pop.mp3");
+        audio.play();
     };
 
     return (
@@ -178,7 +196,7 @@ const DrinkBuilder = ({ score, day }) => {
                     </div>
                 </div>
                 <div className="ActionButtonsContainer">
-                    <button className="ClearCupButton" onClick={clearCup}>
+                    <button className="ClearCupButton" onClick={() => {clearCup(); playPopSound()}}>
                         <img src="/images/button_icons/clear_plate.png" alt="Clear Side" className="ClearSideImage" />
                         <p>Clear Cup</p>
                     </button>
