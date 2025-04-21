@@ -60,9 +60,19 @@ const BurgerBuilder = ({ score, day }) => {
         });
     };
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/burger_help.mp3");
+        audio.play();
+    }
+
     return (
         <div className="BurgerBuilder">
-            <Score score={score} day={day} />
+            <div className="TopMenuBurger">
+                <button className="HelpButton" onClick={playHelpMessage}>
+                    Help
+                </button>
+                <Score score={score} day={day}/>
+            </div>
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>
@@ -77,7 +87,7 @@ const BurgerBuilder = ({ score, day }) => {
                 <p>Delete Burger</p>
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
+                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage"/>
                 <p>Repeat Order</p>
             </button>
 

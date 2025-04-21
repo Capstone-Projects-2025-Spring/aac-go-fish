@@ -381,3 +381,23 @@ img.CupImages.smallmini {
 .CupImages.Smini {
     left: 40rem;
 }
+
+.HelpButton {
+    font-size: 36px;
+    border-radius: 6px;
+    color: white;
+    background-color: #697a53;
+    border: 2px solid;
+    border-color: black;
+    align-items: center;
+    text-align: center;
+    width: fit-content;
+    padding: .5rem .25rem;
+}
+
+.TopMenuDrink {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    gap: 10rem;
+}
