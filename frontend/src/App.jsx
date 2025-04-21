@@ -204,7 +204,7 @@ const App = () => {
                     </div>
                     <div className="right-column">
                         <div className="TopMenu">
-                            <button className="HelpButton" onClick={playHelpMessage}>
+                            <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
                                 Help
                             </button>
                             <Score score={score} day={day} />

@@ -68,7 +68,7 @@ const BurgerBuilder = ({ score, day }) => {
     return (
         <div className="BurgerBuilder">
             <div className="TopMenuBurger">
-                <button className="HelpButton" onClick={playHelpMessage}>
+                <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
                     Help
                 </button>
                 <Score score={score} day={day}/>
