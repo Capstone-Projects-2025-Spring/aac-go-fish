@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ItemButton from "./ItemButton";
 
 export default function ItemGrid({ items, onClick }) {
+
     const [openIndex, setOpenIndex] = useState(null);
 
     return (

@@ -15,7 +15,6 @@ const App = () => {
     const {send} = useContext(WebSocketContext);
 
     const [selectedRole, setSelectedRole] = useState("manager");
-    const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
     const [employeeDrink, setEmployeeDrink] = useState(null);
@@ -117,24 +116,6 @@ const App = () => {
 
     useWebSocket(handleMessage);
 
-    const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
-    const removeSelectedItem = (indexToDelete) => setSelectedItems((prev) => prev.filter((_, idx) => idx !== indexToDelete));
-    const clearAllSelected = () => setSelectedItems([]);
-
-    const onPlayAll = async () => {
-        if (selectedItems.length === 0) return;
-        for (const item of selectedItems) {
-            if (item.audio) {
-                const audio = new Audio(item.audio);
-                await new Promise((resolve) => {
-                    audio.play().then(() => {
-                        audio.onended = resolve;
-                    }).catch(resolve);
-                });
-            }
-        }
-    };
-
     const handleGiveToCustomer = () => {
         send({
             data: {
@@ -164,13 +145,7 @@ const App = () => {
                         <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder}/>
                         <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide}/>
                         <Score score={score} day={day}/>
-                        <AACBoard
-                            selectedItems={selectedItems}
-                            onSelectItem={addSelectedItem}
-                            onDeleteItem={removeSelectedItem}
-                            onClearAll={clearAllSelected}
-                            onPlayAll={onPlayAll}
-                        />
+                        <AACBoard/>
                         <button className="send-order" onClick={handleGiveToCustomer}>
                             Send Order
                         </button>
