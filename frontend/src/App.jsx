@@ -177,8 +177,8 @@ const App = () => {
 
     return (
         <div className="app-container">
-            {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
-            {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={handleHideDayModal}/>}
+            {isGameCompleteModalOpen && <GameCompleteModal score={score} />}
+            {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={handleHideDayModal} />}
             {selectedRole === "manager" ? (
                 <>
                     <div className="columns">
@@ -206,7 +206,7 @@ const App = () => {
                             <button className="HelpButton" onClick={playHelpMessage}>
                                 Help
                             </button>
-                            <Score score={score} day={day}/>
+                            <Score score={score} day={day} />
                         </div>
                         <AACBoard
                             selectedItems={selectedItems}
@@ -223,7 +223,7 @@ const App = () => {
                     </div>
                 </>
             ) : selectedRole === "burger" ? (
-                <BurgerBuilder score={score} day={day}/>
+                <BurgerBuilder score={score} day={day} />
             ) : selectedRole === "side" ? (
                 <SideBuilder score={score} day={day} />
             ) : selectedRole == "drink" ? (
