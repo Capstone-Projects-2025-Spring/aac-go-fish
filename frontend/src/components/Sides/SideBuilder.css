@@ -117,27 +117,27 @@
     transform: none;
 }
 
-.Fryer {
-    width: 250px;
-    height: 250px;
-    border: 3px #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    position: relative;
-}
-
 .Fryer:hover {
     border-color: #ffa500
 }
 
-.FryerImage {
-    max-height: 100%;
-    max-width: 100%;
-    position: absolute;
-    z-index: 0;
+
+.Fryer {
+    flex: 0 0 250px;
+    position: relative;
+    width: 250px;
+    height: 250px;
+    bottom: 10rem;
 }
+
+.FryerImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
 
 .Fryer.drop-hover {
     border: 4px dashed #ffa500;
@@ -178,6 +178,7 @@
     border: 4px solid #ff8c00;
     box-shadow: 0 0 20px 5px #ff8c00;
     animation: pulse 1s infinite;
+    height: 50rem;
 }
 
 @keyframes pulse {
