@@ -8,8 +8,10 @@
 ### Dev
 `docker compose -f compose.dev.yaml up --build`
 
-This will run the frontend and backend. The frontend is accessible at
-`localhost:3000` and the backend is accessible at `localhost:8000`.
+This will run the frontend, backend, and observability stack. The frontend is accessible at
+`localhost:3000` and the backend is accessible at `localhost:3000/api`.
+
+Grafana is accessible at `localhost:3000/grafana`.
 
 ## Backend
 
