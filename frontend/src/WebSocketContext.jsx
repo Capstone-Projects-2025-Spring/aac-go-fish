@@ -19,7 +19,8 @@ export function WebSocketProvider({ children }) {
     const removeListener = (fn) => listeners.current.delete(fn);
 
     useEffect(() => {
-        ws.current = new WebSocket(`ws://${process.env.REACT_APP_BACKEND_DOMAIN}/ws`);
+	    const proto = window.location.protocol === "https:" ? "wss" : "ws";
+	    ws.current = new WebSocket(`${proto}://${window.location.host}/api/ws`);
         ws.current.onmessage = (event) => {
             queue.current.push(JSON.parse(event.data));
 			processMessages();

@@ -168,7 +168,7 @@ const SideBuilder = ({ score, day }) => {
                     </button>
                 </div>
                 <div className="TableBorder">
-                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} />
+                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} manager={false}/>
                 </div>
                 <div className="RightColumn">
                     <button className="RightButtons" onClick={chopSide}

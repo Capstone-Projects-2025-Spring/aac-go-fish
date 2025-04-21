@@ -1,4 +1,5 @@
 .mini {
-    transform: scale(0.5);
-    transform-origin: bottom left; /* Optional: controls where it scales from */
-  }
+  transform: scale(0.5);
+  transform-origin: bottom left;
+  /* Optional: controls where it scales from */
+}
