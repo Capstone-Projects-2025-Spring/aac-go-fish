@@ -220,7 +220,7 @@ const DrinkBuilder = ({ score, day }) => {
 
                     </button>
                     <button className="SendButton" onClick={() => {handleSend(); playPopSound()}}>Send</button>
-                    <button className="BottomButtons" onClick={handleRequestRepeat}>
+                    <button className="BottomButtons" onClick={() => {playPopSound(); handleRequestRepeat()}}>
                         <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
                         <p>Repeat Order</p>
                     </button>

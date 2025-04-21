@@ -232,7 +232,7 @@ const SideBuilder = ({ score, day }) => {
                         Send
                     </button>
 
-                    <button className="RightButtons" onClick={playRepeat}>
+                    <button className="RightButtons" onClick={() => {playPopSound(); playRepeat()}}>
                         <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" alt="Repeat" />
                         Repeat Order
                     </button>
