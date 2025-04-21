@@ -3,8 +3,9 @@ import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import { menu } from "../../menuItems";
 import { WebSocketContext } from "../../WebSocketContext";
-import { playSendSound } from "../Manager/playSendSound";
+import { playSendSound } from "../SoundEffects/playSendSound";
 import Score from "../Score/Score";
+import {playPopSound} from "../SoundEffects/playPopSound";
 
 const BurgerBuilder = ({ score, day }) => {
     const [ingredients, setIngredients] = useState([]);
@@ -35,8 +36,7 @@ const BurgerBuilder = ({ score, day }) => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
             setFullMessage("");
-            const popSound = new Audio("/audio/pop.mp3")
-            popSound.play()
+            playPopSound();
             setTimeout(() => {
                 const audio = new Audio(ingredient.audio);
                 audio.play();
@@ -72,7 +72,7 @@ const BurgerBuilder = ({ score, day }) => {
                 ))}
             </div>
             <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
-            <button className="ClearPlateButton" onClick={clearPlate}>
+            <button className="ClearPlateButton" onClick={() => {clearPlate(); playPopSound();}}>
                 <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
                 <p>Delete Burger</p>
             </button>

@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import "./DrinkBuilder.css";
 import DrinkDisplay from "./DrinkDisplay.jsx";
 import { WebSocketContext } from "../../WebSocketContext";
-import { playSendSound } from "../Manager/playSendSound";
+import { playSendSound } from "../SoundEffects/playSendSound";
 import Score from "../Score/Score";
+import {playPopSound} from "../SoundEffects/playPopSound";
 
 const DrinkBuilder = ({ score, day }) => {
     const [color, setColor] = useState([]);
@@ -126,10 +127,6 @@ const DrinkBuilder = ({ score, day }) => {
         });
     };
 
-    const playPopSound = () => {
-        const audio = new Audio("/audio/pop.mp3");
-        audio.play();
-    };
 
     return (
         <div className="DrinkBuilder">
