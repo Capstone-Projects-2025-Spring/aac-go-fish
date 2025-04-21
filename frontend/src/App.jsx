@@ -12,7 +12,7 @@ import {useWebSocket} from "./WebSocketContext";
 import Manager from "./components/Manager/Manager";
 
 const App = () => {
-    const [selectedRole, setSelectedRole] = useState("manager");
+    const [selectedRole, setSelectedRole] = useState("side");
     const [employeeOrder, setEmployeeOrder] = useState({
         burger: null, side: null, drink: null,
     });
@@ -100,28 +100,39 @@ const App = () => {
 
     useWebSocket(handleMessage);
 
+    const playHelpMessage = () => {
+        const audio = new Audio(`audio/${selectedRole}_help.mp3`);
+        audio.play();
+    }
+
+    function HelpButton() {
+        return <button className="help" onClick={playHelpMessage}>
+            ?
+        </button>
+    }
+
+
     return <div className="app-container">
         {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
-        {isDayCompleteModalOpen &&
-            <DayCompleteModal
-                score={dayScore}
-                customers={dayCustomers}
-                handleClick={() => setIsDayCompleteModalOpen(false)}
-            />
-        }
+        {isDayCompleteModalOpen && <DayCompleteModal
+            score={dayScore}
+            customers={dayCustomers}
+            handleClick={() => setIsDayCompleteModalOpen(false)}
+        />}
         <Score score={score} day={day}/>
-        {selectedRole === "manager" &&
-            <Manager
+        <HelpButton />
+            {selectedRole === "manager" && <Manager
                 customerIndex={customerIndex}
                 customerOrder={customerOrder}
                 employeeOrder={employeeOrder}
                 setEmployeeOrder={setEmployeeOrder}
             />}
-        {selectedRole === "burger" && <BurgerBuilder/>}
-        {selectedRole === "side" && <SideBuilder/>}
-        {selectedRole === "drink" && <DrinkBuilder/>}
-        {!["manager", "burger", "side", "drink"].includes(selectedRole) && <HomePage/>}
-    </div>;
+            {selectedRole === "burger" && <BurgerBuilder/>}
+            {selectedRole === "side" && <SideBuilder/>}
+            {selectedRole === "drink" && <DrinkBuilder/>}
+            {!["manager", "burger", "side", "drink"].includes(selectedRole) && <HomePage/>}
+    </div>
+;
 };
 
 export default App;

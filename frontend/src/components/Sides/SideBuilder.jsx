@@ -146,11 +146,6 @@ const SideBuilder = () => {
         });
     };
 
-    const playHelpMessage = () => {
-        const audio = new Audio("/audio/side_help.mp3");
-        audio.play();
-    }
-
     const playPotato = () => {
         const audio = new Audio("/audio/potato.mp3");
         audio.play();
@@ -168,13 +163,8 @@ const SideBuilder = () => {
 
     return (
         <div className="SideBuilder">
-            <div className="TopMenuSides">
-                <button className="HelpButton" onClick={playHelpMessage}>
-                    Help
-                </button>
-            </div>
             <div className="MainContainer2">
-                <div className="LeftColumn">
+                <div className="Column">
                     <SoundButton className="LeftButtons" onClick={() => {placeSide("potatoes"); playPotato();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/station_specific/potatoButton.png" alt="Place Potatoes" className="ButtonImages" />
@@ -194,7 +184,7 @@ const SideBuilder = () => {
                 <div className="TableBorder">
                     <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} manager={false}/>
                 </div>
-                <div className="RightColumn">
+                <div className="Column">
                     <button className="RightButtons" onClick={chopSide}
                         disabled={tableState !== "potatoes" && tableState !== "onions" && tableState !== "cheese"}>
                         <img src="/images/station_specific/knife.png" alt="" className='ButtonImages' />
