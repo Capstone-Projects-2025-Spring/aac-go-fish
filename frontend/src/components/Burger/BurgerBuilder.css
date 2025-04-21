@@ -153,6 +153,10 @@
     height: 100px;
 }
 
+.UndoImage {
+    height: 100px;
+}
+
 .SendOrderButton {
     background: white;
     border: none;
