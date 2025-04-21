@@ -15,13 +15,17 @@ const App = () => {
     const {send} = useContext(WebSocketContext);
 
     const [selectedRole, setSelectedRole] = useState("manager");
-    const [employeeBurger, setEmployeeBurger] = useState(null);
-    const [employeeSide, setEmployeeSide] = useState(null);
-    const [employeeDrink, setEmployeeDrink] = useState(null);
 
-    const [burgerOrder, setBurgerOrder] = useState([]);
-    const [sideOrder, setSideOrder] = useState(null);
-    const [drinkOrder, setDrinkOrder] = useState(null);
+    const [employeeOrder, setEmployeeOrder] = useState({
+        burger: null,
+        side: null,
+        drink: null,
+    });
+    const [customerOrder, setCustomerOrder] = useState({
+        burger: null,
+        side: null,
+        drink: null,
+    });
 
     const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
     const [isDayCompleteModalOpen, setIsDayCompleteModalOpen] = useState(false);
@@ -37,7 +41,6 @@ const App = () => {
     });
 
     const [customerIndex, setCustomerIndex] = useState(-1);
-
 
     const handleMessage = (message) => {
         if (!message) return;
@@ -56,39 +59,34 @@ const App = () => {
             case "game_state":
                 switch (data.game_state_update_type) {
                     case "new_order":
-                        const burger = data.order.burger?.ingredients ?? [];
+                        const burger = data.order.burger?.ingredients;
                         const drink = data.order.drink ?? null;
                         const side = data.order.side ?? null;
 
-                        setBurgerOrder(burger);
-                        setDrinkOrder(drink);
-                        setSideOrder(side);
-
+                        setCustomerOrder({burger, drink, side})
                         setCustomerIndex((customerIndex + 1) % 10);
 
                         break;
                     case "day_end":
-                        const dayScore = data.score ?? 0;
+                        const dayScore = data.score;
                         setDayScore(formatter.format(dayScore / 100));
                         setDayCustomers(data.customers_served)
 
-                        setDay(data.day ?? 0);
+                        setDay(data.day);
 
                         setIsDayCompleteModalOpen(true);
-                        setTimeout(() => {
-                            setIsDayCompleteModalOpen(false);
-                        }, 10000)
+                        setTimeout(() => setIsDayCompleteModalOpen(false), 10000)
                         break;
                     case "order_component":
                         switch (data.component_type) {
                             case "burger":
-                                setEmployeeBurger(data.component.ingredients);
+                                setEmployeeOrder({...employeeOrder, burger: data.component.ingredients});
                                 break;
                             case "drink":
-                                setEmployeeDrink(data.component);
+                                setEmployeeOrder({...employeeOrder, drink: data.component});
                                 break;
                             case "side":
-                                setEmployeeSide(data.component);
+                                setEmployeeOrder({...employeeOrder, side: data.component});
                                 break;
                             default:
                                 console.log(`Unknown component type=${data.component_type}`);
@@ -99,8 +97,7 @@ const App = () => {
                         setSelectedRole(data.role);
                         break;
                     case "order_score":
-                        setScore(data.score);
-                        const score = data.score ?? 0;
+                        const score = data.score;
                         setScore(formatter.format(score / 100));
                         break;
                     default:
@@ -121,15 +118,13 @@ const App = () => {
             data: {
                 type: "game_state", game_state_update_type: "order_submission", order: {
                     burger: {
-                        ingredients: employeeBurger
-                    }, drink: employeeDrink, side: employeeSide
+                        ingredients: employeeOrder.burger
+                    }, drink: employeeOrder.drink, side: employeeOrder.side
                 }
             }
         });
 
-        setEmployeeBurger(null);
-        setEmployeeDrink(null);
-        setEmployeeSide(null);
+        setEmployeeOrder(null);
     };
 
     function MainScreen({ role }) {
@@ -138,8 +133,8 @@ const App = () => {
                 return <>
                     <img src={`images/customers/${customerIndex}.png`}
                          alt={`Customer ${customerIndex}`}/>
-                    <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder}/>
-                    <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide}/>
+                    <MiniOrderDisplay burger={customerOrder.burger} drink={customerOrder.drink} side={customerOrder.side}/>
+                    <MiniOrderDisplay burger={employeeOrder.burger} drink={employeeOrder.drink} side={employeeOrder.side}/>
                     <AACBoard/>
                     <button className="send-order" onClick={handleGiveToCustomer}>
                         Send Order
@@ -161,7 +156,6 @@ const App = () => {
         {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={() => setIsDayCompleteModalOpen(false)}/>}
         <Score score={score} day={day}/>
         <MainScreen role={selectedRole}/>
-
     </div>;
 };
 
