@@ -55,10 +55,20 @@
         "day": {
           "title": "Day",
           "type": "integer"
+        },
+        "customers_served": {
+          "title": "Customers Served",
+          "type": "integer"
+        },
+        "score": {
+          "title": "Score",
+          "type": "integer"
         }
       },
       "required": [
-        "day"
+        "day",
+        "customers_served",
+        "score"
       ],
       "title": "DayEnd",
       "type": "object"
