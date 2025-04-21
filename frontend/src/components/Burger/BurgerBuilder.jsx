@@ -3,8 +3,9 @@ import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import { menu } from "../../menuItems";
 import { WebSocketContext } from "../../WebSocketContext";
-import { playSendSound } from "../Manager/playSendSound";
+import { playSendSound } from "../SoundEffects/playSendSound";
 import Score from "../Score/Score";
+import {playPopSound} from "../SoundEffects/playPopSound";
 
 const BurgerBuilder = ({ score, day }) => {
     const [ingredients, setIngredients] = useState([]);
@@ -35,6 +36,12 @@ const BurgerBuilder = ({ score, day }) => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
             setFullMessage("");
+            playPopSound();
+            setTimeout(() => {
+                const audio = new Audio(ingredient.audio);
+                audio.play();
+            }, 750);
+
         }
         else {
             setFullMessage("Plate is Full!");
@@ -53,9 +60,19 @@ const BurgerBuilder = ({ score, day }) => {
         });
     };
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/burger_help.mp3");
+        audio.play();
+    }
+
     return (
         <div className="BurgerBuilder">
-            <Score score={score} day={day} />
+            <div className="TopMenuBurger">
+                <button className="HelpButton" onClick={playHelpMessage}>
+                    Help
+                </button>
+                <Score score={score} day={day}/>
+            </div>
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>
@@ -65,12 +82,12 @@ const BurgerBuilder = ({ score, day }) => {
                 ))}
             </div>
             <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
-            <button className="ClearPlateButton" onClick={clearPlate}>
+            <button className="ClearPlateButton" onClick={() => {clearPlate(); playPopSound();}}>
                 <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
                 <p>Delete Burger</p>
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
+                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage"/>
                 <p>Repeat Order</p>
             </button>
 

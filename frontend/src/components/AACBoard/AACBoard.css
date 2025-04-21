@@ -63,5 +63,5 @@
 .AACBoardContainer {
     margin-left: -20rem;
     margin-bottom: 20rem;
-    z-index: 9999;
+    z-index: 30;
 }

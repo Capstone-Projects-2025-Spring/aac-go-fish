@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect, useContext } from 'react';
 import "./DrinkBuilder.css";
 import DrinkDisplay from "./DrinkDisplay.jsx";
 import { WebSocketContext } from "../../WebSocketContext";
-import { playSendSound } from "../Manager/playSendSound";
+import { playSendSound } from "../SoundEffects/playSendSound";
 import Score from "../Score/Score";
+import {playPopSound} from "../SoundEffects/playPopSound";
 
 const DrinkBuilder = ({ score, day }) => {
     const [color, setColor] = useState([]);
@@ -86,9 +87,17 @@ const DrinkBuilder = ({ score, day }) => {
     const selectColor = (selectedColor) => {
         if (fillPercentage > 0) return;
 
+        const selectedDrink = drinkColors.find(drink => drink.color === selectedColor);
+        const selectedName = selectedDrink ? selectedDrink.name : "";
+
         setColor("");
         setTimeout(() => setColor(selectedColor), 50);
         setColorSelected(true);
+        playPopSound();
+        setTimeout(() => {
+            const audio = new Audio(`/audio/${selectedName.toLowerCase()}.mp3`);
+            audio.play();
+        }, 750);
     };
 
     const selectCupSize = (size) => {
@@ -96,6 +105,11 @@ const DrinkBuilder = ({ score, day }) => {
 
         setCupSize(size);
         setCupPlaced(true);
+        playPopSound();
+        setTimeout(() => {
+            const audio = new Audio(`/audio/${size.toLowerCase()}.mp3`);
+            audio.play();
+        }, 750);
     };
 
     const playFillingSound = () => {
@@ -105,6 +119,11 @@ const DrinkBuilder = ({ score, day }) => {
         return audio;
     };
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/drink_help.mp3");
+        audio.play();
+    }
+
     const handleRequestRepeat = () => {
         console.log("Employee requests manager to repeat order...");
         const audio = new Audio("/audio/repeat_order.mp3");
@@ -113,9 +132,15 @@ const DrinkBuilder = ({ score, day }) => {
         });
     };
 
+
     return (
         <div className="DrinkBuilder">
-            <Score score={score} day={day} />
+            <div className="TopMenuDrink">
+                <button className="HelpButton" onClick={playHelpMessage}>
+                    Help
+                </button>
+                <Score score={score} day={day}/>
+            </div>
             <div className="DrinkButtons">
                 <div className="DrinkButtonsContainer">
                     {drinkColors.map((choice, index) => (
@@ -178,7 +203,7 @@ const DrinkBuilder = ({ score, day }) => {
                     </div>
                 </div>
                 <div className="ActionButtonsContainer">
-                    <button className="ClearCupButton" onClick={clearCup}>
+                    <button className="ClearCupButton" onClick={() => {clearCup(); playPopSound()}}>
                         <img src="/images/button_icons/clear_plate.png" alt="Clear Side" className="ClearSideImage" />
                         <p>Clear Cup</p>
                     </button>

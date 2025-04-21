@@ -2,11 +2,9 @@ import pytest
 from fastapi.testclient import TestClient
 
 from backend.dependencies import LobbyManager, lobby_manager
-from backend.game import Message
 from backend.hello import app
-from backend.models import Burger, Order, OrderSubmission
 
-lm = LobbyManager(["Lettuce"])
+lm = LobbyManager(["a", "b", "c"])
 
 
 def lobby_manager_override() -> LobbyManager:
@@ -19,84 +17,117 @@ app.dependency_overrides[lobby_manager] = lobby_manager_override
 
 @pytest.fixture
 def lobby_client() -> TestClient:
-    """Create a TestClient with a lobby created."""
+    """Create a TestClient."""
     client = TestClient(app)
-    client.post("lobby")
     return client
 
 
-@pytest.mark.skip(reason="Test function hangs occasionally")
+@pytest.mark.slow
 def test_websocket(lobby_client: TestClient) -> None:
     """Test that websocket connection does not hang."""
-    player_1_response = lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]})
-    lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]})
+    code = lobby_client.post("lobby").json()["code"]
+    player_1_id = lobby_client.post("/lobby/join", json={"code": code}).json()["id"]
+    player_2_id = lobby_client.post("/lobby/join", json={"code": code}).json()["id"]
 
-    player_1_id = player_1_response.json()["id"]
+    with lobby_client.websocket_connect("/ws") as websocket_1, lobby_client.websocket_connect("/ws") as websocket_2:
+        websocket_1.send_json(dict(data=dict(type="initializer", code=code, id=player_1_id)))
+        websocket_2.send_json(dict(data=dict(type="initializer", code=code, id=player_2_id)))
 
-    with lobby_client.websocket_connect("/ws") as websocket:
-        websocket.send_text(
-            '{"data": {"type": "initializer", "code": ["Lettuce", "Lettuce", "Lettuce"], "id": "%s"}}' % player_1_id
-        )
-        websocket.send_text('{"data": {"type": "lobby_lifecycle", "lifecycle_type": "game_start"}}')
-        msg = websocket.receive_json()["data"]
+        # since player_1 joins first, this should be a player count message with count=1
+        player_count = websocket_1.receive_json()
+        assert player_count["data"]["count"] == 1
+        # the next message for player_1 will be the player count update for player_2 joining
+        player_count = websocket_1.receive_json()
+        assert player_count["data"]["count"] == 2
 
-        order = msg["order"]
-        burger = order["burger"]
+        # whereas player_2 should only get the player count for player_2 joining
+        player_count = websocket_2.receive_json()
+        assert player_count["data"]["count"] == 2
 
-        # since we have only one cook, we should have a burger, but no drink or
-        # side.
-        # technically speaking, we _could_ inject a random.Random for testing,
-        # but that seems like too much effort for not much gain
-        assert burger["ingredients"][0] == "bottom bun"
-        assert burger["ingredients"][-1] == "top bun"
+        # player_1 starts the game...
+        websocket_1.send_json(dict(data=dict(type="lobby_lifecycle", lifecycle_type="game_start")))
 
-    assert order["drink"] is None
-    assert order["side"] is None
+        # ...so player_2 receives the start broadcast
+        data = websocket_2.receive_json()["data"]
+        assert data["lifecycle_type"] == "game_start"
 
-    websocket.close()
+        # next message is the role assignment
+        player_1_role = websocket_1.receive_json()["data"]
+        _ = websocket_2.receive_json()["data"]
 
+        if player_1_role["role"] == "manager":
+            manager = websocket_1
+            cook = websocket_2
+        else:
+            manager = websocket_2
+            cook = websocket_1
 
-@pytest.mark.skip(reason="Test function hangs occasionally")
-def test_websocket_spam_chat(lobby_client: TestClient) -> None:
-    """Test that a bunch of chat messages are received and broadcast without pausing."""
-    id = lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]}).json()["id"]
+        # next message to the manager should be the order
+        data = manager.receive_json()["data"]
+        order = data["order"]
+        burger = order["burger"]["ingredients"]
+        assert burger[0] == "Bottom Bun"
+        assert burger[-1] == "Top Bun"
 
-    client_2 = TestClient(app)
-    id_2 = client_2.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]}).json()["id"]
-
-    with (
-        lobby_client.websocket_connect("/ws") as websocket_1,
-        client_2.websocket_connect("/ws") as websocket_2,
-    ):
-        websocket_1.send_text(
-            '{"data": {"type": "initializer", "code": ["Lettuce", "Lettuce", "Lettuce"], "id": "%s"}}' % id
-        )
-        websocket_2.send_text(
-            '{"data": {"type": "initializer", "code": ["Lettuce", "Lettuce", "Lettuce"], "id": "%s"}}' % id_2
-        )
-
-        for _ in range(10):
-            websocket_1.send_text('{"data": {"type": "chat", "typing": true, "id": "%s"}}' % id)
-
-        for _ in range(10):
-            assert websocket_2.receive_json()["data"]["id"] == id
-
-
-@pytest.mark.skip(reason="Test function hangs occasionally")
-def test_websocket_submit_burger_order(lobby_client: TestClient) -> None:
-    """Test that we get a score after submitting an order."""
-    id = lobby_client.post("/lobby/join", json={"code": ["Lettuce", "Lettuce", "Lettuce"]}).json()["id"]
-    with lobby_client.websocket_connect("/ws") as websocket:
-        websocket.send_text(
-            '{"data": {"type": "initializer", "code": ["Lettuce", "Lettuce", "Lettuce"], "id": "%s"}}' % id
-        )
-        websocket.send_text('{"data": {"type": "lobby_lifecycle", "lifecycle_type": "game_start"}}')
-
-        order = websocket.receive_json()["data"]["order"]
-        m = Message(
-            data=OrderSubmission(
-                order=Order(burger=Burger(ingredients=order["burger"]["ingredients"]), drink=None, side=None)
+        # cook should send an order component...
+        cook.send_json(
+            dict(
+                data=dict(
+                    type="game_state",
+                    game_state_update_type="order_component",
+                    component_type="burger",
+                    component=dict(ingredients=burger),
+                )
             )
         )
-        websocket.send_text(m.model_dump_json())
-        # print(websocket.receive_json())
+
+        # ...which should be sent to the manager
+        data = manager.receive_json()["data"]
+        assert data["component"]["ingredients"] == burger
+
+        # manager submits order
+        manager.send_json(
+            dict(
+                data=dict(
+                    type="game_state",
+                    game_state_update_type="order_submission",
+                    order=dict(burger=dict(ingredients=burger), side=None, drink=None),
+                )
+            )
+        )
+
+        # and gets a score
+        data = manager.receive_json()["data"]
+
+        # a perfect burger gets 500
+        assert data["score"] == 500
+
+
+@pytest.mark.slow
+def test_websocket_spam_chat(lobby_client: TestClient) -> None:
+    """Test that a bunch of chat messages are received and broadcast without pausing."""
+    code = lobby_client.post("lobby").json()["code"]
+    player_1_id = lobby_client.post("/lobby/join", json={"code": code}).json()["id"]
+    player_2_id = lobby_client.post("/lobby/join", json={"code": code}).json()["id"]
+
+    with lobby_client.websocket_connect("/ws") as websocket_1, lobby_client.websocket_connect("/ws") as websocket_2:
+        websocket_1.send_json(dict(data=dict(type="initializer", code=code, id=player_1_id)))
+        websocket_2.send_json(dict(data=dict(type="initializer", code=code, id=player_2_id)))
+
+        # since player_1 joins first, this should be a player count message with count=1
+        player_count = websocket_1.receive_json()
+        assert player_count["data"]["count"] == 1
+        # the next message for player_1 will be the player count update for player_2 joining
+        player_count = websocket_1.receive_json()
+        assert player_count["data"]["count"] == 2
+
+        # whereas player_2 should only get the player count for player_2 joining
+        player_count = websocket_2.receive_json()
+        assert player_count["data"]["count"] == 2
+
+        for _ in range(10):
+            websocket_1.send_json(dict(data=dict(type="chat", typing=True, id=player_1_id)))
+
+        for _ in range(10):
+            data = websocket_2.receive_json()["data"]
+            assert data["type"] == "chat"

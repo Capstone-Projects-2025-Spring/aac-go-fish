@@ -3,6 +3,7 @@ import itertools
 import math
 import random
 import threading
+import typing
 from collections import deque
 
 import structlog
@@ -31,11 +32,19 @@ from .models import (
 logger = structlog.stdlib.get_logger(__file__)
 
 BURGER_INGREDIENTS = ["Patty", "Lettuce", "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"]
-DRINK_COLORS = ["Blue", "Red", "Yellow", "Orange", "Purple", "Green"]
-DRINK_SIZES = ["S", "M", "L"]
-SIDE_TYPES = ["Fries", "Onion Rings", "Mozzarella Sticks"]
+DRINK_COLORS = [
+    ["Blue", "#34C6F4"],
+    ["Green", "#99CA3C"],
+    ["Yellow", "#e2d700"],
+    ["Red", "#FF0000"],
+    ["Orange", "#F5841F"],
+    ["Purple", "#7E69AF"],
+]
+DRINK_SIZES = ["small", "medium", "large"]
+SIDE_TYPES = ["fries", "onionRings", "mozzarellaSticks"]
 
 MESSAGES_PER_LOOP = 5
+DAYS_PER_GAME = 5
 
 
 class GameLoop:
@@ -48,6 +57,9 @@ class GameLoop:
         # Acts as source of truth in case any messages fail to send
         self.day = 1
         self.score = 0
+
+        self.customers = dict()
+        self.day_score = {}
 
         self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
         self.order: Order
@@ -71,7 +83,6 @@ class GameLoop:
                         self.lobby.broadcast(Message(data=message.data), exclude=[message.id])
                     case PlayerLeave(id=id):
                         self.lobby.players.pop(id)
-
                         self.lobby.broadcast(Message(data=message.data))
                     case Chat():
                         self.typing_indicator(message)
@@ -79,8 +90,7 @@ class GameLoop:
                         self.manager.send(Message(data=component))
                     case OrderSubmission(order=order):
                         logger.debug("Received order.", order=order)
-                        self.score += self.grade_order(order)
-                        self.lobby.broadcast(Message(data=OrderScore(score=self.score)))
+                        self.handle_scoring(order=order)
                         self.handle_next_order()
                     case _:
                         logger.warning("Unimplemented message.", message=message.data)
@@ -100,16 +110,29 @@ class GameLoop:
         self.started = True
         self.lobby.open = False
 
-        self.assign_roles()
         self.lobby.broadcast(Message(data=GameStart()), exclude=[id])
+        self.assign_roles()
         self.handle_next_order()
 
     def assign_roles(self) -> None:
         """Assign roles to players."""
-        roles = list(Role)[: len(self.lobby.players)]
+        players = self.lobby.players.values()
+        roles = list(Role)[: len(players)]
         random.shuffle(roles)
 
-        for player, role in zip(self.lobby.players.values(), roles, strict=False):
+        for player, role in zip(players, roles, strict=True):
+            player.role = role
+            player.send(Message(data=RoleAssignment(role=role)))
+
+    def rotate_roles(self) -> None:
+        """Rotate player roles such that no player has the same role as the last day."""
+        players = self.lobby.players.values()
+        roles = typing.cast(list[Role], [player.role for player in players])
+
+        # 4 players; efficiency isn't an issue
+        roles.append(roles.pop(0))
+
+        for player, role in zip(players, roles, strict=False):
             player.role = role
             player.send(Message(data=RoleAssignment(role=role)))
 
@@ -117,18 +140,33 @@ class GameLoop:
         """Give manager next order."""
         if len(self.orders) == 0:
             self.handle_new_day()
-            self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
+
+        self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.order = self.orders.pop()
-        logger.debug("Order sent.")
+        logger.debug("Generated order.", order=self.order)
         self.manager.send(Message(data=NewOrder(order=self.order)))
 
     def handle_new_day(self) -> None:
         """Update current day."""
+        customers = self.customers[self.day]
+        day_score = self.day_score[self.day]
         self.day += 1
-        logger.debug("New day.", day=self.day)
-        self.assign_roles()
-        self.lobby.broadcast(Message(data=DayEnd(day=self.day)))
+        if self.day == DAYS_PER_GAME + 1:
+            self.lobby.broadcast(Message(data=GameEnd()))
+            logger.debug("Game complete.")
+        else:
+            logger.debug("New day.", day=self.day)
+            self.rotate_roles()
+            self.lobby.broadcast(Message(data=DayEnd(day=self.day, customers_served=customers, score=day_score)))
+
+    def handle_scoring(self, order: Order) -> None:
+        """Updates all scores."""
+        score = self.grade_order(order)
+        self.customers[self.day] = self.customers.get(self.day, 0) + 1
+        self.day_score[self.day] = self.day_score.get(self.day, 0) + score
+        self.score += score
+        self.lobby.broadcast(Message(data=OrderScore(score=self.score)))
 
     def grade_order(self, order: Order) -> int:
         """
@@ -194,7 +232,7 @@ def get_orders(day: int, num_players: int) -> deque[Order]:
 
 def _orders_on_day(day: int) -> int:
     """Compute the number of orders on a given day."""
-    return day * 2 - 1
+    return day
 
 
 def _generate_order(num_players: int) -> Order:
@@ -208,7 +246,7 @@ def _generate_order(num_players: int) -> Order:
     )
 
     if num_players >= 3:
-        order.drink = Drink(color=random.choice(DRINK_COLORS), fill=0, size=random.choice(DRINK_SIZES))
+        order.drink = Drink(color=random.choice(DRINK_COLORS)[1], fill=100, size=random.choice(DRINK_SIZES))
 
     if num_players >= 4:
         order.side = Side(table_state=random.choice(SIDE_TYPES))

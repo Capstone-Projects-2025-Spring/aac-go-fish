@@ -1,0 +1,65 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: -1.5rem;
+}
+
+.error-msg {
+    font-size: 3rem;
+    font-weight: bold;
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.customers {
+    margin-top: 1.5rem;
+    font-size: 3rem;
+    margin-bottom: -1.5rem;
+}
+
+.score-earned {
+    font-size: 10rem;
+    font-weight: bold;
+    color: forestgreen;
+    text-shadow: 2px 2px #ccc;
+}
+
+.home-button {
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #2196f3;
+    color: white;
+    box-shadow: 0 4px 0 #1976d2;
+}
+
+.home-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 #1976d2;
+}

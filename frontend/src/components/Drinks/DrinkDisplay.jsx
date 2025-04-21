@@ -16,7 +16,7 @@ export default function DrinkDisplay({ color, fillPercentage, cupSize, cupPositi
             className={`CupContainer ${cupSize} ${mini ? "mini" : ""}`}
             style={{
                 transform: `translateX(${cupPosition}px)`,
-                transition: "transform 0.4s ease-in-out"
+                transition: 'transform 0.4s ease-in-out',
             }}
         >
             <div

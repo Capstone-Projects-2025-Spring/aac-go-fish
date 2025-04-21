@@ -68,17 +68,17 @@
 
 .customer-mini-order-overlay {
     top: 0px;
-    right: 0px;
+    right: 12rem;
     position: absolute;
     max-width: 350px;
     margin-top: 25rem;
     margin-right: 25rem;
-    z-index: 30000;
+    z-index: 500;
 }
 
 .manager-mini-order-overlay {
-    bottom: 20px;
-    left: 10px;
+    bottom: -13rem;
+    left: -5rem;
     position: absolute;
     max-width: 350px;
 }
@@ -86,4 +86,41 @@
 button:focus {
     outline: 3px solid #ff7043;
     outline-offset: 2px;
+}
+
+.HelpButton {
+    font-size: 36px;
+    border-radius: 6px;
+    color: white;
+    background-color: #697a53;
+    border: 2px solid;
+    border-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: fit-content;
+    height: fit-content;
+    line-height: 1;
+}
+
+.HelpButton:active {
+    transform: scale(0.95);
+}
+
+.HelpButton:hover {
+    cursor: pointer;
+}
+
+.TopMenu {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: 10rem;
+    width: 100%;
+}
+
+.Score {
+    white-space: nowrap;
+    overflow: hidden;
 }
