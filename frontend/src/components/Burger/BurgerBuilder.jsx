@@ -35,8 +35,13 @@ const BurgerBuilder = ({ score, day }) => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
             setFullMessage("");
-            const audio = new Audio("/audio/pop.mp3");
-            audio.play();
+            const popSound = new Audio("/audio/pop.mp3")
+            popSound.play()
+            setTimeout(() => {
+                const audio = new Audio(ingredient.audio);
+                audio.play();
+            }, 750);
+
         }
         else {
             setFullMessage("Plate is Full!");
