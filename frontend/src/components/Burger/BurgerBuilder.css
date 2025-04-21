@@ -97,6 +97,10 @@
     border-radius: 6px;
 }
 
+.BottomButtons:disabled {
+    cursor: not-allowed;
+}
+
 .BurgerStation {
     position: relative;
     width: 600px;

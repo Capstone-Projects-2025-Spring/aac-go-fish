@@ -48,6 +48,16 @@ const BurgerBuilder = ({ score, day }) => {
         }
 
     };
+
+    const removeIngredient = () => {
+        setIngredients(prevIngredients => {
+            if (prevIngredients.length === 0){
+                return prevIngredients;
+            }
+            return prevIngredients.slice(0,-1);
+        });
+    };
+
     const clearPlate = () => {
         setIngredients([]);
     };
@@ -82,7 +92,7 @@ const BurgerBuilder = ({ score, day }) => {
                 ))}
             </div>
             <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
-            <button className="BottomButtons">
+            <button className="BottomButtons" onClick={() => { removeIngredient(); playPopSound()}} disabled={ingredients.length === 0}>
                 <img src="/images/button_icons/undo.png" alt="Undo" className="UndoImage"/>
                 <p>Undo</p>
             </button>
