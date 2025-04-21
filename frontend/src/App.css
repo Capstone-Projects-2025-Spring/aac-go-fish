@@ -1,13 +1,15 @@
 .app-container {
-    background-image: url('../public/images/customers/empty.png');
     height: 100vh;
     box-sizing: border-box;
     align-content: center;
     justify-items: center;
-}
-
-.customer-image {
-    width: 100%;
+    > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        z-index: -1;
+    }
 }
 
 .send-order {
@@ -21,8 +23,8 @@
     height: 5.0rem;
     width: 15.0rem;
     font-size: 2.0rem;
+    ::after {
+        content: " \27A4";
+    }
 }
 
-.send-order::after {
-  content: " \27A4";
-}

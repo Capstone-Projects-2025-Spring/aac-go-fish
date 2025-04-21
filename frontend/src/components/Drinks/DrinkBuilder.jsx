@@ -3,9 +3,8 @@ import "./DrinkBuilder.css";
 import DrinkDisplay from "./DrinkDisplay.jsx";
 import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../Manager/playSendSound";
-import Score from "../Score/Score";
 
-const DrinkBuilder = ({ score, day }) => {
+const DrinkBuilder = () => {
     const [color, setColor] = useState([]);
     const [fillPercentage, setFillPercentage] = useState(0);
     const fillInterval = useRef(null);
@@ -115,7 +114,6 @@ const DrinkBuilder = ({ score, day }) => {
 
     return (
         <div className="DrinkBuilder">
-            <Score score={score} day={day} />
             <div className="DrinkButtons">
                 <div className="DrinkButtonsContainer">
                     {drinkColors.map((choice, index) => (

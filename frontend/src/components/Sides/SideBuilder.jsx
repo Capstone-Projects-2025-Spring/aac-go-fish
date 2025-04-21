@@ -3,9 +3,8 @@ import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
 import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../Manager/playSendSound";
-import Score from "../Score/Score";
 
-const SideBuilder = ({ score, day }) => {
+const SideBuilder = () => {
     const [tableState, setTableState] = useState("empty");
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
     const fryingIntervalRef = useRef(null);
@@ -148,7 +147,6 @@ const SideBuilder = ({ score, day }) => {
 
     return (
         <div className="SideBuilder">
-            <Score score={score} day={day} />
             <div className="MainContainer2">
                 <div className="LeftColumn">
                     <button className="LeftButtons" onClick={() => placeSide("potatoes")}

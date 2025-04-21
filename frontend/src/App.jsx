@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useState} from "react";
 import "./App.css";
 import BurgerBuilder from "./components/Burger/BurgerBuilder";
 import DrinkBuilder from "./components/Drinks/DrinkBuilder";
@@ -8,10 +8,10 @@ import MiniOrderDisplay from "./components/Manager/MiniOrderDisplay";
 import HomePage from "./components/HomePage";
 import Score from "./components/Score/Score";
 import GameCompleteModal from "./components/GameCompleteModal/GameCompleteModal"
-import { useWebSocket, WebSocketContext } from "./WebSocketContext";
+import {useWebSocket, WebSocketContext} from "./WebSocketContext";
 
 const App = () => {
-    const { send } = useContext(WebSocketContext);
+    const {send} = useContext(WebSocketContext);
 
     const [selectedRole, setSelectedRole] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
@@ -22,14 +22,14 @@ const App = () => {
     const [burgerOrder, setBurgerOrder] = useState([]);
     const [sideOrder, setSideOrder] = useState(null);
     const [drinkOrder, setDrinkOrder] = useState(null);
-    const [orderVisible, setOrderVisible] = useState(false);
 
-    const [customerNumber, setCustomerNumber] = useState(0);
-    const [isCustomerThinking, setIsCustomerThinking] = useState(false);
     const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
 
     const [score, setScore] = useState(0);
     const [day, setDay] = useState(1);
+
+    const [customerIndex, setCustomerIndex] = useState(-1);
+
 
     const handleMessage = (message) => {
         if (!message) return;
@@ -56,17 +56,7 @@ const App = () => {
                         setDrinkOrder(drink);
                         setSideOrder(side);
 
-                        setCustomerNumber((customerNumber + 1) % 10);
-
-                        setOrderVisible(true);
-
-                        const delay = Math.floor(Math.random() * 2000) + 2000;
-
-                        setTimeout(() => {
-                            setIsCustomerThinking(true);
-                            setOrderVisible(true);
-                            console.log(`Order and thinking bubble visible after ${delay}ms`);
-                        }, delay);
+                        setCustomerIndex((customerIndex + 1) % 10);
 
                         break;
                     case "day_end":
@@ -75,15 +65,12 @@ const App = () => {
                     case "order_component":
                         switch (data.component_type) {
                             case "burger":
-                                console.log("burger");
                                 setEmployeeBurger(data.component.ingredients);
                                 break;
                             case "drink":
-                                console.log("drink");
                                 setEmployeeDrink(data.component);
                                 break;
                             case "side":
-                                console.log("side");
                                 setEmployeeSide(data.component);
                                 break;
                             default:
@@ -95,7 +82,7 @@ const App = () => {
                         setSelectedRole(data.role);
                         break;
                     case "order_score":
-                        setScore(data.score ?? 0);
+                        setScore(data.score);
                         break;
                     default:
                         console.log("Unknown game state update type", data.game_state_update_type);
@@ -111,8 +98,7 @@ const App = () => {
     useWebSocket(handleMessage);
 
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
-    const removeSelectedItem = (indexToDelete) =>
-        setSelectedItems((prev) => prev.filter((_, idx) => idx !== indexToDelete));
+    const removeSelectedItem = (indexToDelete) => setSelectedItems((prev) => prev.filter((_, idx) => idx !== indexToDelete));
     const clearAllSelected = () => setSelectedItems([]);
 
     const onPlayAll = async () => {
@@ -132,14 +118,10 @@ const App = () => {
     const handleGiveToCustomer = () => {
         send({
             data: {
-                type: "game_state",
-                game_state_update_type: "order_submission",
-                order: {
+                type: "game_state", game_state_update_type: "order_submission", order: {
                     burger: {
                         ingredients: employeeBurger
-                    },
-                    drink: employeeDrink,
-                    side: employeeSide
+                    }, drink: employeeDrink, side: employeeSide
                 }
             }
         });
@@ -149,23 +131,40 @@ const App = () => {
         setEmployeeSide(null);
     };
 
-    return (
-        <div className="app-container">
-            {orderVisible && (
-                <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder} />
-            )}
-            <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide} />
-            <Score score={score} day={day} />
-            <AACBoard
-                selectedItems={selectedItems}
-                onSelectItem={addSelectedItem}
-                onDeleteItem={removeSelectedItem}
-                onClearAll={clearAllSelected}
-                onPlayAll={onPlayAll}
-            />
-            <button className="send-order" onClick={handleGiveToCustomer}>Send Order</button>
-        </div>
-    );
+
+    return <div className="app-container">
+        {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
+        {(() => {
+            switch (selectedRole) {
+                case "manager":
+                    return <>
+                        <img src={`images/customers/${customerIndex}.png`}
+                             alt={`Customer ${customerIndex}`}/>
+                        <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder}/>
+                        <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide}/>
+                        <Score score={score} day={day}/>
+                        <AACBoard
+                            selectedItems={selectedItems}
+                            onSelectItem={addSelectedItem}
+                            onDeleteItem={removeSelectedItem}
+                            onClearAll={clearAllSelected}
+                            onPlayAll={onPlayAll}
+                        />
+                        <button className="send-order" onClick={handleGiveToCustomer}>
+                            Send Order
+                        </button>
+                    </>;
+                case "burger":
+                    return <BurgerBuilder/>;
+                case "side":
+                    return <SideBuilder/>;
+                case "drink":
+                    return <DrinkBuilder/>;
+                default:
+                    return <HomePage/>;
+            }
+        })()}
+    </div>;
 };
 
 export default App;

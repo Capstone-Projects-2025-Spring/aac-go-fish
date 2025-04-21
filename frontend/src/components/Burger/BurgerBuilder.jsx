@@ -4,9 +4,8 @@ import BurgerStation from "./BurgerStation";
 import { menu } from "../../menuItems";
 import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../Manager/playSendSound";
-import Score from "../Score/Score";
 
-const BurgerBuilder = ({ score, day }) => {
+const BurgerBuilder = () => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);
     const [fullMessage, setFullMessage] = useState("");
@@ -55,7 +54,6 @@ const BurgerBuilder = ({ score, day }) => {
 
     return (
         <div className="BurgerBuilder">
-            <Score score={score} day={day} />
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>
