@@ -10,8 +10,7 @@ export default function SelectedItemsDisplay({selectedItems, onDelete, onClear, 
                 <button
                     className="selected-item-delete"
                     onClick={() => onDelete(index)}
-                >
-
+                > ×
                 </button>
             </span>
         ))}
