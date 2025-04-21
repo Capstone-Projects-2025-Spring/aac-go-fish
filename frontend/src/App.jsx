@@ -1,46 +1,35 @@
-import React, {useContext, useState} from "react";
+import React, {useState} from "react";
 import "./App.css";
 import BurgerBuilder from "./components/Burger/BurgerBuilder";
 import DrinkBuilder from "./components/Drinks/DrinkBuilder";
 import SideBuilder from "./components/Sides/SideBuilder";
-import AACBoard from "./components/AACBoard/AACBoard";
-import MiniOrderDisplay from "./components/Manager/MiniOrderDisplay";
+
 import HomePage from "./components/HomePage";
 import Score from "./components/Score/Score";
 import GameCompleteModal from "./components/Modal/GameCompleteModal";
 import DayCompleteModal from "./components/Modal/DayCompleteModal";
-import { useWebSocket, WebSocketContext } from "./WebSocketContext";
+import {useWebSocket} from "./WebSocketContext";
+import Manager from "./components/Manager/Manager";
 
 const App = () => {
-    const {send} = useContext(WebSocketContext);
-
     const [selectedRole, setSelectedRole] = useState("manager");
-
     const [employeeOrder, setEmployeeOrder] = useState({
-        burger: null,
-        side: null,
-        drink: null,
+        burger: null, side: null, drink: null,
     });
     const [customerOrder, setCustomerOrder] = useState({
-        burger: null,
-        side: null,
-        drink: null,
+        burger: null, side: null, drink: null,
     });
-
     const [isGameCompleteModalOpen, setIsGameCompleteModalOpen] = useState(false);
     const [isDayCompleteModalOpen, setIsDayCompleteModalOpen] = useState(false);
-
     const [score, setScore] = useState("$0.00");
     const [dayScore, setDayScore] = useState("$0.00");
     const [day, setDay] = useState(1);
     const [dayCustomers, setDayCustomers] = useState(0);
+    const [customerIndex, setCustomerIndex] = useState(-1);
 
     const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD'
+        style: 'currency', currency: 'USD'
     });
-
-    const [customerIndex, setCustomerIndex] = useState(-1);
 
     const handleMessage = (message) => {
         if (!message) return;
@@ -71,9 +60,7 @@ const App = () => {
                         const dayScore = data.score;
                         setDayScore(formatter.format(dayScore / 100));
                         setDayCustomers(data.customers_served)
-
                         setDay(data.day);
-
                         setIsDayCompleteModalOpen(true);
                         setTimeout(() => setIsDayCompleteModalOpen(false), 10000)
                         break;
@@ -113,49 +100,27 @@ const App = () => {
 
     useWebSocket(handleMessage);
 
-    const handleGiveToCustomer = () => {
-        send({
-            data: {
-                type: "game_state", game_state_update_type: "order_submission", order: {
-                    burger: {
-                        ingredients: employeeOrder.burger
-                    }, drink: employeeOrder.drink, side: employeeOrder.side
-                }
-            }
-        });
-
-        setEmployeeOrder(null);
-    };
-
-    function MainScreen({ role }) {
-        switch (role) {
-            case "manager":
-                return <>
-                    <img src={`images/customers/${customerIndex}.png`}
-                         alt={`Customer ${customerIndex}`}/>
-                    <MiniOrderDisplay burger={customerOrder.burger} drink={customerOrder.drink} side={customerOrder.side}/>
-                    <MiniOrderDisplay burger={employeeOrder.burger} drink={employeeOrder.drink} side={employeeOrder.side}/>
-                    <AACBoard/>
-                    <button className="send-order" onClick={handleGiveToCustomer}>
-                        Send Order
-                    </button>
-                </>;
-            case "burger":
-                return <BurgerBuilder/>;
-            case "side":
-                return <SideBuilder/>;
-            case "drink":
-                return <DrinkBuilder/>;
-            default:
-                return <HomePage/>;
-        }
-    }
-
     return <div className="app-container">
         {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
-        {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={() => setIsDayCompleteModalOpen(false)}/>}
+        {isDayCompleteModalOpen &&
+            <DayCompleteModal
+                score={dayScore}
+                customers={dayCustomers}
+                handleClick={() => setIsDayCompleteModalOpen(false)}
+            />
+        }
         <Score score={score} day={day}/>
-        <MainScreen role={selectedRole}/>
+        {selectedRole === "manager" &&
+            <Manager
+                customerIndex={customerIndex}
+                customerOrder={customerOrder}
+                employeeOrder={employeeOrder}
+                setEmployeeOrder={setEmployeeOrder}
+            />}
+        {selectedRole === "burger" && <BurgerBuilder/>}
+        {selectedRole === "side" && <SideBuilder/>}
+        {selectedRole === "drink" && <DrinkBuilder/>}
+        {!["manager", "burger", "side", "drink"].includes(selectedRole) && <HomePage/>}
     </div>;
 };
 
