@@ -235,29 +235,17 @@
     align-items: flex-end;
 }
 
-.CupContainer.small {
+.CupContainer.small, .CupContainer.medium, .CupContainer.large {
     width: 5rem;
     height: 1rem;
-}
-
-.CupContainer.medium {
-    width: 5rem;
-    height: 1rem;
-}
-
-.CupContainer.large {
-    width: 5rem;
-    height: 1rem;
+    top: -1rem;
 }
 
 .CupImages {
     height: auto;
     position: absolute;
-    bottom: 0;
-    left: 2.5rem;
-    transform: translateX(-50%);
+    bottom: -3.3rem;
     z-index: 10;
-    top: 1rem;
     max-width: 7rem;
 }
 
@@ -276,8 +264,6 @@
 .FillOverlay {
     position: absolute;
     bottom: 0;
-    left: 49%;
-    transform: translateX(-50%);
     width: 80%;
     height: 0;
     background-color: transparent;
@@ -286,8 +272,7 @@
 }
 
 .FillOverlay.small {
-
-    bottom: -9rem;
+    bottom: -3rem;
     max-width: 3.3rem;
 
 }
@@ -304,7 +289,7 @@ img.CupImages.smallmini {
 }
 
 .FillOverlay.medium {
-    bottom: -10.6rem;
+    bottom: -3rem;
     max-width: 4rem;
 }
 
@@ -320,7 +305,7 @@ img.CupImages.mediummini {
 }
 
 .FillOverlay.large {
-    bottom: -12.6rem;
+    bottom: -3rem;
     max-width: 5rem;
 
 }

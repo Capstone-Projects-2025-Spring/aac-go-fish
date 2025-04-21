@@ -3,8 +3,9 @@ import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import { menu } from "../../menuItems";
 import { WebSocketContext } from "../../WebSocketContext";
-import { playSendSound } from "../Manager/playSendSound";
+import { playSendSound } from "../SoundEffects/playSendSound";
 import Score from "../Score/Score";
+import {playPopSound} from "../SoundEffects/playPopSound";
 
 const BurgerBuilder = ({ score, day }) => {
     const [ingredients, setIngredients] = useState([]);
@@ -35,6 +36,12 @@ const BurgerBuilder = ({ score, day }) => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
             setFullMessage("");
+            playPopSound();
+            setTimeout(() => {
+                const audio = new Audio(ingredient.audio);
+                audio.play();
+            }, 750);
+
         }
         else {
             setFullMessage("Plate is Full!");
@@ -69,14 +76,14 @@ const BurgerBuilder = ({ score, day }) => {
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>
-                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage"/>
+                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage" />
                         <p>{ingredient.name}</p>
                     </button>
                 ))}
             </div>
-            <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)}/>
-            <button className="ClearPlateButton" onClick={clearPlate}>
-                <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage"/>
+            <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
+            <button className="ClearPlateButton" onClick={() => {clearPlate(); playPopSound();}}>
+                <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
                 <p>Delete Burger</p>
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
@@ -85,7 +92,7 @@ const BurgerBuilder = ({ score, day }) => {
             </button>
 
             <button onClick={handleSend} className="SendOrderButton">
-                <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage"/>
+                <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
             <div className="ErrorMessage">
                 {fullMessage && <p>{fullMessage}</p>}

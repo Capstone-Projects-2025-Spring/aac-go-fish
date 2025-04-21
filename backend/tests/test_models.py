@@ -109,8 +109,17 @@ from backend.models import (
             id="OrderSubmission",
         ),
         pytest.param(
-            '{"data": {"type": "game_state", "game_state_update_type": "day_end", "day": 0}}',
-            Message(data=DayEnd(day=0)),
+            """\
+            {
+                "data": {
+                    "type": "game_state",
+                    "game_state_update_type": "day_end",
+                    "day": 0,
+                    "customers_served": 0,
+                    "score": 0
+                }
+            }""",
+            Message(data=DayEnd(day=0, customers_served=0, score=0)),
             id="DayEnd",
         ),
         pytest.param(

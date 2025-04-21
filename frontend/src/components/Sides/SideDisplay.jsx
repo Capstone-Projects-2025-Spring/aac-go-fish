@@ -1,5 +1,5 @@
-export default function SideDisplay({ tableState, fryTimeLeft, onDragStart }) {
-    return (<div className="Table">
+export default function SideDisplay({ tableState, fryTimeLeft, onDragStart, manager }) {
+    return (<div className="Table" style={{...(manager && {width: '5rem'})}}>
         {tableState === "empty" && <p>Table is empty</p>}
         {tableState === "potatoes" && (<img src="/images/aac_icons/potato.png" alt="Potato" className="TableImages" />)}
         {tableState === "onions" && (<img src="/images/aac_icons/onion.png" alt="Onions" className="TableImages" />)}
@@ -36,7 +36,11 @@ export default function SideDisplay({ tableState, fryTimeLeft, onDragStart }) {
                 <p>Time left: {fryTimeLeft} seconds</p>
             </>
         )}
-        {tableState === "fries" && (<img src="/images/aac_icons/fries.png" alt="Fries" className="TableImages" />)}
+        {tableState === "fries" && (<img src="/images/aac_icons/fries.png" alt="Fries" className="TableImages" style={{
+            transform: 'scale(0.8)',
+            position: 'relative',
+            top: '-1.5rem',
+        }}/>)}
         {tableState === "onionRings" && (<img src="/images/aac_icons/OnionRings.png" alt="OnionRings" className="TableImages" />)}
         {tableState === "mozzarellaSticks" && (<img src="/images/aac_icons/mozzarella_sticks.png" alt="Mozzarella Sticks" className="TableImages" />)}
     </div>)

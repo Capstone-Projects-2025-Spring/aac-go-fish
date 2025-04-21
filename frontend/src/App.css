@@ -68,7 +68,7 @@
 
 .customer-mini-order-overlay {
     top: 0px;
-    right: 0px;
+    right: 12rem;
     position: absolute;
     max-width: 350px;
     margin-top: 25rem;
@@ -77,8 +77,8 @@
 }
 
 .manager-mini-order-overlay {
-    bottom: 20px;
-    left: 10px;
+    bottom: -13rem;
+    left: -5rem;
     position: absolute;
     max-width: 350px;
 }

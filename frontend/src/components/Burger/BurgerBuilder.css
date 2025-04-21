@@ -171,19 +171,21 @@
 }
 
 .ketchup-Ingredient {
-    margin-top: 0;
-    margin-bottom: -5px;
+    margin-top: 0px;
+    margin-bottom: -13px;
+    width: 70px;
 }
 
 .lettuce-Ingredient {
-    margin-top: -10px;
-    margin-bottom: -4px;
+    margin-top: -6px;
+    margin-bottom: -7px;
     width: 70px;
 }
 
 .mustard-Ingredient {
-    margin-top: 0;
-    margin-bottom: -5px;
+    margin-top: 0px;
+    margin-bottom: -13px;
+    width: 70px;
 }
 
 .onion-Ingredient {

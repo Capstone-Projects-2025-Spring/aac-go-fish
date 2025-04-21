@@ -26,6 +26,19 @@
     margin-bottom: -1.5rem;
 }
 
+.error-msg {
+    font-size: 3rem;
+    font-weight: bold;
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.customers {
+    margin-top: 1.5rem;
+    font-size: 3rem;
+    margin-bottom: -1.5rem;
+}
+
 .score-earned {
     font-size: 10rem;
     font-weight: bold;
