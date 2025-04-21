@@ -90,9 +90,6 @@ jobs:
   deploy:
     needs: ["coverage", "wss-schema"]
     runs-on: ubuntu-24.04
-    env:
-      GIT_USER: ${{secrets.USER}}
-      GIT_PASS: ${{secrets.TOKEN}}
     permissions:
       contents: write
     steps:
