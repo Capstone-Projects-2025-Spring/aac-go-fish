@@ -151,52 +151,19 @@ const App = () => {
 
     return (
         <div className="app-container">
-            {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
-            {selectedRole === "manager" ? (
-                <>
-                    <div className="columns">
-                        <div className="column">
-                            <div className="customer-container">
-                                <img
-                                    src={customerNumber ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png` : "/images/customers/empty.png"}
-                                    alt="Customer"
-                                    className="customer-image"
-                                />
-                                {orderVisible && (
-                                    <div className="customer-mini-order-overlay">
-                                        <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder} />
-                                    </div>
-                                )}
-                                <img onClick={handleGiveToCustomer} className="SendCustomerOrder" src="/images/button_icons/send_order.png" alt="send customer order" />
-                                <div className="manager-mini-order-overlay">
-                                    <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="right-column">
-                        <Score score={score} day={day} />
-                        <AACBoard
-                            selectedItems={selectedItems}
-                            onSelectItem={addSelectedItem}
-                            onDeleteItem={removeSelectedItem}
-                            onClearAll={clearAllSelected}
-                            onPlayAll={onPlayAll}
-                            burgerOrder={burgerOrder}
-                            drinkOrder={drinkOrder}
-                            hasSide={!!sideOrder}
-                            drinkSize={"medium"}
-                            orderVisible={orderVisible}
-                        />
-                    </div>
-                </>
-            ) : selectedRole === "burger" ? (
-                <BurgerBuilder score={score} day={day} />
-            ) : selectedRole === "side" ? (
-                <SideBuilder score={score} day={day} />
-            ) : selectedRole == "drink" ? (
-                <DrinkBuilder score={score} day={day} />
-            ) : <HomePage />}
+            {orderVisible && (
+                <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder} />
+            )}
+            <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide} />
+            <Score score={score} day={day} />
+            <AACBoard
+                selectedItems={selectedItems}
+                onSelectItem={addSelectedItem}
+                onDeleteItem={removeSelectedItem}
+                onClearAll={clearAllSelected}
+                onPlayAll={onPlayAll}
+            />
+            <button className="send-order" onClick={handleGiveToCustomer}>Send Order</button>
         </div>
     );
 };

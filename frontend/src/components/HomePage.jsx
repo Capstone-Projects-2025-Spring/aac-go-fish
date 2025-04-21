@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Lobby from "./Lobby/Lobby";
 import "./HomePage.css";
-import { WebSocketContext } from '../WebSocketContext';
+import { WebSocketContext } from '../WebSocketContext'
 import IngredientScrollPicker from "./IngredientScrollPicker/IngredientScrollPicker";
 
 function HomePage() {

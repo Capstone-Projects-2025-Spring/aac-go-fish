@@ -1,17 +1,11 @@
 .ScoreText {
-    font-size: 36px;
-    border-radius: 6px;
     color: white;
     background-color: #697a53;
-    border: 2px solid;
-    border-color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     text-align: center;
-    width: fit-content;
-    margin-top: 10px;
-    padding: 10px;
-
-
+    align-content: center;
+    margin: 0;
+    position: absolute;
+    top: 1.0rem;
+    left: 1.0rem;
+    padding: 1.0rem
 }
