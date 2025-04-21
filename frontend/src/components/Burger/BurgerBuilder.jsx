@@ -3,7 +3,8 @@ import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import { menu } from "../../menuItems";
 import { WebSocketContext } from "../../WebSocketContext";
-import { playSendSound } from "../Manager/playSendSound";
+import { playSendSound } from "../SoundEffects/playSendSound";
+import {playPopSound} from "../SoundEffects/playPopSound";
 
 const BurgerBuilder = () => {
     const [ingredients, setIngredients] = useState([]);
@@ -34,6 +35,12 @@ const BurgerBuilder = () => {
         if (ingredients.length <= maxSize) {
             setIngredients([...ingredients, ingredient]);
             setFullMessage("");
+            playPopSound();
+            setTimeout(() => {
+                const audio = new Audio(ingredient.audio);
+                audio.play();
+            }, 750);
+
         }
         else {
             setFullMessage("Plate is Full!");
@@ -52,8 +59,18 @@ const BurgerBuilder = () => {
         });
     };
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/burger_help.mp3");
+        audio.play();
+    }
+
     return (
         <div className="BurgerBuilder">
+            <div className="TopMenuBurger">
+                <button className="HelpButton" onClick={playHelpMessage}>
+                    Help
+                </button>
+            </div>
             <div className="IngredientButtons">
                 {foodItems.map((ingredient, index) => (
                     <button key={index} onClick={() => addIngredient(ingredient)}>
@@ -63,12 +80,12 @@ const BurgerBuilder = () => {
                 ))}
             </div>
             <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
-            <button className="ClearPlateButton" onClick={clearPlate}>
+            <button className="ClearPlateButton" onClick={() => {clearPlate(); playPopSound();}}>
                 <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
                 <p>Delete Burger</p>
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
+                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage"/>
                 <p>Repeat Order</p>
             </button>
 

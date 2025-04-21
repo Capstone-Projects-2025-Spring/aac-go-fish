@@ -23,7 +23,7 @@ export const menu = [
         name: "Burger",
         children: [
             "Bottom Bun", "Top Bun", "Patty", "Lettuce",
-            "Onion", "Tomato", "Ketchup", "Mustard", "Cheese"
+            "Onion", "Tomato", "Cheese", "Ketchup", "Mustard"
         ],
     },
     {

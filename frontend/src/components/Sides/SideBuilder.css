@@ -32,7 +32,6 @@
     padding: 20px;
     width: 500px;
     min-height: 200px;
-    background-color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -224,4 +223,26 @@
 .ResetImage {
     height: 7rem;
     width: 7rem;
+}
+
+.HelpButton {
+    font-size: 36px;
+    border-radius: 6px;
+    color: white;
+    background-color: #697a53;
+    border: 2px solid;
+    border-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: fit-content;
+    padding: .5rem .25rem;
+}
+
+.TopMenuSides {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    gap: 10rem;
 }

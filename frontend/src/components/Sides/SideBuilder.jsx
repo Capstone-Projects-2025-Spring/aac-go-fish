@@ -2,7 +2,9 @@ import React, { useState, useRef, useContext } from 'react';
 import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
 import { WebSocketContext } from "../../WebSocketContext";
-import { playSendSound } from "../Manager/playSendSound";
+import { playSendSound } from "../SoundEffects/playSendSound";
+import Score from "../Score/Score";
+import {playPopSound} from "../SoundEffects/playPopSound";
 
 const SideBuilder = () => {
     const [tableState, setTableState] = useState("empty");
@@ -145,28 +147,53 @@ const SideBuilder = () => {
         });
     };
 
+    const playHelpMessage = () => {
+        const audio = new Audio("/audio/side_help.mp3");
+        audio.play();
+    }
+
+    const playPotato = () => {
+        const audio = new Audio("/audio/potato.mp3");
+        audio.play();
+    };
+
+    const playOnion = () => {
+        const audio = new Audio("/audio/onion.mp3");
+        audio.play();
+    };
+
+    const playCheese = () => {
+        const audio = new Audio("/audio/cheese.mp3");
+        audio.play();
+    };
+
     return (
         <div className="SideBuilder">
+            <div className="TopMenuSides">
+                <button className="HelpButton" onClick={playHelpMessage}>
+                    Help
+                </button>
+            </div>
             <div className="MainContainer2">
                 <div className="LeftColumn">
-                    <button className="LeftButtons" onClick={() => placeSide("potatoes")}
+                    <button className="LeftButtons" onClick={() => {placeSide("potatoes"); playPopSound(); playPotato();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/station_specific/potatoButton.png" alt="Place Potatoes" className="ButtonImages" />
                         Potato
                     </button>
-                    <button className="LeftButtons" onClick={() => placeSide("onions")}
+                    <button className="LeftButtons" onClick={() => {placeSide("onions"); playPopSound(); playOnion();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/aac_icons/onion.png" alt="Place Onions" className="ButtonImages" />
                         Onion
                     </button>
-                    <button className="LeftButtons" onClick={() => placeSide("cheese")}
+                    <button className="LeftButtons" onClick={() => {placeSide("cheese"); playPopSound(); playCheese();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/aac_icons/cheese.png" alt="Place Cheese" className="ButtonImages" />
                         Cheese
                     </button>
                 </div>
                 <div className="TableBorder">
-                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} />
+                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={handleDragStart} manager={false}/>
                 </div>
                 <div className="RightColumn">
                     <button className="RightButtons" onClick={chopSide}
@@ -174,11 +201,11 @@ const SideBuilder = () => {
                         <img src="/images/station_specific/knife.png" alt="" className='ButtonImages' />
                         Chop
                     </button>
-                    <button className="RightButtons" onClick={reset}>
+                    <button className="RightButtons" onClick={() => {reset(); playPopSound();}}>
                         <img src="/images/button_icons/clear_plate.png" alt="Chop Potatoes" className="ResetImage" />
                         Reset
                     </button>
-                    <button className="SendButton" onClick={handleSend}
+                    <button className="SendButton" onClick={() => {handleSend(); playPopSound();}}
                         disabled={tableState === "empty" || tableState === "frying"}>Send
                     </button>
                     <button className="RightButtons" onClick={handleRequestRepeat}>

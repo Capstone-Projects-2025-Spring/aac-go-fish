@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import Lobby from "./Lobby/Lobby";
+import ErrorModal from './Modal/ErrorModal';
 import "./HomePage.css";
 import { WebSocketContext } from '../WebSocketContext'
 import IngredientScrollPicker from "./IngredientScrollPicker/IngredientScrollPicker";
@@ -9,11 +10,13 @@ function HomePage() {
     const API_HOST = process.env.REACT_APP_BACKEND_DOMAIN;
     const API_BASE = `${API_PROTOCOL}${API_HOST}`;
     const [lobbyCode, setLobbyCode] = useState(null);
-    const [errorMsg, setErrorMsg] = useState("");
+    const [errorMsg, setErrorMsg] = useState(null);
     const [ingredient1, setIngredient1] = useState('Bottom Bun');
     const [ingredient2, setIngredient2] = useState('Bottom Bun');
     const [ingredient3, setIngredient3] = useState('Bottom Bun');
     const { send } = useContext(WebSocketContext);
+
+    const [isErrorModalOpen, setIsModalErrorOpen] = useState(false);
 
     useEffect(() => {
         if (window.location.pathname !== "/"){
@@ -26,6 +29,15 @@ function HomePage() {
             setIngredient3(ingredients[2] ?? 'Bottom Bun');
         }
     },[])
+
+    useEffect(() => {
+        if(errorMsg){
+            setIsModalErrorOpen(true)
+            setTimeout(() => {
+                handleHideErrorModal()
+            }, 5000);
+        }
+    }, [errorMsg])
 
     const handleJoin = async (codeArray) => {
         try {
@@ -54,9 +66,6 @@ function HomePage() {
         } catch (err) {
             console.error("Join failed:", err);
             setErrorMsg(err.message);
-            setTimeout(() => {
-                setErrorMsg("");
-            }, 3000);
         }
     };
 
@@ -81,10 +90,14 @@ function HomePage() {
             await handleJoin(code);
         } catch (err) {
             console.error("Create lobby failed:", err);
-            alert("Failed to create lobby.");
+            setErrorMsg("Failed to create lobby.");
         }
     };
 
+    const handleHideErrorModal = () => {
+        setIsModalErrorOpen(false)
+        setErrorMsg(null)
+    }
 
 
 
@@ -94,8 +107,7 @@ function HomePage() {
                 <h1 className="lobby-title">Order Up!</h1>
                 <div className="lobby-subtitle">A Collaborative Cooking Experience</div>
             </div>
-            <div className="ErrorMessage">{errorMsg && <p>{errorMsg}</p>}</div>
-
+            {isErrorModalOpen && <ErrorModal msg={errorMsg} handleClick={handleHideErrorModal} />}
             {!lobbyCode && (
                 <>
                     <div className="wheel-picker-row">
