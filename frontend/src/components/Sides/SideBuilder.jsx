@@ -2,8 +2,9 @@ import React, { useState, useRef, useContext } from 'react';
 import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
 import { WebSocketContext } from "../../WebSocketContext";
-import { playSendSound } from "../Manager/playSendSound";
+import { playSendSound } from "../SoundEffects/playSendSound";
 import Score from "../Score/Score";
+import {playPopSound} from "../SoundEffects/playPopSound";
 
 const SideBuilder = ({ score, day }) => {
     const [tableState, setTableState] = useState("empty");
@@ -146,22 +147,37 @@ const SideBuilder = ({ score, day }) => {
         });
     };
 
+    const playPotato = () => {
+        const audio = new Audio("/audio/potato.mp3");
+        audio.play();
+    };
+
+    const playOnion = () => {
+        const audio = new Audio("/audio/onion.mp3");
+        audio.play();
+    };
+
+    const playCheese = () => {
+        const audio = new Audio("/audio/cheese.mp3");
+        audio.play();
+    };
+
     return (
         <div className="SideBuilder">
             <Score score={score} day={day} />
             <div className="MainContainer2">
                 <div className="LeftColumn">
-                    <button className="LeftButtons" onClick={() => placeSide("potatoes")}
+                    <button className="LeftButtons" onClick={() => {placeSide("potatoes"); playPopSound(); playPotato();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/station_specific/potatoButton.png" alt="Place Potatoes" className="ButtonImages" />
                         Potato
                     </button>
-                    <button className="LeftButtons" onClick={() => placeSide("onions")}
+                    <button className="LeftButtons" onClick={() => {placeSide("onions"); playPopSound(); playOnion();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/aac_icons/onion.png" alt="Place Onions" className="ButtonImages" />
                         Onion
                     </button>
-                    <button className="LeftButtons" onClick={() => placeSide("cheese")}
+                    <button className="LeftButtons" onClick={() => {placeSide("cheese"); playPopSound(); playCheese();}}
                         disabled={tableState !== "empty"}>
                         <img src="/images/aac_icons/cheese.png" alt="Place Cheese" className="ButtonImages" />
                         Cheese
@@ -176,11 +192,11 @@ const SideBuilder = ({ score, day }) => {
                         <img src="/images/station_specific/knife.png" alt="" className='ButtonImages' />
                         Chop
                     </button>
-                    <button className="RightButtons" onClick={reset}>
+                    <button className="RightButtons" onClick={() => {reset(); playPopSound();}}>
                         <img src="/images/button_icons/clear_plate.png" alt="Chop Potatoes" className="ResetImage" />
                         Reset
                     </button>
-                    <button className="SendButton" onClick={handleSend}
+                    <button className="SendButton" onClick={() => {handleSend(); playPopSound();}}
                         disabled={tableState === "empty" || tableState === "frying"}>Send
                     </button>
                     <button className="RightButtons" onClick={handleRequestRepeat}>
