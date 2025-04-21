@@ -140,7 +140,8 @@ class GameLoop:
         """Give manager next order."""
         if len(self.orders) == 0:
             self.handle_new_day()
-            self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
+
+        self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.order = self.orders.pop()
         logger.debug("Generated order.", order=self.order)
