@@ -8,9 +8,9 @@ const handleRequestRepeat = () => {
     });
 };
 
-export default function EmployeeStation({ handleSend }) {
+export default function EmployeeStation() {
     return <>
-        <button className="BottomButtons" onClick={handleRequestRepeat}>
+        <button onClick={handleRequestRepeat}>
             <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" alt="Request repeat order"/>
             <p>Repeat Order</p>
         </button>

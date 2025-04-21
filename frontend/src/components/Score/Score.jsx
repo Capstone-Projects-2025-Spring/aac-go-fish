@@ -1,9 +1,5 @@
 import "./Score.css";
 
-const Score = ({ score, day }) =>{
-    return <div className="Score">
-        <p className="ScoreText">Day {day} - {score}</p>
-    </div>
+export default function Score({ score, day }) {
+    return <p className="ScoreText">Day {day} - {score}</p>
 }
-
-export default Score;

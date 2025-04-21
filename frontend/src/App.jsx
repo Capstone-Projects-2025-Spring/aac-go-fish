@@ -132,34 +132,36 @@ const App = () => {
         setEmployeeSide(null);
     };
 
+    function MainScreen({ role }) {
+        switch (role) {
+            case "manager":
+                return <>
+                    <img src={`images/customers/${customerIndex}.png`}
+                         alt={`Customer ${customerIndex}`}/>
+                    <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder}/>
+                    <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide}/>
+                    <AACBoard/>
+                    <button className="send-order" onClick={handleGiveToCustomer}>
+                        Send Order
+                    </button>
+                </>;
+            case "burger":
+                return <BurgerBuilder/>;
+            case "side":
+                return <SideBuilder/>;
+            case "drink":
+                return <DrinkBuilder/>;
+            default:
+                return <HomePage/>;
+        }
+    }
 
     return <div className="app-container">
         {isGameCompleteModalOpen && <GameCompleteModal score={score}/>}
         {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={() => setIsDayCompleteModalOpen(false)}/>}
-        {(() => {
-            switch (selectedRole) {
-                case "manager":
-                    return <>
-                        <img src={`images/customers/${customerIndex}.png`}
-                             alt={`Customer ${customerIndex}`}/>
-                        <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder}/>
-                        <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide}/>
-                        <Score score={score} day={day}/>
-                        <AACBoard/>
-                        <button className="send-order" onClick={handleGiveToCustomer}>
-                            Send Order
-                        </button>
-                    </>;
-                case "burger":
-                    return <BurgerBuilder/>;
-                case "side":
-                    return <SideBuilder/>;
-                case "drink":
-                    return <DrinkBuilder/>;
-                default:
-                    return <HomePage/>;
-            }
-        })()}
+        <Score score={score} day={day}/>
+        <MainScreen role={selectedRole}/>
+
     </div>;
 };
 

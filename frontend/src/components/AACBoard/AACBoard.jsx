@@ -2,7 +2,6 @@
 import "./AACBoard.css";
 import ItemGrid from "./ItemGrid";
 import SelectedItemsDisplay from "./SelectedItemsDisplay";
-import { menu } from "../../menuItems";
 import {useState} from "react";
 function AACBoard() {
     const [selectedItems, setSelectedItems] = useState([]);
@@ -24,7 +23,7 @@ function AACBoard() {
 
     return (
         <>
-            <ItemGrid items={menu} onClick={addItem} />
+            <ItemGrid onClick={addItem} />
             <SelectedItemsDisplay selectedItems={selectedItems} onClear={clearAll} onPlay={playAll}/>
         </>
     );

@@ -34,8 +34,7 @@
     border-radius: 6px;
     color: white;
     background-color: #697a53;
-    border: 2px solid;
-    border-color: black;
+    border: 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,17 +48,4 @@
     :hover {
         cursor: pointer;
     }
-}
-
-.TopMenu {
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
-    gap: 10rem;
-    width: 100%;
-}
-
-.Score {
-    white-space: nowrap;
-    overflow: hidden;
 }
