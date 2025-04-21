@@ -1,8 +1,8 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Lobby from "./Lobby/Lobby";
 import ErrorModal from './Modal/ErrorModal';
 import "./HomePage.css";
-import { WebSocketContext } from '../WebSocketContext'
+import {WebSocketContext} from '../WebSocketContext'
 import IngredientScrollPicker from "./IngredientScrollPicker/IngredientScrollPicker";
 
 function HomePage() {
@@ -11,12 +11,12 @@ function HomePage() {
     const [ingredient1, setIngredient1] = useState('Bottom Bun');
     const [ingredient2, setIngredient2] = useState('Bottom Bun');
     const [ingredient3, setIngredient3] = useState('Bottom Bun');
-    const { send } = useContext(WebSocketContext);
+    const {send} = useContext(WebSocketContext);
 
     const [isErrorModalOpen, setIsModalErrorOpen] = useState(false);
 
     useEffect(() => {
-        if (window.location.pathname !== "/"){
+        if (window.location.pathname !== "/") {
             const pathname = window.location.pathname.slice(1);
             console.log("Pathname is " + pathname);
 
@@ -25,10 +25,10 @@ function HomePage() {
             setIngredient2(ingredients[1] ?? 'Bottom Bun');
             setIngredient3(ingredients[2] ?? 'Bottom Bun');
         }
-    },[])
+    }, [])
 
     useEffect(() => {
-        if(errorMsg){
+        if (errorMsg) {
             setIsModalErrorOpen(true)
             setTimeout(() => {
                 handleHideErrorModal()
@@ -39,23 +39,19 @@ function HomePage() {
     const handleJoin = async (codeArray) => {
         try {
             const response = await fetch(`/api/lobby/join`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ code: codeArray }),
+                method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({code: codeArray}),
             });
 
             if (!response.ok) {
-                const body =  await response.json();
+                const body = await response.json();
                 throw new Error(body.detail);
             }
 
-            const { id } = await response.json();
+            const {id} = await response.json();
 
             send({
                 data: {
-                    type: "initializer",
-                    code: codeArray,
-                    id
+                    type: "initializer", code: codeArray, id
                 }
             });
 
@@ -97,23 +93,18 @@ function HomePage() {
     }
 
 
-
-    return (
-        <div className="homepage-container">
+    return (<div className="homepage-container">
             <div className="lobby-header">
                 <h1 className="lobby-title">Order Up!</h1>
                 <div className="lobby-subtitle">A Collaborative Cooking Experience</div>
             </div>
-            {isErrorModalOpen && <ErrorModal msg={errorMsg} handleClick={handleHideErrorModal} />}
-            {!lobbyCode && (
-                <>
+            {isErrorModalOpen && <ErrorModal msg={errorMsg} handleClick={handleHideErrorModal}/>}
+            {!lobbyCode && (<>
                     <div className="wheel-picker-row">
-                        <IngredientScrollPicker selected={ingredient1} setSelected={setIngredient1} />
-                        <IngredientScrollPicker selected={ingredient2} setSelected={setIngredient2} />
-                        <IngredientScrollPicker selected={ingredient3} setSelected={setIngredient3} />
+                        <IngredientScrollPicker selected={ingredient1} setSelected={setIngredient1}/>
+                        <IngredientScrollPicker selected={ingredient2} setSelected={setIngredient2}/>
+                        <IngredientScrollPicker selected={ingredient3} setSelected={setIngredient3}/>
                     </div>
-
-
 
                     <div className="homepage-actions">
                         <button
@@ -122,7 +113,6 @@ function HomePage() {
                         >
                             Create Lobby
                         </button>
-
                         <button
                             className="join-button"
                             onClick={joinLobby}
@@ -130,33 +120,26 @@ function HomePage() {
                         >
                             Join Lobby
                         </button>
-
                     </div>
-                </>
-            )}
+                </>)}
 
-            {lobbyCode && (
-                <>
+            {lobbyCode && (<>
                     <div className="lobby-code-display">
                         <div className="code-images">
-                            {lobbyCode.split('-').map((name, i) => (
-                                <img
+                            {lobbyCode.split('-').map((name, i) => (<img
                                     key={i}
                                     src={`/images/aac_icons/${name.toLowerCase().replace(' ', '_')}.png`}
                                     alt={name}
                                     className="code-image"
-                                />
-                            ))}
+                                />))}
                         </div>
                     </div>
-                    <Lobby lobbyCode={lobbyCode} />
-                </>
-            )}
+                    <Lobby lobbyCode={lobbyCode}/>
+                </>)}
             <div className="game-description">
                 <h3>Cook delicious food with your friends!</h3>
             </div>
-        </div>
-    );
+        </div>);
 }
 
 export default HomePage;
