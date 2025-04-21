@@ -1,11 +1,9 @@
 # How to Run
 ### Website Access
-[Frontend Host](https://bankruptcyassociation.com/api/docs)
-
-[Backend Host](https://bankruptcyassociation.com/api/docs)
+https://bankruptcyassociation.com
 
 ## Running locally
-Make sure you have [Docker Compose](https://docs.docker.com/compose/install/) installed to run our project. 
+Make sure you have [Docker Compose](https://docs.docker.com/compose/install/) installed to run our project.
 - Check that you have Docker Compose installed with the following command:
 ```
 docker compose version
@@ -17,7 +15,7 @@ docker compose version
 ```
 docker compose -f compose.yaml -f compose.dev.yaml up --build
 ```
-Once the containers are running, the frontend of the project will be accessible from `http://localhost` and the backend API will be accessible from `http://localhost/api/docs`.
+Once the containers are running, the project will be accessible from `http://localhost`
 
 ## Additional Information
 
@@ -32,4 +30,3 @@ To run the tests, use `uv run -- pytest`.
 The prod profile uses our public docker containers for deploying to a website, **ignore this if you are not deploying to a website**
 
 `docker compose --profile prod up`
-
