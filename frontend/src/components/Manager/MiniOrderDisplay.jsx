@@ -14,36 +14,36 @@ export default function MiniOrderDisplay({ burger, drink, side }) {
     return (
         (isBurger || isSide || isDrink) && (
             <div className="mini-order-display">
-                {isBurger && (
-                    <div className="burger">
-                        <BurgerDisplay
-                            imagePaths={burger.map((ingredient) => {
-                                if (typeof ingredient === "string") {
-                                    return menuMap.Burger[ingredient]?.sideImage ?? "";
-                                } else if (ingredient.sideImage) {
-                                    return ingredient.sideImage;
-                                }
-                                return "";
-                            })}
-                        />
-                    </div>
-                )}
-                {isDrink && (
-                    <div className="drink">
+                <div className="burger" style={{...(!isDrink && !isSide && {transform: 'scale(1.2)', position: 'relative', left: '7rem'})}}>
+                    {isBurger ? (
+                    <BurgerDisplay
+                        imagePaths={burger.map((ingredient) => {
+                            if (typeof ingredient === "string") {
+                                return menuMap.Burger[ingredient]?.sideImage ?? "";
+                            } else if (ingredient.sideImage) {
+                                return ingredient.sideImage;
+                            }
+                            return "";
+                        })}
+                    />
+                    ) : null}
+                </div>
+                <div className="drink">
+                    {isDrink ? (
                         <DrinkDisplay
-                            color={drink.color}
-                            fillPercentage={drink.fill}
-                            cupSize={drink.size}
-                            mini={false}
-                            cupPosition={0}
+                        color={drink.color}
+                        fillPercentage={drink.fill}
+                        cupSize={drink.size}
+                        mini={false}
+                        cupPosition={0}
                         />
-                    </div>
-                )}
-                {isSide && (
-                    <div className="side">
+                    ) : null}
+                </div>
+                <div className="side">
+                    {isSide ? (
                         <SideDisplay tableState={side.table_state} manager={true}/>
-                    </div>
-                )}
+                    ) : null}
+                </div>
             </div>
         )
     );
