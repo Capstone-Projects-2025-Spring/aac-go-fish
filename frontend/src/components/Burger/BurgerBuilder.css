@@ -97,6 +97,10 @@
     border-radius: 6px;
 }
 
+.BottomButtons:disabled {
+    cursor: not-allowed;
+}
+
 .BurgerStation {
     position: relative;
     width: 600px;
@@ -150,6 +154,10 @@
 }
 
 .SendImage {
+    height: 100px;
+}
+
+.UndoImage {
     height: 100px;
 }
 
