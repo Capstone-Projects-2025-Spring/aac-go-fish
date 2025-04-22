@@ -94,10 +94,8 @@ const DrinkBuilder = ({ score, day }) => {
         setTimeout(() => setColor(selectedColor), 50);
         setColorSelected(true);
         playPopSound();
-        setTimeout(() => {
-            const audio = new Audio(`/audio/${selectedName.toLowerCase()}.mp3`);
-            audio.play();
-        }, 750);
+        const audio = new Audio(`/audio/${selectedName.toLowerCase()}.mp3`);
+        audio.play();
     };
 
     const selectCupSize = (size) => {
@@ -106,10 +104,8 @@ const DrinkBuilder = ({ score, day }) => {
         setCupSize(size);
         setCupPlaced(true);
         playPopSound();
-        setTimeout(() => {
             const audio = new Audio(`/audio/${size.toLowerCase()}.mp3`);
             audio.play();
-        }, 750);
     };
 
     const playFillingSound = () => {

@@ -1,4 +1,5 @@
 export const playPopSound = () => {
-    const audio = new Audio("/audio/pop.mp3");
-    audio.play();
+    const pop = new Audio("/audio/pop.mp3");
+    pop.volume = 0.2;
+    pop.play();
 };

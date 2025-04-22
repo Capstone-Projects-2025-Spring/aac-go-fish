@@ -37,10 +37,8 @@ const BurgerBuilder = ({ score, day }) => {
             setIngredients([...ingredients, ingredient]);
             setFullMessage("");
             playPopSound();
-            setTimeout(() => {
-                const audio = new Audio(ingredient.audio);
-                audio.play();
-            }, 750);
+            const audio = new Audio(ingredient.audio);
+            audio.play();
 
         }
         else {
