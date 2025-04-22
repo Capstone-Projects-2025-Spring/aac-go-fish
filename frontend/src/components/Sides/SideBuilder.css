@@ -295,3 +295,13 @@ img.SendImg {
     align-items: baseline;
     gap: 10rem;
 }
+
+img.ButtonImages.cheese-img {
+    width: auto;
+}
+
+
+img.TableImages.choppedCheese-img {
+    width: 10rem;
+    margin-left: -2rem;
+}
