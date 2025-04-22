@@ -5,7 +5,7 @@ export default function BurgerStation({ imagePaths }) {
         <div className="BurgerStation">
             <img
                 className="GrillImage"
-                src="/images/station_specific/kitchen.png"
+                src="/images/station_specific/kitchenPlate.png"
                 alt="grill station"
             />
             <div className="BurgerStack">
