@@ -48,6 +48,16 @@ const BurgerBuilder = ({ score, day }) => {
         }
 
     };
+
+    const removeIngredient = () => {
+        setIngredients(prevIngredients => {
+            if (prevIngredients.length === 0){
+                return prevIngredients;
+            }
+            return prevIngredients.slice(0,-1);
+        });
+    };
+
     const clearPlate = () => {
         setIngredients([]);
     };
@@ -82,15 +92,19 @@ const BurgerBuilder = ({ score, day }) => {
                 ))}
             </div>
             <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
-            <button className="ClearPlateButton" onClick={() => {clearPlate(); playPopSound();}}>
+            <button className="BottomButtons" onClick={() => { removeIngredient(); playPopSound()}} disabled={ingredients.length === 0}>
+                <img src="/images/button_icons/undo.png" alt="Undo" className="UndoImage"/>
+                <p>Undo</p>
+            </button>
+            <button className="ClearPlateButton" onClick={() => {
+                clearPlate(); playPopSound();}}>
                 <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
                 <p>Delete Burger</p>
             </button>
             <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage"/>
+                <img src="/images/button_icons/repeat_order.png" alt="Repeat Order" className="RepeatOrderImage"/>
                 <p>Repeat Order</p>
             </button>
-
             <button onClick={handleSend} className="SendOrderButton">
                 <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
