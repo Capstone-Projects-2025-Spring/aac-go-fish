@@ -122,7 +122,7 @@ const SideBuilder = ({ score, day }) => {
             : sideType === "onionRings"
                 ? "/images/food_side_view/onion_side.png"
                 : sideType === "mozzarellaSticks"
-                    ? "/images/food_side_view/cheese_side.png"
+                    ? "/images/food_side_view/SlicedMozzarella.png"
                     : null;
 
     return (
@@ -155,11 +155,12 @@ const SideBuilder = ({ score, day }) => {
                                         ? "/images/station_specific/potatoButton.png"
                                         : raw === "onions"
                                             ? "/images/aac_icons/onion.png"
-                                            : "/images/aac_icons/cheese.png"
+                                            : "/images/food_side_view/Mozzarella.png"
                                 }
                                 alt={raw}
-                                className="ButtonImages"
+                                className={`ButtonImages ${raw}-img`}
                             />
+
                             {raw.charAt(0).toUpperCase() + raw.slice(1)}
                         </button>
                     ))}

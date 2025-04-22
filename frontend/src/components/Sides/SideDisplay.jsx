@@ -1,16 +1,16 @@
 export default function SideDisplay({ tableState, fryTimeLeft, onDragStart, manager }) {
-    return (<div className="Table" style={{...(manager && {width: '5rem'})}}>
+    return (<div className="Table" style={{ ...(manager && { width: '5rem' }) }}>
         {tableState === "empty" && <p>Table is empty</p>}
         {tableState === "potatoes" && (<img src="/images/aac_icons/potato.png" alt="Potato" className="TableImages" />)}
         {tableState === "onions" && (<img src="/images/aac_icons/onion.png" alt="Onions" className="TableImages" />)}
-        {tableState === "cheese" && (<img src="/images/aac_icons/cheese.png" alt="Cheese" className="TableImages" />)}
+        {tableState === "cheese" && (<img src="/images/food_side_view/Mozzarella.png" alt="Cheese" className="TableImages" />)}
         {tableState === "choppedPotatoes" && (
             <div
                 className="DraggableItem"
                 draggable="true"
                 onDragStart={(event) => onDragStart(event, "choppedPotatoes")}
             >
-                <img src="/images/station_specific/choppedPotatoes.png" alt="ChoppedPotatoes" className="TableImages" />
+                <img src="/images/station_specific/choppedPotatoes.png" alt="ChoppedPotatoes" className={`TableImages ${tableState}-img`} />
             </div>
         )}
         {tableState === "choppedOnions" && (
@@ -19,7 +19,7 @@ export default function SideDisplay({ tableState, fryTimeLeft, onDragStart, mana
                 draggable="true"
                 onDragStart={(event) => onDragStart(event, "choppedOnions")}
             >
-                <img src="/images/food_side_view/onion_side.png" alt="ChoppedOnions" className="TableImages" />
+                <img src="/images/food_side_view/onion_side.png" alt="ChoppedOnions" className={`TableImages ${tableState}-img`} />
             </div>
         )}
         {tableState === "choppedCheese" && (
@@ -28,7 +28,7 @@ export default function SideDisplay({ tableState, fryTimeLeft, onDragStart, mana
                 draggable="true"
                 onDragStart={(event) => onDragStart(event, "choppedCheese")}
             >
-                <img src="/images/food_side_view/cheese_side.png" alt="ChoppedCheese" className="TableImages" />
+                <img src="/images/food_side_view/SlicedMozzarella.png" alt="ChoppedCheese" className={`TableImages ${tableState}-img`} />
             </div>
         )}
         {tableState === "frying" && (
@@ -40,7 +40,7 @@ export default function SideDisplay({ tableState, fryTimeLeft, onDragStart, mana
             transform: 'scale(0.8)',
             position: 'relative',
             top: '-1.5rem',
-        }}/>)}
+        }} />)}
         {tableState === "onionRings" && (<img src="/images/aac_icons/OnionRings.png" alt="OnionRings" className="TableImages" />)}
         {tableState === "mozzarellaSticks" && (<img src="/images/aac_icons/mozzarella_sticks.png" alt="Mozzarella Sticks" className="TableImages" />)}
     </div>)
