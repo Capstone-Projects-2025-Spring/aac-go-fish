@@ -95,7 +95,7 @@ const BurgerBuilder = ({ score, day }) => {
                 <p>Undo</p>
             </button>
             <button className="ClearPlateButton" onClick={() => {
-                clearPlate(); playPopSound();}}>
+                clearPlate(); playPopSound();}} disabled={ingredients.length === 0}>
                 <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
                 <p>Delete Burger</p>
             </button>
