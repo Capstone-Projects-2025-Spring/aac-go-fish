@@ -19,7 +19,7 @@ export default function SideDisplay({ tableState, fryTimeLeft, onDragStart, mana
                 draggable="true"
                 onDragStart={(event) => onDragStart(event, "choppedOnions")}
             >
-                <img src="/images/food_side_view/onion_side.png" alt="ChoppedOnions" className={`TableImages ${tableState}-img`} />
+                <img src="/images/food_side_view/slicedOnion.png" alt="ChoppedOnions" className={`TableImages ${tableState}-img`} />
             </div>
         )}
         {tableState === "choppedCheese" && (

@@ -120,7 +120,7 @@ const SideBuilder = ({ score, day }) => {
         sideType === "fries"
             ? "/images/station_specific/choppedPotatoes.png"
             : sideType === "onionRings"
-                ? "/images/food_side_view/onion_side.png"
+                ? "/images/food_side_view/sliced_onion.png"
                 : sideType === "mozzarellaSticks"
                     ? "/images/food_side_view/SlicedMozzarella.png"
                     : null;
