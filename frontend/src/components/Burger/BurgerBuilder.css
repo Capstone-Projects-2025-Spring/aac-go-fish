@@ -85,6 +85,10 @@
     border-radius: 6px;
 }
 
+.ClearPlateButton:disabled{
+    cursor: not-allowed;
+}
+
 .BottomButtons {
     min-width: 120px;
     min-height: 40px;

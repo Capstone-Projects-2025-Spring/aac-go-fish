@@ -4,6 +4,7 @@ import ErrorModal from './Modal/ErrorModal';
 import "./HomePage.css";
 import { WebSocketContext } from '../WebSocketContext';
 import IngredientScrollPicker from "./IngredientScrollPicker/IngredientScrollPicker";
+import {playPopSound} from "./SoundEffects/playPopSound";
 
 function HomePage() {
     const API_PROTOCOL = window.location.protocol === "https:" ? "https://" : "http://";
@@ -121,14 +122,14 @@ function HomePage() {
                     <div className="homepage-actions">
                         <button
                             className="create-button"
-                            onClick={createLobby}
+                            onClick={() => {createLobby(); playPopSound()}}
                         >
                             Create Lobby
                         </button>
 
                         <button
                             className="join-button"
-                            onClick={joinLobby}
+                            onClick={() => {joinLobby(); playPopSound()}}
                             disabled={!ingredient1 || !ingredient2 || !ingredient3}
                         >
                             Join Lobby

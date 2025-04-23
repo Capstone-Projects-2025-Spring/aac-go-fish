@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import './Lobby.css';
 import { useWebSocket, WebSocketContext } from '../../WebSocketContext';
+import {playPopSound} from "../SoundEffects/playPopSound";
 
 function Lobby({ lobbyCode }) {
     const [playing, setPlaying] = useState(false);
@@ -75,20 +76,20 @@ function Lobby({ lobbyCode }) {
             <div className="lobby-actions">
                 <button
                     className="start-button"
-                    onClick={sendStartGame}
+                    onClick={() => {sendStartGame(); playPopSound()}}
                     disabled={playerCount < 2}
                 >
                     Start Game
                 </button>
                 <button
                     className="play-all-btn"
-                    onClick={playAll}
+                    onClick={() => {playAll(); playPopSound()}}
                     disabled={playing || !lobbyCode || lobbyCode.split('-').length !== 3}                >
                     {playing ? '🗣️' : '🔊'}
                 </button>
                 <button
                     className="copy-link-btn"
-                    onClick={copyCode}>
+                    onClick={() => {copyCode(); playPopSound()}}>
                     {copied ? '✅' : '🔗'}
                 </button>
             </div>

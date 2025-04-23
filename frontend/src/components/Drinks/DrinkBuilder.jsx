@@ -94,10 +94,8 @@ const DrinkBuilder = ({ score, day }) => {
         setTimeout(() => setColor(selectedColor), 50);
         setColorSelected(true);
         playPopSound();
-        setTimeout(() => {
-            const audio = new Audio(`/audio/${selectedName.toLowerCase()}.mp3`);
-            audio.play();
-        }, 750);
+        const audio = new Audio(`/audio/${selectedName.toLowerCase()}.mp3`);
+        audio.play();
     };
 
     const selectCupSize = (size) => {
@@ -106,10 +104,8 @@ const DrinkBuilder = ({ score, day }) => {
         setCupSize(size);
         setCupPlaced(true);
         playPopSound();
-        setTimeout(() => {
             const audio = new Audio(`/audio/${size.toLowerCase()}.mp3`);
             audio.play();
-        }, 750);
     };
 
     const playFillingSound = () => {
@@ -136,7 +132,7 @@ const DrinkBuilder = ({ score, day }) => {
     return (
         <div className="DrinkBuilder">
             <div className="TopMenuDrink">
-                <button className="HelpButton" onClick={playHelpMessage}>
+                <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
                     Help
                 </button>
                 <Score score={score} day={day}/>
@@ -219,8 +215,8 @@ const DrinkBuilder = ({ score, day }) => {
                         <p>Fill Cup</p>
 
                     </button>
-                    <button className="SendButton" onClick={handleSend}>Send</button>
-                    <button className="BottomButtons" onClick={handleRequestRepeat}>
+                    <button className="SendButton" onClick={() => {handleSend(); playPopSound()}}>Send</button>
+                    <button className="BottomButtons" onClick={() => {playPopSound(); handleRequestRepeat()}}>
                         <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
                         <p>Repeat Order</p>
                     </button>

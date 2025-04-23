@@ -128,7 +128,7 @@ const SideBuilder = ({ score, day }) => {
     return (
         <div className="SideBuilder">
             <div className="TopMenuSides">
-                <button className="HelpButton" onClick={playHelpMessage}>
+                <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
                     Help
                 </button>
                 <Score score={score} day={day} />
@@ -233,7 +233,7 @@ const SideBuilder = ({ score, day }) => {
                         Send
                     </button>
 
-                    <button className="RightButtons" onClick={playRepeat}>
+                    <button className="RightButtons" onClick={() => {playPopSound(); playRepeat()}}>
                         <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" alt="Repeat" />
                         Repeat Order
                     </button>

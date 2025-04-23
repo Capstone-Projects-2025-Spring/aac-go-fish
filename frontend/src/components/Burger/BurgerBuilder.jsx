@@ -37,10 +37,8 @@ const BurgerBuilder = ({ score, day }) => {
             setIngredients([...ingredients, ingredient]);
             setFullMessage("");
             playPopSound();
-            setTimeout(() => {
-                const audio = new Audio(ingredient.audio);
-                audio.play();
-            }, 750);
+            const audio = new Audio(ingredient.audio);
+            audio.play();
 
         }
         else {
@@ -78,7 +76,7 @@ const BurgerBuilder = ({ score, day }) => {
     return (
         <div className="BurgerBuilder">
             <div className="TopMenuBurger">
-                <button className="HelpButton" onClick={playHelpMessage}>
+                <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
                     Help
                 </button>
                 <Score score={score} day={day}/>
@@ -97,15 +95,16 @@ const BurgerBuilder = ({ score, day }) => {
                 <p>Undo</p>
             </button>
             <button className="ClearPlateButton" onClick={() => {
-                clearPlate(); playPopSound();}}>
+                clearPlate(); playPopSound();}} disabled={ingredients.length === 0}>
                 <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
                 <p>Delete Burger</p>
             </button>
-            <button className="BottomButtons" onClick={handleRequestRepeat}>
-                <img src="/images/button_icons/repeat_order.png" alt="Repeat Order" className="RepeatOrderImage"/>
+            <button className="BottomButtons" onClick={() => {playPopSound(); handleRequestRepeat()}}>
+                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage"/>
                 <p>Repeat Order</p>
             </button>
-            <button onClick={handleSend} className="SendOrderButton">
+
+            <button onClick={() => {handleSend(); playPopSound()}} className="SendOrderButton">
                 <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
             </button>
             <div className="ErrorMessage">
