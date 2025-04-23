@@ -37,7 +37,7 @@ services:
       WATCHTOWER_LOG_FORMAT: json
 
   prometheus:
-    image: ghcr.io/capstone-projects-2025-spring/order-up-prometheus:main
+    image: ghcr.io/capstone-projects-2025-spring/aac-go-fish-prometheus:main
     volumes:
       - prometheus-data:/prometheus
     command:
