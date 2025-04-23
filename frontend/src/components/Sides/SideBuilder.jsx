@@ -1,10 +1,11 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import "./SideBuilder.css";
 import SideDisplay from "./SideDisplay";
 import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../SoundEffects/playSendSound";
 import { playPopSound } from "../SoundEffects/playPopSound";
 import Score from "../Score/Score";
+import StationStartModal from "../Modal/StationStartModal";
 
 const RAW_STATES = ["potatoes", "onions", "cheese"];
 const SIDE_TYPES = [
@@ -21,6 +22,16 @@ const SideBuilder = ({ score, day }) => {
     const [isCutting, setIsCutting] = useState(false);
     const fryingIntervalRef = useRef(null);
     const { send } = useContext(WebSocketContext);
+    const [showStart, setShowStart] = useState(true);
+
+    useEffect(() => {
+        if (showStart) {
+            const timer = setTimeout(() => {
+                setShowStart(false);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [showStart]);
 
     const placeSide = (raw) => {
         if (tableState !== "empty") return;
@@ -126,136 +137,144 @@ const SideBuilder = ({ score, day }) => {
                     : null;
 
     return (
-        <div className="SideBuilder">
-            <div className="TopMenuSides">
-                <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
-                    Help
-                </button>
-                <Score score={score} day={day} />
-            </div>
+        <>
+            {showStart && (
+                <StationStartModal
+                    stationName="Side"
+                    handleClick={() => setShowStart(false)}
+                />
+            )}
 
-            <div className="MainContainer2">
-                <div className="LeftColumn">
-                    {RAW_STATES.map((raw) => (
+            <div className="SideBuilder">
+                <div className="TopMenuSides">
+                    <button className="HelpButton" onClick={() => { playPopSound(); playHelpMessage(); }}>
+                        Help
+                    </button>
+                    <Score score={score} day={day} />
+                </div>
+
+                <div className="MainContainer2">
+                    <div className="LeftColumn">
+                        {RAW_STATES.map((raw) => (
+                            <button
+                                key={raw}
+                                className="LeftButtons"
+                                disabled={tableState !== "empty"}
+                                onClick={() => {
+                                    placeSide(raw);
+                                    playPopSound();
+                                    new Audio(`/audio/${raw}.mp3`).play();
+                                }}
+                                draggable
+                                onDragStart={(e) => onDragStart(e, raw)}
+                            >
+                                <img
+                                    src={
+                                        raw === "potatoes"
+                                            ? "/images/station_specific/potatoButton.png"
+                                            : raw === "onions"
+                                                ? "/images/aac_icons/onion.png"
+                                                : "/images/food_side_view/Mozzarella.png"
+                                    }
+                                    alt={raw}
+                                    className={`ButtonImages ${raw}-img`}
+                                />
+                                {raw.charAt(0).toUpperCase() + raw.slice(1)}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div
+                        className={`TableBorder ${isCutting ? "cutting" : ""}`}
+                        draggable={tableState !== "empty" && tableState !== "frying"}
+                        onDragStart={(e) => onDragStart(e, tableState)}
+                        onDragOver={allowDrop}
+                        onDrop={onTableDrop}
+                        onDragLeave={clearHover}
+                    >
+                        <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={onDragStart} />
+                    </div>
+
+                    <div className="RightColumn">
                         <button
-                            key={raw}
-                            className="LeftButtons"
-                            disabled={tableState !== "empty"}
-                            onClick={() => {
-                                placeSide(raw);
-                                playPopSound();
-                                new Audio(`/audio/${raw}.mp3`).play();
-                            }}
+                            className="RightButtons"
+                            disabled={!RAW_STATES.includes(tableState)}
                             draggable
-                            onDragStart={(e) => onDragStart(e, raw)}
+                            onDragStart={(e) => onDragStart(e, "knife")}
+                            onDragOver={allowDrop}
+                            onDrop={onKnifeDrop}
+                            onDragLeave={clearHover}
+                            onClick={chopSide}
                         >
-                            <img
-                                src={
-                                    raw === "potatoes"
-                                        ? "/images/station_specific/potatoButton.png"
-                                        : raw === "onions"
-                                            ? "/images/aac_icons/onion.png"
-                                            : "/images/food_side_view/Mozzarella.png"
-                                }
-                                alt={raw}
-                                className={`ButtonImages ${raw}-img`}
-                            />
-
-                            {raw.charAt(0).toUpperCase() + raw.slice(1)}
+                            <img src="/images/station_specific/knife.png" alt="knife" className="ButtonImages" />
+                            Chop
                         </button>
-                    ))}
+
+                        <button
+                            className="RightButtons"
+                            onDragOver={allowDrop}
+                            onDragLeave={clearHover}
+                            onDrop={(e) => {
+                                e.preventDefault();
+                                clearHover(e);
+                                reset();
+                                playPopSound();
+                            }}
+                            onClick={() => {
+                                reset();
+                                playPopSound();
+                            }}
+                        >
+                            <img src="/images/button_icons/clear_plate.png" alt="reset" className="ResetImage" />
+                            Reset
+                        </button>
+
+                        <button
+                            className="SendButton"
+                            disabled={tableState === "empty" || tableState === "frying"}
+                            onDragOver={allowDrop}
+                            onDragLeave={clearHover}
+                            onDrop={(e) => {
+                                e.preventDefault();
+                                clearHover(e);
+                                if (tableState !== "empty" && tableState !== "frying") {
+                                    playPopSound();
+                                    sendSide();
+                                }
+                            }}
+                            onClick={() => {
+                                playPopSound();
+                                sendSide();
+                            }}
+                        >
+                            <img src="/images/button_icons/bag.png" alt="send" className="SendImg" />
+                            Send
+                        </button>
+
+                        <button className="RightButtons" onClick={() => { playPopSound(); playRepeat(); }}>
+                            <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" alt="Repeat" />
+                            Repeat Order
+                        </button>
+                    </div>
                 </div>
 
                 <div
-                    className={`TableBorder ${isCutting ? "cutting" : ""}`}
-                    draggable={tableState !== "empty" && tableState !== "frying"}
-                    onDragStart={(e) => onDragStart(e, tableState)}
+                    className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
                     onDragOver={allowDrop}
-                    onDrop={onTableDrop}
+                    onDrop={onFryerDrop}
                     onDragLeave={clearHover}
                 >
-                    <SideDisplay tableState={tableState} fryTimeLeft={fryTimeLeft} onDragStart={onDragStart} />
+                    <img src="/images/station_specific/fryer.png" alt="Fryer" className="FryerImage" />
+                    {tableState === "frying" && overlayImage && <img src={overlayImage} alt="" className="ChoppedOverlay" />}
                 </div>
 
-                <div className="RightColumn">
-                    <button
-                        className="RightButtons"
-                        disabled={!RAW_STATES.includes(tableState)}
-                        draggable
-                        onDragStart={(e) => onDragStart(e, "knife")}
-                        onDragOver={allowDrop}
-                        onDrop={onKnifeDrop}
-                        onDragLeave={clearHover}
-                        onClick={chopSide}
-                    >
-                        <img src="/images/station_specific/knife.png" alt="knife" className="ButtonImages" />
-                        Chop
-                    </button>
-
-                    <button
-                        className="RightButtons"
-                        onDragOver={allowDrop}
-                        onDragLeave={clearHover}
-                        onDrop={(e) => {
-                            e.preventDefault();
-                            clearHover(e);
-                            reset();
-                            playPopSound();
-                        }}
-                        onClick={() => {
-                            reset();
-                            playPopSound();
-                        }}
-                    >
-                        <img src="/images/button_icons/clear_plate.png" alt="reset" className="ResetImage" />
-                        Reset
-                    </button>
-
-                    <button
-                        className="SendButton"
-                        disabled={tableState === "empty" || tableState === "frying"}
-                        onDragOver={allowDrop}
-                        onDragLeave={clearHover}
-                        onDrop={(e) => {
-                            e.preventDefault();
-                            clearHover(e);
-                            if (tableState !== "empty" && tableState !== "frying") {
-                                playPopSound();
-                                sendSide();
-                            }
-                        }}
-                        onClick={() => {
-                            playPopSound();
-                            sendSide();
-                        }}
-                    >
-                        <img src="/images/button_icons/bag.png" alt="send" className="SendImg" />
-                        Send
-                    </button>
-
-                    <button className="RightButtons" onClick={() => {playPopSound(); playRepeat()}}>
-                        <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" alt="Repeat" />
-                        Repeat Order
-                    </button>
-                </div>
+                {confirmMessage && (
+                    <div className="ConfirmMessage">
+                        <p>{confirmMessage}</p>
+                    </div>
+                )}
             </div>
-
-            <div
-                className={`Fryer ${tableState === "frying" ? "frying" : ""}`}
-                onDragOver={allowDrop}
-                onDrop={onFryerDrop}
-                onDragLeave={clearHover}
-            >
-                <img src="/images/station_specific/fryer.png" alt="Fryer" className="FryerImage" />
-                {tableState === "frying" && overlayImage && <img src={overlayImage} alt="" className="ChoppedOverlay" />}
-            </div>
-
-            {confirmMessage && (
-                <div className="ConfirmMessage">
-                    <p>{confirmMessage}</p>
-                </div>
-            )}
-        </div>
+        </>
     );
 };
 
