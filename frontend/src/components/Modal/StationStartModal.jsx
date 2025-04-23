@@ -7,7 +7,7 @@ export default function StationStartModal({ stationName, handleClick }) {
         <div className="modal-overlay">
             <div className="modal-content">
                 <div className="station-text">🧑‍🍳 {stationName} Station 👩‍🍳</div>
-                <div className="station-sub-text">Let’s get cooking!</div>
+                <div className="station-sub-text">Let’s get started!</div>
                 <button
                     onClick={() => {
                         handleClick();
