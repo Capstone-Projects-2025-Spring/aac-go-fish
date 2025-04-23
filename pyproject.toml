@@ -7,6 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "asgi-correlation-id>=4.3.4",
     "fastapi[standard]>=0.115.8",
+    "prometheus-fastapi-instrumentator>=7.1.0",
     "pydantic-settings>=2.8.1",
     "structlog>=25.2.0",
 ]
