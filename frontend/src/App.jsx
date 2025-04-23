@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import BurgerBuilder from "./components/Burger/BurgerBuilder";
 import DrinkBuilder from "./components/Drinks/DrinkBuilder";
@@ -9,6 +10,7 @@ import HomePage from "./components/HomePage";
 import Score from "./components/Score/Score";
 import GameCompleteModal from "./components/Modal/GameCompleteModal";
 import DayCompleteModal from "./components/Modal/DayCompleteModal";
+import StationStartModal from "./components/Modal/StationStartModal";
 import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 import { playPopSound } from "./components/SoundEffects/playPopSound";
 
@@ -36,6 +38,8 @@ const App = () => {
     const [day, setDay] = useState(1);
     const [dayCustomers, setDayCustomers] = useState(0);
     const [dayScore, setDayScore] = useState("$0.00");
+
+    const [showStart, setShowStart] = useState(false);
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -110,6 +114,9 @@ const App = () => {
                         break;
                     case "role_assignment":
                         setSelectedRole(data.role);
+                        if (data.role === "manager") {
+                            setShowStart(true);
+                        }
                         break;
                     case "order_score":
                         const score = data.score ?? 0;
@@ -127,6 +134,15 @@ const App = () => {
     };
 
     useWebSocket(handleMessage);
+
+    useEffect(() => {
+        if (showStart) {
+            const timer = setTimeout(() => {
+                setShowStart(false);
+            }, 5000);
+            return () => clearTimeout(timer);
+        }
+    }, [showStart]);
 
     const addSelectedItem = (item) => setSelectedItems((prev) => [...prev, item]);
     const removeSelectedItem = (indexToDelete) =>
@@ -182,6 +198,12 @@ const App = () => {
             {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={handleHideDayModal} />}
             {selectedRole === "manager" ? (
                 <>
+                    {showStart && (
+                        <StationStartModal
+                            stationName="Manager"
+                            handleClick={() => setShowStart(false)}
+                        />
+                    )}
                     <div className="columns">
                         <div className="column">
                             <div className="customer-container">
