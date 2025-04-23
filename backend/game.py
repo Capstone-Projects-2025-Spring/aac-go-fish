@@ -61,7 +61,7 @@ class GameLoop:
         self.customers = dict()
         self.day_score = {}
 
-        self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
+        self.orders = deque()
         self.order: Order
 
         self.started = False
