@@ -109,6 +109,7 @@ class GameLoop:
 
         self.started = True
         self.lobby.open = False
+        self.orders = get_orders(day=self.day, num_players=len(self.lobby.players))
 
         self.lobby.broadcast(Message(data=GameStart()), exclude=[id])
         self.assign_roles()
