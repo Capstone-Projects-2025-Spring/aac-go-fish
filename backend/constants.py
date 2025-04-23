@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     env: str = "demo"
     frontend_url: str = "http://localhost"
     log_level: str = "DEBUG"
+    json_logs: bool = False
     code_length: int = 3
 
 
