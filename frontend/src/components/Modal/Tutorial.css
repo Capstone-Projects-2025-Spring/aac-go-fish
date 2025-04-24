@@ -1,0 +1,44 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 9000;
+}
+
+.highlighted {
+    outline: 3px solid gold;
+    z-index: 9999 !important;
+    position: relative !important;
+}
+
+.help, .controls button {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    color: white;
+    background: mediumpurple;
+    box-shadow: 0 0 2px black;
+    font-size: 2rem;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.help {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.controls {
+    position: absolute;
+    bottom: 5rem;
+    button:disabled {
+        background: gray;
+        cursor: revert;
+    }
+}
+

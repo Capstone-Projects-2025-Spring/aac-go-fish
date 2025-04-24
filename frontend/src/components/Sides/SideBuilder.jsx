@@ -5,6 +5,7 @@ import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../SoundEffects/playSendSound";
 import { playPopSound } from "../SoundEffects/playPopSound";
 import Score from "../Score/Score";
+import Tutorial from "../Modal/Tutorial";
 
 const RAW_STATES = ["potatoes", "onions", "cheese"];
 const SIDE_TYPES = [
@@ -113,7 +114,6 @@ const SideBuilder = ({ score, day }) => {
         }
     };
 
-    const playHelpMessage = () => new Audio("/audio/side_help.mp3").play();
     const playRepeat = () => new Audio("/audio/repeat_order.mp3").play();
 
     const overlayImage =
@@ -127,10 +127,16 @@ const SideBuilder = ({ score, day }) => {
 
     return (
         <div className="SideBuilder">
+            <Tutorial
+                classNames={[
+                    "LeftColumn",
+                    "ChopButton",
+                    "Fryer",
+                    "SendButton",
+                ]}
+                audioSourceFolder={"/audio/tutorial/side"}
+            />
             <div className="TopMenuSides">
-                <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
-                    Help
-                </button>
                 <Score score={score} day={day} />
             </div>
 
@@ -179,7 +185,7 @@ const SideBuilder = ({ score, day }) => {
 
                 <div className="RightColumn">
                     <button
-                        className="RightButtons"
+                        className="ChopButton"
                         disabled={!RAW_STATES.includes(tableState)}
                         draggable
                         onDragStart={(e) => onDragStart(e, "knife")}

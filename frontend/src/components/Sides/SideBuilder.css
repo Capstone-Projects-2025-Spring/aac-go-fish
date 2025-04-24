@@ -87,7 +87,7 @@
 }
 
 .LeftButtons,
-.RightButtons {
+.RightButtons, .ChopButton {
     width: 10rem;
     height: 10rem;
     margin: 10px;
@@ -144,7 +144,7 @@
     transition: all 0.3s ease-in-out;
 }
 
-.RightButtons.drop-hover {
+.RightButtons.drop-hover, .ChopButton.drop-hover {
     border: 4px dashed #ffa500;
     background-color: #292929;
     transition: all 0.3s ease-in-out;
