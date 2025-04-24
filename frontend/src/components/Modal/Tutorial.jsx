@@ -7,7 +7,7 @@ export default function Tutorial({classNames, audioSourceFolder}) {
     const nextStep = () => {
         setStep((prev) => prev + 1);
     };
-    classNames = ["placeholder" , ...classNames]; //
+    classNames = ["placeholder" , ...classNames];
     const previousStep = () => setStep((prev) => prev - 1);
     useEffect(() => {
         const addHighlight = (className) => {
