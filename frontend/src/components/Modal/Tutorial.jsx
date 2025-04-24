@@ -35,7 +35,7 @@ export default function Tutorial({classNames, audioSourceFolder}) {
         {<PreviousStepButton />}
         {<NextStepButton />}
     </span>
-    const Overlay = ({children}) => <div className="overlay">{children}</div>
+    const Overlay = ({children}) => <div className="modal-overlay">{children}</div>
     const portal = document.getElementById("portal-game");
     const TutorialModal = () => ReactDom.createPortal(<Overlay><Controls /></Overlay>, portal)
 
