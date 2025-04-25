@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useState} from "react";
 import "./App.css";
 import BurgerBuilder from "./components/Burger/BurgerBuilder";
 import DrinkBuilder from "./components/Drinks/DrinkBuilder";
@@ -11,6 +11,7 @@ import GameCompleteModal from "./components/Modal/GameCompleteModal";
 import DayCompleteModal from "./components/Modal/DayCompleteModal";
 import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 import {playPopSound} from "./components/SoundEffects/playPopSound";
+import Tutorial from "./components/Modal/Tutorial";
 
 const App = () => {
     const { send } = useContext(WebSocketContext);
@@ -171,17 +172,19 @@ const App = () => {
         setIsDayCompleteModalOpen(false)
     }
 
-    const playHelpMessage = () => {
-        const audio = new Audio("/audio/manager_help.mp3");
-        audio.play();
-    }
-
     return (
         <div className="app-container">
             {isGameCompleteModalOpen && <GameCompleteModal score={score} />}
             {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={handleHideDayModal} />}
             {selectedRole === "manager" ? (
                 <>
+                    <Tutorial
+                        classNames={[
+                            "AACBoardContainer",
+                            "customer-image",
+                        ]}
+                        audioSourceFolder={"/audio/tutorial/manager"}
+                    />
                     <div className="columns">
                         <div className="column">
                             <div className="customer-container">
@@ -204,9 +207,6 @@ const App = () => {
                     </div>
                     <div className="right-column">
                         <div className="TopMenu">
-                            <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
-                                Help
-                            </button>
                             <Score score={score} day={day} />
                         </div>
                         <AACBoard

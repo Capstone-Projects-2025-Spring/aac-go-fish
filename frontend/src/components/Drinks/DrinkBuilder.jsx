@@ -5,6 +5,7 @@ import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../SoundEffects/playSendSound";
 import Score from "../Score/Score";
 import {playPopSound} from "../SoundEffects/playPopSound";
+import Tutorial from "../Modal/Tutorial";
 
 const DrinkBuilder = ({ score, day }) => {
     const [color, setColor] = useState([]);
@@ -115,11 +116,6 @@ const DrinkBuilder = ({ score, day }) => {
         return audio;
     };
 
-    const playHelpMessage = () => {
-        const audio = new Audio("/audio/drink_help.mp3");
-        audio.play();
-    }
-
     const handleRequestRepeat = () => {
         console.log("Employee requests manager to repeat order...");
         const audio = new Audio("/audio/repeat_order.mp3");
@@ -131,35 +127,39 @@ const DrinkBuilder = ({ score, day }) => {
 
     return (
         <div className="DrinkBuilder">
+            <Tutorial
+                classNames={[
+                    "CupSizeContainer",
+                    "DrinkButtonsContainer",
+                    "FillCupButton",
+                    "SendButton",
+                ]}
+                audioSourceFolder={"/audio/tutorial/drink"}
+            />
             <div className="TopMenuDrink">
-                <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
-                    Help
-                </button>
                 <Score score={score} day={day}/>
             </div>
-            <div className="DrinkButtons">
-                <div className="DrinkButtonsContainer">
-                    {drinkColors.map((choice, index) => (
-                        <div className="DrinkButtons" key={index}>
-                            <button
-                                onClick={() => {
-                                    selectColor(choice.color);
-                                    setCupPosition(-375 + index * 150);
-                                }}
-                                style={{
-                                    backgroundColor: choice.color,
-                                    color: "#FFFFFF",
-                                    border: color === choice.color ? "3px solid black" : "none",
-                                    WebkitTextStroke: "",
-                                }}
-                                disabled={fillPercentage > 0}
-                            >
-                                {choice.name}
-                            </button>
-                            <img src="/images/station_specific/Dispenser.png" alt="Dispenser" className="DispenserImage" />
-                        </div>
-                    ))}
-                </div>
+            <div className="DrinkButtonsContainer">
+                {drinkColors.map((choice, index) => (
+                    <div className="DrinkButtons" key={index}>
+                        <button
+                            onClick={() => {
+                                selectColor(choice.color);
+                                setCupPosition(-375 + index * 150);
+                            }}
+                            style={{
+                                backgroundColor: choice.color,
+                                color: "#FFFFFF",
+                                border: color === choice.color ? "3px solid black" : "none",
+                                WebkitTextStroke: "",
+                            }}
+                            disabled={fillPercentage > 0}
+                        >
+                            {choice.name}
+                        </button>
+                        <img src="/images/station_specific/Dispenser.png" alt="Dispenser" className="DispenserImage" />
+                    </div>
+                ))}
             </div>
             <div className="MainContainer">
                 <div className="CupSizeContainer">

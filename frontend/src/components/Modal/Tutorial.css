@@ -1,0 +1,49 @@
+.highlighted {
+    outline: 3px solid gold;
+    z-index: 9999 !important;
+    position: relative !important;
+}
+
+.help, .controls button {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    color: white;
+    background: mediumpurple;
+    font-size: 2rem;
+    font-weight: bold;
+    border: solid white 1px;
+    cursor: pointer;
+}
+
+.help {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+}
+
+.controls {
+    position: absolute;
+    bottom: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    button:disabled {
+        background: gray;
+        cursor: revert;
+    }
+}
+
+.banner {
+    position: absolute;
+    top: 1rem;
+    background: mediumpurple;
+    color: white;
+    width: fit-content;
+    text-align: center;
+    font-size: 4rem;
+    padding: 1rem;
+    font-weight: bold;
+    border: white 2px solid;
+    border-radius: 10px;
+    user-select: none;
+}

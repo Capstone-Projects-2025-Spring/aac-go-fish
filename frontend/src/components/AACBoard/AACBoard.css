@@ -6,6 +6,7 @@
     border-radius: 6px;
     padding: 1rem;
     width: 30rem;
+    background: white;
 }
 
 .aacboard-selected-item {
@@ -63,5 +64,4 @@
 .AACBoardContainer {
     margin-left: -20rem;
     margin-bottom: 20rem;
-    z-index: 30;
 }
