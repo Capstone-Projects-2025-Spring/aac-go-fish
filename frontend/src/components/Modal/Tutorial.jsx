@@ -3,11 +3,9 @@ import {useEffect, useState} from "react";
 import ReactDom from "react-dom";
 
 export default function Tutorial({classNames, audioSourceFolder}) {
+    classNames = ["placeholder", ...classNames];
     const [step, setStep] = useState(0);
-    const nextStep = () => {
-        setStep((prev) => prev + 1);
-    };
-    classNames = ["placeholder" , ...classNames];
+    const nextStep = () => setStep((prev) => prev + 1);
     const previousStep = () => setStep((prev) => prev - 1);
     useEffect(() => {
         const addHighlight = (className) => {
@@ -28,16 +26,17 @@ export default function Tutorial({classNames, audioSourceFolder}) {
         return removeHighlight;
     }, [audioSourceFolder, classNames, step]);
 
-    const HelpButton = () => <button className="help" onClick={() => setStep(1)}>?</button>;
+    const HelpButton = () => <button className="help" onClick={() => setStep(0)}>?</button>;
     const NextStepButton = () => <button onClick={nextStep}>{step === classNames.length - 1 ? '✓' : '⮞'}</button>
-    const PreviousStepButton = () => <button onClick={previousStep} disabled={step <= 1}>⮜</button>
+    const PreviousStepButton = () => <button onClick={previousStep} disabled={step === 0}>⮜</button>
     const Controls = () => <span className="controls">
-        {<PreviousStepButton />}
-        {<NextStepButton />}
+        {<PreviousStepButton/>}
+        {<NextStepButton/>}
     </span>
     const Overlay = ({children}) => <div className="modal-overlay">{children}</div>
     const portal = document.getElementById("portal-game");
-    const TutorialModal = () => ReactDom.createPortal(<Overlay><Controls /></Overlay>, portal)
+    const Banner = () => <div className="banner">How to Play</div>;
+    const TutorialModal = () => ReactDom.createPortal(<Overlay><Controls/>{step === 0 && <Banner/>}</Overlay>, portal)
 
     return <>
         <HelpButton/>

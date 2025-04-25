@@ -130,7 +130,7 @@ const DrinkBuilder = ({ score, day }) => {
             <Tutorial
                 classNames={[
                     "CupSizeContainer",
-                    "DrinkButtons",
+                    "DrinkButtonsContainer",
                     "FillCupButton",
                     "SendButton",
                 ]}
@@ -139,29 +139,27 @@ const DrinkBuilder = ({ score, day }) => {
             <div className="TopMenuDrink">
                 <Score score={score} day={day}/>
             </div>
-            <div className="DrinkButtons">
-                <div className="DrinkButtonsContainer">
-                    {drinkColors.map((choice, index) => (
-                        <div className="DrinkButtons" key={index}>
-                            <button
-                                onClick={() => {
-                                    selectColor(choice.color);
-                                    setCupPosition(-375 + index * 150);
-                                }}
-                                style={{
-                                    backgroundColor: choice.color,
-                                    color: "#FFFFFF",
-                                    border: color === choice.color ? "3px solid black" : "none",
-                                    WebkitTextStroke: "",
-                                }}
-                                disabled={fillPercentage > 0}
-                            >
-                                {choice.name}
-                            </button>
-                            <img src="/images/station_specific/Dispenser.png" alt="Dispenser" className="DispenserImage" />
-                        </div>
-                    ))}
-                </div>
+            <div className="DrinkButtonsContainer">
+                {drinkColors.map((choice, index) => (
+                    <div className="DrinkButtons" key={index}>
+                        <button
+                            onClick={() => {
+                                selectColor(choice.color);
+                                setCupPosition(-375 + index * 150);
+                            }}
+                            style={{
+                                backgroundColor: choice.color,
+                                color: "#FFFFFF",
+                                border: color === choice.color ? "3px solid black" : "none",
+                                WebkitTextStroke: "",
+                            }}
+                            disabled={fillPercentage > 0}
+                        >
+                            {choice.name}
+                        </button>
+                        <img src="/images/station_specific/Dispenser.png" alt="Dispenser" className="DispenserImage" />
+                    </div>
+                ))}
             </div>
             <div className="MainContainer">
                 <div className="CupSizeContainer">

@@ -25,9 +25,25 @@
 .controls {
     position: absolute;
     bottom: 1rem;
-    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
     button:disabled {
         background: gray;
         cursor: revert;
     }
+}
+
+.banner {
+    position: absolute;
+    top: 1rem;
+    background: mediumpurple;
+    color: white;
+    width: fit-content;
+    text-align: center;
+    font-size: 4rem;
+    padding: 1rem;
+    font-weight: bold;
+    border: white 2px solid;
+    border-radius: 10px;
+    user-select: none;
 }
