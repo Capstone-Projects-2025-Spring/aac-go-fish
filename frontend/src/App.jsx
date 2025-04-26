@@ -210,7 +210,7 @@ const App = () => {
                         <Tutorial
                             classNames={[
                                 "AACBoardContainer",
-                                "customer-container",
+                                "customer-image",
                             ]}
                             audioSourceFolder={"/audio/tutorial/manager"}
                         />
