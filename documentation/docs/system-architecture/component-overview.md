@@ -17,120 +17,12 @@ Handles game state, lobby creation, and chat. Issues state updates to the Single
 
 #### HTTP
 
-* `POST /create` - Initialize game state, creates randomized lobby code.
-* `POST /join` - Users specify a game code for a lobby to join.
-* `POST /start` - Starts the game. Only available to users that have created a lobby.
+* `POST /lobby` - Initialize game state, creates randomized lobby code.
+* `POST /lobby/<lobby-code>/join` - Users specify a game code for a lobby to join.
 
 #### WSS
 
-Protocol for WSS messages.
-
-```json
-{
-  "$defs": {
-    "Chat": {
-      "description": "Represents a chat message from a player.",
-      "properties": {
-        "type": {
-          "const": "chat",
-          "title": "Type",
-          "type": "string"
-        },
-        "message": {
-          "title": "Message",
-          "type": "string"
-        }
-      },
-      "required": [
-        "type",
-        "message"
-      ],
-      "title": "Chat",
-      "type": "object"
-    },
-    "Query": {
-      "description": "Represents a player asking for a card.",
-      "properties": {
-        "type": {
-          "const": "query",
-          "title": "Type",
-          "type": "string"
-        },
-        "target_player_id": {
-          "title": "Target Player Id",
-          "type": "integer"
-        },
-        "card": {
-          "title": "Card",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "type",
-        "target_player_id",
-        "card"
-      ],
-      "title": "Query",
-      "type": "object"
-    },
-    "QueryResponse": {
-      "description": "The server response to a player query.",
-      "properties": {
-        "type": {
-          "const": "query_response",
-          "title": "Type",
-          "type": "string"
-        },
-        "count": {
-          "title": "Count",
-          "type": "integer"
-        }
-      },
-      "required": [
-        "type",
-        "count"
-      ],
-      "title": "QueryResponse",
-      "type": "object"
-    }
-  },
-  "description": "Represents a generic message.",
-  "properties": {
-    "data": {
-      "discriminator": {
-        "mapping": {
-          "chat": "#/$defs/Chat",
-          "query": "#/$defs/Query",
-          "query_response": "#/$defs/QueryResponse"
-        },
-        "propertyName": "type"
-      },
-      "oneOf": [
-        {
-          "$ref": "#/$defs/Query"
-        },
-        {
-          "$ref": "#/$defs/QueryResponse"
-        },
-        {
-          "$ref": "#/$defs/Chat"
-        }
-      ],
-      "title": "Data"
-    },
-    "source_player_id": {
-      "title": "Source Player Id",
-      "type": "integer"
-    }
-  },
-  "required": [
-    "data",
-    "source_player_id"
-  ],
-  "title": "Message",
-  "type": "object"
-}
-```
+See [WebSocket Schema](../api-specification/wss-schema.mdx) to browse the WebSocket Schema.
 
 ## Single Page Application (React)
 
