@@ -17,7 +17,7 @@ import Tutorial from "./components/Modal/Tutorial";
 const App = () => {
     const { send } = useContext(WebSocketContext);
 
-    const [selectedRole, setSelectedRole] = useState("side");
+    const [selectedRole, setSelectedRole] = useState();
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
@@ -210,7 +210,7 @@ const App = () => {
                         <Tutorial
                             classNames={[
                                 "AACBoardContainer",
-                                "customer-image",
+                                "customer-container",
                             ]}
                             audioSourceFolder={"/audio/tutorial/manager"}
                         />
