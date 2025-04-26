@@ -6,6 +6,7 @@ import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../SoundEffects/playSendSound";
 import Score from "../Score/Score";
 import {playPopSound} from "../SoundEffects/playPopSound";
+import Tutorial from "../Modal/Tutorial";
 
 const BurgerBuilder = ({ score, day }) => {
     const [ingredients, setIngredients] = useState([]);
@@ -68,17 +69,16 @@ const BurgerBuilder = ({ score, day }) => {
         });
     };
 
-    const playHelpMessage = () => {
-        const audio = new Audio("/audio/burger_help.mp3");
-        audio.play();
-    }
-
     return (
         <div className="BurgerBuilder">
+            <Tutorial
+                classNames={[
+                    "IngredientButtons",
+                    "SendOrderButton",
+                ]}
+                audioSourceFolder={"/audio/tutorial/burger"}
+            />
             <div className="TopMenuBurger">
-                <button className="HelpButton" onClick={() => {playPopSound(); playHelpMessage()}}>
-                    Help
-                </button>
                 <Score score={score} day={day}/>
             </div>
             <div className="IngredientButtons">
