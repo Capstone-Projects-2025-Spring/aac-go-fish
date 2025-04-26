@@ -63,3 +63,16 @@
     transform: translateY(-4px);
     box-shadow: 0 8px 0 #1976d2;
 }
+
+.station-text {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+
+}
+
+.station-sub-text {
+    margin-bottom: 0.5rem;
+    margin-top: -1rem;
+
+}
