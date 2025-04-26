@@ -144,15 +144,19 @@ const SideBuilder = ({ score, day }) => {
                     handleClick={() => setShowStart(false)}
                 />
             )}
-            <Tutorial
-                classNames={[
-                    "LeftColumn",
-                    "ChopButton",
-                    "Fryer",
-                    "SendButton",
-                ]}
-                audioSourceFolder={"/audio/tutorial/side"}
-            />
+
+            {!showStart && (
+                <Tutorial
+                    classNames={[
+                        "LeftColumn",
+                        "ChopButton",
+                        "Fryer",
+                        "SendButton",
+                    ]}
+                    audioSourceFolder={"/audio/tutorial/side"}
+                />
+            )}
+
             <div className="SideBuilder">
                 <div className="TopMenuSides">
                     <button className="HelpButton" onClick={() => { playPopSound(); }}>

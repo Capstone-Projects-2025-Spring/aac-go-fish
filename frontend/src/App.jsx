@@ -205,13 +205,17 @@ const App = () => {
                             handleClick={() => setShowStart(false)}
                         />
                     )}
-                    <Tutorial
-                        classNames={[
-                            "AACBoardContainer",
-                            "customer-image",
-                        ]}
-                        audioSourceFolder={"/audio/tutorial/manager"}
-                    />
+
+                    {!showStart && (
+                        <Tutorial
+                            classNames={[
+                                "AACBoardContainer",
+                                "customer-image",
+                            ]}
+                            audioSourceFolder={"/audio/tutorial/manager"}
+                        />
+                    )}
+
                     <div className="columns">
                         <div className="column">
                             <div className="customer-container">

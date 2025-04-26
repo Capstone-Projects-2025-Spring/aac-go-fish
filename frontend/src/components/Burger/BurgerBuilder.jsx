@@ -89,13 +89,17 @@ const BurgerBuilder = ({ score, day }) => {
                     handleClick={handleStart}
                 />
             )}
-            <Tutorial
-                classNames={[
-                    "IngredientButtons",
-                    "SendOrderButton",
-                ]}
-                audioSourceFolder={"/audio/tutorial/burger"}
-            />
+
+            {!showStart && (
+                <Tutorial
+                    classNames={[
+                        "IngredientButtons",
+                        "SendOrderButton",
+                    ]}
+                    audioSourceFolder={"/audio/tutorial/burger"}
+                />
+            )}
+
             <div className="BurgerBuilder">
                 <div className="TopMenuBurger">
                     <button className="HelpButton" onClick={() => { playPopSound(); }}>
