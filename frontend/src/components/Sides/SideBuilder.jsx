@@ -150,7 +150,16 @@ const SideBuilder = ({ score, day }) => {
                             onClick={() => {
                                 placeSide(raw);
                                 playPopSound();
-                                new Audio(`/audio/${raw}.mp3`).play();
+                                switch (raw){
+                                    case "potatoes":
+                                        new Audio(`/audio/potato.mp3`).play();
+                                        break;
+                                    case "onions":
+                                        new Audio(`/audio/onion.mp3`).play();
+                                        break;
+                                    default:
+                                    new Audio(`/audio/${raw}.mp3`).play();
+                                }
                             }}
                             draggable
                             onDragStart={(e) => onDragStart(e, raw)}
