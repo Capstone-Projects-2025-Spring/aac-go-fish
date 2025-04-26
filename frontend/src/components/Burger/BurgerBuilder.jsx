@@ -102,9 +102,6 @@ const BurgerBuilder = ({ score, day }) => {
 
             <div className="BurgerBuilder">
                 <div className="TopMenuBurger">
-                    <button className="HelpButton" onClick={() => { playPopSound(); }}>
-                        Help
-                    </button>
                     <Score score={score} day={day} />
                 </div>
 
