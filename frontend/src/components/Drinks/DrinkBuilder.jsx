@@ -141,15 +141,19 @@ const DrinkBuilder = ({ score, day }) => {
                     handleClick={() => setShowStart(false)}
                 />
             )}
-            <Tutorial
-                classNames={[
-                    "CupSizeContainer",
-                    "DrinkButtonsContainer",
-                    "FillCupButton",
-                    "SendButton",
-                ]}
-                audioSourceFolder={"/audio/tutorial/drink"}
-            />
+
+            {!showStart && (
+                <Tutorial
+                    classNames={[
+                        "CupSizeContainer",
+                        "DrinkButtonsContainer",
+                        "FillCupButton",
+                        "SendButton",
+                    ]}
+                    audioSourceFolder={"/audio/tutorial/drink"}
+                />
+            )}
+
             <div className="DrinkBuilder">
                 <div className="TopMenuDrink">
                     <button className="HelpButton" onClick={() => { playPopSound(); }}>
