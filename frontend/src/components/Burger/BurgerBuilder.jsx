@@ -1,19 +1,34 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import './BurgerBuilder.css';
 import BurgerStation from "./BurgerStation";
 import { menu } from "../../menuItems";
 import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../SoundEffects/playSendSound";
+import { playPopSound } from "../SoundEffects/playPopSound";
 import Score from "../Score/Score";
-import {playPopSound} from "../SoundEffects/playPopSound";
+import StationStartModal from "../Modal/StationStartModal";
 import Tutorial from "../Modal/Tutorial";
 
 const BurgerBuilder = ({ score, day }) => {
     const [ingredients, setIngredients] = useState([]);
     const { send } = useContext(WebSocketContext);
     const [fullMessage, setFullMessage] = useState("");
+    const [showStart, setShowStart] = useState(true);
 
     const foodItems = menu[0].children;
+
+    const handleStart = () => {
+        setShowStart(false);
+    };
+
+    useEffect(() => {
+        if (showStart) {
+            const timer = setTimeout(() => {
+                handleStart();
+            }, 10000);
+            return () => clearTimeout(timer);
+        }
+    }, [showStart]);
 
     const handleSend = () => {
         const employeeOrder = ingredients.map(ingredient => ingredient.name);
@@ -40,20 +55,17 @@ const BurgerBuilder = ({ score, day }) => {
             playPopSound();
             const audio = new Audio(ingredient.audio);
             audio.play();
-
-        }
-        else {
+        } else {
             setFullMessage("Plate is Full!");
         }
-
     };
 
     const removeIngredient = () => {
         setIngredients(prevIngredients => {
-            if (prevIngredients.length === 0){
+            if (prevIngredients.length === 0) {
                 return prevIngredients;
             }
-            return prevIngredients.slice(0,-1);
+            return prevIngredients.slice(0, -1);
         });
     };
 
@@ -70,7 +82,13 @@ const BurgerBuilder = ({ score, day }) => {
     };
 
     return (
-        <div className="BurgerBuilder">
+        <>
+            {showStart && (
+                <StationStartModal
+                    stationName="Burger"
+                    handleClick={handleStart}
+                />
+            )}
             <Tutorial
                 classNames={[
                     "IngredientButtons",
@@ -78,39 +96,63 @@ const BurgerBuilder = ({ score, day }) => {
                 ]}
                 audioSourceFolder={"/audio/tutorial/burger"}
             />
-            <div className="TopMenuBurger">
-                <Score score={score} day={day}/>
-            </div>
-            <div className="IngredientButtons">
-                {foodItems.map((ingredient, index) => (
-                    <button key={index} onClick={() => addIngredient(ingredient)}>
-                        <img src={ingredient.image} alt={ingredient.name} className="IngredientImage" />
-                        <p>{ingredient.name}</p>
+            <div className="BurgerBuilder">
+                <div className="TopMenuBurger">
+                    <button className="HelpButton" onClick={() => { playPopSound(); }}>
+                        Help
                     </button>
-                ))}
-            </div>
-            <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
-            <button className="BottomButtons" onClick={() => { removeIngredient(); playPopSound()}} disabled={ingredients.length === 0}>
-                <img src="/images/button_icons/undo.png" alt="Undo" className="UndoImage"/>
-                <p>Undo</p>
-            </button>
-            <button className="ClearPlateButton" onClick={() => {
-                clearPlate(); playPopSound();}} disabled={ingredients.length === 0}>
-                <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
-                <p>Delete Burger</p>
-            </button>
-            <button className="BottomButtons" onClick={() => {playPopSound(); handleRequestRepeat()}}>
-                <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage"/>
-                <p>Repeat Order</p>
-            </button>
+                    <Score score={score} day={day} />
+                </div>
 
-            <button onClick={() => {handleSend(); playPopSound()}} className="SendOrderButton">
-                <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
-            </button>
-            <div className="ErrorMessage">
-                {fullMessage && <p>{fullMessage}</p>}
+                <div className="IngredientButtons">
+                    {foodItems.map((ingredient, index) => (
+                        <button key={index} onClick={() => addIngredient(ingredient)}>
+                            <img src={ingredient.image} alt={ingredient.name} className="IngredientImage" />
+                            <p>{ingredient.name}</p>
+                        </button>
+                    ))}
+                </div>
+
+                <BurgerStation imagePaths={ingredients.map((ingredient) => ingredient.sideImage)} />
+
+                <button
+                    className="BottomButtons"
+                    onClick={() => { removeIngredient(); playPopSound(); }}
+                    disabled={ingredients.length === 0}
+                >
+                    <img src="/images/button_icons/undo.png" alt="Undo" className="UndoImage" />
+                    <p>Undo</p>
+                </button>
+
+                <button
+                    className="ClearPlateButton"
+                    onClick={() => { clearPlate(); playPopSound(); }}
+                    disabled={ingredients.length === 0}
+                >
+                    <img src="/images/button_icons/clear_plate.png" alt="Clear Plate" className="ClearPlateImage" />
+                    <p>Delete Burger</p>
+                </button>
+
+                <button
+                    className="BottomButtons"
+                    onClick={() => { playPopSound(); handleRequestRepeat(); }}
+                >
+                    <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" alt="Repeat" />
+                    <p>Repeat Order</p>
+                </button>
+
+                <button
+                    onClick={() => { handleSend(); playPopSound(); }}
+                    className="SendOrderButton"
+                >
+                    <img src="/images/button_icons/send_order.png" alt="Send Order" className="SendCustomerOrderImage" />
+                </button>
+
+                <div className="ErrorMessage">
+                    {fullMessage && <p>{fullMessage}</p>}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
