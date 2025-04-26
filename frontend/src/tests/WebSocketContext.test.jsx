@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { render, act } from '@testing-library/react';
 import { WebSocketProvider, WebSocketContext, useWebSocket } from '../WebSocketContext';
 
