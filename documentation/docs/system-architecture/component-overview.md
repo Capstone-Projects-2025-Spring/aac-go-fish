@@ -17,9 +17,8 @@ Handles game state, lobby creation, and chat. Issues state updates to the Single
 
 #### HTTP
 
-* `POST /create` - Initialize game state, creates randomized lobby code.
-* `POST /join` - Users specify a game code for a lobby to join.
-* `POST /start` - Starts the game. Only available to users that have created a lobby.
+* `POST /lobby` - Initialize game state, creates randomized lobby code.
+* `POST /lobby/<lobby-code>/join` - Users specify a game code for a lobby to join.
 
 #### WSS
 
