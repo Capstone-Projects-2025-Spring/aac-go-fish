@@ -159,9 +159,6 @@ const SideBuilder = ({ score, day }) => {
 
             <div className="SideBuilder">
                 <div className="TopMenuSides">
-                    <button className="HelpButton" onClick={() => { playPopSound(); }}>
-                        Help
-                    </button>
                     <Score score={score} day={day} />
                 </div>
 
