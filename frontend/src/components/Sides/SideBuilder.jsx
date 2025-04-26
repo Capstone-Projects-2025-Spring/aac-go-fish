@@ -215,7 +215,7 @@ const SideBuilder = ({ score, day }) => {
 
                     <div className="RightColumn">
                         <button
-                            className="RightButtons"
+                            className="ChopButton"
                             disabled={!RAW_STATES.includes(tableState)}
                             draggable
                             onDragStart={(e) => onDragStart(e, "knife")}

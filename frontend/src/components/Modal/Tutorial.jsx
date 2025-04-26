@@ -7,6 +7,7 @@ export default function Tutorial({classNames, audioSourceFolder}) {
     const [step, setStep] = useState(0);
     const nextStep = () => setStep((prev) => prev + 1);
     const previousStep = () => setStep((prev) => prev - 1);
+    const exit = () => setStep(classNames.length);
     useEffect(() => {
         const addHighlight = (className) => {
             Array.from(document.getElementsByClassName(className))
@@ -28,7 +29,13 @@ export default function Tutorial({classNames, audioSourceFolder}) {
 
     const HelpButton = () => <button className="help" onClick={() => setStep(0)}>?</button>;
     const NextStepButton = () => <button onClick={nextStep}>{step === classNames.length - 1 ? '✓' : '⮞'}</button>
-    const PreviousStepButton = () => <button onClick={previousStep} disabled={step === 0}>⮜</button>
+    const PreviousStepButton = () => {
+        if (step === 0) {
+            return <button onClick={exit}>✕</button>
+        } else {
+            return <button onClick={previousStep}>⮜</button>
+        }
+    }
     const Controls = () => <span className="controls">
         {<PreviousStepButton/>}
         {<NextStepButton/>}
