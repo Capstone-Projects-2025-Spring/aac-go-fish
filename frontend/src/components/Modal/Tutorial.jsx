@@ -28,12 +28,12 @@ export default function Tutorial({classNames, audioSourceFolder}) {
     }, [audioSourceFolder, classNames, step]);
 
     const HelpButton = () => <button className="help" onClick={() => setStep(0)}>?</button>;
-    const NextStepButton = () => <button onClick={nextStep}>{step === classNames.length - 1 ? '✓' : '⮞'}</button>
+    const NextStepButton = () => <button onClick={nextStep}>{step === classNames.length - 1 ? '✓' : '→'}</button>
     const PreviousStepButton = () => {
         if (step === 0) {
             return <button onClick={exit}>✕</button>
         } else {
-            return <button onClick={previousStep}>⮜</button>
+            return <button onClick={previousStep}>←</button>
         }
     }
     const Controls = () => <span className="controls">
