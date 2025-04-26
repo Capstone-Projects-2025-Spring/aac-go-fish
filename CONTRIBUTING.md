@@ -30,3 +30,5 @@ To run the tests, use `uv run -- pytest`.
 The prod profile uses our public docker containers for deploying to a website, **ignore this if you are not deploying to a website**
 
 `docker compose -f compose.yaml up`
+
+See [the example compose file](./compose-example.yaml) to set up your own.
