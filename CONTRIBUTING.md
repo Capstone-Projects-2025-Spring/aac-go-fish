@@ -13,9 +13,9 @@ docker compose version
 - Navigate to the root directory of the project `aac-go-fish` which contains the `compose.yaml` files.
 - Run the following command from the root directory of the project:
 ```
-docker compose -f compose.yaml -f compose.dev.yaml up --build
+docker compose -f compose.dev.yaml up --build
 ```
-Once the containers are running, the project will be accessible from `http://localhost`
+Once the containers are running, the project will be accessible from `http://localhost:3000`
 
 ## Additional Information
 
@@ -29,4 +29,6 @@ To run the tests, use `uv run -- pytest`.
 ### Prod
 The prod profile uses our public docker containers for deploying to a website, **ignore this if you are not deploying to a website**
 
-`docker compose --profile prod up`
+`docker compose -f compose.yaml up`
+
+See [the example compose file](./compose-example.yaml) to set up your own.

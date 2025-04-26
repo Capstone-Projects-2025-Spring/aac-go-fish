@@ -6,6 +6,7 @@ import { playSendSound } from "../SoundEffects/playSendSound";
 import { playPopSound } from "../SoundEffects/playPopSound";
 import Score from "../Score/Score";
 import StationStartModal from "../Modal/StationStartModal";
+import Tutorial from "../Modal/Tutorial";
 
 const RAW_STATES = ["potatoes", "onions", "cheese"];
 const SIDE_TYPES = [
@@ -20,9 +21,9 @@ const SideBuilder = ({ score, day }) => {
     const [fryTimeLeft, setFryTimeLeft] = useState(0);
     const [confirmMessage, setConfirmMessage] = useState("");
     const [isCutting, setIsCutting] = useState(false);
+    const [showStart, setShowStart] = useState(true);
     const fryingIntervalRef = useRef(null);
     const { send } = useContext(WebSocketContext);
-    const [showStart, setShowStart] = useState(true);
 
     useEffect(() => {
         if (showStart) {
@@ -124,7 +125,6 @@ const SideBuilder = ({ score, day }) => {
         }
     };
 
-    const playHelpMessage = () => new Audio("/audio/side_help.mp3").play();
     const playRepeat = () => new Audio("/audio/repeat_order.mp3").play();
 
     const overlayImage =
@@ -144,10 +144,18 @@ const SideBuilder = ({ score, day }) => {
                     handleClick={() => setShowStart(false)}
                 />
             )}
-
+            <Tutorial
+                classNames={[
+                    "LeftColumn",
+                    "ChopButton",
+                    "Fryer",
+                    "SendButton",
+                ]}
+                audioSourceFolder={"/audio/tutorial/side"}
+            />
             <div className="SideBuilder">
                 <div className="TopMenuSides">
-                    <button className="HelpButton" onClick={() => { playPopSound(); playHelpMessage(); }}>
+                    <button className="HelpButton" onClick={() => { playPopSound(); }}>
                         Help
                     </button>
                     <Score score={score} day={day} />
@@ -265,7 +273,9 @@ const SideBuilder = ({ score, day }) => {
                     onDragLeave={clearHover}
                 >
                     <img src="/images/station_specific/fryer.png" alt="Fryer" className="FryerImage" />
-                    {tableState === "frying" && overlayImage && <img src={overlayImage} alt="" className="ChoppedOverlay" />}
+                    {tableState === "frying" && overlayImage && (
+                        <img src={overlayImage} alt="" className="ChoppedOverlay" />
+                    )}
                 </div>
 
                 {confirmMessage && (

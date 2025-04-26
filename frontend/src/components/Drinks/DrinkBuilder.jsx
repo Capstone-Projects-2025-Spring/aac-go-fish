@@ -3,9 +3,10 @@ import "./DrinkBuilder.css";
 import DrinkDisplay from "./DrinkDisplay.jsx";
 import { WebSocketContext } from "../../WebSocketContext";
 import { playSendSound } from "../SoundEffects/playSendSound";
-import Score from "../Score/Score";
 import { playPopSound } from "../SoundEffects/playPopSound";
+import Score from "../Score/Score";
 import StationStartModal from "../Modal/StationStartModal";
+import Tutorial from "../Modal/Tutorial";
 
 const DrinkBuilder = ({ score, day }) => {
     const [color, setColor] = useState([]);
@@ -49,7 +50,6 @@ const DrinkBuilder = ({ score, day }) => {
 
     const startFilling = () => {
         if (!color || !cupPlaced) return;
-
         const fillingSound = playFillingSound();
         fillInterval.current = setInterval(() => {
             setFillPercentage(prev => {
@@ -98,7 +98,6 @@ const DrinkBuilder = ({ score, day }) => {
 
     const selectColor = (selectedColor) => {
         if (fillPercentage > 0) return;
-
         const selectedDrink = drinkColors.find(drink => drink.color === selectedColor);
         const selectedName = selectedDrink ? selectedDrink.name : "";
 
@@ -112,7 +111,6 @@ const DrinkBuilder = ({ score, day }) => {
 
     const selectCupSize = (size) => {
         if (fillPercentage > 0) return;
-
         setCupSize(size);
         setCupPlaced(true);
         playPopSound();
@@ -125,11 +123,6 @@ const DrinkBuilder = ({ score, day }) => {
         audio.loop = true;
         audio.play();
         return audio;
-    };
-
-    const playHelpMessage = () => {
-        const audio = new Audio("/audio/drink_help.mp3");
-        audio.play();
     };
 
     const handleRequestRepeat = () => {
@@ -148,38 +141,46 @@ const DrinkBuilder = ({ score, day }) => {
                     handleClick={() => setShowStart(false)}
                 />
             )}
-
+            <Tutorial
+                classNames={[
+                    "CupSizeContainer",
+                    "DrinkButtonsContainer",
+                    "FillCupButton",
+                    "SendButton",
+                ]}
+                audioSourceFolder={"/audio/tutorial/drink"}
+            />
             <div className="DrinkBuilder">
                 <div className="TopMenuDrink">
-                    <button className="HelpButton" onClick={() => { playPopSound(); playHelpMessage(); }}>
+                    <button className="HelpButton" onClick={() => { playPopSound(); }}>
                         Help
                     </button>
                     <Score score={score} day={day} />
                 </div>
-                <div className="DrinkButtons">
-                    <div className="DrinkButtonsContainer">
-                        {drinkColors.map((choice, index) => (
-                            <div className="DrinkButtons" key={index}>
-                                <button
-                                    onClick={() => {
-                                        selectColor(choice.color);
-                                        setCupPosition(-375 + index * 150);
-                                    }}
-                                    style={{
-                                        backgroundColor: choice.color,
-                                        color: "#FFFFFF",
-                                        border: color === choice.color ? "3px solid black" : "none",
-                                        WebkitTextStroke: "",
-                                    }}
-                                    disabled={fillPercentage > 0}
-                                >
-                                    {choice.name}
-                                </button>
-                                <img src="/images/station_specific/Dispenser.png" alt="Dispenser" className="DispenserImage" />
-                            </div>
-                        ))}
-                    </div>
+
+                <div className="DrinkButtonsContainer">
+                    {drinkColors.map((choice, index) => (
+                        <div className="DrinkButtons" key={index}>
+                            <button
+                                onClick={() => {
+                                    selectColor(choice.color);
+                                    setCupPosition(-375 + index * 150);
+                                }}
+                                style={{
+                                    backgroundColor: choice.color,
+                                    color: "#FFFFFF",
+                                    border: color === choice.color ? "3px solid black" : "none",
+                                    WebkitTextStroke: "",
+                                }}
+                                disabled={fillPercentage > 0}
+                            >
+                                {choice.name}
+                            </button>
+                            <img src="/images/station_specific/Dispenser.png" alt="Dispenser" className="DispenserImage" />
+                        </div>
+                    ))}
                 </div>
+
                 <div className="MainContainer">
                     <div className="CupSizeContainer">
                         <button
@@ -204,6 +205,7 @@ const DrinkBuilder = ({ score, day }) => {
                             <img src="/images/button_icons/LargeButton.png" alt="Large Cup" className="CupSizeImageLarge" />
                         </button>
                     </div>
+
                     <div className="DrinkDisplayContainer">
                         {cupPlaced && (
                             <DrinkDisplay
@@ -217,11 +219,13 @@ const DrinkBuilder = ({ score, day }) => {
                             {confirmMessage && <p>{confirmMessage}</p>}
                         </div>
                     </div>
+
                     <div className="ActionButtonsContainer">
                         <button className="ClearCupButton" onClick={() => { clearCup(); playPopSound(); }}>
                             <img src="/images/button_icons/clear_plate.png" alt="Clear Side" className="ClearSideImage" />
                             <p>Clear Cup</p>
                         </button>
+
                         <button
                             className="FillCupButton"
                             onMouseDown={startFilling}
@@ -233,9 +237,13 @@ const DrinkBuilder = ({ score, day }) => {
                             <img src="/images/button_icons/pouring.png" alt="Fill Cup" className="FillCupImage" />
                             <p>Fill Cup</p>
                         </button>
-                        <button className="SendButton" onClick={() => { handleSend(); playPopSound(); }}>Send</button>
+
+                        <button className="SendButton" onClick={() => { handleSend(); playPopSound(); }}>
+                            Send
+                        </button>
+
                         <button className="BottomButtons" onClick={() => { playPopSound(); handleRequestRepeat(); }}>
-                            <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" />
+                            <img src="/images/button_icons/repeat_order.png" className="RepeatOrderImage" alt="Repeat" />
                             <p>Repeat Order</p>
                         </button>
                     </div>

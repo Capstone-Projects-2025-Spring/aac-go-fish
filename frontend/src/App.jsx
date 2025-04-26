@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./App.css";
 import BurgerBuilder from "./components/Burger/BurgerBuilder";
 import DrinkBuilder from "./components/Drinks/DrinkBuilder";
@@ -13,11 +12,12 @@ import DayCompleteModal from "./components/Modal/DayCompleteModal";
 import StationStartModal from "./components/Modal/StationStartModal";
 import { useWebSocket, WebSocketContext } from "./WebSocketContext";
 import { playPopSound } from "./components/SoundEffects/playPopSound";
+import Tutorial from "./components/Modal/Tutorial";
 
 const App = () => {
     const { send } = useContext(WebSocketContext);
 
-    const [selectedRole, setSelectedRole] = useState();
+    const [selectedRole, setSelectedRole] = useState("manager");
     const [selectedItems, setSelectedItems] = useState([]);
     const [employeeBurger, setEmployeeBurger] = useState(null);
     const [employeeSide, setEmployeeSide] = useState(null);
@@ -55,9 +55,9 @@ const App = () => {
                 switch (data.lifecycle_type) {
                     case "game_end":
                         setIsGameCompleteModalOpen(true);
-                        break
+                        break;
                     default:
-                        break
+                        break;
                 }
                 break;
             case "game_state":
@@ -87,14 +87,14 @@ const App = () => {
                     case "day_end":
                         const dayScore = data.score ?? 0;
                         setDayScore(formatter.format(dayScore / 100));
-                        setDayCustomers(data.customers_served)
+                        setDayCustomers(data.customers_served);
 
                         setDay(data.day ?? 0);
 
                         setIsDayCompleteModalOpen(true);
                         setTimeout(() => {
                             setIsDayCompleteModalOpen(false);
-                        }, 10000)
+                        }, 10000);
                         break;
                     case "order_component":
                         switch (data.component_type) {
@@ -184,18 +184,19 @@ const App = () => {
     };
 
     const handleHideDayModal = () => {
-        setIsDayCompleteModalOpen(false)
-    }
-
-    const playHelpMessage = () => {
-        const audio = new Audio("/audio/manager_help.mp3");
-        audio.play();
-    }
+        setIsDayCompleteModalOpen(false);
+    };
 
     return (
         <div className="app-container">
             {isGameCompleteModalOpen && <GameCompleteModal score={score} />}
-            {isDayCompleteModalOpen && <DayCompleteModal score={dayScore} customers={dayCustomers} handleClick={handleHideDayModal} />}
+            {isDayCompleteModalOpen && (
+                <DayCompleteModal
+                    score={dayScore}
+                    customers={dayCustomers}
+                    handleClick={handleHideDayModal}
+                />
+            )}
             {selectedRole === "manager" ? (
                 <>
                     {showStart && (
@@ -204,29 +205,60 @@ const App = () => {
                             handleClick={() => setShowStart(false)}
                         />
                     )}
+                    <Tutorial
+                        classNames={[
+                            "AACBoardContainer",
+                            "customer-image",
+                        ]}
+                        audioSourceFolder={"/audio/tutorial/manager"}
+                    />
                     <div className="columns">
                         <div className="column">
                             <div className="customer-container">
                                 <img
-                                    src={customerNumber ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png` : "/images/customers/empty.png"}
+                                    src={customerNumber
+                                        ? `/images/customers/customer${customerNumber}${isCustomerThinking ? "_think" : ""}.png`
+                                        : "/images/customers/empty.png"}
                                     alt="Customer"
                                     className="customer-image"
                                 />
                                 {orderVisible && (
                                     <div className="customer-mini-order-overlay">
-                                        <MiniOrderDisplay burger={burgerOrder} drink={drinkOrder} side={sideOrder} />
+                                        <MiniOrderDisplay
+                                            burger={burgerOrder}
+                                            drink={drinkOrder}
+                                            side={sideOrder}
+                                        />
                                     </div>
                                 )}
-                                <img onClick={() => { handleGiveToCustomer(); playPopSound() }} className="SendCustomerOrder" src="/images/button_icons/send_order.png" alt="send customer order" />
+                                <img
+                                    onClick={() => {
+                                        handleGiveToCustomer();
+                                        playPopSound();
+                                    }}
+                                    className="SendCustomerOrder"
+                                    src="/images/button_icons/send_order.png"
+                                    alt="send customer order"
+                                />
                                 <div className="manager-mini-order-overlay">
-                                    <MiniOrderDisplay burger={employeeBurger} drink={employeeDrink} side={employeeSide} />
+                                    <MiniOrderDisplay
+                                        burger={employeeBurger}
+                                        drink={employeeDrink}
+                                        side={employeeSide}
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className="right-column">
                         <div className="TopMenu">
-                            <button className="HelpButton" onClick={() => { playPopSound(); playHelpMessage() }}>
+                            <button
+                                className="HelpButton"
+                                onClick={() => {
+                                    playPopSound();
+                                    // add playHelpMessage() here later if needed
+                                }}
+                            >
                                 Help
                             </button>
                             <Score score={score} day={day} />
@@ -249,9 +281,11 @@ const App = () => {
                 <BurgerBuilder score={score} day={day} />
             ) : selectedRole === "side" ? (
                 <SideBuilder score={score} day={day} />
-            ) : selectedRole == "drink" ? (
+            ) : selectedRole === "drink" ? (
                 <DrinkBuilder score={score} day={day} />
-            ) : <HomePage />}
+            ) : (
+                <HomePage />
+            )}
         </div>
     );
 };

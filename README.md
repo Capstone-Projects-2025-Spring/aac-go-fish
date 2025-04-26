@@ -21,7 +21,7 @@ The game itself gives each player a role: one player becomes the manager who tak
 
 ## How to Run
 
-[CONTRIBUTING.md](https://github.com/Capstone-Projects-2025-Spring/aac-go-fish/blob/3d7dc9f89c010c0668c1fc74dc9cd868048b8eeb/CONTRIBUTING.md)
+For development, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Conceptual Design
 
