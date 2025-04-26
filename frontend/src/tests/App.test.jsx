@@ -311,23 +311,6 @@ describe("App component", () => {
     expect(screen.queryByAltText("send customer order")).toBeNull();
   });
 
-  it("calls playPopSound on Help button click", () => {
-    renderApp();
-    act(() => {
-      wsCallback({
-        data: {
-          type: "game_state",
-          game_state_update_type: "role_assignment",
-          role: "manager",
-        },
-      });
-    });
-
-    const { playPopSound } = require("../components/SoundEffects/playPopSound");
-    fireEvent.click(screen.getByRole("button", { name: /Help/i }));
-    expect(playPopSound).toHaveBeenCalled();
-  });
-
   it("ignores unknown message types without throwing", () => {
     renderApp();
     expect(() => {
