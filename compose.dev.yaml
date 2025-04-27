@@ -10,6 +10,7 @@ services:
         metadata: .
     environment:
       ENV: demo
+      MODE: cycle
       LOG_LEVEL: DEBUG
       FRONTEND_URL: localhost:3000
       JSON_LOGS: true
