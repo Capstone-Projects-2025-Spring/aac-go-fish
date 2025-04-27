@@ -199,7 +199,7 @@ const App = () => {
             )}
             {selectedRole === "manager" ? (
                 <>
-                    {showStart && (
+                    {showStart && !isDayCompleteModalOpen && (
                         <StationStartModal
                             stationName="Manager"
                             handleClick={() => setShowStart(false)}
