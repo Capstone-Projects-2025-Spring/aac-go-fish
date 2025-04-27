@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import IngredientScrollPicker from '../components/IngredientScrollPicker/IngredientScrollPicker';
+import IngredientScrollPicker from '../../../components/IngredientScrollPicker/IngredientScrollPicker';
 
-jest.mock('../menuItems', () => ({
+jest.mock('../../../menuItems', () => ({
   menu: [
     {
       children: [

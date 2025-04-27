@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Tutorial from "../components/Modal/Tutorial";
+import Tutorial from "../../../components/Modal/Tutorial";
 
 beforeAll(() => {
   const portal = document.createElement("div");

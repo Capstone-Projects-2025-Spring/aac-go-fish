@@ -1,4 +1,4 @@
-import { playSendSound } from '../components/SoundEffects/playSendSound';
+import { playSendSound } from '../../../components/SoundEffects/playSendSound';
 
 describe('playSendSound', () => {
   const originalAudio = global.Audio;

@@ -1,17 +1,17 @@
 import React from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import BurgerBuilder from "../components/Burger/BurgerBuilder";
-import { WebSocketContext } from "../WebSocketContext";
-import { playSendSound } from "../components/SoundEffects/playSendSound";
-import { playPopSound } from "../components/SoundEffects/playPopSound";
+import BurgerBuilder from "../../../components/Burger/BurgerBuilder";
+import { WebSocketContext } from "../../../WebSocketContext";
+import { playSendSound } from "../../../components/SoundEffects/playSendSound";
+import { playPopSound } from "../../../components/SoundEffects/playPopSound";
 
-jest.mock("../components/SoundEffects/playSendSound", () => ({
+jest.mock("../../../components/SoundEffects/playSendSound", () => ({
   playSendSound: jest.fn(),
 }));
-jest.mock("../components/SoundEffects/playPopSound", () => ({
+jest.mock("../../../components/SoundEffects/playPopSound", () => ({
   playPopSound: jest.fn(),
 }));
-jest.mock("../menuItems", () => ({
+jest.mock("../../../menuItems", () => ({
   menu: [
     {
       children: [
@@ -31,7 +31,7 @@ jest.mock("../menuItems", () => ({
     },
   ],
 }));
-jest.mock("../components/Modal/StationStartModal", () => ({
+jest.mock("../../../components/Modal/StationStartModal", () => ({
   stationName,
   handleClick,
 }) => (
@@ -39,12 +39,12 @@ jest.mock("../components/Modal/StationStartModal", () => ({
     {stationName}
   </div>
 ));
-jest.mock("../components/Score/Score", () => ({ score, day }) => (
+jest.mock("../../../components/Score/Score", () => ({ score, day }) => (
   <div data-testid="score-component">
     Score {score} Day {day}
   </div>
 ));
-jest.mock("../components/Burger/BurgerStation", () => ({ imagePaths }) => (
+jest.mock("../../../components/Burger/BurgerStation", () => ({ imagePaths }) => (
   <div data-testid="burger-station" data-paths={JSON.stringify(imagePaths)} />
 ));
 

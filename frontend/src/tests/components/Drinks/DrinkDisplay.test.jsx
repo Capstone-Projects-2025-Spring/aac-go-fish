@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import DrinkDisplay from '../components/Drinks/DrinkDisplay';
+import DrinkDisplay from '../../../components/Drinks/DrinkDisplay';
 
 describe('DrinkDisplay', () => {
   it('renders cup container with correct classes and transform', () => {

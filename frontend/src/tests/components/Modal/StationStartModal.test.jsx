@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import StationStartModal from '../components/Modal/StationStartModal';
-import { playPopSound } from '../components/SoundEffects/playPopSound';
+import StationStartModal from '../../../components/Modal/StationStartModal';
+import { playPopSound } from '../../../components/SoundEffects/playPopSound';
 
-jest.mock('../components/SoundEffects/playPopSound', () => ({
+jest.mock('../../../components/SoundEffects/playPopSound', () => ({
   playPopSound: jest.fn(),
 }));
 

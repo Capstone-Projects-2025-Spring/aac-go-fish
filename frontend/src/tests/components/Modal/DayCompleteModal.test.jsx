@@ -1,11 +1,11 @@
-jest.mock('../components/SoundEffects/playPopSound', () => ({
+jest.mock('../../../components/SoundEffects/playPopSound', () => ({
     playPopSound: jest.fn(),
   }));
 
   import React from 'react';
   import { render, screen, fireEvent } from '@testing-library/react';
-  import DayCompleteModal from '../components/Modal/DayCompleteModal';
-  import { playPopSound } from '../components/SoundEffects/playPopSound';
+  import DayCompleteModal from '../../../components/Modal/DayCompleteModal';
+  import { playPopSound } from '../../../components/SoundEffects/playPopSound';
 
   describe('DayCompleteModal', () => {
     const handleClick = jest.fn();

@@ -1,4 +1,4 @@
-import { playPopSound } from '../components/SoundEffects/playPopSound';
+import { playPopSound } from '../../../components/SoundEffects/playPopSound';
 
 describe('playPopSound', () => {
   const originalAudio = global.Audio;

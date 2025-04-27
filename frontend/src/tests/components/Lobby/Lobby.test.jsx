@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import Lobby from '../components/Lobby/Lobby';
-import { WebSocketContext, useWebSocket } from '../WebSocketContext';
-import { playPopSound } from '../components/SoundEffects/playPopSound';
+import Lobby from '../../../components/Lobby/Lobby';
+import { WebSocketContext, useWebSocket } from '../../../WebSocketContext';
+import { playPopSound } from '../../../components/SoundEffects/playPopSound';
 
-jest.mock('../WebSocketContext', () => {
+jest.mock('../../../WebSocketContext', () => {
   const React = require('react');
   return {
     WebSocketContext: React.createContext({ send: jest.fn() }),
@@ -12,7 +12,7 @@ jest.mock('../WebSocketContext', () => {
   };
 });
 
-jest.mock('../components/SoundEffects/playPopSound', () => ({ playPopSound: jest.fn() }));
+jest.mock('../../../components/SoundEffects/playPopSound', () => ({ playPopSound: jest.fn() }));
 
 describe('Lobby', () => {
   let sendMock;

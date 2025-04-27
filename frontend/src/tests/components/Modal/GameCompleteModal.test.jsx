@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import GameCompleteModal from '../components/Modal/GameCompleteModal';
-import { playPopSound } from '../components/SoundEffects/playPopSound';
+import GameCompleteModal from '../../../components/Modal/GameCompleteModal';
+import { playPopSound } from '../../../components/SoundEffects/playPopSound';
 
-jest.mock('../components/SoundEffects/playPopSound', () => ({
+jest.mock('../../../components/SoundEffects/playPopSound', () => ({
   playPopSound: jest.fn(),
 }));
 

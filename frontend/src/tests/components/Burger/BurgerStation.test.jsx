@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import BurgerStation from '../components/Burger/BurgerStation';
+import BurgerStation from '../../../components/Burger/BurgerStation';
 
-jest.mock('../components/Burger/BurgerDisplay', () => ({ imagePaths }) => (
+jest.mock('../../../components/Burger/BurgerDisplay', () => ({ imagePaths }) => (
   <div data-testid="burger-display" data-paths={JSON.stringify(imagePaths)} />
 ));
 

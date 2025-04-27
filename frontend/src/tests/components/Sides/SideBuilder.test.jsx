@@ -5,12 +5,12 @@ import {
   fireEvent,
   act,
 } from "@testing-library/react";
-import SideBuilder from "../components/Sides/SideBuilder";
-import { WebSocketContext } from "../WebSocketContext";
-import { playPopSound } from "../components/SoundEffects/playPopSound";
+import SideBuilder from "../../../components/Sides/SideBuilder";
+import { WebSocketContext } from "../../../WebSocketContext";
+import { playPopSound } from "../../../components/SoundEffects/playPopSound";
 
 jest.mock(
-  "../components/Sides/SideDisplay",
+  "../../../components/Sides/SideDisplay",
   () =>
     ({ tableState, fryTimeLeft }) =>
       (
@@ -21,10 +21,10 @@ jest.mock(
         />
       )
 );
-jest.mock("../components/Score/Score", () => ({ score, day }) => (
+jest.mock("../../../components/Score/Score", () => ({ score, day }) => (
   <div data-testid="score-component" data-score={score} data-day={day} />
 ));
-jest.mock("../components/Modal/StationStartModal", () => ({
+jest.mock("../../../components/Modal/StationStartModal", () => ({
   stationName,
   handleClick,
 }) => (
@@ -32,10 +32,10 @@ jest.mock("../components/Modal/StationStartModal", () => ({
     {stationName}
   </div>
 ));
-jest.mock("../components/SoundEffects/playPopSound", () => ({
+jest.mock("../../../components/SoundEffects/playPopSound", () => ({
   playPopSound: jest.fn(),
 }));
-jest.mock("../components/SoundEffects/playSendSound", () => ({
+jest.mock("../../../components/SoundEffects/playSendSound", () => ({
   playSendSound: jest.fn(),
 }));
 

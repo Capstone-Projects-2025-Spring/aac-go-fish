@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ErrorModal from '../components/Modal/ErrorModal';
+import ErrorModal from '../../../components/Modal/ErrorModal';
 
 describe('ErrorModal', () => {
   const handleClick = jest.fn();

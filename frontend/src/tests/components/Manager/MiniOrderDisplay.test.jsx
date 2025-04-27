@@ -1,17 +1,17 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MiniOrderDisplay from '../components/Manager/MiniOrderDisplay';
+import MiniOrderDisplay from '../../../components/Manager/MiniOrderDisplay';
 
-jest.mock('../components/Burger/BurgerDisplay', () => ({ imagePaths }) => (
+jest.mock('../../../components/Burger/BurgerDisplay', () => ({ imagePaths }) => (
   <div data-testid="burger-display" data-paths={JSON.stringify(imagePaths)} />
 ));
-jest.mock('../components/Drinks/DrinkDisplay', () => ({ color, fillPercentage, cupSize, mini, cupPosition }) => (
+jest.mock('../../../components/Drinks/DrinkDisplay', () => ({ color, fillPercentage, cupSize, mini, cupPosition }) => (
   <div data-testid="drink-display" data-color={color} data-fill={fillPercentage} data-cup-size={cupSize} data-mini={mini} data-cup-position={cupPosition} />
 ));
-jest.mock('../components/Sides/SideDisplay', () => ({ tableState, manager }) => (
+jest.mock('../../../components/Sides/SideDisplay', () => ({ tableState, manager }) => (
   <div data-testid="side-display" data-state={tableState} data-manager={manager} />
 ));
-jest.mock('../menuItems', () => ({
+jest.mock('../../../menuItems', () => ({
   menuMap: {
     Burger: {
       Tomato: { sideImage: 'tomato.png' },

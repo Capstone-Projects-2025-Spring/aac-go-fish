@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Score from '../components/Score/Score';
+import Score from '../../../components/Score/Score';
 
 describe('Score component', () => {
   it('renders score and day text correctly', () => {

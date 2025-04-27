@@ -1,13 +1,13 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import AACBoard from '../components/AACBoard/AACBoard';
+import AACBoard from '../../../components/AACBoard/AACBoard';
 
-jest.mock('../menuItems', () => ({ menu: [
+jest.mock('../../../menuItems', () => ({ menu: [
   { name: 'Item1', audio: '/audio/1.mp3' },
   { name: 'Item2', audio: null },
 ] }));
 
-jest.mock('../components/AACBoard/ItemGrid', () => ({ items, onClick }) => (
+jest.mock('../../../components/AACBoard/ItemGrid', () => ({ items, onClick }) => (
   <div>
     {items.map(item => (
       <button key={item.name} data-testid={`grid-${item.name}`} onClick={() => onClick(item)}>
@@ -17,7 +17,7 @@ jest.mock('../components/AACBoard/ItemGrid', () => ({ items, onClick }) => (
   </div>
 ));
 
-jest.mock('../components/AACBoard/SelectedItemsDisplay', () => ({ selectedItems, onDelete, onClear, onPlayAll }) => (
+jest.mock('../../../components/AACBoard/SelectedItemsDisplay', () => ({ selectedItems, onDelete, onClear, onPlayAll }) => (
   <div data-testid="selected-display" data-selected={JSON.stringify(selectedItems)} />
 ));
 

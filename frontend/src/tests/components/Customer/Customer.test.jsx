@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Customer from '../components/Customer/Customer';
+import Customer from '../../../components/Customer/Customer';
 
 describe('Customer component', () => {
   it('renders customer image with provided src and alt text', () => {

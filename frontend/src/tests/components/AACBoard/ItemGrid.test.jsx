@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ItemGrid from '../components/AACBoard/ItemGrid';
+import ItemGrid from '../../../components/AACBoard/ItemGrid';
 
-jest.mock('../components/AACBoard/ItemButton', () => ({ item, onClick }) => (
+jest.mock('../../../components/AACBoard/ItemButton', () => ({ item, onClick }) => (
   <button data-testid={`item-btn-${item.name}`} onClick={onClick}>
     {item.name}
   </button>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import BurgerDisplay from '../components/Burger/BurgerDisplay';
+import BurgerDisplay from '../../../components/Burger/BurgerDisplay';
 
 describe('BurgerDisplay component', () => {
   it('renders no img tags when imagePaths is empty', () => {

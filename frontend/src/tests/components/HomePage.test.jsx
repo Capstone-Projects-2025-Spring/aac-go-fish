@@ -1,14 +1,14 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import HomePage from '../components/HomePage';
-import { WebSocketContext } from '../WebSocketContext';
+import HomePage from '../../components/HomePage';
+import { WebSocketContext } from '../../WebSocketContext';
 
-jest.mock('../components/IngredientScrollPicker/IngredientScrollPicker', () => ({ selected, setSelected }) => (
+jest.mock('../../components/IngredientScrollPicker/IngredientScrollPicker', () => ({ selected, setSelected }) => (
   <div data-testid="ingredient-picker" data-selected={selected} />
 ));
-jest.mock('../components/Modal/ErrorModal', () => ({ msg }) => <div data-testid="error-modal">{msg}</div>);
-jest.mock('../components/Lobby/Lobby', () => ({ lobbyCode }) => <div data-testid="lobby">{lobbyCode}</div>);
-jest.mock('../components/SoundEffects/playPopSound', () => ({ playPopSound: jest.fn() }));
+jest.mock('../../components/Modal/ErrorModal', () => ({ msg }) => <div data-testid="error-modal">{msg}</div>);
+jest.mock('../../components/Lobby/Lobby', () => ({ lobbyCode }) => <div data-testid="lobby">{lobbyCode}</div>);
+jest.mock('../../components/SoundEffects/playPopSound', () => ({ playPopSound: jest.fn() }));
 
 describe('<HomePage /> (from tests/ folder)', () => {
   let mockSend;

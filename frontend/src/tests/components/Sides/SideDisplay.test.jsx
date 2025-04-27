@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import SideDisplay from '../components/Sides/SideDisplay';
+import SideDisplay from '../../../components/Sides/SideDisplay';
 
 describe('SideDisplay', () => {
   const renderDisplay = (props) => render(<SideDisplay {...props} />);

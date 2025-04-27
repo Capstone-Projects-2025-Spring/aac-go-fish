@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ItemButton from '../components/AACBoard/ItemButton';
-import { playPopSound } from '../components/SoundEffects/playPopSound';
+import ItemButton from '../../../components/AACBoard/ItemButton';
+import { playPopSound } from '../../../components/SoundEffects/playPopSound';
 
-jest.mock('../components/SoundEffects/playPopSound', () => ({ playPopSound: jest.fn() }));
+jest.mock('../../../components/SoundEffects/playPopSound', () => ({ playPopSound: jest.fn() }));
 
 describe('ItemButton component', () => {
   const item = { name: 'TestItem', image: '/images/test.png' };

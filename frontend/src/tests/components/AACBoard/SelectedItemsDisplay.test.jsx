@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import SelectedItemsDisplay from '../components/AACBoard/SelectedItemsDisplay';
+import SelectedItemsDisplay from '../../../components/AACBoard/SelectedItemsDisplay';
 
 describe('SelectedItemsDisplay', () => {
   const items = [
