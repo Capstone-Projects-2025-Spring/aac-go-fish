@@ -94,7 +94,7 @@ const App = () => {
                         setIsDayCompleteModalOpen(true);
                         setTimeout(() => {
                             setIsDayCompleteModalOpen(false);
-                        }, 10000);
+                        }, 4000);
                         break;
                     case "order_component":
                         switch (data.component_type) {
@@ -139,7 +139,7 @@ const App = () => {
         if (showStart) {
             const timer = setTimeout(() => {
                 setShowStart(false);
-            }, 5000);
+            }, 8000);
             return () => clearTimeout(timer);
         }
     }, [showStart]);
@@ -206,7 +206,7 @@ const App = () => {
                         />
                     )}
 
-                    {!showStart && (
+                    {!showStart && !isDayCompleteModalOpen && (
                         <Tutorial
                             classNames={[
                                 "AACBoardContainer",
