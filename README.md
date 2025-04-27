@@ -1,6 +1,8 @@
 [![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=17853707)
 <div align="center">
 
+<img src="https://capstone-projects-2025-spring.github.io/aac-go-fish/img/favicon.ico">
+
 # Order Up!
 [![Report Issue on Jira](https://img.shields.io/badge/Report%20Issues-Jira-0052CC?style=flat&logo=jira-software)](https://temple-cis-projects-in-cs.atlassian.net/jira/software/c/projects/AGTC/issues)
 [![Deploy Docs](https://github.com/Capstone-Projects-2025-Spring/aac-go-fish/actions/workflows/deploy.yml/badge.svg)](https://github.com/Capstone-Projects-2025-Spring/aac-go-fish/actions/workflows/deploy.yml)
@@ -17,7 +19,7 @@ The goal of this project is to provide a seamless, interactive, connection build
 
 Previously established power dynamics have placed AAC users into reactionary roles. The project challenges these social dynamics by positioning AAC users as active game leaders rather than passive participants. The game is played with relevant AAC on-screen at all times throughout gameplay, so both verbal and nonverbal children can play the game.
 
-The game itself gives each player a role: one player becomes the manager who takes orders from customers and must communicate them to the team. Everyone else becomes cooks who follow the orders and respond to the manager. For both roles, an on-screen interactive AAC interface will cover all communication needs and provide visual indicators when someone else is utilizing its functions.
+The game itself gives each player a role: one player becomes the manager who takes orders from customers and must communicate them to the team. Everyone else becomes cooks who follow the orders and respond to the manager. For each role, an on-screen interactive AAC interface will cover all communication needs.
 
 ## How to Run
 
@@ -25,11 +27,11 @@ For development, see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Conceptual Design
 
-The game will be played on two to four separate devices. One player will host the game and others can join using a unique code. The frontend will be built using React.js, which will be used to build and manage the game components. The backend will be built using Python, which will be used to store game identifiers, connections, state, and logic. FastAPI will be used to process requests between the frontend and backend.
+The game can be played on two to four separate devices. One player will host the game and others can join using a unique code. The frontend is built with React.js, which is used to build and manage the game components. The backend is built with Python, which is used to store game identifiers, connections, state, and logic. FastAPI is used to process requests between the frontend and backend.
 
 ## Background
 
-The system used to connect devices together will mirror what is used by Kahoot. Specifically, the creation of the unique code to connect to a game session through a web browser. The game will also abide by AAC system design guidelines and principles, as well as prior research on AAC communication. This includes the use of grid displays, a commonly used tool that creates sentences for people who struggle with verbal communication. Inclusion of features such as showing in-progress AAC communication, as well as a customizable AAC interface, aim to reduce social isolation by meeting the communication needs of each individual user and promoting empathy building.
+The system used to connect devices together mirrors what is used by Kahoot. Specifically, the creation of the unique code to connect to a game session through a web browser. The game aims to abide by AAC system design guidelines and principles, as well as prior research on AAC communication. This includes the use of grid displays, a commonly used tool that creates sentences for people who struggle with verbal communication. Inclusion of features such as showing in-progress AAC communication, as well as a customizable AAC interface, aim to reduce social isolation by meeting the communication needs of each individual user and promoting empathy building.
 
 ## Collaborators
 
