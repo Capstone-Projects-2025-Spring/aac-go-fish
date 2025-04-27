@@ -73,12 +73,14 @@ git clone https://github.com/Capstone-Projects-2025-Spring/aac-go-fish.git
 ```
 FRONTEND_URL: "https://bankruptcyassociation.com"
 ```
-2. (optional) Select backend MODE field in `compose.yaml` to set game mode
-- cycle: randomizes user roles and shuffles after each day (default if left blank)
-- fixed: each user stays on same role for every day, assigned by join order (Manager -> Burger -> Drink -> Side)
-'''
-MODE: "fixed"
-'''
+2. _(optional)_ Select backend MODE field in `compose.yaml` to set game mode
+
+   Options:
+   - **cycle**: randomizes user roles and shuffles after each day **(default if left blank)**
+   - **fixed**: each user stays on same role for every day, assigned by join order (Manager -> Burger -> Drink -> Side)
+```
+MODE: "cycle"
+```
 3. Change `nginx.conf` to use your Elastic IP and domain name
 ```
     server_name bankruptcyassociation.com www.bankruptcyassociation.com 54.159.150.176;
