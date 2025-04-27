@@ -1,44 +1,48 @@
 .aacboard-selected-items {
     margin-bottom: 1rem;
     font-weight: bold;
-    min-height: 140px;
     border: 2px solid #ddd;
     border-radius: 6px;
     padding: 1rem;
-    width: 30rem;
     background: white;
+    width: 100%;
+    box-sizing: border-box;
+    align-content: center;
+    min-height: 35%;
 }
 
 .aacboard-selected-item {
+    position: relative;
     margin-right: 0.75rem;
     margin-bottom: 0.75rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem;
     border: 2px solid #ccc;
     border-radius: 6px;
     display: inline-flex;
     align-items: center;
     font-size: 1.3rem;
-
     img {
-        width: 2.5rem;
-        height: 2.5rem;
+        width: 4rem;
+        height: 4rem;
         object-fit: contain;
     }
 }
 
 .selected-item-delete {
-    margin-left: 0.5rem;
+    position: absolute;
     cursor: pointer;
     border: none;
     background: transparent;
     font-weight: bold;
     font-size: 1.2rem;
+    top: 0;
+    right: 0;
 }
 
 .aacboard-grid {
-    max-width: 750px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    width: 100%;
+    grid-template-columns: repeat(5, 1fr);
     gap: 0.5rem;
 }
 
@@ -55,13 +59,8 @@
     cursor: pointer;
 
     img {
-        width: 63px;
-        height: 63px;
+        width: 80%;
+        height: 80%;
         object-fit: contain;
     }
-}
-
-.AACBoardContainer {
-    margin-left: -20rem;
-    margin-bottom: 20rem;
 }

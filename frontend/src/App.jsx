@@ -209,8 +209,8 @@ const App = () => {
                     {!showStart && !isDayCompleteModalOpen && (
                         <Tutorial
                             classNames={[
-                                "AACBoardContainer",
-                                "customer-image",
+                                "aacboard-grid",
+                                "customer-container",
                             ]}
                             audioSourceFolder={"/audio/tutorial/manager"}
                         />
@@ -235,15 +235,10 @@ const App = () => {
                                         />
                                     </div>
                                 )}
-                                <img
-                                    onClick={() => {
-                                        handleGiveToCustomer();
-                                        playPopSound();
-                                    }}
-                                    className="SendCustomerOrder"
-                                    src="/images/button_icons/send_order.png"
-                                    alt="send customer order"
-                                />
+                                <button className="send-order" onClick={() => {
+                                    handleGiveToCustomer();
+                                    playPopSound();
+                                }}> Send Order ✉</button>
                                 <div className="manager-mini-order-overlay">
                                     <MiniOrderDisplay
                                         burger={employeeBurger}
@@ -253,25 +248,18 @@ const App = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="right-column">
-                        <div className="TopMenu">
+                        <div className="column">
                             <Score score={score} day={day} />
+                            <AACBoard
+                                selectedItems={selectedItems}
+                                onSelectItem={addSelectedItem}
+                                onDeleteItem={removeSelectedItem}
+                                onClearAll={clearAllSelected}
+                                onPlayAll={onPlayAll}
+                            />
                         </div>
-                        <AACBoard
-                            selectedItems={selectedItems}
-                            onSelectItem={addSelectedItem}
-                            onDeleteItem={removeSelectedItem}
-                            onClearAll={clearAllSelected}
-                            onPlayAll={onPlayAll}
-                            burgerOrder={burgerOrder}
-                            drinkOrder={drinkOrder}
-                            hasSide={!!sideOrder}
-                            drinkSize={"medium"}
-                            orderVisible={orderVisible}
-                        />
                     </div>
-                </>
+                    </>
             ) : selectedRole === "burger" ? (
                 <BurgerBuilder score={score} day={day} />
             ) : selectedRole === "side" ? (
