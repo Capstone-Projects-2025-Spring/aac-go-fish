@@ -26,6 +26,10 @@ install). Use `uv sync --dev` to create a venv.
 
 To run the tests, use `uv run -- pytest`.
 
+### Frontend
+
+To run the tests, use `npm test -- --coverage --watchAll=false` inside the frontend folder
+
 ### Prod
 The prod profile uses our public docker containers for deploying to a website, **ignore this if you are not deploying to a website**
 
