@@ -1,142 +1,208 @@
 # Use Case Descriptions
 
-## **Use Case 1 - Start a Lobby**
-1. The user accesses the web application and sees the option to start or join a game.
-2. The user clicks the "Start Lobby" button.
-3. The user receives a unique game code.
-4. The user copies the game code and shares it with friends.
+## **Use Case 1 - Create Lobby**
+1. The user accesses the web application and sees the option to create or join a lobby.
+2. The user clicks the "Create Lobby" button.
+3. The lobby screen shows three ingredient images that form a unique lobby code.  
 
-## **Use Case 2 - Join a Lobby**
-1. The user accesses the web application and sees the option to start or join a game.
-2. The user clicks the "Join Game" button.
-3. The user is taken to a new screen to enter the game code.
-4. The user enters the game code provided by a friend.
-5. The user clicks the "Join" button.
-6. The user sees the lobby page.
+---
 
-## **Use Case 3 - Start a Game**
-**Starts from:**
-* [Use Case 1](#use-case-1---start-a-lobby).
+## **Use Case 2 – Share Lobby via Link**
+**Starts from:** [Use Case 1 – Create Lobby](#use-case-1--create-lobby)
 
-1. The user sees a list of players who have joined the lobby.
-2. The system assigns each player an avatar.
-3. The user clicks the "Start Game" button to begin the game.
-4. The system assigns roles based on the number of players (Manager and cooking stations).
-5. The user is taken to the restaurant scene and sees their assigned role.
+1. The user clicks the copy icon below the code images.  
+2. The lobby link is copied to the device clipboard.  
+3. A brief check mark confirmation appears over the copy button.  
+4. The user pastes the link into a chat or text messaging platform outside the game.
 
-## **Use Case 4 - Lobby Starts**
-**Starts from:**
-* [Use Case 2](#use-case-2---join-a-lobby).
+---
 
-1. The user sees a list of players who have joined the lobby.
-2. The system assigns each player an avatar.
-3. The user waits for the lobby leader to click the "Start Game" button.
-4. The system assigns roles based on the number of players (Manager and cooking stations).
-5. The user sees a message indicating that the game has started.
-6. The user is taken to the restaurant scene and sees their assigned role.
+## **Use Case 3 – Share Lobby Code (Audio)**
+**Starts from:** [Use Case 1 – Create Lobby](#use-case-1--create-lobby)
 
-## **Use Case 5 - Manager Receives Customer Order**
-**Starts from:**
-* [Use Case 3](#use-case-3---start-a-game).
-* [Use Case 4](#use-case-4---lobby-starts).
+1. The user clicks the speaker icon below the code images.  
+2. The device speaks each ingredient aloud in order.
+3. Nearby friends hear the spoken code.
 
-1. The user sees that they are assigned the manager role.
-2. The user sees a customer approach the counter.
-3. The user sees the customer's order displayed on their screen.
-4. The user sees the AAC board available to relay the order to employees.
+---
 
-## **Use Case 6 - Manager Relays Order to Employees**
-**Starts from:**
-* [Use Case 5](#use-case-5---manager-receives-customer-order).
+## **Use Case 4 – Join Lobby via Link**
+**Starts from:** [Use Case 2 – Share Lobby via Link](#use-case-2--share-lobby-via-link)
 
-1. The user presses buttons on the AAC board that open word categories for different stations (burger, sides, drink)
-2. The user (manager role) selects phrases or words from the AAC menu to communicate the order details.
-3. The user's AAC communication plays aloud on their device for all employees to hear.
-4. The user and the other players see speech bubbles appear on the other players' screens showing the communication in progress.
-5. The user waits for employees to prepare the order.
+1. The user receives a lobby link from a friend.  
+2. The user clicks the link.  
+3. The game home screen opens in the browser.  
+5. The three ingredient images are already filled in.  
+6. The user taps the join lobby button.  
+7. The user joins the lobby.
 
-## **Use Case 7 - Employee Receives Order**
-**Starts from:**
-* [Use Case 3](#use-case-3---start-a-game).
-* [Use Case 4](#use-case-4---lobby-starts).
-* [Use Case 6](#use-case-6---manager-relays-order-to-employees).
 
-1. The user sees that they are assigned to a cooking station (Burger, Sides, or Drinks).
-2. The user hears the manager's AAC communication of the customer's order.
-3. The user sees the ingredients and cooking tools available at their station.
-4. The user begins preparing their part of the order.
+---
 
-## **Use Case 8 - Employee Requests Order Repeat**
-**Starts from:**
-* [Use Case 7](#use-case-7---employee-receives-order).
+## **Use Case 5 – Join Lobby via Manual Code Entry**
+**Starts from:** [Use Case 3 – Share Lobby Code (Audio)](#use-case-3--share-lobby-code-audio)
 
-1. The user (employee role) needs clarification on their part of the order.
-3. The user selects the phrase "Please repeat the order" from the AAC menu.
-4. The user's AAC communication plays aloud on their device.
-5. The user and other players see speech bubbles appear on the other players' screens showing the communication in progress.
-6. The user waits for the manager to relay the order again.
+1. The user sets the first carousel to the first ingredient.  
+2. The user sets the second carousel to the second ingredient.  
+3. The user sets the third carousel to the third ingredient.  
+4. The user clicks the join lobby button.  
+5. The user joins the lobby.  
 
-## **Use Case 9 - Prepare Burger**
-**Starts from:**
-* [Use Case 7](#use-case-7---employee-receives-order).
+---
 
-1. The user (burger employee) begins preparing the burger.
-2. The user clicks on ingredients in the correct order (bun, lettuce, patty, cheese, etc.).
-5. The user completes the burger preparation.
-6. The user sends the completed burger to the order assembly area.
+## **Use Case 6 – Start Game**
+**Starts from:**  
+* [Use Case 1 – Create Lobby](#use-case-1--create-lobby)  
+* [Use Case 4 – Join Lobby via Link](#use-case-4--join-lobby-via-link)  
+* [Use Case 5 – Join Lobby via Manual Code Entry](#use-case-5--join-lobby-via-manual-code-entry)
 
-## **Use Case 10 - Prepare Sides**
-**Starts from:**
-* [Use Case 7](#use-case-7---employee-receives-order).
+---
 
-1. The user (sides employee) begins preparing the side item.
-2. The user drags potatoes out onto their work area.
-3. The user selects the chopping knife.
-2. The user chops potatoes by clicking on them multiple times.
-3. The user drags the chopped potatoes to the deep fryer.
-4. The user waits for the fries to cook (timer appears).
-5. The user removes the fries when they're done cooking.
-6. The user sends the completed side to the order assembly area.
+1. The lobby screen shows the current player count.
+3. The user clicks the start game button.
+5. The game selects one player as Manager.
+6. The game assigns all other players to cooking stations.
+7. A modal showing their assigned station name pops up on each player’s screen.
+8. The modal shows the station name.
+9. The user taps start on the modal.
+10. The game shows the scene for that role.
 
-## **Use Case 11 - Prepare Drinks**
-**Starts from:**
-* [Use Case 7](#use-case-7---employee-receives-order).
+Note: There will always be a manager, each person added after that will add one more role: burger, drink, and side - in that order.
 
-1. The user (drinks employee) begins preparing the drink.
-2. The user clicks the cup to pick it up.
-3. The user selects whether to add ice based on the order.
-4. The user clicks on the correct drink dispenser.
-5. The user fills the cup with the selected drink.
-6. The user sends the completed drink to the order assembly area.
+## **Use Case 7 – Walk-through Joyride**
+**Starts from:** [Use Case 6 – Start Game](#use-case-6--start-game)
 
-## **Use Case 12 - Manager Serves Completed Order**
-**Starts from:**
-* [Use Case 9](#use-case-9---prepare-burger).
-* [Use Case 10](#use-case-10---prepare-sides).
-* [Use Case 11](#use-case-11---prepare-drinks).
+1. The station scene appears.  
+2. A tutorial overlay appears.  
+3. The user clicks the next arrow.
+3. The overlay highlights an important aspect of the station and explains the scene aloud.  
+6. The user clicks the next arrow to go through all important parts of the station and listens to the audio directions.
+8. The user clicks the done button.  
+9. The overlay closes.  
+10. The station screen is now interactive.  
 
-1. The user (manager) sees that all parts of the order have been prepared and assembled.
-2. The user clicks on the completed order.
-3. The user clicks the order complete button.
-4. The user sees the customer receive the order.
-5. The user sees the payment amount and tip based on order accuracy and completion time.
-6. The user sees the day's earnings increase.
+---
 
-## **Use Case 13 - Complete a Day**
-**Starts from:**
-* [Use Case 12](#use-case-12---manager-serves-completed-order).
+## **Use Case 8 – Skip Joyride**
+**Starts from:** [Use Case 6 – Start Game](#use-case-6--start-game)
 
-1. The user sees all customer orders for the day have been completed.
-2. The user sees a "Day Complete" message.
-3. The user sees a summary of the day's performance (orders completed, earnings, tips).
-4. The user clicks the "Continue to Next Day" button.
-5. The user sees that the difficulty increases with more customer orders for the next day.
+1. The station screen appears.  
+2. A tutorial overlay opens at step 1.  
+3. The user clicks the close button.  
+4. The overlay closes.  
+5. The station screen is now interactive.  
 
-## **Use Case 14 - Complete the Game**
-**Starts from:**
-* [Use Case 13](#use-case-13---complete-a-day).
+---
 
-1. The user completes the fifth and final day of the game.
-2. The user sees a "Game Complete" message.
-3. The user sees the final performance summary (total earnings, tips, best day).
-5. The user is presented with options to play again.
+## **Use Case 9 – Manager Receives Customer Order**
+**Starts from:**  
+* [Use Case 7 – Walk-through Joyride](#use-case-7--walk-through-joyride)  
+* [Use Case 8 – Skip Joyride](#use-case-8--skip-joyride)
+
+1. A customer walks to the counter, thinks for a moment, and presents an order request.  
+2. A thought bubble shows shows the customer's order.
+
+---
+
+## **Use Case 10 – Manager Relays Order with AAC**
+**Starts from:** [Use Case 9 – Manager Receives Customer Order](#use-case-9--manager-receives-customer-order)
+
+1. The manager clicks the burger category on the AAC board.  
+2. The manager clicks each burger ingredient in the order the customer requested and the device plays aloud selected ingredients.
+3. The manager clicks the side category.
+4. The manager clicks the side type the customer requested and the device plays the request aloud.
+5. The manager clicks the drink category.  
+6. The manager clicks the drink size and drink color and the device plays the selections aloud.  
+
+---
+
+## **Use Case 11 – Employee Listens to Order**
+**Starts from:**  
+* [Use Case 7 – Walk-through Joyride](#use-case-7--walk-through-joyride)  
+* [Use Case 8 – Skip Joyride](#use-case-8--skip-joyride)  
+* [Use Case 10 – Manager Relays Order with AAC](#use-case-10--manager-relays-order-with-aac)
+
+1. The employee hears the manager's device say the full order aloud.  
+2. The employee notes the part that belongs to their station.
+
+---
+
+## **Use Case 12 – Employee Requests Order Repeat**
+**Starts from:** [Use Case 11 – Employee Listens to Order](#use-case-11--employee-listens-to-order)
+
+1. The employee clicks the repeat the order button.
+2. The device says asks the manager to repeat the order aloud.
+3. The employee waits for the manager to relay the order again.
+
+## **Use Case 13 – Prepare Burger**
+**Starts from:** [Use Case 11 – Employee Listens to Order](#use-case-11--employee-listens-to-order)
+
+1. The burger employee clicks each ingredient in order, they are placed on the burger stack and each ingredient added is read aloud.  
+2. The employee clicks send and hears a confirmation that their burger was sent to the manager.  
+
+---
+
+## **Use Case 14 – Prepare Sides**
+**Starts from:** [Use Case 11 – Employee Listens to Order](#use-case-11--employee-listens-to-order)
+
+1. The sides employee recalls the requested side.  
+2. The employee clicks the ingredient or drags it to the board to place it and the ingredient is stated aloud.  
+3. The employee clicks the knife or drags it onto the ingredient to chop it.
+4. The employee sees and hears the ingredient being chopped.  
+4. The employee drags the chopped pieces to the fryer.  
+5. A timer counts down until the frying is done.
+6. The completed item appears.  
+7. The employee clicks send and hears a confirmation that the item was sent to the manager.  
+
+---
+
+## **Use Case 15 – Prepare Drinks**
+**Starts from:** [Use Case 11 – Employee Listens to Order](#use-case-11--employee-listens-to-order)
+
+1. The drinks employee recalls the drink size and color.  
+2. The employee clicks the cup of the correct size.  
+4. The employee clicks the matching color dispenser.  
+5. The employee clicks fill to watch the drink fill up with the correct drink dispenser.
+6. The employee clicks send and hears a confirmation that the drink was sent to the manager.  
+
+## **Use Case 16 – Manager Serves Order**
+**Starts from:**  
+* [Use Case 13 – Prepare Burger](#use-case-13--prepare-burger)  
+* [Use Case 14 – Prepare Sides](#use-case-14--prepare-sides)  
+* [Use Case 15 – Prepare Drinks](#use-case-15--prepare-drinks)
+
+1. A burger appears on the manager’s screen when the burger employee finishes it.  
+2. A side appears on the manager’s screen when the side employee finishes it.  
+3. A drink appears on the manager’s screen when the drink employee finishes it.  
+4. The manager clicks the send order button.  
+5. The customer is served and leaves the counter.  
+6. The earnings total updates on every screen.  
+
+---
+
+## **Use Case 17 – Day Complete**
+**Starts from:** [Use Case 16 – Manager Serves Order](#use-case-16--manager-serves-order)
+
+1. The last customer of the day leaves.  
+2. A Day Complete banner appears.  
+3. A summary shows number of orders and earnings.  
+4. The user clicks the next day button.  
+5. The summary closes.
+
+---
+
+## **Use Case 18 – Role Assignment for Next Day**
+**Starts from:** [Use Case 17 – Day Complete](#use-case-17--day-complete)
+
+1. If randomization is on, every player will be in a new role for the next day.  
+2. If randomization is off, the current roles remain.  
+
+---
+
+## **Use Case 19 – Game Complete**
+**Starts from:** [Use Case 17 – Day Complete](#use-case-17--day-complete) after the fifth day
+
+1. A Game Complete banner appears.  
+2. A final summary shows total earnings.  
+4. The user clicks the back to home button.  
+5. The home screen loads.  
