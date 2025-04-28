@@ -239,7 +239,7 @@ def _generate_order(num_players: int) -> Order:
     """Generate an order based on the number of players."""
     order = Order(
         burger=Burger(
-            ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 8)) + ["Top Bun"]
+            ingredients=["Bottom Bun"] + random.choices(BURGER_INGREDIENTS, k=random.randint(3, 5)) + ["Top Bun"]
         ),
         drink=None,
         side=None,
