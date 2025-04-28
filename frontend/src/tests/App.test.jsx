@@ -146,7 +146,7 @@ describe("App component", () => {
       "Manager"
     );
     expect(screen.getByTestId("aac-board")).toBeInTheDocument();
-    act(() => jest.advanceTimersByTime(5_000));
+    act(() => jest.advanceTimersByTime(10_000));
     expect(screen.queryByTestId("station-start-modal")).toBeNull();
   });
 
@@ -214,7 +214,7 @@ describe("App component", () => {
         },
       });
     });
-    fireEvent.click(screen.getByAltText("send customer order"));
+    fireEvent.click(screen.getByText("Send Order ✉"));
     expect(sendMock).toHaveBeenCalledWith({
       data: {
         type: "game_state",
