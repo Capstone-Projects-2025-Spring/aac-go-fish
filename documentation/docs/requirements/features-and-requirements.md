@@ -56,7 +56,7 @@ sidebar_position: 4
 - The system must increase the difficulty each day by adding more customer orders each day.
 
 ### Scoring
-- The system must calculate money earned from an order based on the items completed and a tip based on how quickly the order is completed.
+- The system must calculate money earned from an order based on the items completed.
 
 ### Game Rules
 
@@ -87,11 +87,6 @@ sidebar_position: 4
   - Burger: Up to **$2** depending on the similarity between the submitted burger and the ordered burger.
   - Drink: Up to **$2** depending on the similarity between the submitted drink and the ordered drink.
   - Side: **$2**.
-- **Tip Bonus:**
-  - 0% to 25% based on completion speed.
-- **Customer Patience Indicator:**  
-  - Displays remaining patience to help gauge the tip amount.
-  - Faster service results in higher tips.
 
 ## Non-Functional
 - The system must integrate AAC communication seamlessly and ensure it is easy to use.  
