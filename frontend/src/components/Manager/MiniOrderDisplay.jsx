@@ -4,8 +4,6 @@ import SideDisplay from "../Sides/SideDisplay";
 import DrinkDisplay from "../Drinks/DrinkDisplay";
 import {menuMap} from "../../menuItems";
 
-import "./MiniOrderDisplay.css";
-
 export default function MiniOrderDisplay({burger, drink, side}) {
     const isBurger = burger && burger.length > 0;
     const isSide = !!side;

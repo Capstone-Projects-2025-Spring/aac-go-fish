@@ -61,18 +61,23 @@
     min-width: 950px;
 }
 
-.customer-mini-order-overlay {
+.customer-mini-order-overlay,
+.manager-mini-order-overlay{
     position: absolute;
-    top: 0;
-    right: 2%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 30%;
+    height: 40%;
+}
+
+.customer-mini-order-overlay {
+    top: 5%;
+    right: 2%;
 }
 
 .manager-mini-order-overlay {
-    position: absolute;
     bottom: 0;
-    left: 10%;
-    display: flex;
-    align-items: center;
+    left: 10%
 }
