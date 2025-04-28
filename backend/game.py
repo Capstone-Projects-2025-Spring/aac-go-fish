@@ -8,6 +8,7 @@ from collections import deque
 
 import structlog
 
+from .constants import Settings
 from .game_state import Lobby, Player, TaggedMessage
 from .models import (
     Burger,
@@ -45,6 +46,8 @@ SIDE_TYPES = ["fries", "onionRings", "mozzarellaSticks"]
 
 MESSAGES_PER_LOOP = 5
 DAYS_PER_GAME = 5
+
+s = Settings()
 
 
 class GameLoop:
@@ -119,7 +122,10 @@ class GameLoop:
         """Assign roles to players."""
         players = self.lobby.players.values()
         roles = list(Role)[: len(players)]
-        random.shuffle(roles)
+
+        # Shuffle initial roles in cycle mode
+        if s.mode == "cycle":
+            random.shuffle(roles)
 
         for player, role in zip(players, roles, strict=True):
             player.role = role
@@ -157,7 +163,9 @@ class GameLoop:
             logger.debug("Game complete.")
         else:
             logger.debug("New day.", day=self.day)
-            self.rotate_roles()
+            # Rotate roles on cycle mode
+            if s.mode == "cycle":
+                self.rotate_roles()
             self.lobby.broadcast(Message(data=DayEnd(day=self.day, customers_served=customers, score=day_score)))
 
     def handle_scoring(self, order: Order) -> None:

@@ -8,6 +8,7 @@ services:
     command: ["fastapi", "run", "./hello.py", "--root-path", "/api"]
     environment:
       ENV: prod
+      MODE: cycle
       LOG_LEVEL: WARNING
       JSON_LOGS: true
       FRONTEND_URL: "https://bankruptcyassociation.com"
