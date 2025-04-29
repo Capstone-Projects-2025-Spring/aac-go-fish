@@ -28,6 +28,7 @@ sidebar_position: 4
   - If there are 2 players, the cook must be assigned to making the burger.
   - If there are 3 players, two cooks must be randomly assigned to making the burger and drinks.
   - If there are 4 players, the three cooks must be randomly assigned to all stations.
+- The system must allow configuring randomizing or keeping the same roles between days.
 - The system must allow players to start the game.
 
 ### Manager Roles
