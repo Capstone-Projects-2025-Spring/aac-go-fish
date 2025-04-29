@@ -24,6 +24,7 @@ The game itself gives each player a role: one player becomes the manager who tak
 ## How to Run
 
 For development, see [CONTRIBUTING.md](./CONTRIBUTING.md).
+For hosting, see [HOSTING.md](./HOSTING.md).
 
 ## Conceptual Design
 
