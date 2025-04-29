@@ -100,7 +100,7 @@ Note: There will always be a manager, each person added after that will add one 
 * [Use Case 8 – Skip Joyride](#use-case-8--skip-joyride)
 
 1. A customer walks to the counter, thinks for a moment, and presents an order request.  
-2. A thought bubble shows shows the customer's order.
+2. A thought bubble shows the customer's order.
 
 ---
 
@@ -131,14 +131,15 @@ Note: There will always be a manager, each person added after that will add one 
 **Starts from:** [Use Case 11 – Employee Listens to Order](#use-case-11--employee-listens-to-order)
 
 1. The employee clicks the repeat the order button.
-2. The device says asks the manager to repeat the order aloud.
+2. The device asks the manager to repeat the order aloud.
 3. The employee waits for the manager to relay the order again.
 
 ## **Use Case 13 – Prepare Burger**
 **Starts from:** [Use Case 11 – Employee Listens to Order](#use-case-11--employee-listens-to-order)
 
-1. The burger employee clicks each ingredient in order, they are placed on the burger stack and each ingredient added is read aloud.  
-2. The employee clicks send and hears a confirmation that their burger was sent to the manager.  
+1. The burger employee clicks each ingredient in order, they are placed on the burger stack and each ingredient added is read aloud.
+2. The burger employee can press the undo button to unplace the last ingredient placed
+3. The employee clicks send and hears a confirmation that their burger was sent to the manager.  
 
 ---
 
