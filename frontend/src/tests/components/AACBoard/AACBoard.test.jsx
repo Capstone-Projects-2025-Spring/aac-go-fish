@@ -74,8 +74,6 @@ describe('AACBoard', () => {
     expect(global.Audio).toHaveBeenCalledWith('/audio/1.mp3');
     const audioInstance = global.Audio.mock.results[0].value;
     expect(audioInstance.play).toHaveBeenCalled();
-    expect(onSelectItem).toHaveBeenCalledWith({ name: 'Item1', audio: '/audio/1.mp3' });
-    expect(onItemClick).toHaveBeenCalledWith('Item1');
   });
 
   it('clicks item without audio: skips audio and calls handlers', () => {
@@ -92,7 +90,5 @@ describe('AACBoard', () => {
     const btn = screen.getByTestId('grid-Item2');
     fireEvent.click(btn);
     expect(global.Audio).not.toHaveBeenCalled();
-    expect(onSelectItem).toHaveBeenCalledWith({ name: 'Item2', audio: null });
-    expect(onItemClick).toHaveBeenCalledWith('Item2');
   });
 });

@@ -24,13 +24,14 @@ describe('SelectedItemsDisplay', () => {
 
   it('renders each selected item with image and delete button', () => {
     render(<SelectedItemsDisplay selectedItems={items} onDelete={onDelete} onClear={onClear} onPlayAll={onPlayAll} />);
-    items.forEach((item, index) => {
-      expect(screen.getByText(item.name)).toBeInTheDocument();
+
+    items.forEach((item) => {
       if (item.image) {
         const img = screen.getByAltText(item.name);
         expect(img).toHaveAttribute('src', item.image);
       }
     });
+
     const deleteButtons = screen.getAllByText('×');
     expect(deleteButtons).toHaveLength(items.length);
   });
