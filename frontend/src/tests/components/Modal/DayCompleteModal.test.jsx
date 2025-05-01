@@ -1,3 +1,9 @@
+beforeEach(() => {
+  global.Audio = class {
+    play = jest.fn(() => Promise.resolve());
+  };
+});
+
 jest.mock('../../../components/SoundEffects/playPopSound', () => ({
     playPopSound: jest.fn(),
   }));

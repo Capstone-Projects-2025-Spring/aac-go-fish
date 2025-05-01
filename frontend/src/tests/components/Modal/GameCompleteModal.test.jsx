@@ -3,6 +3,12 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import GameCompleteModal from '../../../components/Modal/GameCompleteModal';
 import { playPopSound } from '../../../components/SoundEffects/playPopSound';
 
+beforeEach(() => {
+  global.Audio = class {
+    play = jest.fn(() => Promise.resolve());
+  };
+});
+
 jest.mock('../../../components/SoundEffects/playPopSound', () => ({
   playPopSound: jest.fn(),
 }));
