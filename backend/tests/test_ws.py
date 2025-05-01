@@ -104,6 +104,116 @@ def test_websocket(lobby_client: TestClient) -> None:
 
 
 @pytest.mark.slow
+def test_websocket_full_order(lobby_client: TestClient) -> None:
+    """Test that websocket handles all 4 players and full order flow."""
+    code = lobby_client.post("lobby").json()["code"]
+
+    player_ids = [lobby_client.post("/lobby/join", json={"code": code}).json()["id"] for _ in range(4)]
+    websockets = [lobby_client.websocket_connect("/ws") for _ in range(4)]
+
+    with websockets[0] as ws1, websockets[1] as ws2, websockets[2] as ws3, websockets[3] as ws4:
+        sockets = [ws1, ws2, ws3, ws4]
+
+        # Send initializer messages
+        for ws, pid in zip(sockets, player_ids, strict=False):
+            ws.send_json({"data": {"type": "initializer", "code": code, "id": pid}})
+
+        # Each websocket receives player count updates
+        for ws in sockets:
+            while True:
+                msg = ws.receive_json()
+                if msg["data"].get("count") == 4:
+                    break
+
+        # Start game from first player
+        ws1.send_json({"data": {"type": "lobby_lifecycle", "lifecycle_type": "game_start"}})
+
+        # Wait for game start broadcast and role assignments
+        roles = {}
+        for ws, _ in zip(sockets, player_ids, strict=False):
+            data = ws.receive_json()["data"]
+            if data.get("lifecycle_type") == "game_start":
+                data = ws.receive_json()["data"]
+            roles[data["role"]] = ws
+
+        assert {"manager", "burger", "side", "drink"} == set(roles)
+
+        manager = roles["manager"]
+        burger_cook = roles["burger"]
+        side_cook = roles["side"]
+        drink_cook = roles["drink"]
+
+        # Manager receives an order
+        data = manager.receive_json()["data"]
+        order = data["order"]
+        burger = order["burger"]["ingredients"]
+        side = order["side"]["table_state"]
+        drink = order["drink"]
+
+        # Burger cook sends component
+        burger_cook.send_json(
+            {
+                "data": {
+                    "type": "game_state",
+                    "game_state_update_type": "order_component",
+                    "component_type": "burger",
+                    "component": {"ingredients": burger},
+                }
+            }
+        )
+        data = manager.receive_json()["data"]
+        assert data["component"]["ingredients"] == burger
+
+        # Side cook sends component
+        side_cook.send_json(
+            {
+                "data": {
+                    "type": "game_state",
+                    "game_state_update_type": "order_component",
+                    "component_type": "side",
+                    "component": {"table_state": side},
+                }
+            }
+        )
+        data = manager.receive_json()["data"]
+        assert data["component"]["table_state"] == side
+
+        # Drink cook sends component
+        drink_cook.send_json(
+            {
+                "data": {
+                    "type": "game_state",
+                    "game_state_update_type": "order_component",
+                    "component_type": "drink",
+                    "component": {"color": drink["color"], "fill": drink["fill"], "size": drink["size"]},
+                }
+            }
+        )
+        data = manager.receive_json()["data"]
+        assert data["component"]["color"] == drink["color"]
+
+        # Manager submits complete order
+        manager.send_json(
+            {
+                "data": {
+                    "type": "game_state",
+                    "game_state_update_type": "order_submission",
+                    "order": {
+                        "burger": {"ingredients": burger},
+                        "side": {"table_state": side},
+                        "drink": {"color": drink["color"], "fill": drink["fill"], "size": drink["size"]},
+                    },
+                }
+            }
+        )
+
+        # Manager receives score
+        score_msg = manager.receive_json()["data"]
+        assert "score" in score_msg
+        assert score_msg["score"] == 1200
+
+
+@pytest.mark.slow
 def test_websocket_spam_chat(lobby_client: TestClient) -> None:
     """Test that a bunch of chat messages are received and broadcast without pausing."""
     code = lobby_client.post("lobby").json()["code"]
